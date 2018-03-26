@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>Language Support</title>
+<link rel="stylesheet" href="stylesheets/asciidoctor-spring.css" /><link rel="stylesheet" href="tocbot-3.0.2/tocbot.css" /><style>#tocbot a.toc-link.node-name--H1{font-style:italic}@media screen{#tocbot>ul.toc-list{margin-bottom:.5em;margin-left:.125em}#tocbot ul.sectlevel0,#tocbot a.toc-link.node-name--H1+ul{padding-left:0}#tocbot a.toc-link{height:100%}.is-collapsible{max-height:3000px;overflow:hidden}.is-collapsed{max-height:0}.is-active-link{font-weight:700}}@media print{#tocbot a.toc-link.node-name--H4{display:none}}</style>
+<link rel="stylesheet" href="../../../../../cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>.CodeRay .line-numbers{border-right:1px solid #d8d8d8;padding:0 .5em 0 .25em}.CodeRay span.line-numbers{display:inline-block;margin-right:.5em;color:rgba(0,0,0,.3)}.CodeRay .line-numbers strong{color:rgba(0,0,0,.4)}table.CodeRay{border-collapse:separate;border-spacing:0;margin-bottom:0;border:0;background:none}table.CodeRay td{vertical-align:top;line-height:1.45}table.CodeRay td.line-numbers{text-align:right}table.CodeRay td.line-numbers>pre{padding:0;color:rgba(0,0,0,.3)}table.CodeRay td.code{padding:0 0 0 .5em}table.CodeRay td.code>pre{padding:0}.CodeRay .debug{color:#fff!important;background:navy!important}.CodeRay .annotation{color:#007}.CodeRay .attribute-name{color:navy}.CodeRay .attribute-value{color:#700}.CodeRay .binary{color:#509}.CodeRay .comment{color:#998;font-style:italic}.CodeRay .char{color:#04d}.CodeRay .char .content{color:#04d}.CodeRay .char .delimiter{color:#039}.CodeRay .class{color:#458;font-weight:bold}.CodeRay .complex{color:#a08}.CodeRay .constant,.CodeRay .predefined-constant{color:teal}.CodeRay .color{color:#099}.CodeRay .class-variable{color:#369}.CodeRay .decorator{color:#b0b}.CodeRay .definition{color:#099}.CodeRay .delimiter{color:#000}.CodeRay .doc{color:#970}.CodeRay .doctype{color:#34b}.CodeRay .doc-string{color:#d42}.CodeRay .escape{color:#666}.CodeRay .entity{color:#800}.CodeRay .error{color:#808}.CodeRay .exception{color:inherit}.CodeRay .filename{color:#099}.CodeRay .function{color:#900;font-weight:bold}.CodeRay .global-variable{color:teal}.CodeRay .hex{color:#058}.CodeRay .integer,.CodeRay .float{color:#099}.CodeRay .include{color:#555}.CodeRay .inline{color:#000}.CodeRay .inline .inline{background:#ccc}.CodeRay .inline .inline .inline{background:#bbb}.CodeRay .inline .inline-delimiter{color:#d14}.CodeRay .inline-delimiter{color:#d14}.CodeRay .important{color:#555;font-weight:bold}.CodeRay .interpreted{color:#b2b}.CodeRay .instance-variable{color:teal}.CodeRay .label{color:#970}.CodeRay .local-variable{color:#963}.CodeRay .octal{color:#40e}.CodeRay .predefined{color:#369}.CodeRay .preprocessor{color:#579}.CodeRay .pseudo-class{color:#555}.CodeRay .directive{font-weight:bold}.CodeRay .type{font-weight:bold}.CodeRay .predefined-type{color:inherit}.CodeRay .reserved,.CodeRay .keyword{color:#000;font-weight:bold}.CodeRay .key{color:#808}.CodeRay .key .delimiter{color:#606}.CodeRay .key .char{color:#80f}.CodeRay .value{color:#088}.CodeRay .regexp .delimiter{color:#808}.CodeRay .regexp .content{color:#808}.CodeRay .regexp .modifier{color:#808}.CodeRay .regexp .char{color:#d14}.CodeRay .regexp .function{color:#404;font-weight:bold}.CodeRay .string{color:#d20}.CodeRay .string .string .string{background:#ffd0d0}.CodeRay .string .content{color:#d14}.CodeRay .string .char{color:#d14}.CodeRay .string .delimiter{color:#d14}.CodeRay .shell{color:#d14}.CodeRay .shell .delimiter{color:#d14}.CodeRay .symbol{color:#990073}.CodeRay .symbol .content{color:#a60}.CodeRay .symbol .delimiter{color:#630}.CodeRay .tag{color:teal}.CodeRay .tag-special{color:#d70}.CodeRay .variable{color:#036}.CodeRay .insert{background:#afa}.CodeRay .delete{background:#faa}.CodeRay .change{color:#aaf;background:#007}.CodeRay .head{color:#f8f;background:#505}.CodeRay .insert .insert{color:#080}.CodeRay .delete .delete{color:#800}.CodeRay .change .change{color:#66f}.CodeRay .head .head{color:#f4f}</style>
+</head>
+<body id="languages" class="book toc2 toc-left">
+<div id="header">
+<h1>Language Support</h1>
+<div class="details">
+<span id="revnumber">version 5.0.4.RELEASE</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="languages.html#kotlin">1. Kotlin</a>
+<ul class="sectlevel2">
+<li><a href="languages.html#kotlin-requirements">1.1. Requirements</a></li>
+<li><a href="languages.html#kotlin-extensions">1.2. Extensions</a></li>
+<li><a href="languages.html#kotlin-null-safety">1.3. Null-safety</a></li>
+<li><a href="languages.html#kotlin-classes-interfaces">1.4. Classes &amp; Interfaces</a></li>
+<li><a href="languages.html#kotlin-annotations">1.5. Annotations</a></li>
+<li><a href="languages.html#kotlin-bean-definition-dsl">1.6. Bean definition DSL</a></li>
+<li><a href="languages.html#kotlin-web">1.7. Web</a>
+<ul class="sectlevel3">
+<li><a href="languages.html#webflux-functional-dsl">1.7.1. WebFlux Functional DSL</a></li>
+<li><a href="languages.html#kotlin-script-templates">1.7.2. Kotlin Script templates</a></li>
+</ul>
+</li>
+<li><a href="languages.html#kotlin-spring-projects-in-kotlin">1.8. Spring projects in Kotlin</a>
+<ul class="sectlevel3">
+<li><a href="languages.html#final-by-default">1.8.1. Final by default</a></li>
+<li><a href="languages.html#using-immutable-class-instances-for-persistence">1.8.2. Using immutable class instances for persistence</a></li>
+<li><a href="languages.html#injecting-dependencies">1.8.3. Injecting dependencies</a></li>
+<li><a href="languages.html#injecting-configuration-properties">1.8.4. Injecting configuration properties</a></li>
+<li><a href="languages.html#annotation-array-attributes">1.8.5. Annotation array attributes</a></li>
+<li><a href="languages.html#testing">1.8.6. Testing</a>
+<ul class="sectlevel4">
+<li><a href="languages.html#per-class-lifecycle">Per class lifecycle</a></li>
+<li><a href="languages.html#specification-like-tests">Specification-like tests</a></li>
+<li><a href="languages.html#kotlin-webtestclient-issue"><code>WebTestClient</code> type inference issue in Kotlin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="languages.html#kotlin-getting-started">1.9. Getting started</a>
+<ul class="sectlevel3">
+<li><a href="languages.html#start-spring-io">1.9.1. start.spring.io</a></li>
+<li><a href="languages.html#choosing-the-web-flavor">1.9.2. Choosing the web flavor</a></li>
+</ul>
+</li>
+<li><a href="languages.html#kotlin-resources">1.10. Resources</a>
+<ul class="sectlevel3">
+<li><a href="languages.html#blog-posts">1.10.1. Blog posts</a></li>
+<li><a href="languages.html#examples">1.10.2. Examples</a></li>
+<li><a href="languages.html#tutorials">1.10.3. Tutorials</a></li>
+<li><a href="languages.html#issues">1.10.4. Issues</a>
+<ul class="sectlevel4">
+<li><a href="languages.html#spring-framework">Spring Framework</a></li>
+<li><a href="languages.html#spring-boot">Spring Boot</a></li>
+<li><a href="languages.html#kotlin-2">Kotlin</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="languages.html#groovy">2. Apache Groovy</a></li>
+<li><a href="languages.html#dynamic-language">3. Dynamic Language Support</a>
+<ul class="sectlevel2">
+<li><a href="languages.html#dynamic-language-introduction">3.1. Introduction</a></li>
+<li><a href="languages.html#dynamic-language-a-first-example">3.2. A first example</a></li>
+<li><a href="languages.html#dynamic-language-beans">3.3. Defining beans that are backed by dynamic languages</a>
+<ul class="sectlevel3">
+<li><a href="languages.html#dynamic-language-beans-concepts">3.3.1. Common concepts</a>
+<ul class="sectlevel4">
+<li><a href="languages.html#dynamic-language-beans-concepts-xml-language-element">The &lt;lang:language/&gt; element</a></li>
+<li><a href="languages.html#dynamic-language-refreshable-beans">Refreshable beans</a></li>
+<li><a href="languages.html#dynamic-language-beans-inline">Inline dynamic language source files</a></li>
+<li><a href="languages.html#dynamic-language-beans-ctor-injection">Understanding Constructor Injection in the context of dynamic-language-backed beans</a></li>
+</ul>
+</li>
+<li><a href="languages.html#dynamic-language-beans-groovy">3.3.2. Groovy beans</a>
+<ul class="sectlevel4">
+<li><a href="languages.html#dynamic-language-beans-groovy-customizer">Customizing Groovy objects via a callback</a></li>
+</ul>
+</li>
+<li><a href="languages.html#dynamic-language-beans-bsh">3.3.3. BeanShell beans</a></li>
+</ul>
+</li>
+<li><a href="languages.html#dynamic-language-scenarios">3.4. Scenarios</a>
+<ul class="sectlevel3">
+<li><a href="languages.html#dynamic-language-scenarios-controllers">3.4.1. Scripted Spring MVC Controllers</a></li>
+<li><a href="languages.html#dynamic-language-scenarios-validators">3.4.2. Scripted Validators</a></li>
+</ul>
+</li>
+<li><a href="languages.html#dynamic-language-final-notes">3.5. Bits and bobs</a>
+<ul class="sectlevel3">
+<li><a href="languages.html#dynamic-language-final-notes-aop">3.5.1. AOP - advising scripted beans</a></li>
+<li><a href="languages.html#dynamic-language-final-notes-scopes">3.5.2. Scoping</a></li>
+<li><a href="languages.html#xsd-schemas-lang">3.5.3. The lang XML schema</a></li>
+</ul>
+</li>
+<li><a href="languages.html#dynamic-language-resources">3.6. Further Resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="kotlin"><a class="anchor" href="languages.html#kotlin"></a>1. Kotlin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://kotlinlang.org">Kotlin</a> is a statically-typed language targeting the JVM (and other platforms)
+which allows writing concise and elegant code while providing very good
+<a href="https://kotlinlang.org/docs/reference/java-interop.html">interoperability</a> with
+existing libraries written in Java.</p>
+</div>
+<div class="paragraph">
+<p>The Spring Framework provides first-class support for Kotlin that allows developers to write
+Kotlin applications almost as if the Spring Framework was a native Kotlin framework.</p>
+</div>
+<div class="paragraph">
+<p>Feel free to join the #spring channel of <a href="http://slack.kotlinlang.org/">Kotlin Slack</a> or ask
+a question with <code>spring</code> and <code>kotlin</code> tags on
+<a href="https://stackoverflow.com/questions/tagged/spring+kotlin">Stackoverflow</a> if you need support.</p>
+</div>
+<div class="sect2">
+<h3 id="kotlin-requirements"><a class="anchor" href="languages.html#kotlin-requirements"></a>1.1. Requirements</h3>
+<div class="paragraph">
+<p>Spring Framework supports Kotlin 1.1+ and requires
+<a href="https://bintray.com/bintray/jcenter/org.jetbrains.kotlin%3Akotlin-stdlib"><code>kotlin-stdlib</code></a>
+(or one of its variants like <a href="https://bintray.com/bintray/jcenter/org.jetbrains.kotlin%3Akotlin-stdlib-jre8"><code>kotlin-stdlib-jre8</code></a>
+for Kotlin 1.1 or <a href="https://bintray.com/bintray/jcenter/org.jetbrains.kotlin%3Akotlin-stdlib-jdk8"><code>kotlin-stdlib-jdk8</code></a> for Kotlin 1.2+)
+and <a href="https://bintray.com/bintray/jcenter/org.jetbrains.kotlin%3Akotlin-reflect"><code>kotlin-reflect</code></a>
+to be present on the classpath. They are provided by default if one bootstraps a Kotlin project on
+<a href="https://start.spring.io/#!language=kotlin">start.spring.io</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-extensions"><a class="anchor" href="languages.html#kotlin-extensions"></a>1.2. Extensions</h3>
+<div class="paragraph">
+<p>Kotlin <a href="https://kotlinlang.org/docs/reference/extensions.html">extensions</a> provide the ability
+to extend existing classes with additional functionality. The Spring Framework Kotlin APIs make
+use of these extensions to add new Kotlin specific conveniences to existing Spring APIs.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.spring.io/spring-framework/docs/5.0.4.RELEASE/kdoc-api/spring-framework/">Spring Framework KDoc API</a> lists
+and documents all the Kotlin extensions and DSLs available.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Keep in mind that Kotlin extensions need to be imported to be used. This means
+for example that the <code>GenericApplicationContext.registerBean</code> Kotlin extension
+will only be available if <code>import org.springframework.context.support.registerBean</code> is imported.
+That said, similar to static imports, an IDE should automatically suggest the import in most cases.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For example, <a href="https://kotlinlang.org/docs/reference/inline-functions.html#reified-type-parameters">Kotlin reified type parameters</a>
+provide a workaround for JVM <a href="https://docs.oracle.com/javase/tutorial/java/generics/erasure.html">generics type erasure</a>,
+and Spring Framework provides some extensions to take advantage of this feature.
+This allows for a better Kotlin API <code>RestTemplate</code>, the new <code>WebClient</code> from Spring
+WebFlux and for various other APIs.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Other libraries like Reactor and Spring Data also provide Kotlin extensions
+for their APIs, thus giving a better Kotlin development experience overall.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To retrieve a list of <code>Foo</code> objects in Java, one would normally write:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">Flux&lt;User&gt; users  = client.get().retrieve().bodyToFlux(User.class)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whilst with Kotlin and Spring Framework extensions, one is able to write:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">val users = client.get().retrieve().bodyToFlux&lt;User&gt;()
+// or (both are equivalent)
+val users : Flux&lt;User&gt; = client.get().retrieve().bodyToFlux()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As in Java, <code>users</code> in Kotlin is strongly typed, but Kotlin&#8217;s clever type inference allows
+for shorter syntax.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-null-safety"><a class="anchor" href="languages.html#kotlin-null-safety"></a>1.3. Null-safety</h3>
+<div class="paragraph">
+<p>One of Kotlin&#8217;s key features is <a href="https://kotlinlang.org/docs/reference/null-safety.html">null-safety</a>
+- which cleanly deals with <code>null</code> values at compile time rather than bumping into the famous
+<code>NullPointerException</code> at runtime. This makes applications safer through nullability
+declarations and expressing "value or no value" semantics without paying the cost of wrappers like <code>Optional</code>.
+(Kotlin allows using functional constructs with nullable values; check out this
+<a href="http://www.baeldung.com/kotlin-null-safety">comprehensive guide to Kotlin null-safety</a>.)</p>
+</div>
+<div class="paragraph">
+<p>Although Java does not allow one to express null-safety in its type-system, Spring Framework now
+provides <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#null-safety">null-safety of the whole Spring Framework API</a>
+via tooling-friendly annotations declared in the <code>org.springframework.lang</code> package.
+By default, types from Java APIs used in Kotlin are recognized as
+<a href="https://kotlinlang.org/docs/reference/java-interop.html#null-safety-and-platform-types">platform types</a>
+for which null-checks are relaxed.
+<a href="https://kotlinlang.org/docs/reference/java-interop.html#jsr-305-support">Kotlin support for JSR 305 annotations</a>
++ Spring nullability annotations provide null-safety for the whole Spring Framework API to Kotlin developers,
+with the advantage of dealing with <code>null</code> related issues at compile time.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Libraries like Reactor or Spring Data provide null-safe APIs leveraging this feature.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The JSR 305 checks can be configured by adding the <code>-Xjsr305</code> compiler flag with the following
+options: <code>-Xjsr305={strict|warn|ignore}</code>.</p>
+</div>
+<div class="paragraph">
+<p>For kotlin versions 1.1+, the default behavior is the same to <code>-Xjsr305=warn</code>.
+The <code>strict</code> value is required to have Spring Framework API null-safety taken in account
+in Kotlin types inferred from Spring API but should be used with the knowledge that Spring
+API nullability declaration could evolve even between minor releases and more checks may
+be added in the future).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Generic type arguments, varargs and array elements nullability are not supported yet,
+but should be in an upcoming release, see <a href="https://github.com/Kotlin/KEEP/issues/79">this discussion</a>
+for up-to-date information.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-classes-interfaces"><a class="anchor" href="languages.html#kotlin-classes-interfaces"></a>1.4. Classes &amp; Interfaces</h3>
+<div class="paragraph">
+<p>Spring Framework supports various Kotlin constructs like instantiating Kotlin classes
+via primary constructors, immutable classes data binding and function optional parameters
+with default values.</p>
+</div>
+<div class="paragraph">
+<p>Kotlin parameter names are recognized via a dedicated <code>KotlinReflectionParameterNameDiscoverer</code>
+which allows finding interface method parameter names without requiring the Java 8 <code>-parameters</code>
+compiler flag enabled during compilation.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/FasterXML/jackson-module-kotlin">Jackson Kotlin module</a> which is required
+for serializing / deserializing JSON data is automatically registered when
+found in the classpath and a warning message will be logged if Jackson and Kotlin are
+detected without the Jackson Kotlin module present.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-annotations"><a class="anchor" href="languages.html#kotlin-annotations"></a>1.5. Annotations</h3>
+<div class="paragraph">
+<p>Spring Framework also takes advantage of <a href="https://kotlinlang.org/docs/reference/null-safety.html">Kotlin null-safety</a>
+to determine if a HTTP parameter is required without having to explicitly
+define the <code>required</code> attribute. That means <code>@RequestParam name: String?</code> will be treated
+as not required and conversely <code>@RequestParam name: String</code> as being required.
+This feature is also supported on the Spring Messaging <code>@Header</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>In a similar fashion, Spring bean injection with <code>@Autowired</code>, <code>@Bean</code> or <code>@Inject</code> uses
+this information to determine if a bean is required or not.</p>
+</div>
+<div class="paragraph">
+<p>For example, <code>@Autowired lateinit var foo: Foo</code> implies that a bean
+of type <code>Foo</code> must be registered in the application context, while <code>@Autowired lateinit var foo: Foo?</code>
+won’t raise an error if such bean does not exist.</p>
+</div>
+<div class="paragraph">
+<p>Following the same principle, <code>@Bean fun baz(foo: Foo, bar: Bar?) = Baz(foo, bar)</code> implies
+that a bean of type <code>Foo</code> must be registered in the application context while a bean of
+type <code>Bar</code> may or may not exist. The same behavior applies to autowired constructor parameters.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you are using bean validation on classes with
+<a href="https://kotlinlang.org/docs/reference/classes.html#constructors">primary constructor properties</a>,
+make sure to use
+<a href="https://kotlinlang.org/docs/reference/annotations.html#annotation-use-site-targets">annotation use-site targets</a>
+as described in <a href="https://stackoverflow.com/a/35853200/1092077">this Stack Overflow response</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-bean-definition-dsl"><a class="anchor" href="languages.html#kotlin-bean-definition-dsl"></a>1.6. Bean definition DSL</h3>
+<div class="paragraph">
+<p>Spring Framework 5 introduces a new way to register beans in a functional way using lambdas
+as an alternative to XML or JavaConfig (<code>@Configuration</code> and <code>@Bean</code>). In a nutshell,
+it makes it possible to register beans with a lambda that acts as a <code>FactoryBean</code>.
+This mechanism is very efficient as it does not require any reflection or CGLIB proxies.</p>
+</div>
+<div class="paragraph">
+<p>In Java, one may for example write:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    GenericApplicationContext context = <span class="keyword">new</span> GenericApplicationContext();
+    context.registerBean(Foo.class);
+    context.registerBean(Bar.class, () -&gt; <span class="keyword">new</span> Bar(context.getBean(Foo.class))
+);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Whilst in Kotlin with reified type parameters and <code>GenericApplicationContext</code>
+Kotlin extensions one can instead simply write:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">val context = GenericApplicationContext().apply {
+    registerBean&lt;Foo&gt;()
+    registerBean { Bar(it.getBean&lt;Foo&gt;()) }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to allow a more declarative approach and cleaner syntax, Spring Framework provides
+a <a href="https://docs.spring.io/spring-framework/docs/5.0.4.RELEASE/kdoc-api/spring-framework/org.springframework.context.support/-bean-definition-dsl/">Kotlin bean definition DSL</a>
+It declares an <code>ApplicationContextInitializer</code> via a clean declarative API
+which enables one to deal with profiles and <code>Environment</code> for customizing
+how beans are registered.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">fun beans() = beans {
+    bean&lt;UserHandler&gt;()
+    bean&lt;Routes&gt;()
+    bean&lt;WebHandler&gt;(&quot;webHandler&quot;) {
+        RouterFunctions.toWebHandler(
+            ref&lt;Routes&gt;().router(),
+            HandlerStrategies.builder().viewResolver(ref()).build()
+        )
+    }
+    bean(&quot;messageSource&quot;) {
+        ReloadableResourceBundleMessageSource().apply {
+            setBasename(&quot;messages&quot;)
+            setDefaultEncoding(&quot;UTF-8&quot;)
+        }
+    }
+    bean {
+        val prefix = &quot;classpath:/templates/&quot;
+        val suffix = &quot;.mustache&quot;
+        val loader = MustacheResourceTemplateLoader(prefix, suffix)
+        MustacheViewResolver(Mustache.compiler().withLoader(loader)).apply {
+            setPrefix(prefix)
+            setSuffix(suffix)
+        }
+    }
+    profile(&quot;foo&quot;) {
+        bean&lt;Foo&gt;()
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, <code>bean&lt;Routes&gt;()</code> is using autowiring by constructor and <code>ref&lt;Routes&gt;()</code>
+is a shortcut for <code>applicationContext.getBean(Routes::class.java)</code>.</p>
+</div>
+<div class="paragraph">
+<p>This <code>beans()</code> function can then be used to register beans on the application context.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">val context = GenericApplicationContext().apply {
+    beans().initialize(this)
+    refresh()
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This DSL is programmatic, thus it allows custom registration logic of beans
+via an <code>if</code> expression, a <code>for</code> loop or any other Kotlin constructs.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>See <a href="https://github.com/sdeleuze/spring-kotlin-functional/blob/master/src/main/kotlin/functional/Beans.kt">spring-kotlin-functional beans declaration</a>
+for a concrete example.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Spring Boot is based on Java Config and
+<a href="https://github.com/spring-projects/spring-boot/issues/8115">does not provide specific support for functional bean definition yet</a>,
+but one can experimentally use functional bean definitions via Spring Boot&#8217;s <code>ApplicationContextInitializer</code> support,
+see <a href="https://stackoverflow.com/questions/45935931/how-to-use-functional-bean-definition-kotlin-dsl-with-spring-boot-and-spring-w/46033685#46033685">this Stack Overflow answer</a>
+for more details and up-to-date information.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-web"><a class="anchor" href="languages.html#kotlin-web"></a>1.7. Web</h3>
+<div class="sect3">
+<h4 id="webflux-functional-dsl"><a class="anchor" href="languages.html#webflux-functional-dsl"></a>1.7.1. WebFlux Functional DSL</h4>
+<div class="paragraph">
+<p>Spring Framework now comes with a
+<a href="https://docs.spring.io/spring-framework/docs/5.0.4.RELEASE/kdoc-api/spring-framework/org.springframework.web.reactive.function.server/-router-function-dsl/">Kotlin routing DSL</a>
+that allows one to leverage the <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-fn">WebFlux functional
+API</a> for writing clean and idiomatic Kotlin code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">router {
+    accept(TEXT_HTML).nest {
+        GET(&quot;/&quot;) { ok().render(&quot;index&quot;) }
+        GET(&quot;/sse&quot;) { ok().render(&quot;sse&quot;) }
+        GET(&quot;/users&quot;, userHandler::findAllView)
+    }
+    &quot;/api&quot;.nest {
+        accept(APPLICATION_JSON).nest {
+            GET(&quot;/users&quot;, userHandler::findAll)
+        }
+        accept(TEXT_EVENT_STREAM).nest {
+            GET(&quot;/users&quot;, userHandler::stream)
+        }
+    }
+    resources(&quot;/**&quot;, ClassPathResource(&quot;static/&quot;))
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This DSL is programmatic, thus it allows custom registration logic of beans
+via an <code>if</code> expression, a <code>for</code> loop or any other Kotlin constructs. That can be useful when routes need to be registered
+depending on dynamic data (for example, from a database).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>See <a href="https://github.com/mixitconf/mixit/tree/bad6b92bce6193f9b3f696af9d416c276501dbf1/src/main/kotlin/mixit/web/routes">MiXiT project routes</a>
+for a concrete example.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="kotlin-script-templates"><a class="anchor" href="languages.html#kotlin-script-templates"></a>1.7.2. Kotlin Script templates</h4>
+<div class="paragraph">
+<p>As of version 4.3, Spring Framework provides a
+<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/servlet/view/script/ScriptTemplateView.html">ScriptTemplateView</a>
+to render templates using script engines that supports
+<a href="https://www.jcp.org/en/jsr/detail?id=223">JSR-223</a>.
+Spring Framework 5 goes even further by extending this feature to WebFlux and supporting
+<a href="https://jira.spring.io/browse/SPR-15064">i18n and nested templates</a>.</p>
+</div>
+<div class="paragraph">
+<p>Kotlin provides similar support and allows the rendering of Kotlin based templates, see
+<a href="https://github.com/spring-projects/spring-framework/commit/badde3a479a53e1dd0777dd1bd5b55cb1021cf9e">this commit</a> for details.</p>
+</div>
+<div class="paragraph">
+<p>This enables some interesting use cases - like writing type-safe templates using
+<a href="https://github.com/Kotlin/kotlinx.html">kotlinx.html</a> DSL or simply using Kotlin multiline <code>String</code> with interpolation.</p>
+</div>
+<div class="paragraph">
+<p>This can allow one to write Kotlin templates with full autocompletion and
+refactoring support in a supported IDE:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">import io.spring.demo.*
+
+&quot;&quot;&quot;
+${include(&quot;header&quot;)}
+&lt;h1&gt;${i18n(&quot;title&quot;)}&lt;/h1&gt;
+&lt;ul&gt;
+${users.joinToLine{ &quot;&lt;li&gt;${i18n(&quot;user&quot;)} ${it.firstname} ${it.lastname}&lt;/li&gt;&quot; }}
+&lt;/ul&gt;
+${include(&quot;footer&quot;)}
+&quot;&quot;&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="https://github.com/sdeleuze/kotlin-script-templating">kotlin-script-templating</a> example
+project for more details.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-spring-projects-in-kotlin"><a class="anchor" href="languages.html#kotlin-spring-projects-in-kotlin"></a>1.8. Spring projects in Kotlin</h3>
+<div class="paragraph">
+<p>This section provides focus on some specific hints and recommendations worth
+knowing when developing Spring projects in Kotlin.</p>
+</div>
+<div class="sect3">
+<h4 id="final-by-default"><a class="anchor" href="languages.html#final-by-default"></a>1.8.1. Final by default</h4>
+<div class="paragraph">
+<p>By default, <a href="https://discuss.kotlinlang.org/t/classes-final-by-default/166">all classes in Kotlin are <code>final</code></a>.
+The <code>open</code> modifier on a class is the opposite of Java&#8217;s <code>final</code>: it allows others to
+inherit from this class. This also applies to member functions, in that they need to be marked as <code>open</code> to
+be overridden.</p>
+</div>
+<div class="paragraph">
+<p>Whilst Kotlin&#8217;s JVM-friendly design is generally frictionless with Spring,
+this specific Kotlin feature can prevent the application from starting, if this fact is not taken in
+consideration. This is because Spring beans are normally proxied by CGLIB
+- such as <code>@Configuration</code> classes - which need to be inherited at runtime for technical reasons.
+The workaround was to add an <code>open</code> keyword on each class and member
+functions of Spring beans proxied by CGLIB such as <code>@Configuration</code> classes, which can
+quickly become painful and is against the Kotlin principle of keeping code concise and predictable.</p>
+</div>
+<div class="paragraph">
+<p>Fortunately, Kotlin now provides a
+<a href="https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin"><code>kotlin-spring</code></a>
+plugin, a preconfigured version of <code>kotlin-allopen</code> plugin that automatically opens classes
+and their member functions for types annotated or meta-annotated with one of the following
+annotations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>@Component</code></p>
+</li>
+<li>
+<p><code>@Async</code></p>
+</li>
+<li>
+<p><code>@Transactional</code></p>
+</li>
+<li>
+<p><code>@Cacheable</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Meta-annotations support means that types annotated with <code>@Configuration</code>, <code>@Controller</code>,
+<code>@RestController</code>, <code>@Service</code> or <code>@Repository</code> are automatically opened since these
+annotations are meta-annotated with <code>@Component</code>.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://start.spring.io/#!language=kotlin">start.spring.io</a> enables it by default, so in practice
+you will be able to write your Kotlin beans without any additional <code>open</code> keyword, like in Java.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="using-immutable-class-instances-for-persistence"><a class="anchor" href="languages.html#using-immutable-class-instances-for-persistence"></a>1.8.2. Using immutable class instances for persistence</h4>
+<div class="paragraph">
+<p>In Kotlin, it is very convenient and considered best practice to declare read-only properties
+within the primary constructor, as in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">class Person(val name: String, val age: Int)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can optionally add <a href="https://kotlinlang.org/docs/reference/data-classes.html">the <code>data</code> keyword</a>
+to make the compiler automatically derive the following members from all properties declared
+in the primary constructor:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>equals()/hashCode() pair</p>
+</li>
+<li>
+<p>toString() of the form "User(name=John, age=42)"</p>
+</li>
+<li>
+<p>componentN() functions corresponding to the properties in their order of declaration</p>
+</li>
+<li>
+<p>copy() function</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This allows for easy changes to individual properties even if <code>Person</code> properties are read-only:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">data class Person(val name: String, val age: Int)
+
+val jack = Person(name = &quot;Jack&quot;, age = 1)
+val olderJack = jack.copy(age = 2)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Common persistence technologies such as JPA require a default constructor, preventing this
+kind of design. Fortunately, there is now a workaround for this
+<a href="https://stackoverflow.com/questions/32038177/kotlin-with-jpa-default-constructor-hell">"default constructor hell"</a>
+since Kotlin provides a <a href="https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-jpa-compiler-plugin">kotlin-jpa</a>
+plugin which generates synthetic no-arg constructor for classes annotated with JPA annotations.</p>
+</div>
+<div class="paragraph">
+<p>If you need to leverage this kind of mechanism for other persistence technologies, you can configure
+the <a href="https://kotlinlang.org/docs/reference/compiler-plugins.html#how-to-use-no-arg-plugin">kotlin-noarg</a>
+plugin.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As of the Kay release train, Spring Data supports Kotlin immutable class instances and
+does not require the <code>kotlin-noarg</code> plugin if the module leverages Spring Data object
+mappings (like with MongoDB, Redis, Cassandra, etc).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="injecting-dependencies"><a class="anchor" href="languages.html#injecting-dependencies"></a>1.8.3. Injecting dependencies</h4>
+<div class="paragraph">
+<p>Our recommendation is to try and favor constructor injection with <code>val</code> read-only (and non-nullable when possible)
+<a href="https://kotlinlang.org/docs/reference/properties.html">properties</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">@Component
+class YourBean(
+    private val mongoTemplate: MongoTemplate,
+    private val solrClient: SolrClient
+)</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As of Spring Framework 4.3, classes with a single constructor have their
+parameters automatically autowired, that&#8217;s why there is no need for an
+explicit <code>@Autowired constructor</code> in the example shown above.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If one really needs to use field injection, use the <code>lateinit var</code> construct,
+i.e.,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">@Component
+class YourBean {
+
+    @Autowired
+    lateinit var mongoTemplate: MongoTemplate
+
+    @Autowired
+    lateinit var solrClient: SolrClient
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="injecting-configuration-properties"><a class="anchor" href="languages.html#injecting-configuration-properties"></a>1.8.4. Injecting configuration properties</h4>
+<div class="paragraph">
+<p>In Java, one can inject configuration properties using annotations like <code>@Value("${property}")</code>,
+however in Kotlin <code>$</code> is a reserved character that is used for <a href="https://kotlinlang.org/docs/reference/idioms.html#string-interpolation">string interpolation</a>.</p>
+</div>
+<div class="paragraph">
+<p>Therefore, if one wishes to use the <code>@Value</code> annotation in Kotlin, the <code>$</code>
+character will need to be escaped by writing <code>@Value("\${property}")</code>.</p>
+</div>
+<div class="paragraph">
+<p>As an alternative, it is possible to customize the properties placeholder prefix by declaring
+the following configuration beans:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">@Bean
+fun propertyConfigurer() = PropertySourcesPlaceholderConfigurer().apply {
+    setPlaceholderPrefix(&quot;%{&quot;)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Existing code (like Spring Boot actuators or <code>@LocalServerPort</code>) that uses the <code>${&#8230;&#8203;}</code> syntax,
+can be customised with configuration beans, like as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="kotlin">@Bean
+fun kotlinPropertyConfigurer() = PropertySourcesPlaceholderConfigurer().apply {
+    setPlaceholderPrefix(&quot;%{&quot;)
+    setIgnoreUnresolvablePlaceholders(true)
+}
+
+@Bean
+fun defaultPropertyConfigurer() = PropertySourcesPlaceholderConfigurer()</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If Spring Boot is being used, then
+<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-typesafe-configuration-properties"><code>@ConfigurationProperties</code></a>
+instead of <code>@Value</code> annotations can be used, but currently this only works with <code>lateinit</code> or nullable <code>var</code>
+properties (the former is recommended) since immutable classes initialized by
+constructors are not yet supported.
+See these issues about <a href="https://github.com/spring-projects/spring-boot/issues/8762"><code>@ConfigurationProperties</code> binding for immutable POJOs</a>
+and <a href="https://github.com/spring-projects/spring-boot/issues/1254"><code>@ConfigurationProperties</code> binding on interfaces</a>
+for more details.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="annotation-array-attributes"><a class="anchor" href="languages.html#annotation-array-attributes"></a>1.8.5. Annotation array attributes</h4>
+<div class="paragraph">
+<p>Kotlin annotations are mostly similar to Java ones, but array attributes - which are
+extensively used in Spring - behave differently. As explained in
+<a href="https://kotlinlang.org/docs/reference/annotations.html">Kotlin documentation</a>
+unlike other attributes, the <code>value</code> attribute name can be omitted and
+specified as a <code>vararg</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>To understand what that means, let&#8217;s take <code>@RequestMapping</code>, which is one
+of the most widely used Spring annotations as an example. This Java annotation is declared as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="annotation">@interface</span> RequestMapping {
+
+    <span class="annotation">@AliasFor</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">path</span><span class="delimiter">&quot;</span></span>)
+    <span class="predefined-type">String</span><span class="type">[]</span> value() <span class="keyword">default</span> {};
+
+    <span class="annotation">@AliasFor</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">value</span><span class="delimiter">&quot;</span></span>)
+    <span class="predefined-type">String</span><span class="type">[]</span> path() <span class="keyword">default</span> {};
+
+    RequestMethod<span class="type">[]</span> method() <span class="keyword">default</span> {};
+
+    <span class="comment">// ...</span>
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The typical use case for <code>@RequestMapping</code> is to map a handler method to a specific path
+and method. In Java, it is possible to specify a single value for the
+annotation array attribute and it will be automatically converted to an array.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s why one can write
+<code>@RequestMapping(value = "/foo", method = RequestMethod.GET)</code> or
+<code>@RequestMapping(path = "/foo", method = RequestMethod.GET)</code>.</p>
+</div>
+<div class="paragraph">
+<p>However, in Kotlin 1.2+, one will have to write <code>@RequestMapping("/foo", method = [RequestMethod.GET])</code>
+or <code>@RequestMapping(path = ["/foo"], method = [RequestMethod.GET])</code> (square brackets need
+to be specified with named array attributes).</p>
+</div>
+<div class="paragraph">
+<p>An alternative for this specific <code>method</code> attribute (the most common one) is to
+use a shortcut annotation such as <code>@GetMapping</code> or <code>@PostMapping</code>, etc.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Reminder: If the <code>@RequestMapping</code> <code>method</code> attribute is not specified,
+all HTTP methods will be matched, not only the <code>GET</code> one.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="testing"><a class="anchor" href="languages.html#testing"></a>1.8.6. Testing</h4>
+<div class="sect4">
+<h5 id="per-class-lifecycle"><a class="anchor" href="languages.html#per-class-lifecycle"></a>Per class lifecycle</h5>
+<div class="paragraph">
+<p>Kotlin allows one to specify meaningful test function names between backticks,
+and as of JUnit 5 Kotlin test classes can use the <code>@TestInstance(TestInstance.Lifecycle.PER_CLASS)</code>
+annotation to enable a single instantiation of test classes which allows the use of <code>@BeforeAll</code> and <code>@AfterAll</code>
+annotations on non-static methods, which is a good fit for Kotlin.</p>
+</div>
+<div class="paragraph">
+<p>It is now possible to change the default behavior to <code>PER_CLASS</code> thanks to a
+<code>junit-platform.properties</code> file with a
+<code>junit.jupiter.testinstance.lifecycle.default = per_class</code> property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>class IntegrationTests {
+
+  val application = Application(8181)
+  val client = WebClient.create("http://localhost:8181")
+
+  @BeforeAll
+  fun beforeAll() {
+    application.start()
+  }
+
+  @Test
+  fun `Find all users on HTML page`() {
+    client.get().uri("/users")
+        .accept(TEXT_HTML)
+        .retrieve()
+        .bodyToMono&lt;String&gt;()
+        .test()
+        .expectNextMatches { it.contains("Foo") }
+        .verifyComplete()
+  }
+
+  @AfterAll
+  fun afterAll() {
+    application.stop()
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="specification-like-tests"><a class="anchor" href="languages.html#specification-like-tests"></a>Specification-like tests</h5>
+<div class="paragraph">
+<p>It is possible to create specification-like tests with JUnit 5 and Kotlin.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code>class SpecificationLikeTests {
+
+  @Nested
+  @DisplayName("a calculator")
+  inner class Calculator {
+     val calculator = SampleCalculator()
+
+     @Test
+     fun `should return the result of adding the first number to the second number`() {
+        val sum = calculator.sum(2, 4)
+        assertEquals(6, sum)
+     }
+
+     @Test
+     fun `should return the result of subtracting the second number from the first number`() {
+        val subtract = calculator.subtract(4, 2)
+        assertEquals(2, subtract)
+     }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="kotlin-webtestclient-issue"><a class="anchor" href="languages.html#kotlin-webtestclient-issue"></a><code>WebTestClient</code> type inference issue in Kotlin</h5>
+<div class="paragraph">
+<p><code>WebTestClient</code> is not usable yet in Kotlin due to a
+<a href="https://youtrack.jetbrains.com/issue/KT-5464">type inference issue</a> which is
+expected to be fixed as of Kotlin 1.3. You can watch
+<a href="https://jira.spring.io/browse/SPR-16057">SPR-16057</a> for up-to-date information. Meanwhile,
+the proposed alternative is to use directly <code>WebClient</code> with its Reactor and Spring Kotlin
+extensions to perform integration tests on an embedded WebFlux server.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-getting-started"><a class="anchor" href="languages.html#kotlin-getting-started"></a>1.9. Getting started</h3>
+<div class="sect3">
+<h4 id="start-spring-io"><a class="anchor" href="languages.html#start-spring-io"></a>1.9.1. start.spring.io</h4>
+<div class="paragraph">
+<p>The easiest way to start a new Spring Framework 5 project in Kotlin is to create a new Spring
+Boot 2 project on <a href="https://start.spring.io/#!language=kotlin">start.spring.io</a>.</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to create a standalone WebFlux project as described in
+<a href="https://spring.io/blog/2017/08/01/spring-framework-5-kotlin-apis-the-functional-way">this blog post</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="choosing-the-web-flavor"><a class="anchor" href="languages.html#choosing-the-web-flavor"></a>1.9.2. Choosing the web flavor</h4>
+<div class="paragraph">
+<p>Spring Framework now comes with 2 different web stacks: <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc">Spring MVC</a> and
+<a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#spring-web-reactive">Spring WebFlux</a>.</p>
+</div>
+<div class="paragraph">
+<p>Spring WebFlux is recommended if one wants to create applications that will deal with latency,
+long-lived connections, streaming scenarios or simply if one wants to use the web functional
+Kotlin DSL.</p>
+</div>
+<div class="paragraph">
+<p>For other use cases, especially if you are using blocking technologies like JPA, Spring
+MVC and its annotation-based programming model is a perfectly valid and fully supported choice.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="kotlin-resources"><a class="anchor" href="languages.html#kotlin-resources"></a>1.10. Resources</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://kotlinlang.org/docs/reference/">Kotlin language reference</a></p>
+</li>
+<li>
+<p><a href="http://slack.kotlinlang.org/">Kotlin Slack</a> (with a dedicated #spring channel)</p>
+</li>
+<li>
+<p><a href="https://stackoverflow.com/questions/tagged/spring+kotlin">Stackoverflow with <code>spring</code> and <code>kotlin</code> tags</a></p>
+</li>
+<li>
+<p><a href="https://try.kotlinlang.org/">Try Kotlin in your browser</a></p>
+</li>
+<li>
+<p><a href="https://blog.jetbrains.com/kotlin/">Kotlin blog</a></p>
+</li>
+<li>
+<p><a href="https://kotlin.link/">Awesome Kotlin</a></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="blog-posts"><a class="anchor" href="languages.html#blog-posts"></a>1.10.1. Blog posts</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin">Developing Spring Boot applications with Kotlin</a></p>
+</li>
+<li>
+<p><a href="https://spring.io/blog/2016/03/20/a-geospatial-messenger-with-kotlin-spring-boot-and-postgresql">A Geospatial Messenger with Kotlin, Spring Boot and PostgreSQL</a></p>
+</li>
+<li>
+<p><a href="https://spring.io/blog/2017/01/04/introducing-kotlin-support-in-spring-framework-5-0">Introducing Kotlin support in Spring Framework 5.0</a></p>
+</li>
+<li>
+<p><a href="https://spring.io/blog/2017/08/01/spring-framework-5-kotlin-apis-the-functional-way">Spring Framework 5 Kotlin APIs, the functional way</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="examples"><a class="anchor" href="languages.html#examples"></a>1.10.2. Examples</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/sdeleuze/spring-boot-kotlin-demo">spring-boot-kotlin-demo</a>: regular Spring Boot + Spring Data JPA project</p>
+</li>
+<li>
+<p><a href="https://github.com/mixitconf/mixit">mixit</a>: Spring Boot 2 + WebFlux + Reactive Spring Data MongoDB</p>
+</li>
+<li>
+<p><a href="https://github.com/sdeleuze/spring-kotlin-functional">spring-kotlin-functional</a>: standalone WebFlux + functional bean definition DSL</p>
+</li>
+<li>
+<p><a href="https://github.com/sdeleuze/spring-kotlin-fullstack">spring-kotlin-fullstack</a>: WebFlux Kotlin fullstack example with Kotlin2js for frontend instead of JavaScript or TypeScript</p>
+</li>
+<li>
+<p><a href="https://github.com/spring-petclinic/spring-petclinic-kotlin">spring-petclinic-kotlin</a>: Kotlin version of the Spring PetClinic Sample Application</p>
+</li>
+<li>
+<p><a href="https://github.com/sdeleuze/spring-kotlin-deepdive">spring-kotlin-deepdive</a>: a step by step migration for Boot 1.0 + Java to Boot 2.0 + Kotlin</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="tutorials"><a class="anchor" href="languages.html#tutorials"></a>1.10.3. Tutorials</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://kotlinlang.org/docs/tutorials/spring-boot-restful.html">Creating a RESTful Web Service with Spring Boot</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="issues"><a class="anchor" href="languages.html#issues"></a>1.10.4. Issues</h4>
+<div class="paragraph">
+<p>Here is a list of pending issues related to Spring + Kotlin support.</p>
+</div>
+<div class="sect4">
+<h5 id="spring-framework"><a class="anchor" href="languages.html#spring-framework"></a>Spring Framework</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://jira.spring.io/browse/SPR-16057">Unable to use WebTestClient with mock server in Kotlin</a></p>
+</li>
+<li>
+<p><a href="https://jira.spring.io/browse/SPR-15942">Support null-safety at generics, varargs and array elements level</a></p>
+</li>
+<li>
+<p><a href="https://jira.spring.io/browse/SPR-15413">Add support for Kotlin coroutines</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="spring-boot"><a class="anchor" href="languages.html#spring-boot"></a>Spring Boot</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/issues/8762">Allow <code>@ConfigurationProperties</code> binding for immutable POJOs</a></p>
+</li>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/issues/1254">Allow <code>@ConfigurationProperties</code> binding on interfaces</a></p>
+</li>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/issues/8115">Expose the functional bean registration API via <code>SpringApplication</code></a></p>
+</li>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/issues/10712">Add null-safety annotations on Spring Boot APIs</a></p>
+</li>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/issues/9486">Use Kotlin&#8217;s bom to provide dependency management for Kotlin</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="kotlin-2"><a class="anchor" href="languages.html#kotlin-2"></a>Kotlin</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-6380">Parent issue for Spring Framework support</a></p>
+</li>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-5464">Kotlin requires type inference where Java doesn&#8217;t</a></p>
+</li>
+<li>
+<p><a href="https://github.com/Kotlin/KEEP/issues/79">Better generics null-safety support</a></p>
+</li>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-20283">Smart cast regression with open classes</a></p>
+</li>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-18833">JSR-223 application classpath not available when using Java 9</a></p>
+</li>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-14984">Impossible to pass not all SAM argument as function</a></p>
+</li>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-19592">Apply JSR 305 meta-annotations to generic type parameters</a></p>
+</li>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-18398">Provide a way for libraries to avoid mixing Kotlin 1.0 and 1.1 dependencies</a></p>
+</li>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-15125">Support JSR 223 bindings directly via script variables</a></p>
+</li>
+<li>
+<p><a href="https://youtrack.jetbrains.com/issue/KT-15467">Support all-open and no-arg compiler plugins in Kotlin Eclipse plugin</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="groovy"><a class="anchor" href="languages.html#groovy"></a>2. Apache Groovy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Groovy is a powerful, optionally typed and dynamic language, with static-typing and static
+compilation capabilities. It offers a concise syntax and integrates smoothly with any
+existing Java application.</p>
+</div>
+<div class="paragraph">
+<p>The Spring Framework provides a dedicated <code>ApplicationContext</code> that supports a Groovy-based
+Bean Definition DSL. For more details, see
+<a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#groovy-bean-definition-dsl">The Groovy Bean Definition DSL</a>.</p>
+</div>
+<div class="paragraph">
+<p>Further support for Groovy including beans written in Groovy, refreshable script beans,
+and more is available in next the section <a href="languages.html#dynamic-language">Dynamic Language Support</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dynamic-language"><a class="anchor" href="languages.html#dynamic-language"></a>3. Dynamic Language Support</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="dynamic-language-introduction"><a class="anchor" href="languages.html#dynamic-language-introduction"></a>3.1. Introduction</h3>
+<div class="paragraph">
+<p>Spring 2.0 introduces comprehensive support for using classes and objects that have been
+defined using a dynamic language (such as JRuby) with Spring. This support allows you to
+write any number of classes in a supported dynamic language, and have the Spring
+container transparently instantiate, configure and dependency inject the resulting
+objects.</p>
+</div>
+<div class="paragraph">
+<p>The dynamic languages currently supported are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>JRuby 1.5+</p>
+</li>
+<li>
+<p>Groovy 1.8+</p>
+</li>
+<li>
+<p>BeanShell 2.0</p>
+</li>
+</ul>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">Why only these languages?</div>
+<div class="paragraph">
+<p>The supported languages were chosen because <em>a)</em> the languages have a lot of traction in
+the Java enterprise community, <em>b)</em> no requests were made for other languages at the time
+that this support was added, and <em>c)</em> the Spring developers were most familiar with
+them.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Fully working examples of where this dynamic language support can be immediately useful
+are described in <a href="languages.html#dynamic-language-scenarios">Scenarios</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dynamic-language-a-first-example"><a class="anchor" href="languages.html#dynamic-language-a-first-example"></a>3.2. A first example</h3>
+<div class="paragraph">
+<p>This bulk of this chapter is concerned with describing the dynamic language support in
+detail. Before diving into all of the ins and outs of the dynamic language support,
+let&#8217;s look at a quick example of a bean defined in a dynamic language. The dynamic
+language for this first bean is Groovy (the basis of this example was taken from the
+Spring test suite, so if you want to see equivalent examples in any of the other
+supported languages, take a look at the source code).</p>
+</div>
+<div class="paragraph">
+<p>Find below the <code>Messenger</code> interface that the Groovy bean is going to be implementing,
+and note that this interface is defined in plain Java. Dependent objects that are
+injected with a reference to the <code>Messenger</code> won&#8217;t know that the underlying
+implementation is a Groovy script.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.springframework.scripting</span>;
+
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">Messenger</span> {
+
+    <span class="predefined-type">String</span> getMessage();
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the definition of a class that has a dependency on the <code>Messenger</code> interface.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.springframework.scripting</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">DefaultBookingService</span> <span class="directive">implements</span> BookingService {
+
+    <span class="directive">private</span> Messenger messenger;
+
+    <span class="directive">public</span> <span class="type">void</span> setMessenger(Messenger messenger) {
+        <span class="local-variable">this</span>.messenger = messenger;
+    }
+
+    <span class="directive">public</span> <span class="type">void</span> processBooking() {
+        <span class="comment">// use the injected Messenger object...</span>
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is an implementation of the <code>Messenger</code> interface in Groovy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// from the file 'Messenger.groovy'</span>
+<span class="keyword">package</span> <span class="namespace">org.springframework.scripting.groovy</span>;
+
+<span class="comment">// import the Messenger interface (written in Java) that is to be implemented</span>
+<span class="keyword">import</span> <span class="include">org.springframework.scripting.Messenger</span>
+
+<span class="comment">// define the implementation in Groovy</span>
+<span class="include">class</span> <span class="include">GroovyMessenger</span> <span class="include">implements</span> <span class="include">Messenger</span> {
+
+    <span class="include">String</span> <span class="include">message</span>
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, here are the bean definitions that will effect the injection of the
+Groovy-defined <code>Messenger</code> implementation into an instance of the
+<code>DefaultBookingService</code> class.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To use the custom dynamic language tags to define dynamic-language-backed beans, you
+need to have the XML Schema preamble at the top of your Spring XML configuration file.
+You also need to be using a Spring <code>ApplicationContext</code> implementation as your IoC
+container. Using the dynamic-language-backed beans with a plain <code>BeanFactory</code>
+implementation is supported, but you have to manage the plumbing of the Spring internals
+to do so.</p>
+</div>
+<div class="paragraph">
+<p>For more information on schema-based configuration, see <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/appendix.html#xsd-configuration">XML Schema-based configuration</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;beans</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/beans</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">xmlns:lang</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/lang</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span>
+        <span class="content">http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+        <span class="content">http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- this is the bean definition for the Groovy-backed Messenger implementation --&gt;</span>
+    <span class="tag">&lt;lang:groovy</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">script-source</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">classpath:Messenger.groovy</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;lang:property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">I Can Do The Frug</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/lang:groovy&gt;</span>
+
+    <span class="comment">&lt;!-- an otherwise normal bean that will be injected by the Groovy-backed Messenger --&gt;</span>
+    <span class="tag">&lt;bean</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bookingService</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">x.y.DefaultBookingService</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/bean&gt;</span>
+
+<span class="tag">&lt;/beans&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>bookingService</code> bean (a <code>DefaultBookingService</code>) can now use its private
+<code>messenger</code> member variable as normal because the <code>Messenger</code> instance that was injected
+into it <em>is</em> a <code>Messenger</code> instance. There is nothing special going on here, just
+plain Java and plain Groovy.</p>
+</div>
+<div class="paragraph">
+<p>Hopefully the above XML snippet is self-explanatory, but don&#8217;t worry unduly if it isn&#8217;t.
+Keep reading for the in-depth detail on the whys and wherefores of the above
+configuration.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dynamic-language-beans"><a class="anchor" href="languages.html#dynamic-language-beans"></a>3.3. Defining beans that are backed by dynamic languages</h3>
+<div class="paragraph">
+<p>This section describes exactly how you define Spring managed beans in any of the
+supported dynamic languages.</p>
+</div>
+<div class="paragraph">
+<p>Please note that this chapter does not attempt to explain the syntax and idioms of the
+supported dynamic languages. For example, if you want to use Groovy to write certain of
+the classes in your application, then the assumption is that you already know Groovy. If
+you need further details about the dynamic languages themselves, please
+consult <a href="languages.html#dynamic-language-resources">Further Resources</a> at the end of this chapter.</p>
+</div>
+<div class="sect3">
+<h4 id="dynamic-language-beans-concepts"><a class="anchor" href="languages.html#dynamic-language-beans-concepts"></a>3.3.1. Common concepts</h4>
+<div class="paragraph">
+<p>The steps involved in using dynamic-language-backed beans are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Write the test for the dynamic language source code (naturally)</p>
+</li>
+<li>
+<p><em>Then</em> write the dynamic language source code itself :)</p>
+</li>
+<li>
+<p>Define your dynamic-language-backed beans using the appropriate <code>&lt;lang:language/&gt;</code>
+element in the XML configuration (you can of course define such beans programmatically
+using the Spring API - although you will have to consult the source code for
+directions on how to do this as this type of advanced configuration is not covered in
+this chapter). Note this is an iterative step. You will need at least one bean
+definition per dynamic language source file (although the same dynamic language source
+file can of course be referenced by multiple bean definitions).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The first two steps (testing and writing your dynamic language source files) are beyond
+the scope of this chapter. Refer to the language specification and / or reference manual
+for your chosen dynamic language and crack on with developing your dynamic language
+source files. You <em>will</em> first want to read the rest of this chapter though, as
+Spring&#8217;s dynamic language support does make some (small) assumptions about the contents
+of your dynamic language source files.</p>
+</div>
+<div class="sect4">
+<h5 id="dynamic-language-beans-concepts-xml-language-element"><a class="anchor" href="languages.html#dynamic-language-beans-concepts-xml-language-element"></a>The &lt;lang:language/&gt; element</h5>
+<div class="paragraph">
+<p>The final step involves defining dynamic-language-backed bean definitions, one for each
+bean that you want to configure (this is no different from normal JavaBean
+configuration). However, instead of specifying the fully qualified classname of the
+class that is to be instantiated and configured by the container, you use the
+<code>&lt;lang:language/&gt;</code> element to define the dynamic language-backed bean.</p>
+</div>
+<div class="paragraph">
+<p>Each of the supported languages has a corresponding <code>&lt;lang:language/&gt;</code> element:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;lang:groovy/&gt;</code> (Groovy)</p>
+</li>
+<li>
+<p><code>&lt;lang:bsh/&gt;</code> (BeanShell)</p>
+</li>
+<li>
+<p><code>&lt;lang:std/&gt;</code> (JSR-223)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The exact attributes and child elements that are available for configuration depends on
+exactly which language the bean has been defined in (the language-specific sections
+below provide the full lowdown on this).</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="dynamic-language-refreshable-beans"><a class="anchor" href="languages.html#dynamic-language-refreshable-beans"></a>Refreshable beans</h5>
+<div class="paragraph">
+<p>One of the (if not <em>the</em>) most compelling value adds of the dynamic language support
+in Spring is the<em>'refreshable bean'</em> feature.</p>
+</div>
+<div class="paragraph">
+<p>A refreshable bean is a dynamic-language-backed bean that with a small amount of
+configuration, a dynamic-language-backed bean can monitor changes in its underlying
+source file resource, and then reload itself when the dynamic language source file is
+changed (for example when a developer edits and saves changes to the file on the
+filesystem).</p>
+</div>
+<div class="paragraph">
+<p>This allows a developer to deploy any number of dynamic language source files as part of
+an application, configure the Spring container to create beans backed by dynamic
+language source files (using the mechanisms described in this chapter), and then later,
+as requirements change or some other external factor comes into play, simply edit a
+dynamic language source file and have any change they make reflected in the bean that is
+backed by the changed dynamic language source file. There is no need to shut down a
+running application (or redeploy in the case of a web application). The
+dynamic-language-backed bean so amended will pick up the new state and logic from the
+changed dynamic language source file.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Please note that this feature is <em>off</em> by default.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s take a look at an example to see just how easy it is to start using refreshable
+beans. To <em>turn on</em> the refreshable beans feature, you simply have to specify exactly
+<em>one</em> additional attribute on the <code>&lt;lang:language/&gt;</code> element of your bean definition.
+So if we stick with <a href="languages.html#dynamic-language-a-first-example">the example</a> from earlier in this
+chapter, here&#8217;s what we would change in the Spring XML configuration to effect
+refreshable beans:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;beans&gt;</span>
+
+    <span class="comment">&lt;!-- this bean is now 'refreshable' due to the presence of the 'refresh-check-delay' attribute --&gt;</span>
+    <span class="tag">&lt;lang:groovy</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span>
+            <span class="attribute-name">refresh-check-delay</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">5000</span><span class="delimiter">&quot;</span></span> <span class="error">&lt;</span><span class="error">!</span><span class="attribute-name">--</span> <span class="attribute-name">switches</span> <span class="attribute-name">refreshing</span> <span class="attribute-name">on</span> <span class="attribute-name">with</span> <span class="attribute-name">5</span> <span class="attribute-name">seconds</span> <span class="attribute-name">between</span> <span class="attribute-name">checks</span> <span class="attribute-name">--</span><span class="tag">&gt;</span>
+            script-source=&quot;classpath:Messenger.groovy&quot;<span class="error">&gt;</span>
+        <span class="tag">&lt;lang:property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">I Can Do The Frug</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/lang:groovy&gt;</span>
+
+    <span class="tag">&lt;bean</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bookingService</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">x.y.DefaultBookingService</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/bean&gt;</span>
+
+<span class="tag">&lt;/beans&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That really is all you have to do. The <code>'refresh-check-delay'</code> attribute defined on the
+<code>'messenger'</code> bean definition is the number of milliseconds after which the bean will be
+refreshed with any changes made to the underlying dynamic language source file. You can
+turn off the refresh behavior by assigning a negative value to the
+<code>'refresh-check-delay'</code> attribute. Remember that, by default, the refresh behavior is
+disabled. If you don&#8217;t want the refresh behavior, then simply don&#8217;t define the attribute.</p>
+</div>
+<div class="paragraph">
+<p>If we then run the following application we can exercise the refreshable feature; please
+do excuse the <em>'jumping-through-hoops-to-pause-the-execution'</em> shenanigans in this
+next slice of code. The <code>System.in.read()</code> call is only there so that the execution of
+the program pauses while I (the author) go off and edit the underlying dynamic language
+source file so that the refresh will trigger on the dynamic-language-backed bean when
+the program resumes execution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">org.springframework.context.ApplicationContext</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.context.support.ClassPathXmlApplicationContext</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.scripting.Messenger</span>;
+
+<span class="directive">public</span> <span class="directive">final</span> <span class="type">class</span> <span class="class">Boot</span> {
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> main(<span class="directive">final</span> <span class="predefined-type">String</span><span class="type">[]</span> args) <span class="directive">throws</span> <span class="exception">Exception</span> {
+        ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string"><span class="delimiter">&quot;</span><span class="content">beans.xml</span><span class="delimiter">&quot;</span></span>);
+        Messenger messenger = (Messenger) ctx.getBean(<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span>);
+        <span class="predefined-type">System</span>.out.println(messenger.getMessage());
+        <span class="comment">// pause execution while I go off and make changes to the source file...</span>
+        <span class="predefined-type">System</span>.in.read();
+        <span class="predefined-type">System</span>.out.println(messenger.getMessage());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assume then, for the purposes of this example, that all calls to the
+<code>getMessage()</code> method of <code>Messenger</code> implementations have to be changed such that the
+message is surrounded by quotes. Below are the changes that I (the author) make to the
+<code>Messenger.groovy</code> source file when the execution of the program is paused.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.springframework.scripting</span>
+
+<span class="namespace">class</span> <span class="namespace">GroovyMessenger</span> <span class="namespace">implements</span> <span class="namespace">Messenger</span> {
+
+    <span class="namespace">private</span> <span class="namespace">String</span> <span class="namespace">message</span> = <span class="string"><span class="delimiter">&quot;</span><span class="content">Bingo</span><span class="delimiter">&quot;</span></span>
+
+    <span class="namespace">public</span> <span class="namespace">String</span> <span class="namespace">getMessage</span>() {
+        <span class="comment">// change the implementation to surround the message in quotes</span>
+        <span class="namespace">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">'</span><span class="delimiter">&quot;</span></span> + <span class="namespace">this.message</span> + <span class="string"><span class="delimiter">&quot;</span><span class="content">'</span><span class="delimiter">&quot;</span></span>
+    }
+
+    <span class="namespace">public</span> <span class="namespace">void</span> <span class="namespace">setMessage</span>(<span class="namespace">String</span> <span class="namespace">message</span>) {
+        <span class="namespace">this.message</span> = <span class="namespace">message</span>
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When the program executes, the output before the input pause will be <em>I Can Do The
+Frug</em>. After the change to the source file is made and saved, and the program resumes
+execution, the result of calling the <code>getMessage()</code> method on the
+dynamic-language-backed <code>Messenger</code> implementation will be <em>'I Can Do The Frug'</em>
+(notice the inclusion of the additional quotes).</p>
+</div>
+<div class="paragraph">
+<p>It is important to understand that changes to a script will <em>not</em> trigger a refresh if
+the changes occur within the window of the <code>'refresh-check-delay'</code> value. It is equally
+important to understand that changes to the script are <em>not</em> actually 'picked up' until
+a method is called on the dynamic-language-backed bean. It is only when a method is
+called on a dynamic-language-backed bean that it checks to see if its underlying script
+source has changed. Any exceptions relating to refreshing the script (such as
+encountering a compilation error, or finding that the script file has been deleted) will
+result in a <em>fatal</em> exception being propagated to the calling code.</p>
+</div>
+<div class="paragraph">
+<p>The refreshable bean behavior described above does <em>not</em> apply to dynamic language
+source files defined using the <code>&lt;lang:inline-script/&gt;</code> element notation (see
+<a href="languages.html#dynamic-language-beans-inline">Inline dynamic language source files</a>). Additionally, it <em>only</em> applies to beans where
+changes to the underlying source file can actually be detected; for example, by code
+that checks the last modified date of a dynamic language source file that exists on the
+filesystem.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="dynamic-language-beans-inline"><a class="anchor" href="languages.html#dynamic-language-beans-inline"></a>Inline dynamic language source files</h5>
+<div class="paragraph">
+<p>The dynamic language support can also cater for dynamic language source files that are
+embedded directly in Spring bean definitions. More specifically, the
+<code>&lt;lang:inline-script/&gt;</code> element allows you to define dynamic language source immediately
+inside a Spring configuration file. An example will perhaps make the inline script
+feature crystal clear:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;lang:groovy</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;lang:inline-script&gt;</span>
+
+package org.springframework.scripting.groovy;
+
+import org.springframework.scripting.Messenger
+
+class GroovyMessenger implements Messenger {
+    String message
+}
+
+    <span class="tag">&lt;/lang:inline-script&gt;</span>
+    <span class="tag">&lt;lang:property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">I Can Do The Frug</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;/lang:groovy&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we put to one side the issues surrounding whether it is good practice to define
+dynamic language source inside a Spring configuration file, the <code>&lt;lang:inline-script/&gt;</code>
+element can be useful in some scenarios. For instance, we might want to quickly add a
+Spring <code>Validator</code> implementation to a Spring MVC <code>Controller</code>. This is but a moment&#8217;s
+work using inline source. (See <a href="languages.html#dynamic-language-scenarios-validators">Scripted Validators</a> for such an
+example.)</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="dynamic-language-beans-ctor-injection"><a class="anchor" href="languages.html#dynamic-language-beans-ctor-injection"></a>Understanding Constructor Injection in the context of dynamic-language-backed beans</h5>
+<div class="paragraph">
+<p>There is one <em>very</em> important thing to be aware of with regard to Spring&#8217;s dynamic
+language support. Namely, it is not (currently) possible to supply constructor arguments
+to dynamic-language-backed beans (and hence constructor-injection is not available for
+dynamic-language-backed beans). In the interests of making this special handling of
+constructors and properties 100% clear, the following mixture of code and configuration
+will <em>not</em> work.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// from the file 'Messenger.groovy'</span>
+<span class="keyword">package</span> <span class="namespace">org.springframework.scripting.groovy</span>;
+
+<span class="keyword">import</span> <span class="include">org.springframework.scripting.Messenger</span>
+
+<span class="include">class</span> <span class="include">GroovyMessenger</span> <span class="include">implements</span> <span class="include">Messenger</span> {
+
+    <span class="include">GroovyMessenger</span>() {}
+
+    <span class="comment">// this constructor is not available for Constructor Injection</span>
+    <span class="include">GroovyMessenger</span>(<span class="include">String</span> <span class="include">message</span>) {
+        <span class="include">this.message</span> = <span class="include">message</span>;
+    }
+
+    <span class="predefined-type">String</span> message
+
+    <span class="predefined-type">String</span> anotherMessage
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;lang:groovy</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">badMessenger</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">script-source</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">classpath:Messenger.groovy</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="comment">&lt;!-- this next constructor argument will <strong>not</strong> be injected into the GroovyMessenger --&gt;</span>
+    <span class="comment">&lt;!-- in fact, this isn't even allowed according to the schema --&gt;</span>
+    <span class="tag">&lt;constructor-arg</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">This will <strong>not</strong> work</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+
+    <span class="comment">&lt;!-- only property values are injected into the dynamic-language-backed object --&gt;</span>
+    <span class="tag">&lt;lang:property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">anotherMessage</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Passed straight through to the dynamic-language-backed object</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+
+<span class="tag">&lt;/lang&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In practice this limitation is not as significant as it first appears since setter
+injection is the injection style favored by the overwhelming majority of developers
+anyway (let&#8217;s leave the discussion as to whether that is a good thing to another day).</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="dynamic-language-beans-groovy"><a class="anchor" href="languages.html#dynamic-language-beans-groovy"></a>3.3.2. Groovy beans</h4>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">The Groovy library dependencies</div>
+<div class="paragraph">
+<p>The Groovy scripting support in Spring requires the following libraries to be on the
+classpath of your application.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>groovy-1.8.jar</code></p>
+</li>
+<li>
+<p><code>asm-3.2.jar</code></p>
+</li>
+<li>
+<p><code>antlr-2.7.7.jar</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>From the Groovy homepage&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>"<em>Groovy is an agile dynamic language for the Java 2 Platform that has many of the
+features that people like so much in languages like Python, Ruby and Smalltalk, making
+them available to Java developers using a Java-like syntax. </em>"</p>
+</div>
+<div class="paragraph">
+<p>If you have read this chapter straight from the top, you will already have
+<a href="languages.html#dynamic-language-a-first-example">seen an example</a> of a Groovy-dynamic-language-backed
+bean. Let&#8217;s look at another example (again using an example from the Spring test suite).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.springframework.scripting</span>;
+
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">Calculator</span> {
+
+    <span class="type">int</span> add(<span class="type">int</span> x, <span class="type">int</span> y);
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is an implementation of the <code>Calculator</code> interface in Groovy.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">// from the file 'calculator.groovy'</span>
+<span class="keyword">package</span> org.springframework.scripting.groovy
+
+<span class="type">class</span> <span class="class">GroovyCalculator</span> <span class="directive">implements</span> Calculator {
+
+    <span class="type">int</span> add(<span class="type">int</span> x, <span class="type">int</span> y) {
+        x + y
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;--</span> <span class="attribute-name">from</span> <span class="attribute-name">the</span> <span class="attribute-name">file</span> <span class="error">'</span><span class="attribute-name">beans.xml</span><span class="error">'</span> <span class="attribute-name">--</span><span class="tag">&gt;</span>
+<span class="tag">&lt;beans&gt;</span>
+    <span class="tag">&lt;lang:groovy</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">calculator</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">script-source</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">classpath:calculator.groovy</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/beans&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lastly, here is a small application to exercise the above configuration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.springframework.scripting</span>;
+
+<span class="keyword">import</span> <span class="include">org.springframework.context.ApplicationContext</span>;
+<span class="keyword">import</span> <span class="include">org.springframework.context.support.ClassPathXmlApplicationContext</span>;
+
+<span class="directive">public</span> <span class="type">class</span> <span class="class">Main</span> {
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> Main(<span class="predefined-type">String</span><span class="type">[]</span> args) {
+        ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string"><span class="delimiter">&quot;</span><span class="content">beans.xml</span><span class="delimiter">&quot;</span></span>);
+        Calculator calc = (Calculator) ctx.getBean(<span class="string"><span class="delimiter">&quot;</span><span class="content">calculator</span><span class="delimiter">&quot;</span></span>);
+        <span class="predefined-type">System</span>.out.println(calc.add(<span class="integer">2</span>, <span class="integer">8</span>));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The resulting output from running the above program will be (unsurprisingly) <em>10</em>.
+(Exciting example, huh? Remember that the intent is to illustrate the concept. Please
+consult the dynamic language showcase project for a more complex example, or indeed
+<a href="languages.html#dynamic-language-scenarios">Scenarios</a> later in this chapter).</p>
+</div>
+<div class="paragraph">
+<p>It is important that you <em>do not</em> define more than one class per Groovy source file.
+While this is perfectly legal in Groovy, it is (arguably) a bad practice: in the
+interests of a consistent approach, you should (in the opinion of this author) respect
+the standard Java conventions of one (public) class per source file.</p>
+</div>
+<div class="sect4">
+<h5 id="dynamic-language-beans-groovy-customizer"><a class="anchor" href="languages.html#dynamic-language-beans-groovy-customizer"></a>Customizing Groovy objects via a callback</h5>
+<div class="paragraph">
+<p>The <code>GroovyObjectCustomizer</code> interface is a callback that allows you to hook additional
+creation logic into the process of creating a Groovy-backed bean. For example,
+implementations of this interface could invoke any required initialization method(s), or
+set some default property values, or specify a custom <code>MetaClass</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">interface</span> <span class="class">GroovyObjectCustomizer</span> {
+
+    <span class="type">void</span> customize(GroovyObject goo);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Spring Framework will instantiate an instance of your Groovy-backed bean, and will
+then pass the created <code>GroovyObject</code> to the specified <code>GroovyObjectCustomizer</code> if one
+has been defined. You can do whatever you like with the supplied <code>GroovyObject</code>
+reference: it is expected that the setting of a custom <code>MetaClass</code> is what most folks
+will want to do with this callback, and you can see an example of doing that below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">final</span> <span class="type">class</span> <span class="class">SimpleMethodTracingCustomizer</span> <span class="directive">implements</span> GroovyObjectCustomizer {
+
+    <span class="directive">public</span> <span class="type">void</span> customize(GroovyObject goo) {
+        DelegatingMetaClass metaClass = <span class="keyword">new</span> DelegatingMetaClass(goo.getMetaClass()) {
+
+            <span class="directive">public</span> <span class="predefined-type">Object</span> invokeMethod(<span class="predefined-type">Object</span> object, <span class="predefined-type">String</span> methodName, <span class="predefined-type">Object</span><span class="type">[]</span> arguments) {
+                <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Invoking '</span><span class="delimiter">&quot;</span></span> + methodName + <span class="string"><span class="delimiter">&quot;</span><span class="content">'.</span><span class="delimiter">&quot;</span></span>);
+                <span class="keyword">return</span> <span class="local-variable">super</span>.invokeMethod(object, methodName, arguments);
+            }
+        };
+        metaClass.initialize();
+        goo.setMetaClass(metaClass);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A full discussion of meta-programming in Groovy is beyond the scope of the Spring
+reference manual. Consult the relevant section of the Groovy reference manual, or do a
+search online: there are plenty of articles concerning this topic. Actually making use
+of a <code>GroovyObjectCustomizer</code> is easy if you are using the Spring namespace support.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="comment">&lt;!-- define the GroovyObjectCustomizer just like any other bean --&gt;</span>
+<span class="tag">&lt;bean</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tracingCustomizer</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">example.SimpleMethodTracingCustomizer</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+
+    <span class="comment">&lt;!-- ... and plug it into the desired Groovy bean via the 'customizer-ref' attribute --&gt;</span>
+    <span class="tag">&lt;lang:groovy</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">calculator</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">script-source</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">classpath:org/springframework/scripting/groovy/Calculator.groovy</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">customizer-ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tracingCustomizer</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are not using the Spring namespace support, you can still use the
+<code>GroovyObjectCustomizer</code> functionality.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;bean</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">calculator</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.springframework.scripting.groovy.GroovyScriptFactory</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;constructor-arg</span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">classpath:org/springframework/scripting/groovy/Calculator.groovy</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="comment">&lt;!-- define the GroovyObjectCustomizer (as an inner bean) --&gt;</span>
+    <span class="tag">&lt;constructor-arg&gt;</span>
+        <span class="tag">&lt;bean</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">tracingCustomizer</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">example.SimpleMethodTracingCustomizer</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;/constructor-arg&gt;</span>
+<span class="tag">&lt;/bean&gt;</span>
+
+<span class="tag">&lt;bean</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.springframework.scripting.support.ScriptFactoryPostProcessor</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As of Spring Framework 4.3.3, you may also specify a Groovy <code>CompilationCustomizer</code>
+(such as an <code>ImportCustomizer</code>) or even a full Groovy <code>CompilerConfiguration</code> object
+in the same place as Spring&#8217;s <code>GroovyObjectCustomizer</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="dynamic-language-beans-bsh"><a class="anchor" href="languages.html#dynamic-language-beans-bsh"></a>3.3.3. BeanShell beans</h4>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">The BeanShell library dependencies</div>
+<div class="paragraph">
+<p>The BeanShell scripting support in Spring requires the following libraries to be on the
+classpath of your application.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>bsh-2.0b4.jar</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>From the BeanShell homepage&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>"<em>BeanShell is a small, free, embeddable Java source interpreter with dynamic language
+features, written in Java. BeanShell dynamically executes standard Java syntax and
+extends it with common scripting conveniences such as loose types, commands, and method
+closures like those in Perl and JavaScript.</em>"</p>
+</div>
+<div class="paragraph">
+<p>In contrast to Groovy, BeanShell-backed bean definitions require some (small) additional
+configuration. The implementation of the BeanShell dynamic language support in Spring is
+interesting in that what happens is this: Spring creates a JDK dynamic proxy
+implementing all of the interfaces that are specified in the <code>'script-interfaces'</code>
+attribute value of the <code>&lt;lang:bsh&gt;</code> element (this is why you <em>must</em> supply at least
+one interface in the value of the attribute, and (accordingly) program to interfaces
+when using BeanShell-backed beans). This means that every method call on a
+BeanShell-backed object is going through the JDK dynamic proxy invocation mechanism.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at a fully working example of using a BeanShell-based bean that implements
+the <code>Messenger</code> interface that was defined earlier in this chapter (repeated below for
+your convenience).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">org.springframework.scripting</span>;
+
+<span class="directive">public</span> <span class="type">interface</span> <span class="class">Messenger</span> {
+
+    <span class="predefined-type">String</span> getMessage();
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is the BeanShell 'implementation' (the term is used loosely here) of the
+<code>Messenger</code> interface.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">String</span> message;
+
+<span class="predefined-type">String</span> getMessage() {
+    <span class="keyword">return</span> message;
+}
+
+<span class="type">void</span> setMessage(<span class="predefined-type">String</span> aMessage) {
+    message = aMessage;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And here is the Spring XML that defines an 'instance' of the above 'class' (again, the
+term is used very loosely here).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;lang:bsh</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messageService</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">script-source</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">classpath:BshMessenger.bsh</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">script-interfaces</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">org.springframework.scripting.Messenger</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;lang:property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Hello World!</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+<span class="tag">&lt;/lang:bsh&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="languages.html#dynamic-language-scenarios">Scenarios</a> for some scenarios where you might want to use
+BeanShell-based beans.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dynamic-language-scenarios"><a class="anchor" href="languages.html#dynamic-language-scenarios"></a>3.4. Scenarios</h3>
+<div class="paragraph">
+<p>The possible scenarios where defining Spring managed beans in a scripting language would
+be beneficial are, of course, many and varied. This section describes two possible use
+cases for the dynamic language support in Spring.</p>
+</div>
+<div class="sect3">
+<h4 id="dynamic-language-scenarios-controllers"><a class="anchor" href="languages.html#dynamic-language-scenarios-controllers"></a>3.4.1. Scripted Spring MVC Controllers</h4>
+<div class="paragraph">
+<p>One group of classes that may benefit from using dynamic-language-backed beans is that
+of Spring MVC controllers. In pure Spring MVC applications, the navigational flow
+through a web application is to a large extent determined by code encapsulated within
+your Spring MVC controllers. As the navigational flow and other presentation layer logic
+of a web application needs to be updated to respond to support issues or changing
+business requirements, it may well be easier to effect any such required changes by
+editing one or more dynamic language source files and seeing those changes being
+immediately reflected in the state of a running application.</p>
+</div>
+<div class="paragraph">
+<p>Remember that in the lightweight architectural model espoused by projects such as
+Spring, you are typically aiming to have a really <em>thin</em> presentation layer, with all
+the meaty business logic of an application being contained in the domain and service
+layer classes. Developing Spring MVC controllers as dynamic-language-backed beans allows
+you to change presentation layer logic by simply editing and saving text files; any
+changes to such dynamic language source files will (depending on the configuration)
+automatically be reflected in the beans that are backed by dynamic language source files.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In order to effect this automatic 'pickup' of any changes to dynamic-language-backed
+beans, you will have had to enable the 'refreshable beans' functionality. See
+<a href="languages.html#dynamic-language-refreshable-beans">Refreshable beans</a> for a full treatment of this feature.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Find below an example of an <code>org.springframework.web.servlet.mvc.Controller</code> implemented
+using the Groovy dynamic language.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// from the file '/WEB-INF/groovy/FortuneController.groovy'</span>
+<span class="keyword">package</span> <span class="namespace">org.springframework.showcase.fortune.web</span>
+
+<span class="namespace">import</span> <span class="namespace">org.springframework.showcase.fortune.service.FortuneService</span>
+<span class="namespace">import</span> <span class="namespace">org.springframework.showcase.fortune.domain.Fortune</span>
+<span class="namespace">import</span> <span class="namespace">org.springframework.web.servlet.ModelAndView</span>
+<span class="namespace">import</span> <span class="namespace">org.springframework.web.servlet.mvc.Controller</span>
+
+<span class="namespace">import</span> <span class="namespace">javax.servlet.http.HttpServletRequest</span>
+<span class="namespace">import</span> <span class="namespace">javax.servlet.http.HttpServletResponse</span>
+
+<span class="namespace">class</span> <span class="namespace">FortuneController</span> <span class="namespace">implements</span> <span class="namespace">Controller</span> {
+
+    <span class="annotation">@Property</span> <span class="namespace">FortuneService</span> <span class="namespace">fortuneService</span>
+
+    <span class="namespace">ModelAndView</span> <span class="namespace">handleRequest</span>(<span class="namespace">HttpServletRequest</span> <span class="namespace">request</span>,
+            <span class="namespace">HttpServletResponse</span> <span class="namespace">httpServletResponse</span>) {
+        <span class="namespace">return</span> <span class="namespace">new</span> <span class="namespace">ModelAndView</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">tell</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">fortune</span><span class="delimiter">&quot;</span></span>, <span class="namespace">this.fortuneService.tellFortune</span>())
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;lang:groovy</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">fortune</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">refresh-check-delay</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">3000</span><span class="delimiter">&quot;</span></span>
+        <span class="attribute-name">script-source</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/WEB-INF/groovy/FortuneController.groovy</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;lang:property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">fortuneService</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">fortuneService</span><span class="delimiter">&quot;</span></span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/lang:groovy&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="dynamic-language-scenarios-validators"><a class="anchor" href="languages.html#dynamic-language-scenarios-validators"></a>3.4.2. Scripted Validators</h4>
+<div class="paragraph">
+<p>Another area of application development with Spring that may benefit from the
+flexibility afforded by dynamic-language-backed beans is that of validation. It <em>may</em>
+be easier to express complex validation logic using a loosely typed dynamic language
+(that may also have support for inline regular expressions) as opposed to regular Java.</p>
+</div>
+<div class="paragraph">
+<p>Again, developing validators as dynamic-language-backed beans allows you to change
+validation logic by simply editing and saving a simple text file; any such changes will
+(depending on the configuration) automatically be reflected in the execution of a
+running application and would not require the restart of an application.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Please note that in order to effect the automatic 'pickup' of any changes to
+dynamic-language-backed beans, you will have had to enable the 'refreshable beans'
+feature. See <a href="languages.html#dynamic-language-refreshable-beans">Refreshable beans</a> for a full and detailed treatment of
+this feature.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Find below an example of a Spring <code>org.springframework.validation.Validator</code> implemented
+using the Groovy dynamic language. (See <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#validator">Validation using Spring’s Validator interface</a> for a discussion of the
+<code>Validator</code> interface.)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="keyword">import</span> <span class="include">org.springframework.validation.Validator</span>
+<span class="keyword">import</span> <span class="include">org.springframework.validation.Errors</span>
+<span class="keyword">import</span> <span class="include">org.springframework.beans.TestBean</span>
+
+<span class="type">class</span> <span class="class">TestBeanValidator</span> <span class="directive">implements</span> <span class="predefined-type">Validator</span> {
+
+    <span class="type">boolean</span> supports(<span class="predefined-type">Class</span> clazz) {
+        <span class="keyword">return</span> TestBean.class.isAssignableFrom(clazz)
+    }
+
+    <span class="type">void</span> validate(<span class="predefined-type">Object</span> bean, Errors errors) {
+        <span class="keyword">if</span>(bean.name?.trim()?.size() &gt; <span class="integer">0</span>) {
+            <span class="keyword">return</span>
+        }
+        errors.reject(<span class="string"><span class="delimiter">&quot;</span><span class="content">whitespace</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Cannot be composed wholly of whitespace.</span><span class="delimiter">&quot;</span></span>)
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dynamic-language-final-notes"><a class="anchor" href="languages.html#dynamic-language-final-notes"></a>3.5. Bits and bobs</h3>
+<div class="paragraph">
+<p>This last section contains some bits and bobs related to the dynamic language support.</p>
+</div>
+<div class="sect3">
+<h4 id="dynamic-language-final-notes-aop"><a class="anchor" href="languages.html#dynamic-language-final-notes-aop"></a>3.5.1. AOP - advising scripted beans</h4>
+<div class="paragraph">
+<p>It is possible to use the Spring AOP framework to advise scripted beans. The Spring AOP
+framework actually is unaware that a bean that is being advised might be a scripted
+bean, so all of the AOP use cases and functionality that you may be using or aim to use
+will work with scripted beans. There is just one (small) thing that you need to be aware
+of when advising scripted beans&#8230;&#8203; you cannot use class-based proxies, you must
+use <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop-proxying">interface-based proxies</a>.</p>
+</div>
+<div class="paragraph">
+<p>You are of course not just limited to advising scripted beans&#8230;&#8203; you can also write
+aspects themselves in a supported dynamic language and use such beans to advise other
+Spring beans. This really would be an advanced use of the dynamic language support
+though.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="dynamic-language-final-notes-scopes"><a class="anchor" href="languages.html#dynamic-language-final-notes-scopes"></a>3.5.2. Scoping</h4>
+<div class="paragraph">
+<p>In case it is not immediately obvious, scripted beans can of course be scoped just like
+any other bean. The <code>scope</code> attribute on the various <code>&lt;lang:language/&gt;</code> elements allows
+you to control the scope of the underlying scripted bean, just as it does with a regular
+bean. (The default scope is <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-scopes-singleton">singleton</a>, just as it is
+with 'regular' beans.)</p>
+</div>
+<div class="paragraph">
+<p>Find below an example of using the <code>scope</code> attribute to define a Groovy bean scoped as
+a <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-scopes-prototype">prototype</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;beans</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/beans</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">xmlns:lang</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/lang</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span>
+        <span class="content">http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+        <span class="content">http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;lang:groovy</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">script-source</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">classpath:Messenger.groovy</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">scope</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prototype</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;lang:property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">value</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">I Can Do The RoboCop</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/lang:groovy&gt;</span>
+
+    <span class="tag">&lt;bean</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">bookingService</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">x.y.DefaultBookingService</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;property</span> <span class="attribute-name">name</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">ref</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">messenger</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;/bean&gt;</span>
+
+<span class="tag">&lt;/beans&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-scopes">Bean scopes</a> in <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans">The IoC container</a>
+for a fuller discussion of the scoping support in the Spring Framework.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="xsd-schemas-lang"><a class="anchor" href="languages.html#xsd-schemas-lang"></a>3.5.3. The lang XML schema</h4>
+<div class="paragraph">
+<p>The <code>lang</code> tags in Spring XML configuration deal with exposing objects that have been written
+in a dynamic language such as JRuby or Groovy as beans in the Spring container.</p>
+</div>
+<div class="paragraph">
+<p>These tags (and the dynamic language support) are comprehensively covered in the chapter
+entitled <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#dynamic-language">Dynamic language support</a>.
+Please do consult that chapter for full details on this support and the <code>lang</code> tags themselves.</p>
+</div>
+<div class="paragraph">
+<p>In the interest of completeness, to use the tags in the <code>lang</code> schema, you need to have
+the following preamble at the top of your Spring XML configuration file; the text in the
+following snippet references the correct schema so that the tags in the <code>lang</code> namespace
+are available to you.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="preprocessor">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="tag">&lt;beans</span> <span class="attribute-name">xmlns</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/beans</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name">xmlns:xsi</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.w3.org/2001/XMLSchema-instance</span><span class="delimiter">&quot;</span></span>
+    <span class="attribute-name"><em>xmlns:lang</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.springframework.org/schema/lang</span><span class="delimiter">&quot;</span></span><span class="attribute-name"></em></span> <span class="attribute-name">xsi:schemaLocation</span>=<span class="string"><span class="delimiter">&quot;</span>
+        <span class="content">http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span>
+        <span class="content"><em>http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd</span><span class="delimiter">&quot;</span></span><span class="attribute-name"></em></span><span class="tag">&gt;</span> <span class="comment">&lt;!-- bean definitions here --&gt;</span>
+
+<span class="tag">&lt;/beans&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="dynamic-language-resources"><a class="anchor" href="languages.html#dynamic-language-resources"></a>3.6. Further Resources</h3>
+<div class="paragraph">
+<p>Find below links to further resources about the various dynamic languages described in
+this chapter.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <a href="http://jruby.org/">JRuby</a> homepage</p>
+</li>
+<li>
+<p>The <a href="http://www.groovy-lang.org/">Groovy</a> homepage</p>
+</li>
+<li>
+<p>The <a href="http://www.beanshell.org/">BeanShell</a> homepage</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 5.0.4.RELEASE<br>
+Last updated 2018-02-19 10:39:28 UTC
+</div>
+</div>
+<script src="tocbot-3.0.2/tocbot.js"></script>
+<script>var oldtoc=document.getElementById('toctitle').nextElementSibling;var newtoc=document.createElement('div');newtoc.setAttribute('id','tocbot');newtoc.setAttribute('class','js-toc');oldtoc.parentNode.replaceChild(newtoc,oldtoc);tocbot.init({contentSelector:'#content',headingSelector:'h1, h2, h3, h4, h5',smoothScroll:false});var handleTocOnResize=function(){var width=window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth;if(width<768){tocbot.refresh({contentSelector:'#content',headingSelector:'h1, h2, h3, h4, h5',collapseDepth:6,activeLinkClass:'ignoreactive',throttleTimeout:1000,smoothScroll:false});}else{tocbot.refresh({contentSelector:'#content',headingSelector:'h1, h2, h3, h4, h5',smoothScroll:false});}};window.addEventListener('resize',handleTocOnResize);handleTocOnResize();var link=document.createElement("a");link.setAttribute("href","index.html");link.innerHTML="<i class=\"fa fa-chevron-left\" aria-hidden=\"true\"></i>&nbsp;&nbsp;Back to index";var p=document.createElement("p");p.appendChild(link);var toc=document.getElementById('toc')
+var next=document.getElementById('toctitle').nextElementSibling;toc.insertBefore(p,next);</script>
+<script>if(window.parent==window){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-2728886-23','auto',{'siteSpeedSampleRate':100});ga('send','pageview');}</script></body>
+</html>

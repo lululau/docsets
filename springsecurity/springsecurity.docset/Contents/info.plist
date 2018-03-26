@@ -1,0 +1,20 @@
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+          <key>CFBundleIdentifier</key>
+          <string>springsecurity</string>
+          <key>CFBundleName</key>
+          <string>springsecurity</string>
+          <key>DashDocSetFamily</key>
+          <string>springsecurity</string>
+          <key>DocSetPlatformFamily</key>
+          <string>springsecurity</string>
+          <key>isDashDocset</key>
+          <true/>
+          <key>isJavaScriptEnabled</key>
+          <true/>
+          <key>dashIndexFilePath</key>
+          <string>/docs.spring.io/spring-security/site/docs/5.0.0.RELEASE/reference/htmlsingle/index.html</string>
+  </dict>
+  </plist>

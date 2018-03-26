@@ -1,0 +1,199 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'fileutils'
+require 'sqlite3'
+require 'find'
+require 'nokogiri'
+require 'active_support/core_ext/object'
+
+options = {
+  link_script: <<-SCRIPT
+    text.sub!(/^[\d\.]+/) { |s|
+      s.gsub(/\d+/) { |d|
+        "%02d"%d.to_i
+      }
+    }
+  SCRIPT
+}
+
+OptionParser.new do |opts|
+  opts.banner = 'Usage: html2docset [options] DIR'
+
+  opts.on('-nNAME', '--name=NAME', 'Name the docset explicity') do |value|
+    options[:name] = value
+  end
+
+  opts.on('-kKEYWORD', '--keyword=KEYWORD', 'Keyword') do |value|
+    options[:keyword] = value
+  end
+
+  opts.on('-dDEST', '--dest=DEST', 'Path of resulting docset') do |value|
+    options[:dest] = value.sub(/\/$/, '')
+  end
+
+  opts.on('-iICON', '--icon=ICON', 'Set icon of docset') do |value|
+    options[:icon] = value
+  end
+
+  opts.on('-pPAGE', '--index-page=PAGE', 'Index page') do |value|
+    options[:index] = value
+  end
+
+  opts.on('-sSRC', '--source=SRC', 'Directory containing the HTML documents') do |value|
+    options[:src] = value.sub(/\/$/, '')
+    unless Dir.exist?(options[:src])
+      puts "#{options[:src]} does not exist!"
+      exit(2)
+    end
+  end
+
+  opts.on('', '--page-pattern=PAGE_PATTEN', 'Pattens for pages which should be indexed') do |value|
+    options[:page_pattern] = Regexp.new(value)
+  end
+
+  opts.on('', '--link-pattern=LINK_PATTEN', 'Pattens for links which should be indexed') do |value|
+    options[:link_pattern] = Regexp.new(value)
+  end
+
+  opts.on('', '--link-script=LINK_SCRIPT', 'Script for pruning links') do |value|
+    options[:link_script] = value
+  end
+
+  opts.on('-h', '--help', 'Print help messages') do
+    puts opts
+    exit
+  end
+end.parse!
+
+unless options[:page_pattern]
+  puts '**Error** The page-pattern option is required!'
+end
+
+unless options[:link_pattern]
+  puts '**Error** The link-pattern option is required!'
+end
+
+
+docset_name = "#{options[:name] || os.path.basename(options[:src])}.docset"
+doc_path = "#{docset_name}/Contents/Resources/Documents"
+dsidx_path = "#{docset_name}/Contents/Resources/docSet.dsidx"
+icon_path = "#{docset_name}/icon.png"
+info = "#{docset_name}/Contents/info.plist"
+
+docset_path = "#{options[:dest]}/#{doc_path}"
+sqlite_path = "#{options[:dest]}/#{dsidx_path}"
+info_path = "#{options[:dest]}/#{info}"
+icon_path = "#{options[:dest]}/#{icon_path}"
+
+if Dir.exist?(docset_path)
+  puts 'Docset directory already exist!'
+else
+  FileUtils.mkdir_p(docset_path)
+  puts "Create the docset directory!"
+end
+
+# Copy files
+FileUtils.cp_r(Dir.glob("#{options[:src]}/*"), docset_path)
+puts 'Copy the HTML documentations!'
+
+# Init SQLite
+
+db = SQLite3::Database.new(sqlite_path)
+db.execute <<-SQL
+  CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT);
+SQL
+db.execute <<-SQL
+  CREATE UNIQUE INDEX anchor ON searchIndex (name, type, path);
+SQL
+puts 'Create the SQLite Index'
+
+# Add Secions
+Find.find(docset_path) do |path|
+  next if File.directory?(path)
+  next unless options[:page_pattern] =~ path
+  File.open(path) do |file|
+    doc = Nokogiri::HTML(file)
+    doc.css('a').each do |el|
+      href = el.attributes['href']&.value
+      next unless href
+      next unless options[:link_pattern] =~ href
+      text = el.text
+      next unless text.present?
+      eval(options[:link_script] || '')
+      next unless db.execute('SELECT rowid FROM searchIndex WHERE path = ? and name = ?', href, text).empty?
+      db.execute('INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES (?,?,?)', text, 'Section', href)
+    end
+  end
+end
+
+# Create info.plist
+plist_content = <<-PLIST
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+          <key>CFBundleIdentifier</key>
+          <string>#{docset_name.sub(/.docset/, '')}</string>
+          <key>CFBundleName</key>
+          <string>#{docset_name.sub(/.docset/, '')}</string>
+          <key>DashDocSetFamily</key>
+          <string>#{docset_name.sub(/.docset/, '')}</string>
+          <key>DocSetPlatformFamily</key>
+          <string>#{options[:keyword] || docset_name.downcase.sub(/.docset/, '')}</string>
+          <key>isDashDocset</key>
+          <true/>
+          <key>isJavaScriptEnabled</key>
+          <true/>
+          <key>dashIndexFilePath</key>
+          <string>#{options[:index]}</string>
+  </dict>
+  </plist>
+PLIST
+File.open(info_path, 'w') { |f| f.write(plist_content)}
+
+# Add icon
+if options[:icon]
+  if options[:icon].end_with?('.png')
+    FileUtils.cp(options[:icon], icon_path)
+    puts 'Create the icon for docset!'
+  else
+    puts '**Error**: icon file should be a valid PNG image!'
+    exit(2)
+  end
+end
+
+__END__
+
+# Command generate Spring MVC single page reference
+html2docset -n springmvc -k springmvc -i ./icon.png -d springmvc -p /docs.spring.io/spring/docs/current/spring-framework-reference/web.html -s spring-mvc --page-pattern=web\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring/docs/current/spring-framework-reference/web.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Core single page reference
+html2docset -n spring -k spring -i ./icon.png -d spring -p /docs.spring.io/spring/docs/current/spring-framework-reference/core.html -s spring-core --page-pattern=core\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring/docs/current/spring-framework-reference/core.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Testing single page reference
+html2docset -n springtest -k springtest -i ./icon.png -d springtest -p /docs.spring.io/spring/docs/current/spring-framework-reference/testing.html -s spring-testing --page-pattern=testing\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring/docs/current/spring-framework-reference/testing.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Data Access single page reference
+html2docset -n springda -k springda -i ./icon.png -d springda -p /docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html -s spring-dataaccess --page-pattern=data-access\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Web Reactive single page reference
+html2docset -n springreactive -k springreactive -i ./icon.png -d springreactive -p /docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html -s spring-webreactive --page-pattern=web-reactive\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Integration single page reference
+html2docset -n springintegration -k springintegration -i ./icon.png -d springintegration -p /docs.spring.io/spring/docs/current/spring-framework-reference/integration.html -s spring-integration --page-pattern=integration\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring/docs/current/spring-framework-reference/integration.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Languages single page reference
+html2docset -n springlang -k springlang -i ./icon.png -d springlang -p /docs.spring.io/spring/docs/current/spring-framework-reference/languages.html -s spring-lang --page-pattern=languages\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring/docs/current/spring-framework-reference/languages.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Session single page reference
+html2docset -n springsession -k springsession -i ./icon.png -d springsession -p /docs.spring.io/spring-session/docs/current/reference/html5/index.html -s spring-session --page-pattern=index\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring-session/docs/current/reference/html5/index.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Security single page reference
+html2docset -n springsecurity -k springsecurity -i ./icon.png -d springsecurity -p /docs.spring.io/spring-security/site/docs/5.0.0.RELEASE/reference/htmlsingle/index.html -s spring-security --page-pattern=index\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring-security/site/docs/5.0.0.RELEASE/reference/htmlsingle/index.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Spring Boot single page reference
+html2docset -n springboot -k springboot -i ./icon.png -d springboot -p /docs.spring.io/spring-boot/docs/current/reference/htmlsingle/index.html -s spring-boot --page-pattern=index\\.html --link-pattern='^#' --link-script='href.sub!(/^/, "/docs.spring.io/spring-boot/docs/current/reference/htmlsingle/index.html");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate MyBatis reference
+html2docset -n mybatis -k mybatis -i ./mybatis.png -d mybatis -p /www.mybatis.org/mybatis-3/zh/index.html -s mybatis3 --page-pattern='/zh/.*\.html$' --link-pattern='^.*\.html' --link-script='href.sub!(/^/, "/www.mybatis.org/mybatis-3/zh/");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
