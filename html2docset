@@ -197,3 +197,6 @@ html2docset -n springboot -k springboot -i ./icon.png -d springboot -p /docs.spr
 
 # Command generate MyBatis reference
 html2docset -n mybatis -k mybatis -i ./mybatis.png -d mybatis -p /www.mybatis.org/mybatis-3/zh/index.html -s mybatis3 --page-pattern='/zh/.*\.html$' --link-pattern='^.*\.html' --link-script='href.sub!(/^/, "/www.mybatis.org/mybatis-3/zh/");text.sub!(/^[\d\.]+/) { |s| s.gsub(/\d+/) { |d| "%02d"%d.to_i}}'
+
+# Command generate Puppeteer API doc
+html2docset -n puppeteer -k puppeteer -i ./puppeteer.png -d puppeteer -p /github.com/GoogleChrome/puppeteer/blob/master/docs/api.md.html -s puppeteer-api --page-pattern='api.md.html' --link-pattern='api.md.html#' --link-script='href.sub!(/^/, "/github.com/GoogleChrome/puppeteer/blob/master/docs/");'
