@@ -1,0 +1,419 @@
+(function() {
+  var DocsView,
+    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  DocsView = (function() {
+    function DocsView(options) {
+      this.updateTOC = bind(this.updateTOC, this);
+      this.queueSidebarUpdate = bind(this.queueSidebarUpdate, this);
+      this.updateTOCFromPage = bind(this.updateTOCFromPage, this);
+      this.getReadingSection = bind(this.getReadingSection, this);
+      this.updatePageHeader = bind(this.updatePageHeader, this);
+      this.getLinkedSection = bind(this.getLinkedSection, this);
+      this.handleHashChange = bind(this.handleHashChange, this);
+      this.scrollBody = bind(this.scrollBody, this);
+      this.getScrollForSectionTarget = bind(this.getScrollForSectionTarget, this);
+      this.isMobile = bind(this.isMobile, this);
+      this.handleLinkClick = bind(this.handleLinkClick, this);
+      this.header = options.header;
+      this.body = options.body;
+      this.sidebar = options.sidebar;
+      this.toc = options.toc;
+      this.hashHandled = false;
+      this.queue = {
+        timer: null,
+        type: null
+      };
+    }
+
+    DocsView.prototype.init = function() {
+      this.handleHashChange();
+      this.updatePageHeader();
+      this.handleHashChange();
+      this.body.focus();
+      this.body.on('scroll', this.updatePageHeader);
+      this.body.on('scroll', this.queueSidebarUpdate);
+      $(window).on('hashchange', this.handleHashChange);
+      $(window).on('resize', this.queueSidebarUpdate);
+      $(window).on('resize', this.updatePageHeader);
+      $(document.body).on('click', 'a[href*="#"]', this.handleLinkClick);
+      if (!location.hash) {
+        return this.updateTOCFromPage();
+      }
+    };
+
+    DocsView.prototype.handleLinkClick = function(e) {
+      var $section, a, bodyToScroll, scroll;
+      a = e.currentTarget;
+      if (location.pathname.replace(/^\//, '') === a.pathname.replace(/^\//, '') && location.hostname === a.hostname) {
+        $section = this.getLinkedSection(a.hash);
+        if ($section) {
+          history.pushState({}, '', a.href);
+          scroll = this.getScrollForSectionTarget($section);
+          bodyToScroll = this.isMobile() ? $(document.body) : this.body;
+          bodyToScroll.animate({
+            scrollTop: scroll
+          }, {
+            duration: 400,
+            complete: (function(_this) {
+              return function() {
+                return _this.updateTOCFromPage(true);
+              };
+            })(this)
+          });
+          return false;
+        }
+      }
+    };
+
+    DocsView.prototype.isMobile = function() {
+      return this.sidebar.css('position') !== 'fixed';
+    };
+
+    DocsView.prototype.getScrollForSectionTarget = function($section) {
+      return docs.body.scrollTop() + $section.children().position().top;
+    };
+
+    DocsView.prototype.scrollBody = function(scrollTop) {
+      return this.body.animate({
+        scrollTop: scrollTop
+      }, 300);
+    };
+
+    DocsView.prototype.handleHashChange = function(e) {
+      var $linked, scroll;
+      $linked = this.getLinkedSection();
+      if ($linked) {
+        console.log('hashchange', $linked[0]);
+        scroll = docs.body.scrollTop() + $linked.children().position().top;
+        docs.body.scrollTop(scroll);
+        return this.updateTOC($linked.attr('id'), true);
+      }
+    };
+
+    DocsView.prototype.getLinkedSection = function(hash) {
+      var $section, selector;
+      if (hash == null) {
+        hash = location.hash;
+      }
+      $section = null;
+      if (hash) {
+        selector = 'section#' + hash.substr(1);
+        try {
+          $section = $(selector);
+        } catch (error) {
+
+        }
+      }
+      if ($section != null ? $section.length : void 0) {
+        return $section;
+      }
+    };
+
+    DocsView.prototype.updatePageHeader = function() {
+      var body;
+      body = {
+        top: ''
+      };
+      if (!this.isMobile()) {
+        body.top = this.header.outerHeight();
+      }
+      return this.body.css(body);
+    };
+
+    DocsView.prototype.getReadingSection = function() {
+      var $closest, minDistance, offset;
+      minDistance = 2e308;
+      $closest = null;
+      offset = 15;
+      this.body.find('section').each(function() {
+        var distance, el;
+        el = $(this);
+        distance = el.offset().top + offset;
+        if (distance >= 0 && distance < minDistance) {
+          minDistance = distance;
+          return $closest = el;
+        }
+      });
+      console.log('center=', offset, 'closest=', minDistance, $closest[0]);
+      return $closest;
+    };
+
+    DocsView.prototype.updateTOCFromPage = function(scroll) {
+      var readingSection;
+      if (scroll == null) {
+        scroll = false;
+      }
+      readingSection = this.getReadingSection();
+      this.updateTOC(readingSection.attr('id'), scroll);
+      return this.queue.type = null;
+    };
+
+    DocsView.prototype.queueSidebarUpdate = function(e) {
+      var queue, wait;
+      queue = this.queue;
+      if (this.isMobile() || this.queue.type === 'hashchange') {
+        return;
+      }
+      window.clearTimeout(queue.timer);
+      wait = (function() {
+        switch (e.type) {
+          case 'load':
+          case 'hashchange':
+            return 50;
+          default:
+            return 50;
+        }
+      })();
+      queue.type = e.type;
+      return queue.timer = window.setTimeout(this.updateTOCFromPage, wait);
+    };
+
+    DocsView.prototype.updateTOC = function(readingSectionId, scroll) {
+      var $activeLink, $activeMenu, newScrollTop, showBottom, showTop, toc;
+      if (scroll == null) {
+        scroll = false;
+      }
+      toc = this.toc;
+      $activeLink = toc.find('a[href="#' + readingSectionId + '"]');
+      toc.find('a.active').removeClass('active');
+      $activeLink.addClass('active');
+      if (scroll) {
+        $activeMenu = $activeLink.parents('li:last');
+        showTop = $activeMenu.position().top;
+        showBottom = showTop + $activeMenu.outerHeight();
+        newScrollTop = showTop < 0 ? toc.scrollTop() + showTop : showBottom > toc.innerHeight() ? toc.scrollTop() - toc.innerHeight() + showBottom : void 0;
+        return toc.animate({
+          'scrollTop': newScrollTop
+        }, 250);
+      }
+    };
+
+    return DocsView;
+
+  })();
+
+  $(function() {
+    var docs;
+    if (!$('#page-docs').length) {
+      return;
+    }
+    docs = new DocsView({
+      header: $('#header'),
+      body: $('#main'),
+      sidebar: $('#toc-nav'),
+      toc: $('#toc'),
+      expandableNavs: $('.doc-expandable-nav')
+    });
+    window.docs = docs;
+    return docs.init();
+  });
+
+}).call(this);
+
+(function() {
+  $(function() {
+    $(document).foundation();
+    return $('#header .open-mobile-menu button').on('click', function() {
+      return $(document.body).toggleClass('mobile-menu-active');
+    });
+  });
+
+}).call(this);
+
+(function() {
+  $(function() {
+    var $pms, activeClass, closeOptions;
+    $pms = $('#installation .pms');
+    activeClass = 'active';
+    closeOptions = function() {
+      $pms.removeClass(activeClass);
+      return $(document).off('click', closeOptions);
+    };
+    return $pms.on('click', function(e) {
+      var $clicked, $selected, clickedText;
+      console.log(e);
+      if (!$pms.hasClass(activeClass)) {
+        $pms.addClass(activeClass);
+        return window.setTimeout(function() {
+          return $(document).on('click', closeOptions);
+        }, 1);
+      } else {
+        $selected = $pms.find('.selected');
+        $clicked = $(e.target);
+        if (!$clicked.is('a')) {
+          clickedText = $clicked.text();
+          $clicked.text($selected.text());
+          return $selected.text(clickedText);
+        }
+      }
+    });
+  });
+
+}).call(this);
+
+(function() {
+  var CLEAR_ALL, INITIAL_COMMAND, MSG_OVER_CAPACITY, MSG_START_FAILED, MSG_WELCOME, calculateGeometry, createSocket, createTerm, ensureFullHeight, getInitialCommand, getWebSocketRootURL, initApp, resizeBackend;
+
+  MSG_WELCOME = "💁  here you can try httpie with a local httpbin.org,\n   there is no internet access so other sites won't load\n\n⌨️  press <enter> to start your demo… ";
+
+  MSG_OVER_CAPACITY = "sorry, there is currently too many users connected\n";
+
+  MSG_START_FAILED = "sorry, couldn't start a new terminal for you\n";
+
+  CLEAR_ALL = "\033[2J\033[1;1H";
+
+  INITIAL_COMMAND = "http -v PUT httpbin.org/put API-Key:foo hello=world";
+
+  initApp = function() {
+    var $term, socket, term, tid;
+    $term = $('#term');
+    if (!$term.length) {
+      return;
+    }
+    $(window).on('resize', function() {
+      return ensureFullHeight($term);
+    }).trigger('resize');
+    term = createTerm($term);
+    term.open($term[0], true);
+    term.write(MSG_WELCOME);
+    socket = null;
+    tid = null;
+    $(window).on('resize', function() {
+      window.clearTimeout(tid);
+      return tid = window.setTimeout(function() {
+        var geometry;
+        geometry = calculateGeometry($term);
+        console.log('resizing ', geometry);
+        term.resize(geometry.cols, geometry.rows);
+        if (socket) {
+          return resizeBackend($term, socket);
+        }
+      }, 300);
+    });
+    term.on('data', function(data) {
+      var message;
+      console.log("TERM: '" + data + "'");
+      if (!socket || socket.readyState !== WebSocket.OPEN) {
+        term.write(CLEAR_ALL);
+        if ((socket != null ? socket.readyState : void 0) === WebSocket.CLOSED) {
+          socket = null;
+        }
+        return window.setTimeout(function() {
+          console.log('SOCK: creating');
+          socket = createSocket($term, term, getInitialCommand());
+          return window.SOCKET = socket;
+        }, 200);
+      } else {
+        message = ['stdin', data];
+        console.log('SEND:', message);
+        return socket.send(JSON.stringify(message));
+      }
+    });
+    return window.TERM = term;
+  };
+
+  getInitialCommand = function() {
+    var cmd, hashArgs;
+    cmd = INITIAL_COMMAND;
+    hashArgs = window.location.hash.substr(1).replace(/\s+/g, ' ').replace(/(^\s+|\s+$)/g, '');
+    console.log(hashArgs);
+    if (/^[a-zA-Z0-9._ \/:|><='"-]+$/.test(hashArgs)) {
+      cmd = hashArgs;
+    }
+    return cmd;
+  };
+
+  getWebSocketRootURL = function() {
+    var protocol;
+    protocol = window.location.protocol.replace('http', 'ws');
+    return protocol + "//" + window.location.host;
+  };
+
+  ensureFullHeight = function($term) {
+    var height;
+    height = $(window).height() - $('header').outerHeight();
+    return $term.css('height', height + "px");
+  };
+
+  calculateGeometry = function($term) {
+    var $test, columnWidth, geometry, rowHeight;
+    $test = $('<span>x</span>').css('visibility', 'hidden').appendTo($term);
+    columnWidth = $test.width();
+    rowHeight = parseFloat($term.css('line-height'));
+    $test.remove();
+    geometry = {
+      cols: Math.floor($term.width() / columnWidth),
+      rows: Math.floor($term.height() / rowHeight)
+    };
+    return geometry;
+  };
+
+  resizeBackend = function($term, socket) {
+    var geometry, message;
+    geometry = calculateGeometry($term);
+    message = ['set_size', geometry.rows, geometry.cols];
+    console.log('SEND:', message);
+    return socket.send(JSON.stringify(message));
+  };
+
+  createSocket = function($term, term, initialCommand) {
+    var initialized, socket;
+    socket = new WebSocket(getWebSocketRootURL() + '/demo/socket');
+    initialized = false;
+    socket.onopen = function(event) {
+      console.log('SOCK:', event.type);
+      return resizeBackend($term, socket);
+    };
+    socket.onclose = function(event) {
+      console.log('SOCK:', event.type);
+      return term.write("\n\ndisconnected! press <enter> to start again\n\n");
+    };
+    socket.onmessage = function(event) {
+      var message, payload, ref, type;
+      console.log('SOCK:', event.type);
+      ref = JSON.parse(event.data), type = ref[0], payload = ref[1];
+      console.log('GOT:', type, event);
+      switch (type) {
+        case 'stdout':
+          term.write(payload);
+          if (!initialized) {
+            initialized = true;
+            message = ["stdin", initialCommand];
+            return socket.send(JSON.stringify(message));
+          }
+          break;
+        case 'MaxTerminalsReached':
+          return term.write(MSG_OVER_CAPACITY);
+        case 'StartError':
+          return term.write(MSG_START_FAILED);
+        case 'disconnect':
+          return null;
+      }
+    };
+    return socket;
+  };
+
+  createTerm = function($term) {
+    var colors, geometry, options;
+    colors = Terminal.colors.slice();
+    colors[256] = $term.css('background-color');
+    colors[257] = $term.css('color');
+    geometry = calculateGeometry($term);
+    options = {
+      colors: colors,
+      screenKeys: false,
+      convertEol: true,
+      cursorBlink: true,
+      useStyle: false,
+      cols: geometry.cols,
+      row: geometry.rows,
+      geometry: [geometry.cols, geometry.rows]
+    };
+    console.log(options);
+    return new Terminal(options);
+  };
+
+  $(initApp);
+
+}).call(this);

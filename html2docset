@@ -200,3 +200,6 @@ html2docset -n mybatis -k mybatis -i ./mybatis.png -d mybatis -p /www.mybatis.or
 
 # Command generate Puppeteer API doc
 html2docset -n puppeteer -k puppeteer -i ./puppeteer.png -d puppeteer -p /github.com/GoogleChrome/puppeteer/blob/master/docs/api.md.html -s puppeteer-api --page-pattern='api.md.html' --link-pattern='api.md.html#' --link-script='href.sub!(/^/, "/github.com/GoogleChrome/puppeteer/blob/master/docs/");'
+
+# Command generate httpie doc
+html2docset -n httpie -k httpie -i ./httpie.png -d httpie-docset -p /httpie.org/doc.html -s httpie --page-pattern='doc.html' --link-pattern='^doc.html#' --link-script='href.sub!(/^/, "/httpie.org/");'
