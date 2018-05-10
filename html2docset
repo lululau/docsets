@@ -203,3 +203,6 @@ html2docset -n puppeteer -k puppeteer -i ./puppeteer.png -d puppeteer -p /github
 
 # Command generate httpie doc
 html2docset -n httpie -k httpie -i ./httpie.png -d httpie-docset -p /httpie.org/doc.html -s httpie --page-pattern='doc.html' --link-pattern='^doc.html#' --link-script='href.sub!(/^/, "/httpie.org/");'
+
+# Command generate thymeleaf tutorials
+html2docset -n thymeleaf -k thymeleaf -i ./thymeleaf.png -d thymeleaf-docset -p /www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html -s thymeleaf --page-pattern='(extendingthymeleaf|thymeleafspring|usingthymeleaf).html' --link-pattern='^(extendingthymeleaf|thymeleafspring|usingthymeleaf).html#' --link-script='href.sub!(/^/, "/www.thymeleaf.org/doc/tutorials/3.0/");'

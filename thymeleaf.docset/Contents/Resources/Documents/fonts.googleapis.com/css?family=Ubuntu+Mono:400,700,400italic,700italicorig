@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Ubuntu Mono Italic'), local('UbuntuMono-Italic'), url(https://fonts.gstatic.com/s/ubuntumono/v7/KFOhCneDtsqEr0keqCMhbCc_OsbSlQ.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Ubuntu Mono Bold Italic'), local('UbuntuMono-BoldItalic'), url(https://fonts.gstatic.com/s/ubuntumono/v7/KFO8CneDtsqEr0keqCMhbCc_Mn33hY9uew.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu Mono'), local('UbuntuMono-Regular'), url(https://fonts.gstatic.com/s/ubuntumono/v7/KFOjCneDtsqEr0keqCMhbCc6CsE.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Ubuntu Mono Bold'), local('UbuntuMono-Bold'), url(https://fonts.gstatic.com/s/ubuntumono/v7/KFO-CneDtsqEr0keqCMhbC-BL9H1tYg.ttf) format('truetype');
+}
