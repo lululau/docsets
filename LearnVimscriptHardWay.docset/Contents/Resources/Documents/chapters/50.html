@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>段移动原理 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">段移动原理</h1>
+<p>如果你未曾用过Vim的段移动命令 (<code>[[</code>, <code>]]</code>, <code>[]</code> and <code>][</code>)，现在花上几秒读读它们的帮助文档。
+也顺便读读<code>:help section</code>。</p>
+<p>还是不懂？这不是什么问题，我第一次读这些的时候也是这样。
+在写代码之前，我们先岔开来学习这些移动是怎么工作的，然后在下一章我们将使得我们的Potion插件支持它们。</p>
+<h2 id="nroff">Nroff文件</h2>
+<p>四个"段移动"命令正如其字面上的含义，可以用来在文件的"段"之间移动。</p>
+<p>这些命令默认为[nroff文件][]而设计。
+Nroff类似于LaTex或Markdown -- 它是用来写标记文本的(最终会生成UNIX man页面)。</p>
+<p>Nroff文件使用一组"macro"来定义"段头"。
+比如，这里有个来自于<code>awk</code>man页面的例子：</p>
+<pre class="codehilite"><code class="language-nroff">.SH NAME                                                     ***
+awk \- pattern-directed scanning and processing language
+.SH SYNOPSIS                                                 ***
+.B awk
+[
+.BI \-F
+.I fs
+]
+[
+.BI \-v
+.I var=value
+]
+[
+.I 'prog'
+|
+.BI \-f
+.I progfile
+]
+[
+.I file ...
+]
+.SH DESCRIPTION                                              ***
+.I Awk
+scans each input
+.I file
+for lines that match ...</code></pre>
+
+
+<p>以<code>.SH</code>开头的行就是段头。我用<code>***</code>把它们标记出来。
+四个段移动命令将在段头行之间移动你的光标。</p>
+<p>Vim以<code>.</code>和nroff的段头符开始的任何行当做一个段头，<em>即使你编辑的不是nroff文件</em>！</p>
+<p>你可以改变<code>sections</code>设置来改变段头符，但Vim依旧需要在行开头有一个点，而且段头符必须是成对的字符，
+所以这样改对Potion文件不会有足够的灵活性。</p>
+<h2 id="_2">括号</h2>
+<p>段移动命令<em>也</em>查看另一样东西：一个打开或关闭的大括号(<code>{</code>或<code>}</code>)作为行的第一个字符。</p>
+<p><code>[[</code>和<code>]]</code>查看开括号，而<code>[]</code>和<code>][</code>查看闭括号。</p>
+<p>这额外的"行为"使得你可以在C风格语言的段之间轻松移动。
+然而，这些规则也依旧没有顾及你正在编辑的文件类型！</p>
+<p>加入下面内容到一个缓冲区里：</p>
+<pre class="codehilite"><code class="language-text">Test           A B
+Test
+
+.SH Hello      A B
+
+Test
+
+{              A
+Test
+}                B
+
+Test
+
+.H World       A B
+
+Test
+Test           A B</code></pre>
+
+
+<p>现在执行<code>:set filetype=basic</code>来告诉Vim这是一个BASIC文件，并尝试段移动命令。</p>
+<p><code>[[</code>和<code>]]</code>命令将在标记为<code>A</code>的行之间移动，而<code>[]</code>和<code>][</code>将在标记为<code>B</code>的行之间移动。</p>
+<p>这告诉我们，Vim总是用同样的两条规则来处理段移动，即使没有一条是起作用的(比如在BASIC中的情况)！</p>
+<h2 id="_3">练习</h2>
+<p>再次阅读<code>:help section</code>，现在你应该可以理解段移动了。</p>
+<p>也顺便读读<code>:help sections</code>吧。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="49.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="51.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="50.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

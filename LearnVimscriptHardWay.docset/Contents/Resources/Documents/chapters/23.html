@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>函数 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">函数</h1>
+<p>一如大多数编程语言，Vimscript支持函数。让我们看看如何创建函数，然后再讨论它们的古怪之处。</p>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:function meow()</code></pre>
+
+
+<p>你可能会认为这将定义函数<code>meow</code>。不幸的是，情况不是这样的，我们已经掉进了Vimscript其中的一个坑。</p>
+<p><strong>没有作用域限制的Vimscript函数必须以一个大写字母开头！</strong></p>
+<p>即使你<em>真的</em>给函数限定了作用域(我们待会会谈到)，你最好也用一个大写字母开头。
+大多数Vimscript程序猿都是这么做的，所以不要破例。</p>
+<p>ok，是时候认真地定义一个函数了。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:function Meow()
+:  echom "Meow!"
+:endfunction</code></pre>
+
+
+<p>这次Vim愉快地定义了一个函数。让我们试试运行它：</p>
+<pre class="codehilite"><code class="language-vim">:call Meow()</code></pre>
+
+
+<p>不出所料，Vim显示<code>Meow!</code></p>
+<p>让我们试试令它返回一个值。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:function GetMeow()
+:  return "Meow String!"
+:endfunction</code></pre>
+
+
+<p>现在执行这个命令试试：</p>
+<pre class="codehilite"><code class="language-vim">:echom GetMeow()</code></pre>
+
+
+<p>Vim将调用这个函数并把结果传递给<code>echom</code>，显示<code>Meow String!</code>。</p>
+<h2 id="_2">调用函数</h2>
+<p>我们已经看到，Vimscript里调用函数有两种不同的方法。</p>
+<p>当你想直接调用一个函数时，使用<code>call</code>命令。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:call Meow()
+:call GetMeow()</code></pre>
+
+
+<p>第一个函数输出<code>Meow!</code>，然而第二个却没有任何输出。当你使用<code>call</code>时，返回值会被丢弃，
+所以这种方法仅在函数具有副作用时才有用。</p>
+<p>第二种方法是在表达式里调用函数。这次不需要使用<code>call</code>，你只需引用函数的名字。
+执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom GetMeow()</code></pre>
+
+
+<p>正如我们见过的，这会调用<code>GetMeow</code>并把返回值传递给<code>echom</code>。</p>
+<h2 id="_3">隐式返回</h2>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom Meow()</code></pre>
+
+
+<p>这将会显示两行：<code>Meow!</code>和<code>0</code>。第一个显然来自于<code>Meow</code>内部的<code>echom</code>。第二个则告诉我们，
+如果一个Vimscript函数不返回一个值，它隐式返回<code>0</code>。看我们可以利用这一点做什么。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:function TextwidthIsTooWide()
+:  if &amp;l:textwidth &gt;# 80
+:    return 1
+:  endif
+:endfunction</code></pre>
+
+
+<p>这个函数涉及到我们之前学到的许多重要概念：</p>
+<ul><li><code>if</code>语句</li>
+<li>将选项作为变量</li>
+<li>访问特定作用域里的选项变量</li>
+<li>大小写敏感的比较</li>
+</ul><p>如果你对以上内容感到陌生，最好翻到前几章温习一遍。</p>
+<p>现在我们已经定义了一个函数，该函数告诉我们当前缓冲区的<code>textwidth</code>会不会设得‘太过宽’。
+(因为80字符的限制适用于除了HTML之外的任何代码文件)</p>
+<p>现在让我们使用它。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:set textwidth=80
+:if TextwidthIsTooWide()
+:  echom "WARNING: Wide text!"
+:endif</code></pre>
+
+
+<p>在这里我们做了什么？</p>
+<ul><li>一开始我们设置全局的<code>textwidth</code>为<code>80</code>。</li>
+<li>接着我们运行一个if语句判断<code>TextwidthIsTooWide()</code>是否为真。</li>
+<li>由于不满足条件，<code>if</code>语句体(译注：包括函数内的和函数外的)不会被执行。</li>
+</ul><p>因为我们没有显式返回一个值，Vim从函数中返回代表'falsy'的<code>0</code>。试试改变一下。运行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:setlocal textwidth=100
+:if TextwidthIsTooWide()
+:  echom "WARNING: Wide text!"
+:endif</code></pre>
+
+
+<p>这次函数中的<code>if</code>执行了它的语句体，返回<code>1</code>，并且我们手工输入的<code>if</code>语句也执行了<em>它</em>的语句体。</p>
+<h2 id="_4">练习</h2>
+<p>阅读<code>:help :call</code>。目前先忽略关于"范围"的内容。你可以传递多少参数给一个函数？感到惊讶不？</p>
+<p>阅读<code>:help E124</code>第一自然段并找出你可以用哪些字符来命名函数。可以用下划线吗？点(Dashes)呢？
+重音符号(Accented characters)？Unicode符号？如果读了文档还是搞不清楚，试一下看看。</p>
+<p>阅读<code>:help return</code>。这个命令的缩写("short form")是什么？(我说了你千万不要用它)
+在你的预期之内吗？如果不是，为什么？</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="22.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="24.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="23.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

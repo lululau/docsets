@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>路径 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">路径</h1>
+<p>Vim是一个文本编辑器，而文本编辑器(经常)处理文本文件。文本文件储存在文件系统中，
+而我们使用路径来描述文件。Vimscript有一些内置的方法会在你需要处理路径时帮上大忙。</p>
+<h2 id="_2">绝对路径</h2>
+<p>有时外部脚本也需要获取特定文件的绝对路径名。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom expand('%')
+:echom expand('%:p')
+:echom fnamemodify('foo.txt', ':p')</code></pre>
+
+
+<p>第一个命令显示我们正在编辑的文件的相对路径。<code>%</code>表示"当前文件"。
+Vim也支持其他一些字符串作为<code>expand()</code>的参数。</p>
+<p>第二个命令显示当前文件的完整的绝对路径名。字符串中的<code>:p</code>告诉Vim你需要绝对路径。
+这里也有许多别的修饰符可以用到。</p>
+<p>第三个命令显示了当前文件夹下的文件<code>foo.txt</code>的绝对路径，无论文件是否存在。(译注：试一下看看文件不存在的情况？)
+<code>fnamemodify()</code>是一个比<code>expand()</code>灵活多了的Vim函数，
+你可以指定任意文件名作为<code>fnamemodify()</code>的参数，而不仅仅是<code>expand()</code>所需要的那种特殊字符串。</p>
+<h2 id="_3">列出文件</h2>
+<p>你可能想要得到一个特定文件夹下的文件列表。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo globpath('.', '*')</code></pre>
+
+
+<p>Vim将输出当前目录下所有的文件和文件夹。<code>globpath()</code>函数返回一个字符串，
+其中每一项都用换行符隔开。为了得到一个列表，你需要自己去<code>split()</code>。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo split(globpath('.', '*'), '\n')</code></pre>
+
+
+<p>这次Vim显示一个包括各个文件路径的Vimscript列表。
+如果你的文件名里包括了换行符，那就只能由你自己想办法了。</p>
+<p><code>globpath()</code>的通配符(wildcards)的工作方式就像你所想的一样。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo split(globpath('.', '*.txt'), '\n')</code></pre>
+
+
+<p>Vim显示一个当前文件夹下的所有<code>.txt</code>文件组成的列表。</p>
+<p>你可以用<code>**</code>递归地列出文件。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo split(globpath('.', '**'), '\n')</code></pre>
+
+
+<p>Vim将列出当前文件夹下的所有文件及文件夹。</p>
+<p><code>globpath()</code><em>非常地</em>强大。在你完成本章练习后，你将学到更多内容。</p>
+<h2 id="_4">练习</h2>
+<p>阅读<code>:help expand()</code>.</p>
+<p>阅读<code>:help fnamemodify()</code>.</p>
+<p>阅读<code>:help filename-modifiers</code>.</p>
+<p>阅读<code>:help simplify()</code>.</p>
+<p>阅读<code>:help resolve()</code>.</p>
+<p>阅读<code>:help globpath()</code>.</p>
+<p>阅读<code>:help wildcards</code>.</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="39.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="41.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="40.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

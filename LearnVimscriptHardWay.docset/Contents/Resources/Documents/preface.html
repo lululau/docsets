@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>前言 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="index.html"></a></h1>
+            </header>
+
+            
+                <section class="content">
+                    
+    <div class="fourteen columns offset-by-one">
+        <div><h1 id="_1">前言</h1>
+<p>程序猿们更喜欢实现自己的idea。</p>
+<p>idea形成算法，而算法又发展为算法，并使 <em>idea成真</em> </p>
+<p>作为一个程序猿，我们使用文本编辑器记录我们的idea，并为写程序实现它。全职的程序猿
+一生中的千分之十的时间都是在和他的文本编辑器打交道，这期间他们的所做的事情包括：</p>
+<ul><li>将他们的灵感记录到计算机上</li>
+<li>重新考虑并修改灵感中的错误</li>
+<li>用代码实现他们的灵感</li>
+<li>写文档记录某功能是如何及为什么那么实现</li>
+<li>与其他的程序猿交流这个经验</li>
+</ul><p>Vim是一个功能相当强大的编辑器，当然，前提是你需要根据你的工作、喜好以及习惯定制
+它。本书将向你介绍Vimscript，一门用于定制Vim的脚本语言。读完本书你将能够定制
+Vim使其更加适应你的文本编辑需求，以后再使用Vim将有更好的体验。</p>
+<p>同时我也会提到一些与Vimscript关系不大的点，但那些内容通常都能加强你对Vimscript的认知。
+如果你一天仅很少的时间使用Vim，学习Vimscript对你没有多大意义，所以请慎重考虑并平衡你的时间。</p>
+<p>本书的写作风格与其他多数的编程书籍略有不同。本书将引领你敲写命令并查看其背后的奥秘
+，而不是仅仅简单的告诉你Vimscript是如何工作的。</p>
+<p>有时本书会带你进入死胡同，然后才会给你解释解决问题的"正确方法"。其他的书籍通常不这么做，
+或者仅仅在解决问题 <em>之后</em> 提到其中的技巧。然而这并不是现实世界中事情的进展顺序。
+你时常会快速写一些Vimscript的代码段，运行却遇到不明缘由的故障。细致研读此书，不要
+局限于浏览，读完之后再次遇到上述问题你将能够顺利解决了。熟能生巧嘛！</p>
+<p>本书的每一章节都只讲述一个主题。每一章节都内容简短而信息丰富，所以不要跳过任何章节。
+如果你真想从本书中学到东西，你要动手敲写所有的命令。可能你已经是一个经验丰富的程序猿，
+能够快速阅读并理解代码的含义。但是不要掉以轻心，学习Vim/Vimscript有个与其他普通程序
+语言更加不同的体验。</p>
+<p>你需要 <strong>敲写 <em>所有的</em> 命令</strong></p>
+<p>你需要 <strong>完成 <em>所有的</em> 练习</strong></p>
+<p>两个理由解释上述内容的重要性！第一，Vimscript语言是一门古老的语言，其设计难免存在一些
+不妥之处。一个简单的配置项就可影响整个脚本的功能。敲写 <em>每个</em> 章节遇到的 <em>每个</em> 命令
+，完成 <em>每个</em> 练习，你就会发现很容易地发现并修复遇到的问题。</p>
+<p>第二，Vimscript其实 <em>就是</em> Vim命令。在Vim中，保存一个文件使用命令<code>:write</code>（或者缩写
+<code>:w</code>）并回车确认。在Vimscript中，使用<code>write</code>实现文件保存功能。Vimscript中的许多
+命令都可用于日常文件编辑工作，必须勤加练习以记住那些命令才会有用，
+仅仅是看过是无法运用自如的。</p>
+<p>我希望本书能够对你有所帮助。本书 <em>不是</em> 一本对Vimscript的综合指南。本书试图让你
+掌握Vimscript，能够利用它定制你的Vim环境，为其他用户编写一些简单的插件，
+能够阅读他人的代码（利用<code>:help</code>命令），能够分辨出一些常见的语法陷阱。</p>
+<p>祝你好运！</p></div>
+
+        <div class="prevnext">
+            
+            
+                <a class="next" href="acknowledgements.html">Next &raquo;</a>
+            
+        </div>
+    </div>
+
+                </section>
+            
+
+            <footer class="sixteen columns">
+                Made by <a href="preface.html"></a>.
+
+                <a href="license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

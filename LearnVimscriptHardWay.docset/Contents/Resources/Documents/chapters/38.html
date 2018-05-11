@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>切换 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">切换</h1>
+<p>在开头前几章我们曾讲过怎么在Vim里设置选项。
+对于布尔选项，我们可以使用<code>set someoption!</code>来"切换"选项。
+如果我们能给这个命令创建一个映射，那就再好不过了。</p>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;N :setlocal number!&lt;cr&gt;</code></pre>
+
+
+<p>在normal模式中按下<code>&lt;leader&gt;N</code>看看。Vim将会在开启和关闭行号显示之间切换。
+像这样的"切换"映射是十分方便的，因此我们就不需要两个独立的键来开/关。</p>
+<p>不幸的是，这只对布尔选项起作用。如果我们想要切换一个非布尔选项，还需要做更多的工作。</p>
+<h2 id="_2">切换选项</h2>
+<p>从创建一个可以切换选项的函数，以及调用该函数的映射开始吧。
+把下面的代码加入到你的<code>~/.vimrc</code>(或一个<code>~/.vim/plugin/</code>中的独立文件，如果你想要的话)：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;f :call FoldColumnToggle()&lt;cr&gt;
+
+function! FoldColumnToggle()
+    echom &amp;foldcolumn
+endfunction</code></pre>
+
+
+<p>保存并source文件，然后按下<code>&lt;leader&gt;f</code>试试看。Vim显示当前<code>foldcolumn</code>选项的值。
+如果你不熟悉这个选项，阅读<code>:help foldcolumn</code>再继续。</p>
+<p>让我们添加真正的切换功能。修改代码成这样：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;f :call FoldColumnToggle()&lt;cr&gt;
+
+function! FoldColumnToggle()
+    if &amp;foldcolumn
+        setlocal foldcolumn=0
+    else
+        setlocal foldcolumn=4
+    endif
+endfunction</code></pre>
+
+
+<p>保存并source文件，然后试试看。每次你按下它Vim将显示或隐藏折叠状态条(fold column)。</p>
+<p><code>if</code>语句判断<code>&amp;foldcolumn</code>是否为真(记住Vim把0看作假而其他数字为真)。
+如果是，把它设成0(隐藏它)。否则就设置它为4。就是这么简单。</p>
+<p>你可以使用一个简单的函数像这样来切换任何以<code>0</code>代表关，以其他数字代表开的选项。</p>
+<h2 id="_3">切换其他东西</h2>
+<p>我们的梦想不应止于切换选项。还有一个我们想切换的东西是quickfix窗口。
+依然以之前的骨架代码作为起点。加入下面的代码到你的文件：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;q :call QuickfixToggle()&lt;cr&gt;
+
+function! QuickfixToggle()
+    return
+endfunction</code></pre>
+
+
+<p>这个映射暂时什么都不干。让我们把它转变成其他稍微有点用的东西(不过还没有彻底完成)。
+把代码改成这样：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;q :call QuickfixToggle()&lt;cr&gt;
+
+function! QuickfixToggle()
+    copen
+endfunction</code></pre>
+
+
+<p>保存并source文件。如果现在你试一下这个映射，你就会看到一个空荡荡的quickfix窗口。</p>
+<p>为了达到实现切换功能的目的，我们将选择一个既快捷又肮脏的手段：全局变量。
+把代码改成这样：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;q :call QuickfixToggle()&lt;cr&gt;
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction</code></pre>
+
+
+<p>我们干的事情十分简单 —— 每次调用函数时，我们用一个全局变量来储存quickfix窗口的开关状态。</p>
+<p>保存并source文件，接着执行映射试试看。Vim将抱怨变量尚未定义！那么我们先把变量初始化吧。</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;q :call QuickfixToggle()&lt;cr&gt;
+
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction</code></pre>
+
+
+<p>保存并source文件，接着试一下映射。成功了！</p>
+<h2 id="_4">改进</h2>
+<p>我们的切换函数可以工作，但还留有一些问题。</p>
+<p>第一个问题是，假设用户用<code>:copen</code>或<code>:cclose</code>手动开关窗口，我们的全局变量将不会刷新。
+实际上这不会是个大问题，因为大多数情况下用户会用这个映射开关窗口，万一没有打开，他们也会再按一次。</p>
+<p>这又是关于写Vimscript代码的重要经验：如果你试图处理每一个边际条件，你将陷在里面，而且不会有任何进展。</p>
+<p>在大多数情况下，先推出可工作(而且即使不能工作也不会造成破坏)的代码然后回过头改善，
+要比耗费许多小时苛求完美好得多。除外你正在开发一个很可能有很多人用到的插件。
+在这种情况下它才值得耗费时日来达到无懈可击的程度，让用户满意并减少bug报告。</p>
+<h2 id="_5">重新加载窗口/缓冲区</h2>
+<p>我们的函数的另外一个问题是，当用户已经打开了quickfix窗口，并执行这个映射时，
+Vim关闭了窗口，接着把他们弹到上一个分割中，而不是送他们回之前的地方。
+如果你仅仅想快速查看一下quickfix窗口然后继续工作，发生这种事是让人恼怒的。</p>
+<p>为了解决这个问题，我们将引入一种写Vim插件时非常有用的惯用法。把你的代码改成这样：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;q :call QuickfixToggle()&lt;cr&gt;
+
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+        execute g:quickfix_return_to_window . "wincmd w"
+    else
+        let g:quickfix_return_to_window = winnr()
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction</code></pre>
+
+
+<p>我们在映射中加入了新的两行。其中一行(在<code>else</code>分支)设置了另一个全局变量，来保存执行<code>:copen</code>时的当前窗口序号。</p>
+<p>另一行(在<code>if</code>分支)执行以那个序号作前缀的<code>wincmd w</code>，来告诉Vim跳转到对应窗口。</p>
+<p>我们的解决方法又一次不是无懈可击的，用户可能在两次执行映射之间打开或关闭新的分割。
+即使这样，它还是适合于大多数场合，所以目前这已经够好的了。</p>
+<p>在大多数程序中，这种手工保存全局状态的伎俩会遭到谴责，但对于一个非常短小的Vimscript函数而言，
+它既快捷又肮脏，却能不辱使命，完成重任。</p>
+<h2 id="_6">练习</h2>
+<p>阅读<code>:help foldcolumn</code>.</p>
+<p>阅读<code>:help winnr()</code></p>
+<p>阅读<code>:help ctrl-w_w</code>.</p>
+<p>阅读<code>:help wincmd</code>.</p>
+<p>在需要的地方加上<code>s:</code>和<code>&lt;SID&gt;</code>来把函数限定在独自的命名空间中。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="37.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="39.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="38.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>字典 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">字典</h1>
+<p>我们讲到的最后一种Vimscript类型将是字典。
+Vimscript字典类似于Python中的dict，Ruby中的hash，和Javascript中的object。</p>
+<p>字典用花括号创建。值是异质的，但<em>键会被强制转换成字符串</em>。就是这么简单，你没想到吧？</p>
+<p>执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo {'a': 1, 100: 'foo'}</code></pre>
+
+
+<p>Vim显示<code>{'a':1,'100':'foo'}</code>，这说明Vimscript的确把键强制转换为字符串，同时保留值不变。</p>
+<p>Vimscript避免了Javascript标准的蠢笨之处，允许你在字典的最后一个元素后留下一个逗号。
+(译注：在Javascript的标准中，最后一个元素后面不能留下一个逗号。
+但在Firefox里，留下那个逗号是允许的，不过这是Firefox的问题。)
+执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo {'a': 1, 100: 'foo',}</code></pre>
+
+
+<p>Vim再次显示<code>{'a':1,'100':'foo'}</code>(译注：结尾小逗号不见了)。你应该<em>总是</em>在字典里留下一个多余的逗号，
+<em>尤其</em>是当字典的定义跨越多行的时候，这样增加新项的时候将不容易犯错。</p>
+<h2 id="_2">索引</h2>
+<p>查找字典中的一个值的语法跟大多数语言是一样的。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo {'a': 1, 100: 'foo',}['a']</code></pre>
+
+
+<p>Vim显示<code>1</code>。试试使用不是字符串的索引：</p>
+<pre class="codehilite"><code class="language-vim">:echo {'a': 1, 100: 'foo',}[100]</code></pre>
+
+
+<p>Vim会在查找之前把索引强制转换成字符串，因为键只能是字符串，这么做是合理的。</p>
+<p>当键仅由字母，数字和/或下划线组成时，Vimscript也支持Javascript风格的"点"查找。
+试试下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo {'a': 1, 100: 'foo',}.a
+:echo {'a': 1, 100: 'foo',}.100</code></pre>
+
+
+<p>两种情况下，Vim都显示了正确的元素。使用哪种索引字典的方式取决于你自己的偏好。</p>
+<h2 id="_3">赋值和添加</h2>
+<p>像对待变量一样赋值给字典中的项，就可以在字典中轻松地添加新的项。</p>
+<pre class="codehilite"><code class="language-vim">:let foo = {'a': 1}
+:let foo.a = 100
+:let foo.b = 200
+:echo foo</code></pre>
+
+
+<p>Vim显示<code>{'a': 100, 'b': 200}</code>。赋值和添加一个新项的方式是一样的。</p>
+<h2 id="_4">移除项</h2>
+<p>有两种方法可以移除字典中的项。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:let test = remove(foo, 'a')
+:unlet foo.b
+:echo foo
+:echo test</code></pre>
+
+
+<p>Vim显示<code>{}</code>和<code>100</code>。<code>remove</code>函数将移除给定字典的给定键对应的项，并返回被移除的值。
+<code>unlet</code>命令也能移除字典中的项，只是不返回值。</p>
+<p>你不能移除字典中不存在的项。试试执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:unlet foo["asdf"]</code></pre>
+
+
+<p>Vim抛出一个错误。</p>
+<p>选择<code>remove</code>还是<code>unlet</code>很大程度上取决于个人偏好。如果非要我说，我推荐使用<code>remove</code>，
+因为它比<code>unlet</code>更灵活。<code>remove</code>可以做任何<code>unlet</code>能做的事，反过来不成立。
+所以选择<code>remove</code>可以一招鲜，吃遍天。</p>
+<h2 id="_5">字典函数</h2>
+<p>就像列表，Vim有许许多多内置的字典函数。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom get({'a': 100}, 'a', 'default')
+:echom get({'a': 100}, 'b', 'default')</code></pre>
+
+
+<p>Vim显示<code>100</code>和<code>default</code>，如同列表版本的<code>get</code>函数.</p>
+<p>你也可以检查给定字典里是否有给定的键。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom has_key({'a': 100}, 'a')
+:echom has_key({'a': 100}, 'b')</code></pre>
+
+
+<p>Vim显示<code>1</code>和<code>0</code>。不要忘了，Vimscript把<code>0</code>当作假而其他数字则是真。</p>
+<p>你可以用<code>items</code>从一个字典中获取对应的键值对，执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo items({'a': 100, 'b': 200})</code></pre>
+
+
+<p>Vim将显示<code>[['a',100],['b',200]]</code>这样的嵌套列表。到目前为止，Vimscript字典<em>不一定</em>是有序的，
+所以不要指望<code>items</code>的返回结果是有序的！</p>
+<p>你可以用<code>keys</code>返回字典的所有的键和<code>values</code>返回所有的值。它们的作用一如其名——你可以查一下。</p>
+<h2 id="_6">练习</h2>
+<p>阅读<code>:help Dictionary</code>。看完它。注意大写<code>D</code>。</p>
+<p>阅读<code>:help get()</code>.</p>
+<p>阅读<code>:help has_key()</code>.</p>
+<p>阅读<code>:help items()</code>.</p>
+<p>阅读<code>:help keys()</code>.</p>
+<p>阅读<code>:help values()</code>.</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="36.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="38.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="37.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

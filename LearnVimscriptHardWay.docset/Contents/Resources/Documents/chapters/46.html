@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>高级语法高亮 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">高级语法高亮</h1>
+<p>目前我们已经为Potion文件实现了简单的关键字和函数的语法高亮。</p>
+<p>如果没有做上一章的练习，你需要回去完成。我将假设你做了练习。</p>
+<p>事实上，你应该回去完成你跳过的<em>任何</em>练习。即使你觉得你不需要，为了更好的学习效果，
+你都得把它们完成了。请在这一点上相信我。</p>
+<h2 id="_2">高亮注释</h2>
+<p>接下来我们需要高亮Potion的一个重要组成部分——注释。
+问题是，Potion的注释以<code>#</code>开头，而<code>#</code>并不在<code>iskeyword</code>里。</p>
+<p>如果不知道什么是<code>iskeyword</code>，你没有认真听讲。回去并<em>完成那该死的练习</em>。
+在写每一章的内容时，我不会把无意义的粗重活丢给你。你<em>真的</em>需要完成它们来跟上本书的进度。</p>
+<p>因为<code>#</code>不是一个keyword字符，我们需要使用正则表达式来匹配它(以及接下来的注释)。
+我们将用<code>syntax match</code>代替<code>syntax keyword</code>。在你的syntax文件中加入下面几行：</p>
+<pre class="codehilite"><code class="language-vim">syntax match potionComment "\v#.*$"
+highlight link potionComment Comment</code></pre>
+
+
+<p>我不会再唠叨要把它们放到文件的哪里。你已经是个程序猿了：由你自己判断。</p>
+<p>关闭并重新打开<code>factorial.pn</code>。在文件的某处添加一个注释，你将看到它被当作注释高亮了。</p>
+<p>第二行是简单的：它告诉Vim高亮<code>potionComment</code>语法类型组里的任何东西为<code>Comment</code>。</p>
+<p>第一行有点新东西。我们使用<code>syntax match</code>来告诉Vim用<em>正则表达式</em>而不是关键词来匹配。</p>
+<p>注意正则表达式以<code>\v</code>开头，表示使用"very magic"模式。
+如果你不太清楚，重读关于基本正则表达式的那一章。(译注：第31章)</p>
+<p>当前状况下，"very magic"模式不是必须的。
+但将来我们可能会改变这个正则表达式，然后苦思冥想为何它不工作了，
+所以我建议总是使用"very magic"来保证一致性。</p>
+<p>至于正则表达式的功能，非常简单：匹配以<code>#</code>开头的注释，包括以此开始到行末的所有字符。</p>
+<p>如果你需要重新唤起对正则表达式的记忆，你应该看一下
+Zed Shaw的<a href="http://regex.learncodethehardway.org/">Learn Regex the Hard Way</a>。</p>
+<h2 id="_3">高亮运算符</h2>
+<p>另一个需要正则表达式来高亮的部分是运算符。在你的syntax文件中加入下列内容：</p>
+<pre class="codehilite"><code class="language-vim">syntax match potionOperator "\v\*"
+syntax match potionOperator "\v/"
+syntax match potionOperator "\v\+"
+syntax match potionOperator "\v-"
+syntax match potionOperator "\v\?"
+syntax match potionOperator "\v\*\="
+syntax match potionOperator "\v/\="
+syntax match potionOperator "\v\+\="
+syntax match potionOperator "\v-\="
+
+highlight link potionOperator Operator</code></pre>
+
+
+<p>关闭并重新打开<code>factorial.pn</code>。注意到阶乘函数的<code>*=</code>现在被高亮了。</p>
+<p>你可能首先注意到，我把每个正则表达式独立成一行而不是像对关键字一样分成组。
+这是因为<code>syntax match</code><em>不</em>支持在一行里放多个组。</p>
+<p>你应该也注意到每个正则表达式都以<code>\v</code>开头，即使并不是必须的。
+在写Vimscript时，我希望保持正则表达式的一致性，即使这样做需要多打几个符号。</p>
+<p>你可能会奇怪，为什么我不用类似于<code>"\v-\=?"</code>的正则表达式来同时匹配<code>-</code><em>以及</em><code>-=</code>。
+你想要的话也可以这么做。它会正常工作。
+我只是坚持认为<code>-</code>和<code>-=</code>是不同的运算符，所以把它们放到不同行里。</p>
+<p>把每个运算符放在单独的匹配中，简化了正则表达式，代价是输入了额外的字符。
+我喜欢这么做，但你可能不这么认为。你自己决定吧。</p>
+<p>我也没有把<code>=</code>定义成一个运算符。我们等会会这么做，但我希望暂时先不这样做，这样就能给你考上一题了。</p>
+<p>因为分开了<code>-</code>和<code>-=</code>的正则表达式，我不得不在定义<code>-</code><em>之后</em>定义<code>-=</code>！</p>
+<p>如果以相反的顺序定义，并在Potion文件里使用<code>-=</code>，Vim将匹配<code>-</code>(当然，同时也高亮它)，
+剩下<code>=</code>等待匹配。这意味着在构建<code>syntax match</code>组时，每个组"消耗"的文本片段在之后不能被匹配到。</p>
+<p>这讲得太笼统了，但我暂时并不打算纠结于细节。
+总之，你应该在匹配较小的组之后匹配较大的组，因为在<em>之后</em>定义的组优先于在<em>之前</em>定义的组。</p>
+<p>让我们继续并添加<code>=</code>作为运算符。现在请听题：</p>
+<pre class="codehilite"><code class="language-vim">syntax match potionOperator "\v\="</code></pre>
+
+
+<p>花一点时间想想你应该把它放在syntax文件的哪个位置。如果你需要提示，重读前几章。</p>
+<h2 id="_4">练习</h2>
+<p>阅读<code>:help syn-match</code>.</p>
+<p>阅读<code>:help syn-priority</code>.</p>
+<p>在例子中，我们没有把<code>:</code>当作运算符。阅读Potion文档并审慎地决定是否把<code>:</code>当作一个运算符。
+如果你决定这么做，把它加到syntax文件中。</p>
+<p>同样考虑<code>.</code>和<code>/</code>。</p>
+<p>增加一个高亮数字的语法类型分组<code>potionNumber</code>。链接它到高亮组<code>Number</code>。
+不要忘了Potion支持<code>2</code>，<code>0xffaf</code>，<code>123.23</code>，<code>1e-2</code>和<code>1.9956e+2</code>这几种形式。
+记得在处理边际状态的花费的时间和这些边际状态出现的次数之间取得平衡。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="45.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="47.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="46.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

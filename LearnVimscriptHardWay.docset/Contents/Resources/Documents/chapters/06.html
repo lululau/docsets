@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Leaders / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="leaders">Leaders</h1>
+<p>我们已经学了一种不会让我们发狂的键盘映射方法，但是你可以注意到另外一个问题。</p>
+<p>每次我们像<code>:nnoremap &lt;space&gt; dd</code>这样映射一个按键都会覆盖掉<code>&lt;space&gt;</code>的原有功能。
+如果哪天我们想用<code>&lt;space&gt;</code>了，怎么办？</p>
+<p>有些按键你平常使用并不需要用到。你几乎永远不会用到<code>-</code>、 <code>H</code>、<code>L</code>、<code>&lt;space&gt;</code>、<code>&lt;cr&gt;</code>
+和<code>&lt;bs&gt;</code>这些按键的功能（当然，是在normal模式下）。依据你的工作方式，可能还有其他你
+不会用到的按键。</p>
+<p>这些按键都可以随意映射，但是只有这6个按键貌似不够吧。难道为Vim称道的可定制传说
+有问题？</p>
+<h2 id="_1">映射按键序列</h2>
+<p>不像Emacs，Vim可以映射多个按键。运行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap -d dd
+:nnoremap -c ddO</code></pre>
+
+
+<p>norma模式下快读敲入 <code>-d</code>或<code>-c</code>查看效果。第一个映射作用是删除一行，第二个是
+删除一行并进入insert模式。</p>
+<p>这就意味着你可以用一个你不常用的按键（如<code>-</code>）作为“前缀”，后接其它字符作为一个整体
+进行映射。你需要多敲一个按键以执行这些映射，多一个按键而已，很容易就记住了。</p>
+<p>如果你也认为这是个好方法，我可以告诉你，Vim已经支持这种机制。</p>
+<h2 id="leader">Leader</h2>
+<p>我们称这个“前缀”为“leader”。你可以按你的喜好设置你的leader键。运行命令：</p>
+<pre class="codehilite"><code class="language-vim">:let mapleader = "-"</code></pre>
+
+
+<p>你可以替换<code>-</code>为你喜欢的按键。尽管会屏蔽一个有用的功能，但我个人使用的是<code>,</code>，因为这个键比较
+比较容易按到。</p>
+<p>当你创建新的映射时，你可以使用<code>&lt;leader&gt;</code>表示“我设置的leader按键”。运行命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;d dd</code></pre>
+
+
+<p>现在试试按下你的leader按键和<code>d</code>。Vim会删除当前行。</p>
+<p>然而为何每次都要繁琐的设置<code>&lt;leader&gt;</code>？为什么创建映射时不直接敲入你的“前缀”按键？
+原因主要有三个。</p>
+<p>首先，你某天可能会想要更换你的“leader”。在一个地方定义它使得更方便更换它。</p>
+<p>第二，其他人看你的<code>~/.vimrc</code>文件时，一旦看到<code>&lt;leader&gt;</code>就能够立即知道你的用意。如果他们
+喜欢你的<code>~/.vimrc</code>配置，即使他们使用不同的leader也可以简单的复制你的映射配置。</p>
+<p>最后，许多Vim插件都会创建以<code>&lt;leader&gt;</code>开头的映射。如果你已经设置了leader，你会更容易上手
+使用那些插件。</p>
+<h2 id="local-leader">Local Leader</h2>
+<p>Vim有另外一个“leader”成为“local leader“。这个leader用于那些只对某类文件
+（如Python文件、HTML文件）而设置的映射。</p>
+<p>本书将在后续章节讲述如何为特定类型的文件创建映射，但你可以现在创建一个“localleader”：</p>
+<pre class="codehilite"><code class="language-vim">:let maplocalleader = "\\"</code></pre>
+
+
+<p>注意我们使用<code>\\</code>而不是<code>\</code>，因为<code>\</code>在Vimscript中是转义字符。我们将在后续章节
+讲到这个。</p>
+<p>现在你就可以在映射中使用<code>&lt;localleader&gt;</code>了，使用方法和<code>&lt;leader&gt;</code>一样（当然，
+你要使用另外一个前缀）。</p>
+<p>如果你不喜欢反斜线，请随意更改它。</p>
+<h2 id="_2">练习</h2>
+<p>阅读<code>:help mapleader</code>。</p>
+<p>阅读<code>:help maplocalleader</code>。</p>
+<p>在你的<code>~/.vimrc</code>文件中设置<code>mapleader</code>和<code>maplocalleader</code>。</p>
+<p>增加<code>&lt;leader&gt;</code>前缀到之前章节中你添加到<code>~/.vimrc</code>文件中的映射命令，
+防止那些映射覆盖了默认的按键作用。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="05.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="07.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="06.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

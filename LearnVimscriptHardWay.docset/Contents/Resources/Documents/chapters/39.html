@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>函数式编程 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">函数式编程</h1>
+<p>现在让我们小憩一下，聊一聊一种你可能听过的编程风格：<a href="https://secure.wikimedia.org/wikipedia/en/wiki/Functional_programming">函数式编程</a>。</p>
+<p>如果你用过Python，Ruby或Javascript，<em>甚或</em>Lisp，Scheme，Clojure或Haskell，
+你应该会觉得把函数作为变量类型，用不可变的状态作为数据结构是平常的事。
+如果你没用过，你可以放心地跳过这一章了，但我还是鼓励你找机会去试试并拓宽自己的视野。</p>
+<p>Vimscript具有使用函数式风格进行编程的潜力，不过会有点吃力。
+我们可以创建一些辅助函数来让这个过程少些痛苦。</p>
+<p>继续前进并创建<code>functional.vim</code>文件，这样你就不用反复地重新击打每一行代码。
+这个文件将会成为这一章的草稿本。</p>
+<h2 id="_2">不可变的数据结构</h2>
+<p>不幸的是，Vim没有类似于Clojure内置的vector和map那样的不可变集合，
+不过通过一些辅助函数，我们可以在一定程度上模拟出来。</p>
+<p>在你的文件加上下面的函数:</p>
+<pre class="codehilite"><code class="language-vim">function! Sorted(l)
+    let new_list = deepcopy(a:l)
+    call sort(new_list)
+    return new_list
+endfunction</code></pre>
+
+
+<p>保存并source文件，然后执行<code>:echo Sorted([3,2,4,1])</code>来试试看。
+Vim输出<code>[1,2,3,4]</code>。</p>
+<p>这跟调用内置的<code>sort()</code>函数有什么区别呢？关键在于第一行：<code>let new_list = deepcopy(a:l)</code>。
+Vim的<code>sort()</code><em>就地</em>重排列表，所以我们先创建一个列表的副本，并排序<em>副本</em>,
+这样原本的列表不会被改变。</p>
+<p>这样就避免了副作用，并帮助我们写出更容易推断和测试的代码。让我们加入更多同样风格的辅助函数：</p>
+<pre class="codehilite"><code class="language-vim">function! Reversed(l)
+    let new_list = deepcopy(a:l)
+    call reverse(new_list)
+    return new_list
+endfunction
+
+function! Append(l, val)
+    let new_list = deepcopy(a:l)
+    call add(new_list, a:val)
+    return new_list
+endfunction
+
+function! Assoc(l, i, val)
+    let new_list = deepcopy(a:l)
+    let new_list[a:i] = a:val
+    return new_list
+endfunction
+
+function! Pop(l, i)
+    let new_list = deepcopy(a:l)
+    call remove(new_list, a:i)
+    return new_list
+endfunction</code></pre>
+
+
+<p>除了中间的一行和它们接受的参数，每一个函数都是一样的。保存并source文件，在一些列表上试试它们。</p>
+<p><code>Reversed()</code>接受一个列表并返回一个新的倒置了元素的列表。</p>
+<p><code>Append()</code>返回一个在原列表的基础上增加了给定值的新列表。</p>
+<p><code>Assoc()</code>("associate"的缩写)返回一个给定索引上的元素被替换成新值的新列表。</p>
+<p><code>Pop()</code>返回一个给定索引上的元素被移除的新列表。</p>
+<h2 id="_3">作为变量的函数</h2>
+<p>Vimscript支持使用变量储存函数，但是相关的语法有点愚钝。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:let Myfunc = function("Append")
+:echo Myfunc([1, 2], 3)</code></pre>
+
+
+<p>Vim意料之中地显示<code>[1, 2, 3]</code>。注意我们使用的变量以大写字母开头。
+如果一个Vimscript变量要引用一个函数，它就要以大写字母开头。</p>
+<p>就像其他种类的变量，函数也可以储存在列表里。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:let funcs = [function("Append"), function("Pop")]
+:echo funcs[1](['a', 'b', 'c'], 1)</code></pre>
+
+
+<p>Vim显示<code>['a', 'c']</code>。<code>funcs</code>变量<em>不</em>需要以大写字母开头，因为它储存的是列表，而不是函数。
+列表的内容不会造成任何影响。</p>
+<h2 id="_4">高阶函数</h2>
+<p>让我们创建一些用途广泛的高阶函数。如果你需要解释，高阶函数就是接受<em>别的</em>函数并使用它们的函数。</p>
+<p>我们将从<code>map</code>函数开始。在你的文件中添加这个：</p>
+<pre class="codehilite"><code class="language-vim">function! Mapped(fn, l)
+    let new_list = deepcopy(a:l)
+    call map(new_list, string(a:fn) . '(v:val)')
+    return new_list
+endfunction</code></pre>
+
+
+<p>保存并source文件，执行下面命令试试看：</p>
+<pre class="codehilite"><code class="language-vim">:let mylist = [[1, 2], [3, 4]]
+:echo Mapped(function("Reversed"), mylist)</code></pre>
+
+
+<p>Vim显示<code>[[2, 1], [4, 3]]</code>，正好是对列表中的每一个元素应用了<code>Reversed()</code>的结果。</p>
+<p><code>Mapped()</code>是如何起作用的？我们又一次用<code>deepcopy()</code>创建新的列表，修修改改，返回修改后的副本
+—— 没什么是新的。有门道的是中间的部分。</p>
+<p><code>Mapped()</code>接受两个参数：一个funcref("储存一个函数的变量"在Vim里的说法)和一个列表。
+我们使用内置的<code>map()</code>函数实现真正的工作。现在就阅读<code>:help map()</code>来看它怎么工作的。</p>
+<p>现在我们将创建一些通用的高阶函数。把下面的代码加入到你的文件：</p>
+<pre class="codehilite"><code class="language-vim">function! Filtered(fn, l)
+    let new_list = deepcopy(a:l)
+    call filter(new_list, string(a:fn) . '(v:val)')
+    return new_list
+endfunction</code></pre>
+
+
+<p>用下面的命令尝试<code>Filtered()</code>：</p>
+<pre class="codehilite"><code class="language-vim">:let mylist = [[1, 2], [], ['foo'], []]
+:echo Filtered(function('len'), mylist)</code></pre>
+
+
+<p>Vim显示<code>[[1, 2], ['foo']]</code>。</p>
+<p><code>Filtered()</code>接受一个谓词函数和一个列表。它返回一个列表的副本，
+而这个列表只包括将自身作为谓词函数的输入参数并返回真值的元素。
+这里我们使用了内置的<code>len()</code>，让它过滤掉所有长度为0的元素。</p>
+<p>最后我们创建了<code>Filtered()</code>的好基友(counterpart)：</p>
+<pre class="codehilite"><code class="language-vim">function! Removed(fn, l)
+    let new_list = deepcopy(a:l)
+    call filter(new_list, '!' . string(a:fn) . '(v:val)')
+    return new_list
+endfunction</code></pre>
+
+
+<p>像使用<code>Filtered()</code>一样试一下：</p>
+<pre class="codehilite"><code class="language-vim">:let mylist = [[1, 2], [], ['foo'], []]
+:echo Removed(function('len'), mylist)</code></pre>
+
+
+<p>Vim显示<code>[[], []]</code>。<code>Removed()</code>就像<code>Filtered()</code>，不过它只保留谓词函数返回<em>非</em>真值的元素。</p>
+<p>代码中的唯一不同在于调用命令前面的<code>'!' .</code>，它把谓词函数的结果取反。</p>
+<h2 id="_5">效率</h2>
+<p>考虑到Vim不得不持续地创建新的副本并垃圾回收旧的对象，你可能会认为不停地制造副本是种浪费。</p>
+<p>是的，你是对的！Vim的列表不像Clojure的vector那样支持结构共享(structural sharing)，
+所以这里所有的复制操作是昂贵的。</p>
+<p>有时这的确是个问题。如果你需要使用庞大的列表，程序就会因此变慢。
+在现实世界，你可能会吃惊地发现你几乎不会注意到其中的差别。</p>
+<p>想想看吧：当我正写下本章时，Vim占用了80M内存(而且我可是装了<em>一堆</em>插件)。
+我的笔记本总共有<em>8G</em>内存。有一些列表的副本被创建出来，这会造成可被察觉的不同吗？
+当然这取决于列表的大小，但在大多数情况下答案将会是"No"。</p>
+<p>作为比较，我的Firefox打开了五个tab，现在正饕餮着<em>1.22G</em>内存。</p>
+<p>你将需要自己判断，什么时候这种编程风格会导致不可接受的低效率。</p>
+<h2 id="_6">练习</h2>
+<p>阅读<code>:help sort()</code>。</p>
+<p>阅读<code>:help reverse()</code>。</p>
+<p>阅读<code>:help copy()</code>。</p>
+<p>阅读<code>:help deepcopy()</code>。</p>
+<p>阅读<code>:help map()</code>，如果你未曾读过。</p>
+<p>阅读<code>:help function()</code>。</p>
+<p>修改<code>Assoc()</code>, <code>Pop()</code>, <code>Mapped()</code>, <code>Filtered()</code>和<code>Removed()</code>来支持字典类型。
+你可能需要阅读<code>:help type()</code>来帮助自己。</p>
+<p>实现<code>Reduced()</code>。</p>
+<p>倒给自己一杯最喜欢的饮料。这一章真激烈(intense)！</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="38.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="40.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="39.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

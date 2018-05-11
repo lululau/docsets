@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>列表 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">列表</h1>
+<p>目前为止我们已经很熟悉Vimscript里的变量类型了，但我们压根还没讲到集合(aggregates)呢！
+Vim有两种主要的集合类型，现在我们将讲到第一种：列表。</p>
+<p>Vimscript列表是有序的，异质的元素集合。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo ['foo', 3, 'bar']</code></pre>
+
+
+<p>Vim输出这个列表。列表里当然可以嵌套列表。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo ['foo', [3, 'bar']]</code></pre>
+
+
+<p>Vim会愉快地输出这个列表。</p>
+<h2 id="_2">索引</h2>
+<p>Vimscript列表的索引从0开始，你可以用下标得到对应元素。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo [0, [1, 2]][1]</code></pre>
+
+
+<p>Vim显示<code>[1,2]</code>。你也可以从列表结尾进行索引，这很像Python。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo [0, [1, 2]][-2]</code></pre>
+
+
+<p>Vim显示<code>0</code>。索引<code>-1</code>对应列表的最后一个元素，<code>-2</code>对应倒数第二个，以此类推。</p>
+<h2 id="_3">切割</h2>
+<p>Vim列表也可被切割。这<em>看上去</em>会让Python程序员感到眼熟，但它<em>不</em>总是表现得跟Python中的一样！
+执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo ['a', 'b', 'c', 'd', 'e'][0:2]</code></pre>
+
+
+<p>Vim显示<code>['a','b','c']</code>(第1,2,3个元素)。越过列表索引上界也是安全的。试试这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo ['a', 'b', 'c', 'd', 'e'][0:100000]</code></pre>
+
+
+<p>Vim仅仅显示整个列表。</p>
+<p>可以用负数切割。试试这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo ['a', 'b', 'c', 'd', 'e'][-2:-1]</code></pre>
+
+
+<p>Vim显示<code>['d','e']</code>(元素-2和-1)。</p>
+<p>你可以忽略第一个索引以表示"开头"和/或最后一个索引以表示"结尾"。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo ['a', 'b', 'c', 'd', 'e'][:1]
+:echo ['a', 'b', 'c', 'd', 'e'][3:]</code></pre>
+
+
+<p>Vim显示<code>['a','b']</code>和<code>['d','e']</code>。</p>
+<p>像Python，Vimscript也允许你索引和切割字符串。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo "abcd"[0:2]</code></pre>
+
+
+<p>Vim显示<code>abc</code>。可是，你不能使用负数来索引字符串。你却<em>可以</em>使用负数切割字符串！
+执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo "abcd"[-1] . "abcd"[-2:]</code></pre>
+
+
+<p>Vim显示<code>cd</code>(使用负数索引会没有报错地得到一个空字符串)。</p>
+<h2 id="_4">连接</h2>
+<p>你可以用<code>+</code>连接Vim列表。试试这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo ['a', 'b'] + ['c']</code></pre>
+
+
+<p>Vim，一点也不奇怪地，显示<code>['a','b','c']</code>。
+没什么好说的——在奇怪的Vimscript世界里，列表是如此地正常，以至于让人感到奇怪。</p>
+<h2 id="_5">列表函数</h2>
+<p>Vim有着许许多多内置列表函数。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:let foo = ['a']
+:call add(foo, 'b')
+:echo foo</code></pre>
+
+
+<p>Vim就地在列表<code>foo</code>末尾加上<code>'b'</code>，并显示<code>['a','b']</code>。</p>
+<pre class="codehilite"><code class="language-vim">:echo len(foo)</code></pre>
+
+
+<p>Vim显示<code>2</code>，即是列表的长度。试试下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo get(foo, 0, 'default')
+:echo get(foo, 100, 'default')</code></pre>
+
+
+<p>Vim显示<code>a</code>和<code>default</code>。<code>get</code>函数会返回给定索引对应的给定列表的项，如果索引超过列表范围，
+返回给定的默认值。</p>
+<p>执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo index(foo, 'b')
+:echo index(foo, 'nope')</code></pre>
+
+
+<p>Vim显示<code>1</code>和<code>-1</code>。<code>index</code>函数返回给定项在给定列表的第一个索引，如果不在列表中则返回<code>-1</code>。</p>
+<p>现在执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo join(foo)
+:echo join(foo, '---')
+:echo join([1, 2, 3], '')</code></pre>
+
+
+<p>Vim显示<code>a b</code>,<code>a---b</code>,和<code>123</code>。<code>join</code>先将给定列表的每一项强制转换成字符串，
+再以给定的分割字符串(或一个空格，如果没有给的话)作为分割，连接成一个字符串。</p>
+<p>执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:call reverse(foo)
+:echo foo
+:call reverse(foo)
+:echo foo</code></pre>
+
+
+<p>Vim先显示<code>['b','a']</code>，接着是<code>['a','b']</code>。<code>reverse</code><em>就地</em>转置给定的列表。</p>
+<h2 id="_6">练习</h2>
+<p>阅读<code>:help List</code>。看完它。注意大写<code>L</code>。</p>
+<p>阅读<code>:help add()</code>.</p>
+<p>阅读<code>:help len()</code>.</p>
+<p>阅读<code>:help get()</code>.</p>
+<p>阅读<code>:help index()</code>.</p>
+<p>阅读<code>:help join()</code>.</p>
+<p>阅读<code>:help reverse()</code>.</p>
+<p>浏览<code>:help functions</code>来查找我没有讲过的其他列表函数。
+执行<code>:match Keyword /\clist/</code>来以大小写不敏感的方式高亮单词<code>list</code>，以便于你的查找。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="34.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="36.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="35.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>基本折叠 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">基本折叠</h1>
+<p>如果从未在Vim里使用过代码折叠，你不知道你都错过了什么。
+阅读<code>:help usr_28</code>并花费时间在日常工作中使用它。
+一旦到了铭记于指的程度，你就可以继续本章了。</p>
+<h2 id="_2">折叠类型</h2>
+<p>Vim支持六种不同的决定如何折叠你的文本的折叠类型。</p>
+<h3 id="manual">Manual</h3>
+<p>你手动创建折叠并且折叠将被Vim储存在内存中。
+当你关闭Vim时，它们也将一并烟消云散，而下次你编辑文件时将不得不重新创建。</p>
+<p>在你把它跟一些自定义的创建折叠的映射结合起来时，这种方式会很方便。
+在本书中，我们不会这么做，但当你想这么做的时候，它会帮上忙。</p>
+<h3 id="marker">Marker</h3>
+<p>Vim基于特定的字符组合折叠你的代码。</p>
+<p>这些字符通常放置于注释中(比如<code>// {{{</code>)，
+不过在有些语言里，你可以使用该语言自己的语法代替，比如javascript的<code>{</code>和<code>}</code>。</p>
+<p>纯粹为了你的编辑器，用注释割裂你的代码看上去有点丑，但好处是你可以定制特定的折叠。
+如果你想以特定的方式组织一个大文件，这个类型将是非常棒的选择。</p>
+<h3 id="diff">Diff</h3>
+<p>在diff文件时使用该特定的折叠类型。我们不会讨论它，因为Vim会自动使用它。</p>
+<h3 id="expr">Expr</h3>
+<p>这让你可以用自定义的Vimscript来决定折叠的位置。它是最为强大的方式，不过也需要最繁重的工作。
+下一章我们将讲到它。</p>
+<h3 id="indent">Indent</h3>
+<p>Vim使用你的代码的缩进来折叠。同样缩进等级的代码折叠到一块，空行则被折叠到周围的行一起去。</p>
+<p>这是最便捷的方式，因为你的代码已经缩进过了；你仅仅需要启动它。
+这将是我们用来折叠Potion代码的第一种方式。</p>
+<h2 id="potion">Potion折叠</h2>
+<p>让我们再一次看一下Potion实例代码：</p>
+<pre class="codehilite"><code class="language-text">factorial = (n):
+    total = 1
+    n to 1 (i):
+        total *= i.
+    total.
+
+10 times (i):
+    i string print
+    '! is: ' print
+    factorial (i) string print
+    "\n" print.</code></pre>
+
+
+<p>函数体和循环体已经缩进好了。这意味着我们可以不怎么费力就能实现一些基本的缩进。</p>
+<p>在我们开始之前，在<code>total *= i</code>上添加一个注释，这样我们就有一个供测试的多行内部块。
+你将在做练习的时候学到为什么我们需要这么做，但暂时先信任我。现在文件看上去就像这样：</p>
+<pre class="codehilite"><code class="language-text">factorial = (n):
+    total = 1
+    n to 1 (i):
+        # Multiply the running total.
+        total *= i.
+    total.
+
+10 times (i):
+    i string print
+    '! is: ' print
+    factorial (i) string print
+    "\n" print.</code></pre>
+
+
+<p>在你的Potion插件的版本库下创建一个<code>ftplugin</code>文件夹，然后在里面创建一个<code>potion</code>文件夹。
+最后，在<em><code>potion</code>文件夹</em>里面创建一个<code>folding.vim</code>文件。</p>
+<p>不要忘了每次Vim设置一个buffer的<code>filetype</code>为<code>potion</code>时，它都会执行这个文件中的代码。
+(因为它位于一个叫<code>potion</code>的文件夹)</p>
+<p>将所有的折叠相关的代码放在同一个文件显然是一个好主意，它能帮我们维护我们的插件的繁多的功能。</p>
+<p>在这个文件中加入下面一行：</p>
+<pre class="codehilite"><code class="language-vim">setlocal foldmethod=indent</code></pre>
+
+
+<p>关闭Vim，重新打开<code>factoria.pn</code>。用<code>zR</code>，<code>zM</code>和<code>za</code>尝试折叠功能。</p>
+<p>一行Vimscript代码就能带来一些有用的折叠！这真是太酷了！</p>
+<p>你可能注意到<code>factorial</code>函数的内循环里面的那几行不能折叠，尽管它们缩进了。
+为什么会这样？</p>
+<p>事实上，在使用<code>indent</code>折叠时，Vim默认忽略以<code>#</code>字符开头的行。
+这在编辑C文件时很有用(这时<code>#</code>表示一个预编译指令)，但在编辑其他文件时不怎么有意义。</p>
+<p>让我们在<code>ftplugin/potion/folding.vim</code>中添加多一行来修复问题：</p>
+<pre class="codehilite"><code class="language-vim">setlocal foldmethod=indent
+setlocal foldignore=</code></pre>
+
+
+<p>关闭并重新打开<code>factorial.pn</code>，现在内部块可以正常地折叠了。</p>
+<h2 id="_3">练习</h2>
+<p>阅读<code>:help foldmethod</code>.</p>
+<p>阅读<code>:help fold-manual</code>.</p>
+<p>阅读<code>:help fold-marker</code>和<code>:help foldmarker</code>.</p>
+<p>阅读<code>:help fold-indent</code>.</p>
+<p>阅读<code>:help fdl</code>和<code>:help foldlevelstart</code>.</p>
+<p>阅读<code>:help foldminlines</code>.</p>
+<p>阅读<code>:help foldignore</code>.</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="47.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="49.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="48.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

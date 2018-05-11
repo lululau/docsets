@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>自动命令 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">自动命令</h1>
+<p>现在我们谈论一个跟映射一样重要的东西：自动命令。</p>
+<p>自动命令可以让Vim自动执行某些指定的命令，这些指定的命令会在某些事件发生的时候执行。我们先看一个例子。</p>
+<p>使用<code>:edit foo</code>打开一个新文件，然后立即使用<code>:quit</code>关闭。查看你的硬盘，你会发现这个文件并不存在。这是因为在你第一次保存这个文件之前，Vim<em>实际上</em>并没有真正创建它。</p>
+<p>让我们对Vim做一些改变，使得Vim可以在你开始编辑文件的时候就创建它们。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufNewFile * :write</code></pre>
+
+
+<p>这里面有很多需要进一步说明的，不过在此之前我建议你先感受下它是怎么工作的。执行<code>:edit foo</code>，使用<code>:quit</code>关闭，然后查看硬盘。这个时候文件会存在（当然文件内容为空）。</p>
+<p>你只有关闭Vim才能删除这个自动命令。我们会在后面的章节说明如何避免这种情况。</p>
+<h2 id="_2">自动命令结构</h2>
+<p>让我们来深入分析下我们刚才创建的自动命令：</p>
+<pre class="codehilite"><code class="language-text">:autocmd BufNewFile * :write
+         ^          ^ ^
+         |          | |
+         |          | 要执行的命令
+         |          |
+         |          用于事件过滤的“模式（pattern）”
+         |
+         要监听的“事件”</code></pre>
+
+
+<p>这个命令的第一部分是我们想监听的事件的类型。Vim提供了<em>很多</em>可以监听的事件。这些事件包括：</p>
+<ul><li>开始编辑一个当前并不存在的文件。</li>
+<li>读取一个文件，不管这个文件是否存在。</li>
+<li>改变一个缓冲区的<code>filetype</code>设置。</li>
+<li>在某段时间内不按下键盘上面的某个按键。</li>
+<li>进入插入模式。</li>
+<li>退出插入模式。</li>
+</ul><p>上面只举出了可用事件里面的很小一部分。还有很多其他的事件，你可以利用这些事件来做一些有趣的事情。</p>
+<p>这个自动命令的下一部分是一个“模式”，这个模式可以进一步限定你要执行的命令的执行范围。新开一个Vim实例，执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufNewFile *.txt :write</code></pre>
+
+
+<p>这个跟之前的那个自动命令基本一样，不过这个自动命令只对后缀为<code>.txt</code>的文件有效，也就是说当你新建的文件为txt文件的时候，Vim会在文件创建的时候自动执行write命令将文件保存到硬盘上。</p>
+<p>试试执行<code>:edit bar</code>，然后执行<code>:quit</code>，再执行<code>:edit bar.txt</code>，然后再执行<code>:quit</code>。你会发现Vim会自动创建<code>bar.txt</code>，但不会创建<code>bar</code>，因为它的后缀名不是txt，不跟模式匹配。</p>
+<p>这个自动命令的最后一部分是事件发生时我们想执行的命令。这个部分很容易理解，跟我们执行其他命令一样，除了不能在这个命令中使用特殊的字符，例如<code>&lt;cr&gt;</code>。我们会在本书后面的章节中谈论如何突破这个限制，现在你只需要遵守它就可以。</p>
+<h2 id="_3">再来一个示例</h2>
+<p>我们再定义一个自动命令，这次使用一个不同的事件。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufWritePre *.html :normal gg=G</code></pre>
+
+
+<p>这里用到了<code>normal</code>命令，我会在本书的后面的章节里面讲到它，这可能有点超前，不过我觉得这是一个很好的使用自动命令的示例，所以请大家先忍受一下。</p>
+<p>创建一个名为<code>foo.html</code>的新文件。用Vim编辑它，并输入下面的文本，请保证输入的文本<em>完全一致</em>，包括空白符：</p>
+<pre class="codehilite"><code class="language-html">&lt;html&gt;
+&lt;body&gt;
+ &lt;p&gt;Hello!&lt;/p&gt;
+                 &lt;/body&gt;
+                  &lt;/html&gt;</code></pre>
+
+
+<p>执行<code>:w</code>保存这个文件。看看会发生了什么？Vim似乎在文件保存之前重新进行了文本缩进处理。</p>
+<p>ok，请先相信我文本缩进处理是<code>:normal gg=G</code>干的，先别纠结于为什么<code>:normal gg=G</code>可以干这个。</p>
+<p>我们<em>应该</em>把注意力放在自动命令上。这个自动命令里面用到的事件是<code>BufWritePre</code>，这个事件会在你保存<em>任何</em>字符到文件之前触发。</p>
+<p>我们使用了<code>*.html</code>这个模式，这个模式会保证命令只会在编辑html文件的时候被执行。这就是自动命令强大的地方，因为它可以专门针对特定类型的文件来执行我们想要执行的命令。ok，让我们继续探索它吧。</p>
+<h2 id="_4">多个事件</h2>
+<p>你可以创建一个绑定<em>多个</em>事件的自动命令，这些事件使用逗号分隔开。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufWritePre,BufRead *.html :normal gg=G</code></pre>
+
+
+<p>这个跟上面的自动命令基本一样，不同的是它会让Vim不仅在写html文件的时候进行缩进处理，读html文件的时候也会进行缩进处理。如果你有些同事不喜欢把HTML文件格式搞得漂亮点，那么这个命令会很有用。</p>
+<p>在Vim脚本编程中有一个不成文的规定，你应该同时使用<code>BufRead</code>和<code>BufNewFile</code>（译注：这里不是BufWritePre）这两个事件来运行命令，这样当你打开某个类型的文件，不论这个文件是否存在命令都会执行。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufNewFile,BufRead *.html setlocal nowrap</code></pre>
+
+
+<p>上面的命令会使得无论你在什么时候编辑HTML文件自动换行都会被关闭。</p>
+<h2 id="filetype">FileType事件</h2>
+<p>最有用的事件是<code>FileType</code>事件。这个事件会在Vim设置一个缓冲区的<code>filetype</code>的时候触发。</p>
+<p>让我们针对不同文件类型设置一些有用的映射。运行命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd FileType javascript nnoremap &lt;buffer&gt; &lt;localleader&gt;c I//&lt;esc&gt;
+:autocmd FileType python     nnoremap &lt;buffer&gt; &lt;localleader&gt;c I#&lt;esc&gt;</code></pre>
+
+
+<p>打开一个Javascript文件（后缀为<code>.js</code>的文件）,将光标移动到某一行，敲击<code>&lt;localleader&gt;c</code>，光标所在的那一行会被注释掉。</p>
+<p>现在打开一个Python文件（后缀为<code>.py</code>的文件）,将光标移动到某一行，敲击<code>&lt;localleader&gt;c</code>，同样的那一行会被注释掉，不同的是此时所用的是Python的注释字符！</p>
+<p>在自动命令中包含我们上一章中学到的本地缓冲区映射，我们可以创建一些映射，这些映射会根据我们正在编辑的文件的类型来进行不同的处理。</p>
+<p>这可以为我们在编码的时候减轻很多思考的负担。如果要添加一个注释，我们可能想到的是必须将光标移动到行首，然后添加一个注释字符，而使用上面的映射，我们只需要简单的将其理解为“注释掉这一行”。</p>
+<h2 id="_5">练习</h2>
+<p>浏览<code>:help autocmd-events</code>查看自动命令可以绑定的所有事件。你不需要现在就记住每一个事件。仅仅只需要了解下你可以使用这些事件做哪些事情。</p>
+<p>创建一些<code>FileType</code>自动命令使用<code>setlocal</code>对你喜欢的文件类型做一些设置。你可以针对不同的文件类型设置<code>wrap</code>、<code>list</code>、 <code>spell</code>和<code>number</code>这些选项。</p>
+<p>对一些你会经常处理的文件类型创建一些类似“注释掉这一行”的命令。</p>
+<p>把所有这些自动命令写到你的<code>~/.vimrc</code>文件里面。记住使用前面章节中提到过的快速编辑和加载<code>~/.vimrc</code>文件的映射来做这个事情，这是必须的！</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="11.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="13.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="12.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

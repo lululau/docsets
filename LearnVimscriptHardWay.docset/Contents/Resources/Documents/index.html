@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="static/scripts/less.js"></script>
+    </head>
+
+    <body class="splash">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="index.html"></a></h1>
+            </header>
+
+            
+    <section class="content fourteen columns offset-by-one">
+        <p><a href="http://learnvimscriptthehardway.stevelosh.com/">笨方法学Vimscript</a>面向那些想学会如何自定义<a href="http://www.vim.org/">Vim</a>编辑器的用户。</p>
+<p>这 <em>不是</em> 一个Vim <em>使用</em> 教程。阅读本书之前你应该适应用Vim编辑文本，并知道一些诸如
+"buffer", "window"以及"insert mode"这些术语的含义。</p>
+<p>本书大致分为三个部分：</p>
+<ul>
+<li>第一部分讲述了一些Vim的基本命令，通过这些命令修改你的<code>~/.vimrc</code>可以快速、
+  方便地定制你的Vim环境。</li>
+<li>第二部分将Vimscript作为一门编程语言做深入了解，包括变量、比较还有函数。</li>
+<li>第三部分实例创建一个插件。</li>
+</ul>
+<p>本书<a href="http://learnvimscriptthehardway.stevelosh.com/license.html">版权</a>2013 归Steve Losh所有，非经同意，他人不得出版或作更改。
+你可以在没有做任何改动且不从中牟利的前提下分享本书。</p>
+<p>本书将一直免费在线阅读。</p>
+<p>你可以用8$购买一本<a href="http://leanpub.org/learnvimscriptthehardway">电子版(PDF, epub, mobi)</a>。</p>
+<p>你可以用20$购买一本<a href="http://bit.ly/lvsthw-paperback">纸质版</a>。</p>
+<p>你可以用40$购买一本<a href="http://bit.ly/lvsthw-hardcover">精装版</a>。</p>
+<p>可从<a href="http://bitbucket.org/sjl/learnvimscriptthehardway/">BitBucket</a>和<a href="http://github.com/sjl/learnvimscriptthehardway/">GitHub</a>获取本书的源码。如果你发下任何错误或感觉某处
+可以改善，可以随意提交问题，但是我保留本书的版权，所以，如果你感觉不爽我也能够理解。</p>
+
+        <section class="toc">
+            <h2>Table of Contents</h2>
+
+            <ol class="pre-toc">
+                <li><a href="preface.html">Preface</a></li>
+                <li><a href="acknowledgements.html">Acknowledgements</a></li>
+            </ol>
+            <ol class="toc" start="0">
+                
+                    <li><a href="chapters/00.html">预备知识</a></li>
+                
+                    <li><a href="chapters/01.html">打印信息</a></li>
+                
+                    <li><a href="chapters/02.html">设置选项</a></li>
+                
+                    <li><a href="chapters/03.html">基本映射</a></li>
+                
+                    <li><a href="chapters/04.html">模式映射</a></li>
+                
+                    <li><a href="chapters/05.html">精确映射</a></li>
+                
+                    <li><a href="chapters/06.html">Leaders</a></li>
+                
+                    <li><a href="chapters/07.html">编辑你的Vimrc文件</a></li>
+                
+                    <li><a href="chapters/08.html">Abbreviations</a></li>
+                
+                    <li><a href="chapters/09.html">更多的Mappings</a></li>
+                
+                    <li><a href="chapters/10.html">锻炼你的手指</a></li>
+                
+                    <li><a href="chapters/11.html">本地缓冲区的选项设置和映射</a></li>
+                
+                    <li><a href="chapters/12.html">自动命令</a></li>
+                
+                    <li><a href="chapters/13.html">本地缓冲区缩写</a></li>
+                
+                    <li><a href="chapters/14.html">自动命令组</a></li>
+                
+                    <li><a href="chapters/15.html">Operator-Pending映射</a></li>
+                
+                    <li><a href="chapters/16.html">更多Operator-Pending映射</a></li>
+                
+                    <li><a href="chapters/17.html">状态条</a></li>
+                
+                    <li><a href="chapters/18.html">负责任的编码</a></li>
+                
+                    <li><a href="chapters/19.html">变量</a></li>
+                
+                    <li><a href="chapters/20.html">变量作用域</a></li>
+                
+                    <li><a href="chapters/21.html">条件语句</a></li>
+                
+                    <li><a href="chapters/22.html">比较</a></li>
+                
+                    <li><a href="chapters/23.html">函数</a></li>
+                
+                    <li><a href="chapters/24.html">函数参数</a></li>
+                
+                    <li><a href="chapters/25.html">数字</a></li>
+                
+                    <li><a href="chapters/26.html">字符串</a></li>
+                
+                    <li><a href="chapters/27.html">字符串函数</a></li>
+                
+                    <li><a href="chapters/28.html">Execute命令</a></li>
+                
+                    <li><a href="chapters/29.html">Normal命令</a></li>
+                
+                    <li><a href="chapters/30.html">执行normal!</a></li>
+                
+                    <li><a href="chapters/31.html">基本的正则表达式</a></li>
+                
+                    <li><a href="chapters/32.html">实例研究：Grep 运算符(Operator)，第一部分</a></li>
+                
+                    <li><a href="chapters/33.html">实例研究：Grep运算符(Operator)，第二部分</a></li>
+                
+                    <li><a href="chapters/34.html">实例研究：Grep运算符(Operator)，第三部分</a></li>
+                
+                    <li><a href="chapters/35.html">列表</a></li>
+                
+                    <li><a href="chapters/36.html">循环</a></li>
+                
+                    <li><a href="chapters/37.html">字典</a></li>
+                
+                    <li><a href="chapters/38.html">切换</a></li>
+                
+                    <li><a href="chapters/39.html">函数式编程</a></li>
+                
+                    <li><a href="chapters/40.html">路径</a></li>
+                
+                    <li><a href="chapters/41.html">创建一个完整的插件</a></li>
+                
+                    <li><a href="chapters/42.html">旧社会下的插件配置方式</a></li>
+                
+                    <li><a href="chapters/43.html">新希望：用Pathogen配置插件</a></li>
+                
+                    <li><a href="chapters/44.html">检测文件类型</a></li>
+                
+                    <li><a href="chapters/45.html">基本语法高亮</a></li>
+                
+                    <li><a href="chapters/46.html">高级语法高亮</a></li>
+                
+                    <li><a href="chapters/47.html">更高级的语法高亮</a></li>
+                
+                    <li><a href="chapters/48.html">基本折叠</a></li>
+                
+                    <li><a href="chapters/49.html">高级折叠</a></li>
+                
+                    <li><a href="chapters/50.html">段移动原理</a></li>
+                
+                    <li><a href="chapters/51.html">Potion段移动</a></li>
+                
+                    <li><a href="chapters/52.html">外部命令</a></li>
+                
+                    <li><a href="chapters/53.html">自动加载</a></li>
+                
+                    <li><a href="chapters/54.html">文档</a></li>
+                
+                    <li><a href="chapters/55.html">发布</a></li>
+                
+                    <li><a href="chapters/56.html">还剩下什么？</a></li>
+                
+            </ol>
+        </section>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="index.html"></a>.
+
+                <a href="license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

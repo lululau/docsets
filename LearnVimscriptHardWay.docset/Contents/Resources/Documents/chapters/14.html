@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>自动命令组 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">自动命令组</h1>
+<p>前面几章我们学习了自动命令。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufWrite * :echom "Writing buffer!"</code></pre>
+
+
+<p>现在使用<code>:write</code>命令将当前缓冲区写入文件，然后执行<code>:messages</code>命令查看消息日志。你会看到<code>Writing buffer!</code>在消息列表中。</p>
+<p>然后将当前缓冲区写入文件，执行<code>:messages</code>查看消息日志。你会看到<code>Writing buffer!</code>在消息列表中出现了两次。</p>
+<p>现在再次执行上面的自动命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufWrite * :echom "Writing buffer!"</code></pre>
+
+
+<p>再次将当前缓冲区写入文件并执行<code>:messages</code>命令。你会看到<code>Writing buffer!</code>在消息列表中出现了<em>4</em>次，这是怎么回事？</p>
+<p>这是因为当你以上面的方式创建第二个自动命令的时候，Vim没办法知道你是想替换第一个自动命令。在上面的示例中，Vim创建了两个<em>不同</em>的自动命令，并且这两个命令刚好做同样的事情。</p>
+<h2 id="_2">这会有什么问题？</h2>
+<p>既然你现在知道了Vim可能创建两个完全一样的自动命令，你可能会想：“有什么大不了？只要别这么干就可以！”。</p>
+<p>问题是当你加载你的<code>~/.vimrc</code>文件的时候，Vim会重新读取整个文件，包括你所定义的任何自动命令！这就意味着每次你加载你的<code>~/.vimrc</code>文件的时候，Vim都会复制之前的自动命令，这会降低Vim的运行速度，因为它会一次又一次地执行相同的命令。</p>
+<p>你可以执行下面的命令模拟这种情况：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufWrite * :sleep 200m</code></pre>
+
+
+<p>现在将当前缓冲区写入文件。你可能注意到Vim在写入文件的时候有点缓慢，当然也你可能注意不到。现在执行上面的自动命令三次：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd BufWrite * :sleep 200m
+:autocmd BufWrite * :sleep 200m
+:autocmd BufWrite * :sleep 200m</code></pre>
+
+
+<p>再次写文件。这次会更明显。</p>
+<p>当然你不会创建任何只是进行sleep而不做任何事情的自动命令，不过一个使用Vim的老鸟的<code>~/.vimrc</code>文件可以轻易达到1000行，其中会有很多自动命令。再加上安装的插件中的自动命令，这肯定会影响Vim的速度。</p>
+<h2 id="grouping-autocommands">把自动命令放到组中（Grouping Autocommands）</h2>
+<p>对于这个问题，Vim有一个解决方案。这个解决方案的第一步是将相关的自动命令收集起来放到一个已命名的组（groups）中。</p>
+<p>新开一个Vim实例，这样可以清除之前所创建的自动命令。然后运行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:augroup testgroup
+:    autocmd BufWrite * :echom "Foo"
+:    autocmd BufWrite * :echom "Bar"
+:augroup END</code></pre>
+
+
+<p>中间两行的缩进没有什么含义，如果你不想输入的话可以不输。</p>
+<p>将一个缓冲区写入文件然后执行<code>:messages</code>。你应该可以在消息日志列表中看到<code>Foo</code>和<code>Bar</code>。现在执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:augroup testgroup
+:    autocmd BufWrite * :echom "Baz"
+:augroup END</code></pre>
+
+
+<p>当你再次将缓冲区写入文件的时候猜猜会发生什么。ok，你也许已经有结果了，重新写入缓冲区，然后执行<code>:messages</code>命令，看看你猜对了没。</p>
+<h2 id="_3">清除自动命令组</h2>
+<p>当你写入文件的时候发生什么了？猜对了么？</p>
+<p>如果你认为Vim会替换那个组，那么你猜错了。不要紧，很多人刚开始的时候都会这么想（我也是）。</p>
+<p>当你多次使用<code>augroup</code>的时候，Vim每次都会组合那些组。</p>
+<p>如果你想清除一个组，你可以把<code>autocmd!</code>这个命令包含在组里面。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:augroup testgroup
+:    autocmd!
+:    autocmd BufWrite * :echom "Cats"
+:augroup END</code></pre>
+
+
+<p>现在试试写入文件然后执行<code>:messages</code>查看消息日志。这次Vim只会输出<code>Cats</code>在消息列表中。</p>
+<h2 id="vimrc">在Vimrc中使用自动命令</h2>
+<p>既然我们现在知道了怎么把自动命令放到一个组里面以及怎么清除这些组，我们可以使用这种方式将自动命令添加到<code>~/.vimrc</code>中，这样每次加载它的时候就不会复制自动命令了。</p>
+<p>添加下面的命令到你的<code>~/.vimrc</code>文件中：</p>
+<pre class="codehilite"><code class="language-vim">augroup filetype_html
+    autocmd!
+    autocmd FileType html nnoremap &lt;buffer&gt; &lt;localleader&gt;f Vatzf
+augroup END</code></pre>
+
+
+<p>当进入<code>filetype_html</code>这个组的时候，我们会立即清除这个组，然后定义一个自动命令，然后退出这个组。当我们再次加载<code>~/.vimrc</code>文件的时候，清除组命令会阻止Vim添加一个一模一样的自动命令。</p>
+<h2 id="_4">练习</h2>
+<p>查看你的<code>~/.vimrc</code>文件，然后把所有的自动命令用上面组的方式包裹起来。如果你觉得有必要，可以把多个自动命令放到一个组里面。</p>
+<p>想想上一节的示例中的自动命令是干啥的。</p>
+<p>阅读<code>:help autocmd-groups</code>。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="13.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="15.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="14.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

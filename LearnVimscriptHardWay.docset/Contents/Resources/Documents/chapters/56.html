@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>还剩下什么？ / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">还剩下什么？</h1>
+<p>如果已经读到了这里并且完成了所有的例子和练习，你现在对Vimscript基础的掌握就很牢固了。
+不要担心，还有<em>许多</em>东西需要学呢！</p>
+<p>如果你求知若渴，这里还有一些东西值得你去探索。</p>
+<h2 id="_2">配色方案</h2>
+<p>在本书中我们给Potion文件添加了语法高亮。作为硬币的另一面，我们也可以创建配色方案来决定每种语法元素的颜色。</p>
+<p>制作Vim的配色方案非常简单直白，甚至有点重复。阅读<code>:help highlgiht</code>来学习基础知识。
+你可能想要看看一些内置的配色方案来看他们怎么组织文件的。</p>
+<p>如果你渴望挑战，看看我自己的<a href="https://github.com/sjl/badwolf/blob/master/colors/badwolf.vim">灰太狼</a>配色方案来了解我是怎么用Vimscript来为我简化定义及维护工作的。
+注意"palette"字典和<code>HL</code>函数，它们动态地生成<code>highlight</code>命令。</p>
+<h2 id="command">Command命令</h2>
+<p>许多插件允许用户使用键映射和函数调用来交互，但有一些偏好使用Ex命令。
+举个例子，<a href="https://github.com/tpope/vim-fugitive">Fugitive</a>插件创建类似<code>:Gbrowse</code>和<code>:Gdiff</code>并把调用它们的方式留给用户定制。</p>
+<p>像这样的命令是通过<code>:command</code>命令创建的。阅读<code>:help user-commands</code>来学习怎样给自己制作一个。
+你应该已经学会了足够的Vimscript知识来帮助自己理解Vim文档，并以此来学习新的命令。</p>
+<h2 id="_3">运行时路径</h2>
+<p>在本书中，关于Vim怎么加载某个文件时，我都是用"使用Pathogen"应付过去的。
+鉴于你已经懂得了许多Vimscript知识，你可以阅读<code>:help runtimepath</code>并查看<a href="https://github.com/tpope/vim-pathogen/blob/master/autoload/pathogen.vim">Pathogen源代码</a>
+来找出幕后隐藏的真相。</p>
+<h2 id="omnicomplete">Omnicomplete</h2>
+<p>Vim提供了许多不同的方法来补全文本(浏览<code>:help ins-completion</code>)。
+大多数都很简单，但其中最强大的是"omnicomplete"，
+它允许你调用一个自定义的Vimscript函数来决定你想到的各种补全方式。</p>
+<p>当你决定对omnicomplete一探究竟，你可以从<code>:help omnifunc</code>和<code>:help coml-omni</code>开始你的征途。</p>
+<h2 id="_4">编译器支持</h2>
+<p>在我们的Potion插件中，我们创建了一些编译并执行Potion文件的映射。
+Vim提供了更深入的支持来跟编译器交互，包括解析编译器错误并生成一个整洁的列表让你跳转到对应的错误。</p>
+<p>如果你对此感兴趣，你可以从通读整篇<code>:help quickfix.txt</code>开始深入。
+不过，我得提醒你<code>errorformat</code>不适合心脏虚弱的人阅读。</p>
+<h2 id="_5">其他语言</h2>
+<p>这本书专注于Vimscript，但Vim也提供了其他语言的接口，比如Python, Ruby, 和Lua。
+这意味着如果不喜欢Vimscript，你可以使用其他语言拓展Vim。</p>
+<p>当然还是需要了解Vimscript来编辑你的<code>~/.vimrc</code>，和理解Vim提供给其他语言的API。
+但使用一个替代语言可能是从Vimscript的局限之处解放出来的好办法，尤其在写大型插件的时候。</p>
+<p>如果你想了解更多用特定语言拓展Vim，查看下列对应的帮助文档：</p>
+<ul><li><code>:help Python</code></li>
+<li><code>:help Ruby</code></li>
+<li><code>:help Lua</code></li>
+<li><code>:help perl-using</code></li>
+<li><code>:help MzScheme</code></li>
+</ul><h2 id="vim">Vim文档</h2>
+<p>作为最后的部分，这里列出了一些Vim帮助条目，它们非常有用，有趣，有道理，或者仅仅是好玩(排名不分先后)：</p>
+<ul><li><code>:help various-motions</code></li>
+<li><code>:help sign-support</code></li>
+<li><code>:help virtualedit</code></li>
+<li><code>:help map-alt-keys</code></li>
+<li><code>:help error-messages</code></li>
+<li><code>:help development</code></li>
+<li><code>:help tips</code></li>
+<li><code>:help 24.8</code></li>
+<li><code>:help 24.9</code></li>
+<li><code>:help usr_12.txt</code></li>
+<li><code>:help usr_26.txt</code></li>
+<li><code>:help usr_32.txt</code></li>
+<li><code>:help usr_42.txt</code></li>
+</ul><h2 id="_6">练习</h2>
+<p>去为你想要的功能写一个Vim插件，向全世界分享你的成果！</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="55.html">&laquo; Previous</a>
+            
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="56.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

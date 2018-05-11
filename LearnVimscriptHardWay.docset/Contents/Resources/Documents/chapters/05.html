@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>精确映射 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">精确映射</h1>
+<p>准备好，下面的内容会比较难以理解。</p>
+<p>目前为止，我们已经使用<code>map</code>、<code>nmap</code>、<code>vmap</code>以及<code>imap</code>创建了实用的按键映射。
+他们很方便，但是有个缺点。运行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:nmap - dd
+:nmap \ -</code></pre>
+
+
+<p>试试按下<code>\</code>（在normal模式）。有什么现象？</p>
+<p>当你按下<code>\</code>时，Vim会解释其为<code>-</code>。但是我们又映射了<code>-</code>！Vim会继续解析<code>-</code>为<code>dd</code>，
+即它会删除整行。</p>
+<p>你使用那些命令创建的映射可能会被Vim解释成 <em>其它</em> 的映射。乍一听这像是一个优点，
+但实际上这很变态。解释原因之前，我们先用如下命令删除那些映射：</p>
+<pre class="codehilite"><code class="language-vim">:nunmap -
+:nunmap \</code></pre>
+
+
+<h2 id="_2">递归</h2>
+<p>运行命令：</p>
+<pre class="codehilite"><code class="language-vim">:nmap dd O&lt;esc&gt;jddk</code></pre>
+
+
+<p>上面的命令看上去像是要映射<code>dd</code>为：</p>
+<ul><li>在当前行之前添加新行</li>
+<li>退出insert模式</li>
+<li>向下移动一行</li>
+<li>删除当前行</li>
+<li>向上移动到新加的行</li>
+</ul><p>貌似这个映射的作用是“清除当前行”。但你可以试试。</p>
+<p>当你按下<code>dd</code>后，Vim就不动了。按下<code>&lt;c-c&gt;</code>才可以继续，但是你的文件中会多出许多
+空行！想想发生了什么？</p>
+<p>这个映射实际上是 <em>递归</em> 的！当你按下<code>dd</code>后，Vim解释为：</p>
+<ul><li><code>dd</code>存在映射，执行映射的内容。<ul><li>新建一行。</li>
+<li>退出insert模式。</li>
+<li>向下移动一行。</li>
+<li><code>dd</code>存在映射，执行映射的内容。<ul><li>新建一行。</li>
+<li>退出insert模式。</li>
+<li>向下移动一行。</li>
+<li><code>dd</code>存在映射，执行映射的内容。然后一直这样。</li>
+</ul></li>
+</ul></li>
+</ul><p>这个映射永远不会结束！删除这个可怕的映射再继续：</p>
+<pre class="codehilite"><code class="language-vim">:nunmap dd</code></pre>
+
+
+<h2 id="_3">负面影响</h2>
+<p><code>*map</code>系列命令的一个缺点就是存在递归的危险。另外一个是如果你安装一个插件，插件
+映射了同一个按键为不同的行为，两者冲突，有一个映射就无效了。</p>
+<p>当安装一个新的插件时，可能你不会使用或记住每一个其创建的映射。即使你记住了，你还得
+回看下你的<code>~/.vimrc</code>文件以确保你自定义的映射与插件创建的没有冲突。</p>
+<p>这导致插件安装变得乏味，易于出错。肯定有个解决办法。</p>
+<h2 id="_4">非递归映射</h2>
+<p>Vim提供另一组映射命令，这些命令创建的映射在运行时 <em>不会</em> 进行递归。运行命令：</p>
+<pre class="codehilite"><code class="language-vim">:nmap x dd
+:nnoremap \ x</code></pre>
+
+
+<p>按下<code>\</code>看看有什么现象。</p>
+<p>当你按下<code>\</code>时，Vim忽略了<code>x</code>的映射，仅按照<code>x</code>的默认操作执行。即删除当前光标下的字符
+而不是删除整行。</p>
+<p>每一个<code>*map</code>系列的命令都有个对应的<code>*noremap</code>命令，包括：<code>noremap</code>/<code>nnoremap</code>、
+<code>vnoremap</code>和<code>inoremap</code>。这些命令将不递归解释映射的内容。</p>
+<p>该何时使用这些非递归的映射命令呢？</p>
+<p>答案是： <strong>任何时候</strong> 。</p>
+<p><strong>是的，没开玩笑， <em>任何时候</em> 。</strong></p>
+<p>在安装插件或添加新的自定义映射时使用<code>*map</code>系列命令纯属是给自己 <em>找</em> 麻烦。
+多敲几个字符以确保这个问题不会发生，救自己于火海。</p>
+<h2 id="_5">练习</h2>
+<p>将之前章节中添加到<code>~/.vimrc</code>文件中的映射命令全部换成非递归版本。</p>
+<p>读帮助文档<code>:help unmap</code>。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="04.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="06.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="05.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>条件语句 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">条件语句</h1>
+<p>每种编程语言都有产生分支流程的方法，在Vimscript中，这是用<code>if</code>语句实现的。
+<code>if</code>语句是Vimscript中产生分支的基本方法。这里没有类似Ruby中的<code>unless</code>语句，
+所以代码中所有的判断都需要用<code>if</code>实现。</p>
+<p>在谈论Vim的<code>if</code>语句之前，我们需要花费额外的时间讲讲语法，这样可以在同一页里讲完它。</p>
+<h2 id="_2">多行语句</h2>
+<p>有时你在一行里写不下所需的Vimscript。在讲到自动命令组时，我们已经遇到过这样的例子了。
+这里是我们之前写过的代码：</p>
+<pre class="codehilite"><code class="language-vim">:augroup testgroup
+:    autocmd BufWrite * :echom "Baz"
+:augroup END</code></pre>
+
+
+<p>在理想的情况下，你可以分开成三行来写。但在手工执行命令的时候，这样写就太冗长了。
+其实，你可以用管道符(<code>|</code>)来隔开每一行。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom "foo" | echom "bar"</code></pre>
+
+
+<p>Vim会把它当作两个独立的命令。如果你看不到两行输出，执行<code>:messages</code>查看消息日志。</p>
+<p>在本书的剩余部分，当你想手工执行一个命令，却对输入新行和冒号感到心烦时，试试用管道隔开，
+在一行里写完。</p>
+<h2 id="if">If的基本用法</h2>
+<p>现在让我们回到正题上来，执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:if 1
+:    echom "ONE"
+:endif</code></pre>
+
+
+<p>Vim将显示<code>ONE</code>，因为整数<code>1</code>是"truthy"。现在执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:if 0
+:    echom "ZERO"
+:endif</code></pre>
+
+
+<p>Vim将<em>不</em>显示<code>ZERO</code>，因为整数<code>0</code>是"falsy"。让我们看看对字符串是怎么处理的。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:if "something"
+:    echom "INDEED"
+:endif</code></pre>
+
+
+<p>结果可能让你吃惊。Vim<em>不会</em>把非空字符串当作"truthy"，所以什么也没有显示。</p>
+<p>让我们打破沙锅问到底。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:if "9024"
+:    echom "WHAT?!"
+:endif</code></pre>
+
+
+<p>这次Vim<em>会</em>显示了！为什么会这样？</p>
+<p>为了搞懂发生了什么，执行下面三个命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom "hello" + 10
+:echom "10hello" + 10
+:echom "hello10" + 10</code></pre>
+
+
+<p>第一个命令使得Vim输出<code>10</code>，第二个命令输出<code>20</code>，第三个则又一次输出<code>10</code>！</p>
+<p>在探究了所有的命令后，对于Vimscript我们可以得出结论：</p>
+<ul><li>如有必要，Vim将强制转换变量(和字面量)的类型。在解析<code>10 + "20foo"</code>时，Vim将把
+  <code>"20foo"</code>转换成一个整数(<code>20</code>)然后加到<code>10</code>上去。</li>
+<li>以一个数字开头的字符串会被强制转换成数字，否则会转换成<code>0</code></li>
+<li>在所有的强制转换完成<em>后</em>，当<code>if</code>的判断条件等于非零整数时，Vim会执行<code>if</code>语句体。</li>
+</ul><h2 id="else-elseif">Else 和 Elseif</h2>
+<p>Vim，像Python一样，支持"else"和"else if"分句。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:if 0
+:    echom "if"
+:elseif "nope!"
+:    echom "elseif"
+:else
+:    echom "finally!"
+:endif</code></pre>
+
+
+<p>Vim输出<code>finally!</code>，因为前面的判断条件都等于0，而0代表falsy。</p>
+<h2 id="_3">练习</h2>
+<p>来一杯啤酒，安抚自己因Vim中的字符串强制转换而受伤的心。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="20.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="22.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="21.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

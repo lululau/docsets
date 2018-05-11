@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>创建一个完整的插件 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">创建一个完整的插件</h1>
+<p>在前四十来章中，我们讲解了许多基础方面的内容。
+在本书的最后部分，我们将尝试从零开始为一门语言创造Vim插件。</p>
+<p>这不是个适合懦夫的游戏。这将需要你竭尽全力。</p>
+<p>如果你现在就想退出，那确实也不坏！你已经学到了如何在<code>~/.vimrc</code>里改善你的生活，
+还有如果修复别人的插件里的bugs。</p>
+<p>有"这就够了，我不想虚掷光阴于创造一个我将不会使用的插件"这种想法并不可耻。
+现实一点。如果你不想创造一个自己想用的插件，现在就可以离开，到你想要的时候再回来吧。</p>
+<p>如果你<em>真的</em>想要继续，确保你可以挤出一些时间。本书剩余部分将会显得困难，
+而且我会假定你真的想<em>学点东西</em>，而不是仅仅慵懒地一章章翻过去。</p>
+<h2 id="potion">Potion</h2>
+<p>我们创造的插件将为<a href="http://fogus.github.com/potion/index.html">Potion</a>这门语言提供支持。</p>
+<p>Potion是由<code>Why the lucky stiff</code>在隐于江湖之前(before his disappearance)创建的一门玩具语言。
+它非常的简单，所以我们就拿它一试身手。</p>
+<p>Potion跟<a href="http://iolanguage.com/">Io</a>很像，同时又借鉴了Ruby,Lua以及其他语言。如果你未曾玩过Io，它可能看上去略古怪。
+我强烈推荐你花上至少一两个小时的时间玩玩Potion。在现实生活中你不会用它，
+但是它可能会改变你思考的方式并带给你新的思想。</p>
+<p>Potion的当前实现相当地粗糙。举个例子：如果你犯了语法错误，它通常会还你段错误。
+不要太纠结于此。我会给你许多可用的代码示范，这样你就能更关注于Vimscript本身而非Potion。</p>
+<p>我们的目标不是学习Potion(尽管那也挺有趣)。
+我们的目标是以Potion作为一个小例子来体验写一个完整的Vim插件的方方面面。</p>
+<h2 id="_2">练习</h2>
+<p>下载并安装<a href="http://fogus.github.com/potion/index.html">Potion</a>。这个就要你自己动手了。它应该会比较简单的。</p>
+<p>确保你可以在Potion解释器和以<code>.pn</code>文件的形式运行小册子里的第一个示例代码。
+如果解释器貌似不能工作，看<a href="https://github.com/fogus/potion/issues/12">这个issue</a>来查找可能的原因。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="40.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="42.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="41.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

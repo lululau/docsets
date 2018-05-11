@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>外部命令 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">外部命令</h1>
+<p>Vim遵循UNIX哲学"做一件事，做好它"。
+与其试图集成你可能想要的功能到编辑器自身，更好的办法是在适当时使用Vim来调用外部命令。</p>
+<p>让我们在插件中添加一些跟Potion编译器交互的命令，来浅尝在Vim里面调用外部命令的方法。</p>
+<h2 id="_2">编译</h2>
+<p>首先我们将加入一个命令来编译和执行当前Potion文件。
+有很多方法可以实现这一点，不过我们暂且用外部命令简单地实现。</p>
+<p>在你的插件的repo中创建<code>potion/ftplugin/potion/running.vim</code>文件。
+这将是我们创建编译和执行Potion文件的映射的地方。</p>
+<pre class="codehilite"><code class="language-vim">if !exists("g:potion_command")
+    let g:potion_command = "potion"
+endif
+
+function! PotionCompileAndRunFile()
+    silent !clear
+    execute "!" . g:potion_command . " " . bufname("%")
+endfunction
+
+nnoremap &lt;buffer&gt; &lt;localleader&gt;r :call PotionCompileAndRunFile()&lt;cr&gt;</code></pre>
+
+
+<p>第一部分以全局变量的形式储存着用来执行Potion代码的命令，如果还没有设置过的话。
+我们之前见过类似的检查了。</p>
+<p>如果<code>potion</code>不在用户的<code>$PATH</code>内，这将允许用户覆盖掉它，
+比如在<code>~/.vimrc</code>添加类似<code>let g:potion_command = "/Users/sjl/src/potion/potion"</code>的一行。</p>
+<p>最后一行添加了一个buffer-local的映射来调用我们前面定义的函数。
+不要忘了，由于这个文件位于<code>ftdetect/potion</code>文件夹，每次一个文件的<code>filetype</code>设置成<code>potion</code>，它都会被执行。</p>
+<p>真正实现了功能的地方在<code>PotionCompileAndRunFile()</code>。
+保存文件，打开<code>factorial.pn</code>并按下<code>&lt;localleader&gt;r</code>来执行这个映射，看看发生了什么。</p>
+<p>如果<code>potion</code>位于你的<code>$PATH</code>下，代码会被执行，你应该在终端看到输出(或者在窗口底部，如果你用的是GUI vim)。
+如果你看到了没有找到<code>potion</code>命令的错误，你需要像上面提到那样在<code>~/.vimrc</code>内设置<code>g:potion_command</code>。</p>
+<p>让我们了解一下<code>PotionCompileAndRunFile()</code>的工作原理。</p>
+<h2 id="bang">Bang!</h2>
+<p><code>:!</code>命令(念作"bang")会执行外部命令并在屏幕上显示它们的输出。尝试执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:!ls</code></pre>
+
+
+<p>Vim将输出<code>ls</code>命令的结果，同时还有"请按 ENTER 或其它命令继续"的提示。</p>
+<p>当这样执行时，Vim不会传递任何输入给外部命令。为了验证，执行：</p>
+<pre class="codehilite"><code class="language-vim">:!cat</code></pre>
+
+
+<p>打入一些行，然后你将看到<code>cat</code>命令把它们都吐回来了，就像你是在Vim之外执行<code>cat</code>。按下Ctrl-D来结束。</p>
+<p>想要执行一个外部命令并避免<code>请按 ENTER 或其它命令继续</code>的提示，使用<code>:silent !</code>。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:silent !echo Hello, world.</code></pre>
+
+
+<p>如果在GUI Vim比如MacVim或gVim下执行，你将不会看到<code>Hello,world.</code>的输出。</p>
+<p>如果你在终端下执行，你看到的结果取决于你的配置。
+一旦执行了一个<code>:silent !</code>，你可能需要执行<code>:redraw!</code>来重新刷新屏幕。</p>
+<p>注意这个命令是<code>:silent !</code>而不是<code>:silent!</code>(看到空格了吗？)！
+这是两个不一样的命令，我们想要的是前者！Vimscript奇妙吧？</p>
+<p>让我们回到<code>PotionCompileAndRun()</code>上来：</p>
+<pre class="codehilite"><code class="language-vim">function! PotionCompileAndRunFile()
+    silent !clear
+    execute "!" . g:potion_command . " " . bufname("%")
+endfunction</code></pre>
+
+
+<p>首先我们执行一个<code>silent !clear</code>命令，来清空屏幕输出并避免产生提示。
+这将确保我们仅仅看到本次命令的输出，如果一再执行同样的命令，你会觉得有用的。</p>
+<p>在下一行我们使用老朋友<code>execute</code>来动态创建一个命令。建立的命令看上去类似于：</p>
+<pre class="codehilite"><code class="language-text">!potion factorial.pn</code></pre>
+
+
+<p>注意这里没有<code>silent</code>，所以用户将看到命令输出，并不得不按下enter来返回Vim。
+这就是我们想要的，所以就这样设置好了。</p>
+<h2 id="_3">显示字节码</h2>
+<p>Potion编译器有一个显示由它生成的字节码的选项。如果你正试图在非常低级的层次下debug，这将帮上忙。
+在shell里执行下面的命令：</p>
+<pre class="codehilite"><code class="language-text">potion -c -V factorial.pn</code></pre>
+
+
+<p>你将看到一大堆像这样的输出：</p>
+<pre class="codehilite"><code class="language-text">-- parsed --
+code ...
+-- compiled --
+; function definition: 0x109d6e9c8 ; 108 bytes
+; () 3 registers
+.local factorial ; 0
+.local print_line ; 1
+.local print_factorial ; 2
+...
+[ 2] move     1 0
+[ 3] loadk    0 0   ; string
+[ 4] bind     0 1
+[ 5] loadpn   2 0   ; nil
+[ 6] call     0 2
+...</code></pre>
+
+
+<p>让我们添加一个使用户可以在新的Vim分割下，看到当前Potion代码生成的字节码的映射，
+这样他们能更方便地浏览并测试输出。</p>
+<p>首先，在<code>ftplugin/potion/running.vim</code>底部添加下面一行：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;buffer&gt; &lt;localleader&gt;b :call PotionShowBytecode()&lt;cr&gt;</code></pre>
+
+
+<p>这里没有什么特别的 -- 只是一个简单的映射。现在先描划出函数的大概框架：</p>
+<pre class="codehilite"><code class="language-vim">function! PotionShowBytecode()
+    " Get the bytecode.
+
+    " Open a new split and set it up.
+
+    " Insert the bytecode.
+
+endfunction</code></pre>
+
+
+<p>既然已经建立起一个框架，让我们把它变成现实吧。</p>
+<h2 id="system">system()</h2>
+<p>有许多不同的方法可以实现这一点，所以我选择相对便捷的一个。</p>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom system("ls")</code></pre>
+
+
+<p>你应该在屏幕的底部看到<code>ls</code>命令的输出。如果执行<code>:message</code>，你也能看到它们。
+Vim函数<code>system()</code>接受一个字符串命令作为参数并以字符串形式返回那个命令的输出。</p>
+<p>你可以把另一个字符串作为参数传递给<code>system()</code>。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom system("wc -c", "abcdefg")</code></pre>
+
+
+<p>Vim将显示<code>7</code>(以及一些别的)。
+如果你像这样传递第二个参数，Vim将写入它到临时文件中并通过管道作为标准输入输入到命令里。
+目前我们不需要这个特性，不过它值得了解。</p>
+<p>回到我们的函数。编辑<code>PotionShowBytecode()</code>来填充框架的第一部分：</p>
+<pre class="codehilite"><code class="language-vim">function! PotionShowBytecode()
+    " Get the bytecode.
+    let bytecode = system(g:potion_command . " -c -V " . bufname("%"))
+    echom bytecode
+
+    " Open a new split and set it up.
+
+    " Insert the bytecode.
+
+endfunction</code></pre>
+
+
+<p>保存文件，在<code>factorial.pn</code>处执行<code>:set ft=potion</code>重新加载，并使用<code>&lt;lovalleader&gt;b</code>尝试一下。
+Vim会在屏幕的底部显示字节码。一旦看到它成功执行了，你可以移除<code>echom</code>。</p>
+<h2 id="_4">在分割上打草稿</h2>
+<p>接下来我们将打开一个新的分割把结果展示给用户。
+这将让用户能够借助Vim的全部功能来浏览字节码，而不是仅仅只在屏幕上昙花一现。</p>
+<p>为此我们将创建一个"草稿"分割：一个分割，它包括一个永不保存并每次执行映射都会被覆盖的缓冲区。
+把<code>PotionShowBytecode()</code>函数改成这样：</p>
+<pre class="codehilite"><code class="language-vim">function! PotionShowBytecode()
+    " Get the bytecode.
+    let bytecode = system(g:potion_command . " -c -V " . bufname("%"))
+
+    " Open a new split and set it up.
+    vsplit __Potion_Bytecode__
+    normal! ggdG
+    setlocal filetype=potionbytecode
+    setlocal buftype=nofile
+
+    " Insert the bytecode.
+
+endfunction</code></pre>
+
+
+<p>新增的命令应该很好理解。</p>
+<p><code>vsplit</code>创建了名为<code>__Potion_Bytecode__</code>的新竖直分割。
+我们用下划线包起名字，使得用户注意到这不是普通的文件(它只是显示输出的缓冲区)。
+下划线不是什么特殊用法，只是约定俗成罢了。</p>
+<p>接着我们用<code>normal! ggdG</code>删除缓冲区中的所有东西。
+第一次执行这个映射时，并不需要这样做，但之后我们将重用<code>__Potion_Bytecode__</code>缓冲区，所以需要清空它。</p>
+<p>接下来我们为这个缓冲区设置两个本地设置。首先我们设置它的文件类型为<code>potionbytecode</code>，只是为了指明它的用途。
+我们也改变<code>buftype</code>为<code>nofile</code>，告诉Vim这个缓冲区与磁盘上的文件不相关，这样它就不会把缓冲区写入。</p>
+<p>最后还剩下把我们保存在<code>bytecode</code>变量的字节码转储进缓冲区。完成函数，让它看上去像这样：</p>
+<pre class="codehilite"><code class="language-vim">function! PotionShowBytecode()
+    " Get the bytecode.
+    let bytecode = system(g:potion_command . " -c -V " . bufname("%") . " 2&gt;&amp;1")
+
+    " Open a new split and set it up.
+    vsplit __Potion_Bytecode__
+    normal! ggdG
+    setlocal filetype=potionbytecode
+    setlocal buftype=nofile
+
+    " Insert the bytecode.
+    call append(0, split(bytecode, '\v\n'))
+endfunction</code></pre>
+
+
+<p>Vim函数<code>append()</code>接受两个参数：一个将被附加内容的行号和一个将按行附加的字符串列表。
+举个例子，尝试执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:call append(3, ["foo", "bar"])</code></pre>
+
+
+<p>这将附加两行，<code>foo</code>和<code>bar</code>，在你当前缓冲区的第三行之后。
+这次我们将在表示文件开头的第0行之后添加。</p>
+<p>我们需要一个字符串列表来附加，但我们只有来自<code>system()</code>调用的单个包括换行符的字符串。
+我们使用Vim的<code>split()</code>函数来分割这一大坨文本成一个字符串列表。
+<code>split()</code>接受一个待分割的字符串和一个查找分割点的正则表达式。这真的很简单。</p>
+<p>现在函数已经完成了，试一下对应的映射。
+当你在<code>factorial.pn</code>中执行<code>&lt;localleader&gt;b</code>，Vim将打开新的包括Potion字节码的缓冲区。
+修改Potion源代码，保存文件，执行映射来看看会有什么不同的结果。</p>
+<h2 id="_5">练习</h2>
+<p>阅读<code>:help bufname</code>。</p>
+<p>阅读<code>:help buftype</code>。</p>
+<p>阅读<code>:help append()</code>。</p>
+<p>阅读<code>:help split()</code>。</p>
+<p>阅读<code>:help :!</code>。</p>
+<p>阅读<code>:help :read</code>和<code>:help :read!</code>(我们没有讲到这些命令，不过它们非常好用)。</p>
+<p>阅读<code>:help system()</code>。</p>
+<p>阅读<code>:help design-not</code>。</p>
+<p>目前，我们的插件要求用户在执行映射之前手动保存文件来使得他们的改变起效。
+当今撤销已经变得非常轻易，所以修改写过的函数来自动替他们保存。</p>
+<p>如果你在一个带语法错误的Potion文件上执行这个字节码映射，会发生什么？为什么？</p>
+<p>修改<code>PotionShowBytecode()</code>函数来探测Potion编译器是否返回一个错误，并向用户输出错误信息。</p>
+<h2 id="_6">加分题</h2>
+<p>每次你执行字节码映射时，一个新的竖直分割都会被创建，即使用户没有关闭上一个。
+如果用户没有一再关闭这些窗口，他们最终将被大量额外的窗口困住。</p>
+<p>修改<code>PotionShowBytecode()</code>来探测<code>__Potion_Bytecode__</code>缓冲区的窗口是否已经打开了，
+如果是，切换到它上去而不是创建新的分割。</p>
+<p>你大概想要阅读<code>:help bufwinnr()</code>来获取帮助。</p>
+<h2 id="_7">额外的加分题</h2>
+<p>还记得我们设置临时缓冲区的<code>filetype</code>为<code>potionbytecode</code>？
+创建<code>syntax/potionbytecode.vim</code>文件并为Potion字节码定义语法高亮，使得它们更易读。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="51.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="53.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="52.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

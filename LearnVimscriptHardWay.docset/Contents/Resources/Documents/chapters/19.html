@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>变量 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">变量</h1>
+<p>到目前为止我们已经讲完了单行命令。在本书后面的三分之一个章节中将会把Vim脚本当作一个<em>脚本语言</em>。这部分东西不会像前面的你学到的东西一样马上可以学以致用，不过这是为本书的最后一部分打基础，最后一部分会讲解创建一个插件所需要的各个方面的东西。</p>
+<p>我们开始吧。我们首先要了解的是变量。执行下面的命令。</p>
+<pre class="codehilite"><code class="language-vim">:let foo = "bar"
+:echo foo</code></pre>
+
+
+<p>Vim会显示<code>bar</code>。<code>foo</code>现在是一个变量，我们将一个字符串<code>"bar"</code>赋值给它。现在执行这些命令：</p>
+<pre class="codehilite"><code class="language-vim">:let foo = 42
+:echo foo</code></pre>
+
+
+<p>Vim会显示<code>42</code>，因为我们将<code>foo</code>赋值为整型<code>42</code>。</p>
+<p>从这些小例子似乎可以看出Vim脚本是动态类型的。事实并非如此，我们之后会说明。</p>
+<h2 id="_2">作为变量的选项</h2>
+<p>你可以通过一种特殊语法将<em>选项</em>作为变量来设置。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:set textwidth=80
+:echo &amp;textwidth</code></pre>
+
+
+<p>Vim会显示<code>80</code>。在名称的前面加一个<code>&amp;</code>符号是告诉Vim你正在引用这个选项，而不是在使用一个名称刚好相同的变量。</p>
+<p>我们来看下Vim是怎么处理布尔选项的。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:set nowrap
+:echo &amp;wrap</code></pre>
+
+
+<p>Vim显示<code>0</code>。然后再试试这些选项：</p>
+<pre class="codehilite"><code class="language-vim">:set wrap
+:echo &amp;wrap</code></pre>
+
+
+<p>这次Vim会显示<code>1</code>。这些输出很明确提示Vim会将整型<code>0</code>当作"false"，整型<code>1</code>当作"true"。我们可以更进一步假设Vim会将所有的非0值整型当作"truthy"，而事实确实如此。</p>
+<p>我们也可以使用<code>let</code>命令来<em>设置</em>作为变量的选项。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:let &amp;textwidth = 100
+:set textwidth?</code></pre>
+
+
+<p>Vim会显示<code>textwidth=100</code>。</p>
+<p>既然<code>set</code>可以搞定选项的设置，那我们为什么还要用<code>let</code>呢？执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:let &amp;textwidth = &amp;textwidth + 10
+:set textwidth?</code></pre>
+
+
+<p>这一次Vim显示<code>textwidth=110</code>。当你用<code>set</code>来设置某个选项，你只能给它设置一个常量值。当你使用<code>let</code>并将它作为一个变量来设置，你可以使用Vim脚本的所有强大之处来决定它的值。</p>
+<h2 id="_3">本地选项</h2>
+<p>如果你想将某个选项作为变量来设置它的<em>本地</em>值，而不是<em>全局</em>值，你需要在变量名前面加前缀。</p>
+<p>在两个分隔的窗口中分别打开两个文件。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:let &amp;l:number = 1</code></pre>
+
+
+<p>然后切换到另一文件，然后再执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:let &amp;l:number = 0</code></pre>
+
+
+<p>注意第一个窗口会出现行号，而第二个没有。</p>
+<h2 id="register">作为变量的寄存器(Register)</h2>
+<p>你也可以将<em>寄存器</em>当作变量来读取和设置。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:let @a = "hello!"</code></pre>
+
+
+<p>现在把光标放到文本中的某个地方然后敲击<code>"ap</code>。这个命令会告诉Vim“在这里粘贴寄存器<code>a</code>中的内容”。我们设置了这个寄存器的内容，所以Vim会将<code>hello!</code>粘贴到你的文本中。</p>
+<p>还可以读寄存器的内容。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo @a</code></pre>
+
+
+<p>Vim会输出<code>hello!</code>。</p>
+<p>在你的文件中选择一个单词然后用<code>y</code>复制，再执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo @"</code></pre>
+
+
+<p>Vim会输出你刚才复制的单词。<code>"</code>寄存器是“未命名(unnamed)”寄存器，在复制的时候没有指定寄存器的文本都会放到这里。</p>
+<p>在你的文件中执行搜索<code>/someword</code>，然后执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo @/</code></pre>
+
+
+<p>Vim会输出你刚刚使用的搜索模式。这样你就可以通过编程来读<em>和修改</em>当前的搜索模式，有些时候这会很有用。</p>
+<h2 id="_4">练习</h2>
+<p>检查你的<code>~/.vimrc</code>文件，然后将其中的一些<code>set</code>和<code>setlocal</code>命令替换为它们的<code>let</code>形式。记住布尔选项仍然需要被设置为某个值。</p>
+<p>尝试将某个布尔选项设置为0和1之外的值，例如<code>wrap</code>。当你将它设置为一个不同的数字时会怎么样？如果设置为字符串又会是什么情况？</p>
+<p>回到你的<code>~/.vimrc</code>文件，然后恢复所有的修改。在<code>set</code>可以搞定的时候，永远都不要用<code>let</code>，这是因为<code>let</code>更难于阅读。</p>
+<p>阅读<code>:help registers</code>，然后看看你可以进行读和写的寄存器列表。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="18.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="20.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="19.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

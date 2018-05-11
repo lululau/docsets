@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>字符串函数 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">字符串函数</h1>
+<p>Vim有许多内置(built-in)函数来操作字符串。本章中我们将介绍一些最为重要的字符串函数。</p>
+<h2 id="_2">长度</h2>
+<p>第一个介绍的函数是<code>strlen</code>。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom strlen("foo")</code></pre>
+
+
+<p>Vim显示<code>3</code>，也即<code>"foo"</code>的长度。现在尝试下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom len("foo")</code></pre>
+
+
+<p>Vim再一次显示<code>3</code>。对于字符串，<code>len</code>和<code>strlen</code>有同样的效果。在本书稍后的章节我们会回过头来探讨<code>len</code>。</p>
+<h2 id="_3">切割</h2>
+<p>执行下面的命令(注意是<code>echo</code>而不是<code>echom</code>)：</p>
+<pre class="codehilite"><code class="language-vim">:echo split("one two three")</code></pre>
+
+
+<p>Vim显示<code>['one','two','three']</code>。<code>split</code>函数把字符串切割成列表。我们将简要介绍列表，
+但现在不要纠结于此。</p>
+<p>你也可以指定一个分隔符来代替"空白"。</p>
+<pre class="codehilite"><code class="language-vim">:echo split("one,two,three", ",")</code></pre>
+
+
+<p>Vim再一次显示<code>['one','two','three']</code>，因为<code>split</code>的第二个参数是","，表示以","切割。</p>
+<h2 id="_4">连接</h2>
+<p>你不仅可以切割字符串，还可以连接它们。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo join(["foo", "bar"], "...")</code></pre>
+
+
+<p>Vim将显示<code>foo...bar</code>。暂时不要在意列表语法。</p>
+<p><code>split</code>和<code>join</code>可以合作无间。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echo join(split("foo bar"), ";")</code></pre>
+
+
+<p>Vim显示<code>foo;bar</code>。首先我们把<code>"foo bar"</code>切割成列表，接着用分号作为分隔符把列表连接成字符串。</p>
+<h2 id="_5">大小写转换</h2>
+<p>Vim有两个函数来转换字符串大小写。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom tolower("Foo")
+:echom toupper("Foo")</code></pre>
+
+
+<p>Vim显示<code>foo</code>和<code>FOO</code>。这很浅显易懂吧。</p>
+<p>在许多语言(如Python)有一个惯例是在进行比较之前把字符串强制转换成小写来实现大小写无关的比较。
+在Vimscript里不需要这么做，因为有大小写不敏感的比较运算符。如果你回忆不起来，重新读关于比较的那一章。
+(译注：如果你回忆不起来，那是第22章)</p>
+<p>你可以自由选择使用<code>tolower</code>或<code>==#</code>以及<code>==?</code>来实现大小写敏感的比较。Vimscript社区对此还没有明显的偏好。
+选定一个并在你所有的脚本中保持一致。</p>
+<h2 id="_6">练习</h2>
+<p>执行<code>:echo split('1   2')</code>和<code>:echo split('1,,,2',',')</code>。它们表现一致吗？</p>
+<p>阅读<code>:help splt()</code>。</p>
+<p>阅读<code>:help join()</code>。</p>
+<p>阅读<code>:help functions</code>并浏览有关String的内置函数。使用<code>/</code>命令来辅助你(记住，Vim的帮助文件可以以一般文件的方式浏览)。
+这里有着<em>许多</em>函数，所以不要纠结于每一个函数的文档。给自己留下印象，以便于将来的不时之用，
+这就够了。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="26.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="28.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="27.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

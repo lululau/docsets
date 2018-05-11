@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>实例研究：Grep 运算符(Operator)，第一部分 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="grep-operator">实例研究：Grep 运算符(Operator)，第一部分</h1>
+<p>在本章和下一章中，我们将使用Vimscript来实现一个相当复杂的程序。我们将探讨一些闻所未闻的东西，
+也将在实战中把之前学过的东西联系起来。</p>
+<p>在本实例研究中，遇到不熟悉的内容，你得用<code>:help</code>弄懂它。如果你只是走马观花，就将所获无多。</p>
+<h2 id="grep">Grep</h2>
+<p>如果你未曾用过<code>:grep</code>，现在你应该花费一分钟读读<code>:help :grep</code>和<code>:help :make</code>。
+如果之前没用过quickfix window，阅读<code>:help quickfix-window</code>。</p>
+<p>简明扼要地说：<code>:grep ...</code>将用你给的参数来运行一个外部的grep程序，解析结果，填充quickfix列表，
+这样你就能在Vim里面跳转到对应结果。</p>
+<p>我们将会添加一个"grep运算符"到任意Vim的内置(或自定义！)的动作中，来选择想要搜索的文本，
+让<code>:grep</code>更容易使用。</p>
+<h2 id="_1">用法</h2>
+<p>在写下每一个有意义的Vimscript程序的第一步，你需要思索一个问题：“它会被用户怎么使用呢？”。
+尝试构思出一种优雅，简易，符合直觉的调用方法。</p>
+<p>这次我会替你把这活干了：</p>
+<ul><li>我们将创造一个"grep运算符"并绑定到<code>&lt;leader&gt;g</code>。</li>
+<li>它将表现得同其他任意Vim运算符一样，还可以加入到组合键(比如<code>w</code>和<code>i{</code>)中。</li>
+<li>它将立刻开始搜索并打开quickfix窗口展示结果。</li>
+<li>它将<em>不会</em>跳到第一个结果，因为当第一个结果不是你想要的时候，这样做会困扰你。</li>
+</ul><p>一些你将怎么使用它的用例：</p>
+<ul><li><code>&lt;leader&gt;giw</code>: Grep光标下的词(word)。</li>
+<li><code>&lt;leader&gt;giW</code>: Grep光标下的词的大写形式(WORD)。</li>
+<li><code>&lt;leader&gt;gi'</code>: Grep当前所在的单引号括住的词。</li>
+<li><code>viwe&lt;leader&gt;g</code>: 可视状态下选中一个词并拓展选择范围到下一词，然后Grep。</li>
+</ul><p>有很多，<em>很多</em>其他的方法可以用它。看上去它好像需要写很多，很多代码，
+但事实上我们只需要实现"运算符"功能然后Vim就会完成剩下的工作。</p>
+<h2 id="_2">一个原型</h2>
+<p>在埋头写下巨量(trickey bits)的Vimscript之前，有一个也许会帮上忙的方法是简化你的目标并实现<em>它</em>，
+来推测你最终解决方案可能的"外形"。</p>
+<p>让我们简化我们的目标为"创造一个映射来搜索光标下的词"。这有用而且应该更简单，所以我们能更快得到可运行的成果。
+目前我们将映射它到<code>&lt;leader&gt;g</code>。</p>
+<p>我们从一个映射骨架开始并逐渐填补它。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :grep -R something .&lt;cr&gt;</code></pre>
+
+
+<p>如果你阅读过<code>:help grep</code>，你就能轻易理解这个命令。我们之前也看过许多映射，这里没有什么是新的。</p>
+<p>显然我们还没做什么，所以让我们一步步打磨这个映射直到它符合我们的要求。</p>
+<h2 id="_3">搜索部分</h2>
+<p>首先我们需要搜索光标下的词，而不是<code>something</code>。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :grep -R &lt;cword&gt; .&lt;cr&gt;</code></pre>
+
+
+<p>现在试一下。<code>&lt;cword&gt;</code>是一个Vim的command-line模式的特殊变量，
+Vim会在执行命令之前把它替换为"光标下面的那个词"。</p>
+<p>你可以使用<code>&lt;cWORD&gt;</code>来得到大写形式(WORD)。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :grep -R &lt;cWORD&gt; .&lt;cr&gt;</code></pre>
+
+
+<p>现在试试把光标放在诸如<code>foo-bar</code>的词上面。Vim将grep<code>foo-bar</code>而不是其中的一部分。</p>
+<p>我们的搜索部分还有一个问题：如果这里面有什么特殊的shell字符，Vim会毫不犹豫地传递给外部的grep命令。
+这样会导致程序崩溃(或更糟：铸成某些大错)。</p>
+<p>让我们看看如何使它挂掉。输入<code>foo;ls</code>并把光标放上去执行映射。grep命令失败了，
+而Vim将执行<code>ls</code>命令！这肯定糟透了，如果词里包括比<code>ls</code>更危险的命令呢？</p>
+<p>为了解决这个问题，我们将调用参数用引号括起来。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :grep -R '&lt;cWORD&gt;' .&lt;cr&gt;</code></pre>
+
+
+<p>大多数shell把单引号括起来的内容当作(大体上)字面量，所以我们的映射现在更加健壮了。</p>
+<h2 id="shell">转义Shell命令参数</h2>
+<p>搜索部分还有一个问题。在<code>that's</code>上尝试这个映射。它不会工作，因为词里的单引号与grep命令的单引号发生了冲突！</p>
+<p>为了解决问题，我们可以使用Vim的<code>shellescape</code>函数。
+阅读<code>:help escape()</code>和<code>:help shellescape()</code>来看它是怎样工作的(真的很简单)。</p>
+<p>因为<code>shellescape()</code>要求Vim字符串，我们需要用<code>execute</code>动态创建命令。
+首先执行下面命令来转换<code>:grep</code>映射到<code>:execute "..."</code>形式：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :execute "grep -R '&lt;cWORD&gt;' ."&lt;cr&gt;</code></pre>
+
+
+<p>试一下并确信它可以工作。如果不行，找出拼写错误并改正。
+然后执行下面的使用了<code>shellescape</code>的命令。</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :execute "grep -R " . shellescape("&lt;cWORD&gt;") . " ."&lt;cr&gt;</code></pre>
+
+
+<p>在一般的词比如<code>foo</code>上执行这个命令试试。它可以工作。再到一个带单引号的词，比如<code>that's</code>，上试试看。
+它还是不行！为什么会这样？</p>
+<p>问题在于Vim在拓展命令行中的特殊变量，比如<code>&lt;cWORD&gt;</code>，的<em>之前</em>，就已经执行了<code>shellescape()</code>。
+所以Vim shell-escaped了字面量字符串<code>"&lt;cWORD&gt;"</code>(什么都不做，除了给它添上一对单引号)并连接到我们的<code>grep</code>命令上。</p>
+<p>通过执行下面的命令，你可以亲眼目睹这一切。</p>
+<pre class="codehilite"><code class="language-vim">:echom shellescape("&lt;cWORD&gt;")</code></pre>
+
+
+<p>Vim将输出<code>'&lt;cWORD&gt;'</code>。注意引号也是输出字符串的一部分。Vim把它作为shell命令参数保护了起来。</p>
+<p>为解决这个问题，我们将使用<code>expand()</code>函数来强制拓展<code>&lt;cWORD&gt;</code>为对应字符串，
+抢在它被传递给<code>shellescape</code><em>之前</em>。</p>
+<p>让我们单独看看这一部分是怎么工作的。把你的光标移到带单引号的词(比如<code>that's</code>)上去，
+并执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:echom expand("&lt;cWORD&gt;")</code></pre>
+
+
+<p>Vim输出<code>that's</code>，因为<code>expand("&lt;cWORD&gt;")</code>以Vim字符串的形式返回当前光标下的词。
+是时候加入<code>shellescape</code>的部分了：</p>
+<pre class="codehilite"><code class="language-vim">:echom shellescape(expand("&lt;cWORD&gt;"))</code></pre>
+
+
+<p>这次Vim输出<code>'that'\''s'</code>。
+如果觉得这看上去真可笑，你大概没有感受过看透了各种shell转义的疯狂形式后的淡定吧。
+目前，不用为此而纠结。就相信Vim接受了<code>expand</code>的输出并正确地转义了它。</p>
+<p>目前我们已经得到了光标下的词的彻底转义版本。是时候连接它到我们的映射了！
+执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :exe "grep -R " . shellescape(expand("&lt;cWORD&gt;")) . " ."&lt;cr&gt;</code></pre>
+
+
+<p>试一下。这个映射不再有问题，即使我们用它搜索带古怪符号的词。</p>
+<p>"从简单的Vimscript开始并一点点转变它直到达成你的目标"这样的工作方式将会被你一再取用。</p>
+<h2 id="_4">整理整理</h2>
+<p>在完成映射之前，还要处理一些小问题。首先，我们说过我们不想自动跳到第一个结果，
+所以要用<code>grep!</code>替换掉<code>grep</code>。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :execute "grep! -R " . shellescape(expand("&lt;cWORD&gt;")) . " ."&lt;cr&gt;</code></pre>
+
+
+<p>再一次试试，发现什么都没发生。Vim用结果填充了quickfix窗口，我们却无法打开。
+执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :execute "grep! -R " . shellescape(expand("&lt;cWORD&gt;")) . " ."&lt;cr&gt;:copen&lt;cr&gt;</code></pre>
+
+
+<p>现在试试这个映射，你将看到Vim自动打开了包含搜索结果的quickfix窗口。
+我们所做的仅仅是在映射的结尾续上<code>:copen&lt;cr&gt;</code>。</p>
+<p>最后一点，在搜索的时候，我们要移除Vim所有的grep输出。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;g :silent execute "grep! -R " . shellescape(expand("&lt;cWORD&gt;")) . " ."&lt;cr&gt;:copen&lt;cr&gt;</code></pre>
+
+
+<p>我们完成了，试一试并犒劳一下自己吧！<code>silent</code>命令仅仅是在运行一个命令的同时隐藏它的正常输出。</p>
+<h2 id="_5">练习</h2>
+<p>把我们刚刚做出来的映射加入到你的<code>~/.vimrc</code>文件。</p>
+<p>如果你未曾读过<code>:help :grep</code>，去读它。</p>
+<p>阅读<code>:help cword</code>。</p>
+<p>阅读<code>:help cnext</code>和<code>help cprevious</code>。修改你的grep映射，试一下它们。</p>
+<p>设置<code>:cnext</code>和<code>:cprevious</code>的映射，让在匹配内容间的移动更加方便。</p>
+<p>阅读<code>:help expand</code>。</p>
+<p>阅读<code>:help copen</code>。</p>
+<p>在我们创建的映射中加入height参数到<code>:copen</code>命令中，看看quickfix窗口能不能以指定的高度打开。</p>
+<p>阅读<code>:help silent</code>。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="31.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="33.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="32.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

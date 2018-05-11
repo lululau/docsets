@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>循环 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">循环</h1>
+<p>你可能会惊讶地发现，作为一本关于编程语言的书，在前35章里我们压根就没有提到循环！
+Vimscript提供了非常多的方式操作文本(比如，<code>normal!</code>)，
+因此循环并不像在其他大多数语言中的那么必要。</p>
+<p>即使如此，总有一天你会需要用到它的，所以现在让我们探讨Vim支持的两种主要的循环。</p>
+<h2 id="for">For循环</h2>
+<p>第一种循环是<code>for</code>循环。如果你习惯了Java,C或Javascript中的<code>for</code>循环，它看上去有点古怪。
+但是你会发现这种写法十分地优雅。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:let c = 0
+
+:for i in [1, 2, 3, 4]
+:  let c += i
+:endfor
+
+:echom c</code></pre>
+
+
+<p>Vim显示<code>10</code>，就是把列表中的每一个元素的加起来的结果。Vimscript的<code>for</code>循环遍历整个列表
+(或我们待会会提到的字典)。</p>
+<p>Vimscript中不存在C风格的<code>for (int i = 0; i &lt; foo; i++)</code>。这一开始可能难以适应，
+但一旦习惯你就不会再怀念C风格的for循环了。</p>
+<h2 id="while">While循环</h2>
+<p>Vim也支持经典的<code>while</code>循环。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:let c = 1
+:let total = 0
+
+:while c &lt;= 4
+:  let total += c
+:  let c += 1
+:endwhile
+
+:echom total</code></pre>
+
+
+<p>Vim再次显示<code>10</code>。几乎每一个程序猿都熟悉这个循环，所以我们不会浪费时间讲解。
+你将会很少用到它。铭记它以备不时之需。</p>
+<h2 id="_2">练习</h2>
+<p>阅读<code>:help for</code>.</p>
+<p>阅读<code>:help while</code>.</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="35.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="37.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="36.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

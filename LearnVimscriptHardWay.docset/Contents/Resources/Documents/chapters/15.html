@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Operator-Pending映射 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="operator-pending">Operator-Pending映射</h1>
+<p>这一章我们将来探索Vim映射系统中另外一个神奇的部分：“Operator-Pending映射”。开始之前，我们先解释下这里面的几个词含义。</p>
+<p>一个Operator（操作）就是一个命令，你可以在这个命令的后面输入一个Movement（移动）命令，然后Vim开始对文本执行前面的操作命令，这个操作命令会从你当前所在的位置开始执行，一直到这个移动命令会把你带到的位置结束。</p>
+<p>常用到的Operator有<code>d</code>，<code>y</code>和<code>c</code>。例如：</p>
+<pre class="codehilite"><code class="language-text">按键   操作       移动
+----   --------   -------------
+dw     删除       到下一个单词
+ci(    修改       在括号内
+yt,    复制       到逗号</code></pre>
+
+
+<h2 id="movement">Movement映射</h2>
+<p>Vim允许你创建任何新的movements，这些movements可以跟所有命令一起工作。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:onoremap p i(</code></pre>
+
+
+<p>在缓冲区中输入下面的文字：</p>
+<pre class="codehilite"><code class="language-text">return person.get_pets(type="cat", fluffy_only=True)</code></pre>
+
+
+<p>把光标放到单词“cat”上，然后敲击<code>dp</code>。结果会发生什么？Vim会删除括号内的所有文字。你可以把这个新建的movements当作“参数”。</p>
+<p><code>onoremap</code>命令会告诉Vim当它在等待一个要附加在operator后面的movement的时候，如果这个movement是<code>p</code>的话，它会把它当作<code>i(</code>。所以当我们在运行<code>dp</code>的时候，就象是在对Vim说“delete parameters”，而Vim会把它理解为“在括号内删除”。</p>
+<p>我们现在可以立马对所有的operators使用这个新建的映射。再次在缓冲区中输入上面的文字（或者直接把之前修改恢复一下）。</p>
+<pre class="codehilite"><code class="language-text">return person.get_pets(type="cat", fluffy_only=True)</code></pre>
+
+
+<p>把光标放到单词“cat”上，然后敲击<code>cp</code>。这次又会发生什么？Vim会删除括号中的所有文字，不过这一次删除之后Vim会处于插入模式，这是因为你使用的是“change”，而不是“delete”。</p>
+<p>再看一个示例。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:onoremap b /return&lt;cr&gt;</code></pre>
+
+
+<p>现在把下面的文字输入到缓冲区：</p>
+<pre class="codehilite"><code class="language-python">def count(i):
+    i += 1
+    print i
+
+    return foo</code></pre>
+
+
+<p>把光标放到第二行的<code>i</code>上，然后按下<code>db</code>。会发生生么？Vim把整个函数体中直到<code>return</code>上面的内容都删除了，<code>return</code>就是上面的映射使用Vim的通用查找得到的结果。</p>
+<p>当你想搞清楚怎么定义一个新的operator-pending movement的时候，你可以从下面几个步骤来思考：</p>
+<ol><li>在光标所在的位置开始。</li>
+<li>进入可视模式(charwise)。</li>
+<li>... 把映射的按键放到这里 ...</li>
+<li>所有你想包含在movement中的文字都会被选中。</li>
+</ol><p>你所要做的工作就是在第三步中填上合适的按键。</p>
+<h2 id="_1">改变开始位置</h2>
+<p>你可能已经从上面所学的东西中意识到一个了问题。如果我们定义的movements都是从光标所在的位置开始的话，那么这就会限制我们做一些我们想使用movement来做的事情。</p>
+<p>但是Vim并不会限制你去做你想做的事情，所以对于这个问题肯定有解决办法。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:onoremap in( :&lt;c-u&gt;normal! f(vi(&lt;cr&gt;</code></pre>
+
+
+<p>这个命令看起来有些复杂，不过我们还是先试试它能干什么。将下面的文字输入缓冲区：</p>
+<pre class="codehilite"><code class="language-python">print foo(bar)</code></pre>
+
+
+<p>把光标放到单词<code>print</code>上面，然后敲击<code>cin(</code>。Vim会删除括号内的内容然后进入插入模式，并且光标会停留在括号的中间。</p>
+<p>你可以将这个映射理解为“在下一个括号内(inside next parentheses)”。它会对当前行光标所在位置的下一个括号内的文本执行operator。</p>
+<p>我们再创建一个“在上一个括号内(inside last parentheses)”的movement进行对照。（在这里使用“前一个(previous)“可能更准确，但这会覆盖“段落(paragraph)”movement）</p>
+<pre class="codehilite"><code class="language-vim">:onoremap il( :&lt;c-u&gt;normal! F)vi(&lt;cr&gt;</code></pre>
+
+
+<p>先试试确保这个命令可以工作。</p>
+<p>那么这些映射是怎么工作的呢？首先，<code>&lt;c-u&gt;</code>比较特殊，可以先不用管（你只需要相信我这个东西可以让这个映射在任何情况下都能正常工作）。如果我们删除它的话，这个映射会变成这个样子：</p>
+<pre class="codehilite"><code class="language-vim">:normal! F)vi(&lt;cr&gt;</code></pre>
+
+
+<p><code>:normal!</code>会在后面的章节谈到，现在你只需要知道它可以在常用模式下模拟按下按键。例如，运行
+<code>:normal! dddd</code>会删除两行，就像按下<code>dddd</code>。映射后面的<code>&lt;cr&gt;</code>是用来执行<code>:normal!</code>命令的。</p>
+<p>那么现在我们可以认为这个映射的关键是运行下面这些按键组成的命令：</p>
+<pre class="codehilite"><code class="language-vim">F)vi(</code></pre>
+
+
+<p>This is fairly simple:
+这个命令很容易理解：</p>
+<ul><li><code>F)</code>: 向后移动到最近的<code>)</code>字符。</li>
+<li><code>vi(</code>: 进入可视模式选择括号内的所有内容。</li>
+</ul><p>这个movement结束在在可视模式下选择中我们想操作的文本，然后Vim会对选中的文本执行操作，就像通常情况一样。</p>
+<h2 id="_2">一般规则</h2>
+<p>下面两条规则可以让你可以很直观的以多种方式创建operator-pending映射：</p>
+<ul><li>如果你的operator-pending映射以在可视模式下选中文本结束，Vim会操作这些文本。</li>
+<li>否则，Vim会操作从光标的原始位置到一个新位置之间的文本。</li>
+</ul><h2 id="_3">练习</h2>
+<p>为"around next parentheses"和"around last
+parentheses"创建operator-pending映射</p>
+<p>为打括号创建类似的in/around next/last的mappings。</p>
+<p>阅读<code>:help omap-info</code>，看看你可不可以搞清楚<code>&lt;c-u&gt;</code>是干啥的。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="14.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="16.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="15.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

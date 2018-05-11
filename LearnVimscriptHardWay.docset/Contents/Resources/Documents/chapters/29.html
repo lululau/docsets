@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Normal命令 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="normal">Normal命令</h1>
+<p>目前为止我们已经介绍了几个最为常用的Vimscript命令，但都跟日常中在normal模式下处理文本的方式无关。
+有没有一种办法能把我们的脚本跟日常的文本编辑命令结合起来呢？</p>
+<p>答案显然是肯定的。之前我们已经见过<code>normal</code>命令，是时候更详细地介绍它了。
+执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:normal G</code></pre>
+
+
+<p>Vim将把你的光标移到当前文件的最后一行，就像是在normal模式里按下<code>G</code>。现在执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:normal ggdd</code></pre>
+
+
+<p>Vim将移动到文件的第一行(<code>gg</code>)并删除它(<code>dd</code>)。</p>
+<p><code>normal</code>命令简单地接受一串键值并当作是在normal模式下输入的。就是那么简单！</p>
+<h2 id="_1">避免映射</h2>
+<p>执行下面的命令来映射<code>G</code>键到别的东西：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap G dd</code></pre>
+
+
+<p>现在在normal模式按下<code>G</code>将删除一整行。试试这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:normal G</code></pre>
+
+
+<p>Vim将删除当前行。<code>normal</code>命令将顾及当前的所有映射。</p>
+<p>这意味着我们需要给<code>normal</code>提供类似于<code>nnoremap</code>之于<code>nmap</code>的版本，
+否则我们没法使用它——考虑到我们猜测不了用户的映射方式。</p>
+<p>幸好Vim真的有这样的命令叫<code>normal!</code>。执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:normal! G</code></pre>
+
+
+<p>这次Vim将移动光标到文件底部，即使<code>G</code>已经被映射了。</p>
+<p>在写Vim脚本时，你应该<em>总是</em>使用<code>normal!</code>，<em>永不</em>使用<code>normal</code>。不要信任用户在<code>~/.vimrc</code>中的映射。</p>
+<h2 id="_2">特殊字符</h2>
+<p>如果你使用<code>normal!</code>一段时间了，就很可能注意到一个问题。试试下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:normal! /foo&lt;cr&gt;</code></pre>
+
+
+<p>第一眼看上去它应该会开始搜索<code>foo</code>，但你将看到它不会正常工作。
+问题在于<code>normal!</code>不会解析像<code>&lt;cr&gt;</code>那样的特殊字符序列。</p>
+<p>于是，Vim认为你想要搜索字符串序列"foo<cr>"，没有意识到你甚至按下了回车来进行搜索！
+(译注：原文为you even pressed return to perform the search! 按后文的意思应该是没有按下return,待问作者)
+我们将在下一章讨论如何应对这个问题。</cr></p>
+<h2 id="_3">练习</h2>
+<p>阅读<code>:help normal</code>。在最后部分，你将获得关于下一章主题的提示。</p>
+<h2 id="_4">附加题</h2>
+<p>如果你还没准备好面对挑战，跳过这一节。如果你够胆，祝你好运！</p>
+<p>重温<code>:help normal</code>关于undo的部分。尝试设计一个删除两行却能单独撤销每次删除的映射。
+建议从<code>nnoremap &lt;leader&gt;d dddd</code>开始吧。</p>
+<p>这次你并不真的需要<code>normal!</code>(<code>nnoremap</code>就够了)，
+但是它揭示了一点：有时阅读一个Vim命令的文档可以激发关于别的内容的奇思妙想。</p>
+<p>如果你未尝使用过<code>helpgrep</code>命令，那就是时候用上它了。阅读<code>:help helpgrep</code>。
+留心关于怎样在匹配内容中浏览的部分。</p>
+<p>暂时先别纠结模式(patterns)，我们很快就要谈到它们。
+现在只需了解你可以用类似<code>foo.*bar</code>来查找文档中包括该正则模式的行。</p>
+<p>不幸的是，<code>helpgrep</code>会不时给你带来挫折感，因为为了找到某些词，你需要懂得去搜索某些词。
+我会帮你省下些无用功，这次你得查找到一种手工修改Vim的撤销序列的方法，
+这样你映射的两个删除才能独立地撤销。</p>
+<p>在以后你要灵活变通(pragmatic)。有时在你迷惘徘徊的时候，Google一下，你就知道。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="28.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="30.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="29.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

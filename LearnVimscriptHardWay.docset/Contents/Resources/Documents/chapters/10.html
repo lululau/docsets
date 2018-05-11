@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>锻炼你的手指 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">锻炼你的手指</h1>
+<p>这一章我们会讲到怎么更有效地学习Vim，不过在此之前需要先做一些小小的准备。</p>
+<p>让我们先创建一个mapping，这个mapping会为你的左手减轻很多负担。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:inoremap jk &lt;esc&gt;</code></pre>
+
+
+<p>ok，现在进入插入模式然后敲击<code>jk</code>。Vim会返回到常用模式，就像你敲击了escape按键一样。</p>
+<p>在Vim中有很多默认的方式可以退出插入模式：</p>
+<ul><li><code>&lt;esc&gt;</code></li>
+<li><code>&lt;c-c&gt;</code></li>
+<li><code>&lt;c-[&gt;</code></li>
+</ul><p>使用上面的这几种方式，你都需要伸出你的爪子，这会让你感到很不自在。使用<code>jk</code>会很棒，因为这两个按键正好就在你最强健有力的两个手指下面，并且你不用搞得好像在演奏吉他和弦似的移动手指。</p>
+<p>有些人可能更喜欢使用<code>jj</code>，但我更钟意<code>jk</code>，有两个原因：</p>
+<ul><li>使用两个不同的按键，你可以“滚动”你的手指而不是把同一个按键按两次。</li>
+<li>如果你出于习惯在常用模式下按了<code>jk</code>，只会将光标向下移动一下，然后又向上移动一下，最终光标还是停留在原来的位置。但是在常用模式下按了<code>jj</code>的话，只会把光标移动到一个不同的地方。</li>
+</ul><p>不过需要注意的是，如果在你所用的语言中<code>jk</code>会经常组合出现（例如德语）,你可能就需要选择一个不同的mapping了。</p>
+<h2 id="map">学习Map</h2>
+<p>ok，现在你已经有了一个新的mapping，你会怎么学习使用它呢？特别是你已经用了这么久的escape按键，使用escape按键都已经刻入了你的脑子中，以至于在编辑的时候你会不假思索的敲击它。</p>
+<p>重新学习一个mapping的窍门就是<em>强制</em>将之前的按键设置为不可用，<em>强迫</em>自己使用新的mapping。执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:inoremap &lt;esc&gt; &lt;nop&gt;</code></pre>
+
+
+<p>这个命令会告诉Vim在插入模式下敲击escape按键后执行<code>&lt;nop&gt;</code>(no operation)，这样escape按键在插入模式下就无效了。ok，现在你就<em>不得不</em>使用<code>jk</code>这个mapping来退出插入模式了。</p>
+<p>一开始你可能不太适应，你还是会在插入模式下敲击escape按键，并且以为已经退出到了常用模式，然后开始敲击按键准备在常用模式下做一些事情，从而导致一些不需要的字符出现在你的文本中。这会让你感到有些不爽，但如果你坚持一段时间后，你会惊讶的发现你的思维和手指会多么快的适应 新的mapping。用不到一到两个小时你就不会再在插入模式下敲击escape了。 </p>
+<p>这个方法适用于所有的用于替代原有操作方式的新mapping，包括在生活中也是如此。当你想改掉一个坏习惯的时候，你最好能够想一些办法使得这个坏习惯很难甚至是不能发生。</p>
+<p>如果你想学会自己做饭，不想每天都吃盖浇饭，那么每天下班的时候就不要去成都小吃了。这样你就会在饿了的时候想办法去做点东西吃，当前你先要确保你家里没有泡面。</p>
+<p>如果你想戒烟，那你就不要把烟带在身上，把它放到车上。这样当你的烟瘾又犯了的时候，你会觉得走到车里去取烟是一件很蛋疼的事，这样你就不会吸了。</p>
+<h2 id="_2">练习</h2>
+<p>如果还是会在Vim的常用模式中使用方向键移动光标，那么就将它们映射为<code>&lt;nop&gt;</code>。</p>
+<p>如果你在编辑模式下也会使用方向键，同样的，映射为<code>&lt;nop&gt;</code>吧。</p>
+<p>正确使用Vim的关键就是使得自己能够快速的离开插入模式，然后在常用模式下进行移动。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="09.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="11.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="10.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>本地缓冲区缩写 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">本地缓冲区缩写</h1>
+<p>上一章讲的东西比较多，完全理解会有点难，所以这一章来点容易的。我们已经学习了如何定义本地缓冲区的映射和设置选项，现在以同样的方式来学习本地缓冲区的缩写。</p>
+<p>打开你的<code>foo</code>和<code>bar</code>这两个文件，切换到<code>foo</code>，然后执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:iabbrev &lt;buffer&gt; --- &amp;mdash;</code></pre>
+
+
+<p>在文件<code>foo</code>下进入插入模式输入下面的文本：</p>
+<pre class="codehilite"><code class="language-text">Hello --- world.</code></pre>
+
+
+<p>Vim会为你将<code>---</code>替换为“Hello“。现在切换到<code>bar</code>试试。在<code>bar</code>中替换不会发生，这是因为我们所定义的缩写被设置为只用于<code>foo</code>的本地缓冲区。</p>
+<h2 id="_2">自动命令和缩写</h2>
+<p>使用本地缓冲区的缩写和自动命令来创建一个简单的“snippet”系统。</p>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:autocmd FileType python     :iabbrev &lt;buffer&gt; iff if:&lt;left&gt;
+:autocmd FileType javascript :iabbrev &lt;buffer&gt; iff if ()&lt;left&gt;</code></pre>
+
+
+<p>打开一个Javascript文件然后输入<code>iff</code>缩写。然后再打开一个Python文件试试。Vim会依据文件类型在当前行执行合适的缩写。</p>
+<h2 id="_3">练习</h2>
+<p>为你经常编辑的文件创建更多的针对不同类型的文件的“snippet”缩写。你可以为绝大多数语言创建<code>return</code>的缩写，为javascript创建<code>function</code>的缩写，以及为HTML文件创建<code>&amp;ldquo;</code>和<code>&amp;rdquo;</code>的缩写。</p>
+<p>将你创建的snippets加入到你的<code>~/.vimrc</code>文件中。</p>
+<p>记住：最好的学习使用这些snippets的方法是<em>禁用</em>之前你做这些事情的方式。执行<code>:iabbrev &lt;buffer&gt; return NOPENOPENOPE</code>会<em>强迫</em>你使用缩写，这个命令在你输入return的时候不会输出任何东西。为了节省学习的时间，为你刚才创建的snippets都创建一个上面的缩写来<em>强迫</em>你使用你创建的snippets。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="12.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="14.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="13.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

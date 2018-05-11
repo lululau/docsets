@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>Execute命令 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="execute">Execute命令</h1>
+<p><code>execute</code>命令用来把一个字符串当作Vimscript命令执行。在前面的章节我们曾经跟它打过交道，
+不过随着对Vimscript中的字符串有更深入的了解，现在我们将再次认识它。</p>
+<h2 id="execute_1"><code>execute</code>基本用法</h2>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:execute "echom 'Hello, world!'"</code></pre>
+
+
+<p>Vim把<code>echom 'Hello, world!'</code>当作一个命令，而且尽职地在把它输出的同时将消息记录下来。
+Execute是一个非常强大的工具，因为它允许你用任意字符串来创造命令。</p>
+<p>让我们试试一个更实用的例子。先在Vim里打开一个文件作为准备工作，接着使用<code>:edit foo.txt</code>在同一个窗口创建新的缓冲区。
+现在执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:execute "rightbelow vsplit " . bufname("#")</code></pre>
+
+
+<p>Vim将在第二个文件的右边打开第一个文件的竖直分割窗口(vertical split)。为什么会这样？</p>
+<p>首先，Vim将<code>"rightbelow vsplit"</code>和<code>bufname('#')</code>调用的结果连接在一起，创建一个字符串作为命令。</p>
+<p>我们过一段时间才会讲到相应的函数，现在姑且认为它返回前一个缓冲区的路径名。
+你可以用<code>echom</code>来确认这一点。</p>
+<p>待<code>bufname</code>执行完毕，Vim将结果连接成<code>"rightbelow vsplit bar.txt"</code>。
+<code>execute</code>命令将此作为Vimscript命令执行，在新的分割里打开该文件。</p>
+<h2 id="execute_2">Execute危险吗？</h2>
+<p>在大多数编程语言中使用诸如"eval"来构造可执行的字符串是会受到谴责的(如果不会是更严重的后果)。
+因为两个原因，Vimscript中的<code>execute</code>命令能免于操这份心。</p>
+<p>首先，大多数Vimscript代码仅仅接受唯一的来源——用户的输入。
+假设有用户想输入一个古怪的字符串来执行邪恶的命令，无所谓，反正这是他们自己的计算机！
+然而在其他语言里，程序通常得接受来自不可信的用户的输入。Vim是一个特殊的环境，
+在此无需担心一般的安全性问题。</p>
+<p>第二个原因是因为Vimscript有时候处理问题的方式过于晦涩难懂且稀奇古怪。
+这时<code>execute</code>会是完成任务的最简单，最直白的方法。
+在大多数其他语言中，使用"eval"不会省下你多少击键的生命，但在Vimscript里这样做可以化繁为简。</p>
+<h2 id="_1">练习</h2>
+<p>浏览<code>:help execute</code>来明了哪些命令你可以用<code>execute</code>实现而哪些不可以。
+但当涉猎，因为我们很快将重新审视这个问题。</p>
+<p>阅读<code>:help leftabove</code>，<code>:help rightbelow</code>，<code>:help :split</code>和<code>:help :vsplit</code>(注意最后两个条目中额外的分号)。</p>
+<p>在你的<code>~/.vimrc</code>中加入能在选定的分割(竖直或水平，上/下/左/右方位)中打开前一个缓冲区的映射。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="27.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="29.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="28.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

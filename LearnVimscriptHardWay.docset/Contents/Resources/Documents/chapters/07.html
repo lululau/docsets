@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>编辑你的Vimrc文件 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="vimrc">编辑你的Vimrc文件</h1>
+<p>在继续学习Vimscript之前，我们先找个添加新映射到<code>~/.vimrc</code>文件中的更方便的方法。</p>
+<p>有时你正在疯狂的编码，突然发现加个映射会加速你的进度。你要立即将其加到<code>~/.vimrc</code>
+文件中以防止忘记，但是你 <em>不想</em> 退出当前的文件，因为灵感稍纵即逝。</p>
+<p>本章的主题是你想使编辑文件更为方便变得更为方便。</p>
+<p>有点绕，但我没有拼错。再读一次。</p>
+<p>本章的主题是你想使（（（编辑文件）更为方便）变得更为方便）。</p>
+<h2 id="_1">编辑映射</h2>
+<p>我们在一个分屏中打开<code>~/.vimrc</code>文件以快速编辑添加映射，然后退出继续编码。运行命令：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;ev :vsplit $MYVIMRC&lt;cr&gt;</code></pre>
+
+
+<p>我称这个命令为“ <strong>编辑</strong> 我的 <strong>vimrc</strong> 文件”。</p>
+<p><code>$MYVIMRC</code>是指定你的<code>~/.vimrc</code>文件的特殊Vim变量。现在不要担心，相信我不会有问题。</p>
+<p><code>:vsplit</code>打开一个新的纵向分屏。如果你喜好横向的分屏，你可以用<code>:split</code>替换它。</p>
+<p>花一分钟彻底理解理解那个映射命令。命令的目的是：在一个新的分屏中打开我的<code>~/.vimrc</code>。
+它是如何工作的？映射中的每一个字符都是必不可少的？</p>
+<p>通过哪个映射，你只要三个键就可以打开你的<code>~/.vimrc</code>文件。只要你多用几次，你就能
+半秒内敲出这个命令。</p>
+<p>当你编码过程中突然想到一个可以提高效率的新映射要加到<code>~/.vimrc</code>文件中，
+现在对你来说简直就是小菜一碟。</p>
+<h2 id="_2">重读映射配置</h2>
+<p><code>~/.vimrc</code>文件添加一个映射并不是立即生效的。<code>~/.vimrc</code>文件只在你启动Vim的时候才会读取。
+也就是说在当前的session中你还需要痛苦的再次拼写那个完整的命令。</p>
+<p>我们加个映射来解决这个问题：</p>
+<pre class="codehilite"><code class="language-vim">:nnoremap &lt;leader&gt;sv :source $MYVIMRC&lt;cr&gt;</code></pre>
+
+
+<p>我称这个命令为“ <strong>重读</strong> 我的 <strong>vimrc</strong> 文件”。</p>
+<p><code>source</code>命令告诉Vim读取指定的文件，并将其当做Vimscript执行。</p>
+<p>现在在编码时你可以方便的添加新映射了。</p>
+<ul><li><code>&lt;leader&gt;ev</code>打开配置文件。</li>
+<li>添加映射。</li>
+<li>使用<code>:wq&lt;cr&gt;</code>或<code>ZZ</code>保存文件并关闭分屏，回到之前的文件。</li>
+<li>使用<code>&lt;leader&gt;sv</code>重读配置使修改生效。</li>
+</ul><p>定义一个映射需要8次按键。减少了中断思维的可能性。</p>
+<h2 id="_3">练习</h2>
+<p>在你的<code>~/.vimrc</code>文件中添加映射，温习“编辑<code>~/.vimrc</code>”和“重读<code>~/.vimrc</code>”过程。</p>
+<p>多练几遍，随意加些没意义的映射。</p>
+<p>阅读<code>:help myvimrc</code>。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="06.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="08.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="07.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

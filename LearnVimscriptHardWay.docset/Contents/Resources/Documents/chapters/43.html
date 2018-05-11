@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>新希望：用Pathogen配置插件 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="pathogen">新希望：用Pathogen配置插件</h1>
+<p>Vim的插件配置方式，在你仅仅添加一个文件来自定义自己的Vim体验时很合理，
+但当你想要使用别人写的插件时，这种方式会导致一团糟。</p>
+<p>在过去，要想使用别人写好的插件，你得下载所有文件并逐一正确地放置它们。
+你也可能使用<code>zip</code>或<code>tar</code>来替你做放置的工作。</p>
+<p>在这个过程中有些明显的问题：</p>
+<ul><li>当你想更新插件的时候怎么办？你可以覆盖旧的文件，
+  但如果作者删除了某个文件，你怎么知道你要手工删除对应文件？</li>
+<li>假如有两个插件正好使用了同样的文件名(比如<code>utils.vim</code>或别的更大众的名字)呢？
+  有时你可以简单地重命名掉它，但如果它位于<code>autoload/</code>或别的名字相关的文件夹中呢？
+  你改掉文件名，就等于改掉插件。这一点也不好玩。</li>
+</ul><p>人们总结出一系列hacks来让事情变得简单些，比如Vimball。
+幸运的是，我们不再需要忍受这些肮脏的hacks。
+<a href="http://tpo.pe/">Tim Pope</a>创造了著名的<a href="http://www.vim.org/scripts/script.php?script_id=2332">Pathogen</a>插件让管理大量插件变得轻松愉快，
+只要插件作者神志清醒地安排好插件结构。(译注：现在推荐<a href="https://github.com/gmarik/vundle">vundle</a>来代替Pathogen，前者支持使用git下载插件)</p>
+<p>让我们了解一下Pathogen的工作方式，以及为了让我们的插件更加兼容，我们需要做的事。</p>
+<h2 id="_1">运行时路径</h2>
+<p>当Vim在特殊的文件夹，比如<code>syntax/</code>，中查找文件时，它不仅仅只到单一的地方上查找。
+就像Linux/Unix/BSD系统上的<code>PATH</code>，Vim设置<code>runtimepath</code>以便查找要加载的文件。</p>
+<p>在你的桌面创建<code>colors</code>文件夹。在这个文件夹中创建一个叫<code>mycolor.vim</code>的文件(在本示例中你可以让它空着)。
+打开Vim并执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:color mycolor</code></pre>
+
+
+<p>Vim将显示一个错误，因为它不懂得去你的桌面查找。现在执行这个命令：</p>
+<pre class="codehilite"><code class="language-vim">:set runtimepath=/Users/sjl/Desktop</code></pre>
+
+
+<p>当然，你得根据你的情况修改路径名。现在再尝试color命令：</p>
+<pre class="codehilite"><code class="language-vim">:color mycolor</code></pre>
+
+
+<p>这次Vim找到了<code>mycolor.vim</code>，所以它将不再报错。由于文件是空的，它事实上什么都没<em>做</em>，
+但由于它不再报错，我们确信它找到了。</p>
+<h2 id="pathogen_1">Pathogen</h2>
+<p>Pathogen插件在你加载Vim的时候自动地把路径加到你的<code>runtimepath</code>中。
+所有在<code>~/.vim/bundle/</code>下的文件夹将逐个加入到<code>runtimepath</code>。(译注：vundle也是这么做的)</p>
+<p>这意味着每个<code>bundle/</code>下的文件夹应该包括部分或全部的标准的Vim插件文件夹，比如<code>colors/</code>和<code>syntax/</code>。
+现在Vim可以从每个文件夹中加载文件，而且每个插件文件都独立于自己的文件夹中。</p>
+<p>这么一来更新插件就轻松多了。你只需要整个移除旧的插件文件夹，并迎来新的版本。
+如果你通过版本控制来管理<code>~/.vim</code>文件夹(你应该这么做)，
+你可以使用Mercurial的subrepo或Git的submodule功能来直接签出(checkout)每个插件的代码库，
+然后用一个简单的<code>hg pull; hg update</code>或<code>git pull origin master</code>来更新。</p>
+<h2 id="pathogen_2">成为Pathogen兼容的</h2>
+<p>我们计划让我们的用户通过Pathogen安装我们写的Potion插件。
+我们需要做的：在插件的代码库里，放置我们的文件到正确的文件夹中。就是这么简单！</p>
+<p>我们插件的代码库展开后看起来就像这样：</p>
+<pre class="codehilite"><code class="language-text">potion/
+    README
+    LICENSE
+    doc/
+        potion.txt
+    ftdetect/
+        potion.vim
+    ftplugin/
+        potion.vim
+    syntax/
+        potion.vim
+    ... etc ...</code></pre>
+
+
+<p>我们把它放置在GitHub或Bitbucket上，这样用户就能简单地clone它到<code>bundle/</code>，一切顺利！</p>
+<h2 id="_2">练习</h2>
+<p>如果你还没有安装[vnudle][]，安装它。(译注：原文是安装<a href="http://www.vim.org/scripts/script.php?script_id=2332">Pathogen</a>，但是没有必要啦)</p>
+<p>给你的插件创建Mercurial或Git代码库，起名叫<code>potion</code>。
+你可以把它放到你喜欢的地方，并链接到<code>~/.vim/bundle/potion/</code>或就把它直接放到<code>~/.vim/bindle/potion/</code>。</p>
+<p>在代码库中创建<code>README</code>和<code>LICENSE</code>文件，然后commit。</p>
+<p>Push到Bitbucket或GitHub。</p>
+<p>阅读<code>:help runtimepath</code>。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="42.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="44.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="43.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>实例研究：Grep运算符(Operator)，第三部分 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="grepoperator">实例研究：Grep运算符(Operator)，第三部分</h1>
+<p>我们新鲜出炉的"grep运算符"工作得很好，但是写Vimscript的目的，就是要体贴地改善你的用户的生活。
+我们可以额外做两件事，让我们的运算符更加符合Vim生态圈的要求。</p>
+<h2 id="_1">保护寄存器</h2>
+<p>由于把文本复制到未命名寄存器中，我们破坏了之前在那里的内容。</p>
+<p>这并不是我们的用户想要的，所以让我们在复制之前先保存寄存器中的内容并于最后重新加载。
+修改代码成这样：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;g :set operatorfunc=GrepOperator&lt;cr&gt;g@
+vnoremap &lt;leader&gt;g :&lt;c-u&gt;call GrepOperator(visualmode())&lt;cr&gt;
+
+function! GrepOperator(type)
+    let saved_unnamed_register = @@
+
+    if a:type ==# 'v'
+        normal! `&lt;v`&gt;y
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    else
+        return
+    endif
+
+    silent execute "grep! -R " . shellescape(@@) . " ."
+    copen
+
+    let @@ = saved_unnamed_register
+endfunction</code></pre>
+
+
+<p>我们在函数的开头和结尾加入了两个<code>let</code>语句。
+第一个用一个变量保存<code>@@</code>中的内容，第二个则重新加载保存的内容。</p>
+<p>保存并source文件。测试一下，复制一些文本，接着按下<code>&lt;leader&gt;giw</code>来执行运算符，
+然后按下<code>p</code>来粘贴之前复制的文本。</p>
+<p>当写Vim插件时，你<em>总是</em>应该尽量在修改之前保存原来的设置和寄存器值，并在之后加载回去。
+这样你就避免了让用户陷入恐慌的可能。</p>
+<h2 id="_2">命名空间</h2>
+<p>我们的脚本在全局命名空间中创建了函数<code>GrepOperator</code>。
+这大概不算什么大问题，但当你写Vimscript的时候，事前以免万一远好过事后万分歉意。</p>
+<p>仅需增加几行代码，我们就能避免污染全局命名空间。把代码修改成这样：</p>
+<pre class="codehilite"><code class="language-vim">nnoremap &lt;leader&gt;g :set operatorfunc=&lt;SID&gt;GrepOperator&lt;cr&gt;g@
+vnoremap &lt;leader&gt;g :&lt;c-u&gt;call &lt;SID&gt;GrepOperator(visualmode())&lt;cr&gt;
+
+function! s:GrepOperator(type)
+    let saved_unnamed_register = @@
+
+    if a:type ==# 'v'
+        normal! `&lt;v`&gt;y
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    else
+        return
+    endif
+
+    silent execute "grep! -R " . shellescape(@@) . " ."
+    copen
+
+    let @@ = saved_unnamed_register
+endfunction</code></pre>
+
+
+<p>脚本的前三行已经被改变了。首先，我们在函数名前增加前缀<code>s:</code>，这样它就会处于当前脚本的命名空间。</p>
+<p>我们也修改了映射，在<code>GrepOperator</code>前面添上<code>&lt;SID&gt;</code>，所以Vim才能找到这个函数。
+如果我们不这样做，Vim会尝试在全局命名空间查找该函数，这是不可能找到的。</p>
+<p>欢呼吧，我们的<code>grep-operator.vim</code>脚本不仅非常有用，而且是一个善解人意的Vimscript公民！</p>
+<h2 id="_3">练习</h2>
+<p>阅读<code>:help &lt;SID&gt;</code>。</p>
+<p>享受一下，吃点零食犒劳自己。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="33.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="35.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="34.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

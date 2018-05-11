@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>基本映射 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">基本映射</h1>
+<p>如果说Vimscript有一个特性使得你能够按照你的意愿定制Vim，那就非键盘映射莫属。
+你可以通过键盘映射告诉Vim：</p>
+<blockquote>
+<p>当我按下这个键时，我需要你放弃默认操作，按我的想法做。</p>
+</blockquote>
+<p>我们先从normal模式的键盘映射开始。我们将在下一章节讨论insert模式和其他模式下的
+键盘映射。</p>
+<p>随意在文本中敲写几行文字，然后运行命令：</p>
+<pre class="codehilite"><code class="language-vim">:map - x</code></pre>
+
+
+<p>将光标置于文本中的某处，按下<code>-</code>。注意Vim删除了当前光标下的字符，就好像你按了<code>x</code>一样。</p>
+<p>我们本来就有个按键用于 "删除当前光标下的字符" ，所以我们将<code>-</code>重新映射到稍微有用的
+功能。执行命令：</p>
+<pre class="codehilite"><code class="language-vim">:map - dd</code></pre>
+
+
+<p>现在移动光标到任意一行，再按下<code>-</code>，这次Vim删除了整行的文本，因为<code>dd</code>的功能就是删除整行。</p>
+<h2 id="_2">特殊字符</h2>
+<p>你可以使用<code>&lt;keyname&gt;</code>告诉Vim一个特殊的按键。尝试如下命令：</p>
+<pre class="codehilite"><code class="language-vim">:map &lt;space&gt; viw</code></pre>
+
+
+<p>移动光标到一个单词上，按下空格键。Vim将高亮选中整个单词。</p>
+<p>你也可以映射修饰键入Ctrl和Alt。执行：</p>
+<pre class="codehilite"><code class="language-vim">:map &lt;c-d&gt; dd</code></pre>
+
+
+<p>现在在键盘上按下<code>Ctrl+d</code>将执行<code>dd</code>命令。</p>
+<h2 id="_3">注释</h2>
+<p>还记得我们在第一章讨论的注释么？键盘映射就无法使用注释。尝试如下命令：</p>
+<pre class="codehilite"><code class="language-vim">:map &lt;space&gt; viw " Select word</code></pre>
+
+
+<p>现在你再按下空格键，一些恐怖的事情就会发生。想一想为什么会这样呢？</p>
+<p>当你按下空格键时，Vim认为你是想执行命令<code>viw&lt;space&gt;"&lt;space&gt;Select&lt;space&gt;word</code>。
+很明显，这不是你的本意。</p>
+<p>如果你仔细查看了这个映射的结果，可能你会发现一些奇怪的事。利用几分钟时间，
+弄明白使用这个映射时到底发生了什么，以及 <em>为什么</em> 会是那样的结果。</p>
+<p>暂时搞不明白也不要担心，我们很快就会再次谈论这个问题。</p>
+<h2 id="_4">练习</h2>
+<p>映射按键<code>-</code>为 "删除当前行，然后将其粘贴到下一行" 。然后你就可以一次按键就将一行
+文本移动到下一行。</p>
+<p>将那个映射命令添加到你的<code>~/.vimrc</code>文件中，以后每次启动Vim你都可以使用那个映射了。</p>
+<p>试试如何映射按键<code>_</code>，使其将当前行上移一行。</p>
+<p>将这个映射也加到你的的<code>~/.vimrc</code>文件中。</p>
+<p>想想如果你想取消一个映射或重置一个按键为默认功能时该怎么操作。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="02.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="04.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="03.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>

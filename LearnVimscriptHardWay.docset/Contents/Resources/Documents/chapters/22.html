@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>比较 / Learn Vimscript the Hard Way</title>
+        <meta name="description" content="">
+        <meta name="author" content="Steve Losh">
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link href="../static/styles/skeleton/base.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/skeleton.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/skeleton/layout.css" rel="stylesheet" type="text/css" />
+
+        <link href="../static/styles/tango.css" rel="stylesheet" type="text/css" />
+        <link href="../static/styles/style.less" rel="stylesheet/less" type="text/css" />
+
+        <script type="text/javascript" src="../static/scripts/less.js"></script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="sixteen columns">
+                <h1><a href="../index.html"></a></h1>
+            </header>
+
+            
+
+    <section class="content twelve columns offset-by-one">
+        <div> 
+<h1 id="_1">比较</h1>
+<p>我们已经学习了条件语句，但如果我们不能进行比较，<code>if</code>语句并不怎么有用。
+当然Vim允许我们比较值的大小，只是不会像看上去那么一目了然。</p>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:if 10 &gt; 1
+:    echom "foo"
+:endif</code></pre>
+
+
+<p>显然，Vim会显示<code>foo</code>。现在执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:if 10 &gt; 2001
+:    echom "bar"
+:endif</code></pre>
+
+
+<p>Vim什么都不显示，因为<code>10</code>不比<code>2001</code>大。目前为止，一切正常。运行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:if 10 == 11
+:    echom "first"
+:elseif 10 == 10
+:    echom "second"
+:endif</code></pre>
+
+
+<p>Vim显示<code>second</code>。没什么好惊讶的。让我们试试比较字符串。执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:if "foo" == "bar"
+:    echom "one"
+:elseif "foo" == "foo"
+:    echom "two"
+:endif</code></pre>
+
+
+<p>Vim输出<code>two</code>。还是没什么好惊讶的，所以我开头说的(译注：Vim的比较不像看上去那么直白)到底是指什么呢？</p>
+<h2 id="_2">大小写敏感</h2>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:set noignorecase
+:if "foo" == "FOO"
+:    echom "vim is case insensitive"
+:elseif "foo" == "foo"
+:    echom "vim is case sensitive"
+:endif</code></pre>
+
+
+<p>Vim执行<code>elseif</code>分句,所以显然Vimscript是大小写敏感的。有道理，但没什么好震惊的。
+现在执行下面命令：</p>
+<pre class="codehilite"><code class="language-vim">:set ignorecase
+:if "foo" == "FOO"
+:    echom "no, it couldn't be"
+:elseif "foo" == "foo"
+:    echom "this must be the one"
+:endif</code></pre>
+
+
+<p><strong>啊！</strong> 就在这里停下来。是的，你所见属实。</p>
+<p><strong><code>==</code>的行为取决于用户的设置。</strong></p>
+<p>我发誓我没忽悠你。你再试试看看。我没开玩笑，这不是我干的。</p>
+<h2 id="_3">防御性编程</h2>
+<p>这意味着什么？意味着在为别人开发插件时，你<em>不能</em>信任<code>==</code>。
+一个不加包装的<code>==</code><em>不能</em>出现在你的插件代码里。</p>
+<p>这个建议就像是"<code>nmap</code> VS <code>nnoremap</code>"一样。<em>永远不要</em>猜测你的用户的配置。
+Vim既古老，又博大艰深。在写插件时，你<em>不得不</em>假定用户们的配置五花八门，千变万化。</p>
+<p>所以怎样才能适应这荒谬的现实？好在Vim有额外两种比较操作符来处理这个问题。</p>
+<p>执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:set noignorecase
+:if "foo" ==? "FOO"
+:    echom "first"
+:elseif "foo" ==? "foo"
+:    echom "second"
+:endif</code></pre>
+
+
+<p>Vim显示<code>first</code>因为<code>==?</code>是"无论你怎么设都大小写<em>不敏感</em>"比较操作符。现在执行下面的命令：</p>
+<pre class="codehilite"><code class="language-vim">:set ignorecase
+:if "foo" ==# "FOO"
+:    echom "one"
+:elseif "foo" ==# "foo"
+:    echom "two"
+:endif</code></pre>
+
+
+<p>Vim显示<code>two</code>因为<code>==#</code>是"无论你怎么设都大小写<em>敏感</em>"比较操作符。</p>
+<p>故事的最后告诉我们一个道理：你应该<em>总是</em>用显式的大小写敏感或不敏感比较。
+使用常规的形式是<em>错的</em>并且它<em>终究</em>会出错。打多一下就能拯救你自己于焦头烂额中。</p>
+<p>当你比较整数时，这点小不同不会有什么影响。
+不过，我还是建议每一次都使用大小写敏感的比较(即使不一定需要这么做)，好过该用的时候<em>忘记</em>用了。</p>
+<p>在比较整数时使用<code>==#</code>或<code>==?</code>都可以，而且将来一旦你改成字符串间的比较，它还会正确工作。
+如果你真想用<code>==</code>比较整数也不是不行，不过要铭记，一旦被改成字符串间的比较,你需要修改比较操作符。</p>
+<h2 id="_4">练习</h2>
+<p>尝试<code>:set ignorecase</code>和<code>:set noignorecase</code>，看看在不同状态下比较的表现。</p>
+<p>阅读<code>:help ignorecase</code>来看看为什么有的人设置了这个选项。</p>
+<p>阅读<code>:help expr4</code>看看所有允许的比较操作符。</p></div>
+
+        <div class="prevnext">
+            
+                <a class="prev" href="21.html">&laquo; Previous</a>
+            
+            
+                <a class="next" href="23.html">Next &raquo;</a>
+            
+        </div>
+    </section>
+
+
+            <footer class="sixteen columns">
+                Made by <a href="22.html"></a>.
+
+                <a href="../license.html">License</a>.
+
+                Built with
+                <a href="http://bitbucket.org/sjl/bookmarkdown/">Bookmarkdown</a>.
+            </footer>
+        </div>
+
+        
+
+        
+    </body>
+</html>
