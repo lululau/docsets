@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='381521407' property='twitter:account_id'/>
+
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-16x16.png" sizes="16x16"/>
+
+
+  
+    
+  
+
+
+<title>Manuals | RubyMotion</title>
+
+<meta property="og:title" content="Manuals | RubyMotion"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://rubymotion.com"/>
+<meta property="og:image" content="/img/rubymotion-logo.png"/>
+
+<meta name="description" content="Write cross-platform apps for iOS, Android and OS X in Ruby"/>
+
+
+<meta name="viewport" content="initial-scale=1, width=device-width" />
+
+<!--[if lt IE 9]>
+<script src="/javascripts/libs/html5shiv.min.js"></script>
+<script src="/javascripts/libs/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css"/>
+<link rel="stylesheet" href="../../../../css/lightbox.css" type="text/css"/>
+
+<!-- Analytics -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1471287-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </head>
+  <body data-section="chapter_3">
+
+    <div class="container">
+      
+        <article class="guides_pages">
+  <div class="row_fluid">
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <aside class="col_4 aside_toc">
+      <div class="toc_followed">
+        <div class="toc_container">
+          <h3 class="resp_m_deploy_title">Table of contents</h3>
+          <ol class="toc_list resp_m_to_deploy">
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_creation" class="toc_chapters anchor_links"><span class="toc_num">1. </span>Creation</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_project_templates" class="anchor_links"><span class="toc_num">1.1. </span>Project Templates</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_project_anatomy" class="anchor_links"><span class="toc_num">1.2. </span>Project Anatomy</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_configuration" class="toc_chapters anchor_links"><span class="toc_num">2. </span>Configuration</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_common_options" class="anchor_links"><span class="toc_num">2.1. </span>Common Options</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_ios_options" class="anchor_links"><span class="toc_num">2.2. </span>iOS Options</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_os_x_options" class="anchor_links"><span class="toc_num">2.3. </span>OS X Options</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_providing_custom_values" class="anchor_links"><span class="toc_num">2.4. </span>Providing Custom Values</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_files_dependencies" class="anchor_links"><span class="toc_num">2.5. </span>Files Dependencies</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_vendoring_3rd_party_libraries" class="anchor_links"><span class="toc_num">2.6. </span>Vendoring 3rd-Party Libraries</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_embedded_frameworks" class="anchor_links"><span class="toc_num">2.7. </span>Embedded Frameworks</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_entitlements" class="anchor_links"><span class="toc_num">2.8. </span>Entitlements</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_advanced_info_plist_settings" class="anchor_links"><span class="toc_num">2.9. </span>Advanced Info.plist Settings</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_build" class="toc_chapters anchor_links"><span class="toc_num">3. </span>Build</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_xcode_resource_files" class="anchor_links"><span class="toc_num">3.1. </span>Xcode Resource Files</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_parallel_compilation" class="anchor_links"><span class="toc_num">3.2. </span>Parallel Compilation</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_cleaning" class="anchor_links"><span class="toc_num">3.3. </span>Cleaning</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_running" class="toc_chapters anchor_links"><span class="toc_num">4. </span>Running</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_passing_arguments" class="anchor_links"><span class="toc_num">4.1. </span>Passing Arguments</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_interactive_console" class="anchor_links"><span class="toc_num">4.2. </span>Interactive Console</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_simulators" class="toc_chapters anchor_links"><span class="toc_num">5. </span>Simulators</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_cleaning_the_sandbox" class="anchor_links"><span class="toc_num">5.1. </span>Cleaning the Sandbox</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_archiving" class="toc_chapters anchor_links"><span class="toc_num">6. </span>Archiving</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_development_vs_release" class="anchor_links"><span class="toc_num">6.1. </span>Development vs Release</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_install_on_device" class="anchor_links"><span class="toc_num">6.2. </span>Install on Device</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_distribution" class="anchor_links"><span class="toc_num">6.3. </span>Distribution</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_manifest_file" class="anchor_links"><span class="toc_num">6.4. </span>Manifest File</a>
+             </li>
+            </ol>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <div class="col_9 guide_content">
+<div class="sect1">
+<h2 id="_rubymotion_project_management_guide_for_ios_and_os_x">RubyMotion Project Management Guide for iOS and OS X</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this guide we will explain how to create new RubyMotion iOS or OS X projects, then configure and maintain them.</p>
+</div>
+<div class="sect2">
+<h3 id="_creation">1. Creation</h3>
+<div class="paragraph">
+<p>To create a new RubyMotion project, pass the <code>create</code> command to <em>/usr/bin/motion</em>. It will create a new project directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ motion create Hello
+$ cd Hello
+$ ls
+Rakefile app resources spec</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_project_templates">1.1. Project Templates</h4>
+<div class="paragraph">
+<p>By default, the motion create command will create a RubyMotion iOS project. The same command will accept the <code>--template=</code> argument in order to create a different type of project.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion currently ships with several templates. In this document, we will focus on the following two:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ios</code>: will create a RubyMotion iOS project. This is the template used by default.</p>
+</li>
+<li>
+<p><code>osx</code>: will create a RubyMotion OS X project.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example, to create an OS X project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ motion create --template=osx Hello
+$ cd Hello</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Developers can add 3rd-party templates in the <code>~/Library/RubyMotion/template</code> directory. A RubyMotion project template is a directory that includes a <code>files</code> sub-directory which will contains the files that will be created by motion create.</p>
+</div>
+<div class="paragraph">
+<p>You can refer to the builtin templates in <code>/Library/RubyMotion/lib/motion/project/template</code> for documentation.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_project_anatomy">1.2. Project Anatomy</h4>
+<div class="paragraph">
+<p>The following table illustrates the anatomy of a project directory.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">File/Directory</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Rakefile</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This file contains the configuration of the project, as well as a default set of tasks. It can be edited to change the configuration or add new tasks.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>.gitignore</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This file contains file patterns that should be ignored by the source control management software (for instance, build files). This file is used by Git, but it can be ported to other SCMs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>app/</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This directory contains the Ruby code of the project. In a new project, a <em>main.rb</em> file is created automatically.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>resources/</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This directory contains the resources files of the project, such as images or sounds. In a new project, this directory is empty.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>spec/</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This directory contains the specification files of the application. In a new project, a default specification file is created automatically.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>RubyMotion projects are based on Rake. Essential rake tasks will be covered in the following sections. To see the full list of available tasks:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake -T</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Rake is the de-facto build system framework for Ruby. It is similar to make and ships by default in OS X.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration">2. Configuration</h3>
+<div class="paragraph">
+<p>The rake config task will dump the project configuration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake config</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each configuration variable has a sensible default value that can be manually overriden in the <em>Rakefile</em> file.</p>
+</div>
+<div class="sect3">
+<h4 id="_common_options">2.1. Common Options</h4>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Discussion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project name, as a <code>String</code>. The default value is the name passed to motion create.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project version, as a <code>String</code>. The default value is <code>"1.0"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>short_version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project short version, as a <code>String</code>. This value must be unique for each version released to the App Store. The default value is <code>"1"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>identifier</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project identifier, as a <code>String</code>, in reverse DNS format. The default value is the concatenation of <code>"com.yourcompany."</code> and the <code>name</code> variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delegate_class</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the application delegate class, as a <code>String</code>. The default value is <code>"AppDelegate"</code> and the class is defined in <em>app/main.rb</em>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>files</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project files, as an <code>Array</code>. The default value is an array containing all <em>.rb</em> file in the <em>app</em> directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>frameworks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The names of iOS or OS X frameworks to link against, as an <code>Array</code>. It should contain the names of public frameworks, typically present in <em>/System/Library/Frameworks</em>. The build system is capable of dealing with dependencies, for instance there is no need to mention <code>"CoreFoundation"</code> if you have <code>"Foundation"</code>. The default value for iOS projects is [_UIKit_, _Foundation_, _CoreGraphics_], and for OS X projects, [_AppKit_, _Foundation_, _CoreGraphics_].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>weak_frameworks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Similar to <code>frameworks</code> but only links if it is available for the <code>deployment_target</code>. This correlates to XCodes <code>Optional</code> setting and useful when a framework is not available for the projects <code>deployment_target</code>. Refer to <a href="http://developer.apple.com/library/ios/#documentation/miscellaneous/conceptual/iphoneostechoverview/iPhoneOSFrameworks/iPhoneOSFrameworks.html">iOS Frameworks</a> to verify the required framework. The default value is <code>[]</code>, an empty Array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>libs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Library paths to link against, as an <code>Array</code>. It should contain paths to public, system libraries, for example <code>"/usr/lib/libz.dylib"</code>. The default value is <code>[]</code>, an empty array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>build_dir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the directory for build products, as a <code>String</code>. It must be relative to the project directory. The directory will be created by the build system if it does not exist yet. If it cannot be created, a temporary directory will be used instead. The default value is <code>"build"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>resources_dirs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directories for resources files, as an <code>Array</code> of <code>String</code>. The default value is <code>["resources"]</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>specs_dir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directories for specification files, as an <code>Array</code> of <code>String</code>. It must be relative to the project directory. The default value is <code>"spec"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xcode_dir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directory where Xcode is installed, as a <code>String</code>. The default value is determined by the returned value of '/usr/bin/xcode-select --print-path', or, if invalid, <em>/Applications/Xcode.app/Contents/Developer</em>. Giving a new value to this setting must be done first, before changing other settings.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sdk_version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version number of the iOS or OS X SDK to use, as a <code>String</code>. The default value is the version number of the most recent supported SDK in <code>xcode_dir</code>. Example: <code>"5.0"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>deployment_target</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version number of the SDK to target, as a <code>String</code>. The default value is the value of <code>sdk_version</code>, but can be lowered to target older versions of iOS or OS X. Example: <code>"4.3"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>codesign_certificate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the certificate to use for codesigning, as a <code>String</code>. The default value is the first iPhone or Mac Developer certificate found in keychain. Example: <code>"iPhone Developer: Darth Vader (A3LKZY369Q)"</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_ios_options">2.2. iOS Options</h4>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Discussion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>icons</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of names of resource files to use for icons, as an <code>Array</code>. For example, ["Icon.png", "Icon-72.png", "Icon@2x.png"]. The files must conform to the <a href="http://developer.apple.com/library/ios/#documentation/userexperience/conceptual/mobilehig/IconsImages/IconsImages.html">HIG guidelines</a>. The default value is <code>[]</code>, an empty array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fonts</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of names of font files in the resources directory, as an <code>Array</code>. For example, <code>["Inconsolata.otf"]</code>. The fonts will then be properly taken into account when generating the application. The default value is the list of all <em>.ttf</em> and <em>.otf</em> files in the resources directory. It is recommended to keep the default value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>prerendered_icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the image files in <code>icons</code> are already pre-rendered according to the HIG guidelines. If <code>false</code>, iOS will apply a reflective shine effect on the icons. The default value is <code>false</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>device_family</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Family of devices to support. Possible values can be: <code>iphone</code>, <code>ipad</code> or [:iphone, :ipad] (for a universal application). The default value is <code>:iphone</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>interface_orientations</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supported interface orientations. Value must be an <code>Array</code> of one or more of the following symbols: <code>:portrait</code>, <code>:landscape_left</code>, <code>:landscape_right</code>, and <code>:portrait_upside_down</code>. The default value is [:portrait, :landscape_left, :landscape_right].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>provisioning_profile</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the provisioning profile to use for deployment, as a <code>String</code>. The default value is the first <em>.mobileprovision</em> file found in '~/Library/MobileDevice/Provisioning Profiles'.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>seed_id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application provisioning identifier, as a <code>String</code>. It is a unique (within the App Store) 10 characters identifier generated by the provisioning portal. The default value is the first application identifier found in <code>provisioning_profile</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_os_x_options">2.3. OS X Options</h4>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Discussion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the icon resource file to use as the application icon, as a <code>String</code>. For example, <code>"Icon.png"</code>. The default value is <code>''</code>, an empty string.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>copyright</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The human-readable copyright that will be used in the application&#8217;s property file, as a <code>String</code>. The default value is <code>"Copyright (c) CURRENT_DATE CURRENT_USER. All Right Reserved."</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>embedded_frameworks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of 3rd-party frameworks to embed in the application bundle, as an <code>Array</code> of <code>String</code> objects representing filesystem paths. For example, <code>["../MyFramework/framework"]</code>. The default value is an empty array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>external_frameworks</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of frameworks to use that are outside of <code>/System/Library/Frameworks</code> and should not be embedded, as an <code>Array</code> of <code>String</code> objects representing filesystem paths. For example, <code>["/Library/Frameworks/iTunesLibrary.framework"]</code>. The default value is an empty array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>codesign_for_development</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether it codesigns the application for development build. If <code>false</code>, it skips codesigning. The default value is <code>false</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>codesign_for_release</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether it codesigns the application for release build. If <code>false</code>, it skips codesigning. The default value is <code>true</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_providing_custom_values">2.4. Providing Custom Values</h4>
+<div class="paragraph">
+<p>Custom values for the configuration settings can be added by tweaking the <code>Motion::App.setup</code> block in the <code>Rakefile</code> file.</p>
+</div>
+<div class="paragraph">
+<p>As an example, let&#8217;s take the configuration block of a fictional video player application for the iPad. The device family setting has to change from its default value, iPhone, to iPad. Also, the application makes use of an additional framework, AVFoundation, for audio-video functionality.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  app.name = 'Awesome Video Player'
+  app.device_family = :ipad
+  app.frameworks += ['AVFoundation']
+end</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_files_dependencies">2.5. Files Dependencies</h4>
+<div class="paragraph">
+<p>By default, RubyMotion will compile files in the regular sorting order of the filesystem. When a RubyMotion application starts, the main scope of each file will then be executed in that specific order.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes, you will want to customize the order, if for instance one file makes use of a constant defined in another.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ cat app/foo.rb
+class Foo
+end
+$ cat app/bar.rb
+class Bar &lt; Foo
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the example above, using the default order, <em>bar.rb</em> will be compiled before <em>foo.rb</em> resulting in a constant lookup error, because the <code>Foo</code> constant has not been defined yet when we execute the code in <em>bar.rb</em>.</p>
+</div>
+<div class="paragraph">
+<p>To fix that problem, the <code>files_dependencies</code> method can be used in the <em>Rakefile</em>. This method accepts a <code>Hash</code> which should be a set of files dependencies.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.files_dependencies 'app/bar.rb' =&gt; 'app/foo.rb'
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After this change, the build system will compile <em>foo.rb</em> before <em>bar.rb</em>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_vendoring_3rd_party_libraries">2.6. Vendoring 3rd-Party Libraries</h4>
+<div class="paragraph">
+<p>The iOS and OS X SDK has a significant amount of functionality built-in that you can use in your RubyMotion project. However, sometimes you will have to use a 3rd-party library that provides a feature missing from the system.</p>
+</div>
+<div class="paragraph">
+<p>To vendor a 3rd-party library in a RubyMotion project, the source code must be available somewhere on the filesystem. It is recommended to keep the 3rd-party libraries required by the project in the same place, for instance under a <em>vendor</em> directory.</p>
+</div>
+<div class="paragraph">
+<p>The <code>vendor_project</code> method can be called from the <em>Rakefile</em>. Its first argument must be the path to the 3rd-party library, for example <code>"vendor/OAuth2Client"</code>. Its second argument must be a symbol representing the project type, like <code>:xcode</code>. Other arguments can be provided as a list of key/value objects.</p>
+</div>
+<div class="paragraph">
+<p>Here is a table summarizing project types and key/value objects.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Project Type</th>
+<th class="tableblock halign-left valign-middle">Key</th>
+<th class="tableblock halign-left valign-middle">Discussion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle" rowspan="7"><p class="tableblock"><code>:xcode</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:xcodeproj</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the Xcode project file to use. Optional if there is one <em>.xcodeproj</em> file in the directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:target</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the target to build. If not provided, the default target will be used. Cannot be defined at the same time as <code>:scheme</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:scheme</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the scheme to build. If not provided, the default scheme will be used. Cannot be defined at the same time as <code>:target</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:configuration</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the configuration to build. If not provided, <code>"Release"</code> will be used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:headers_dir</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Path to the directory that contains public headers files, declaring APIs that will be used by the RubyMotion project. The path should be relative to the path provided to <code>vendor_project</code>, for example <code>"Sources/Headers"</code>. This key is optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:products</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">An <code>Array</code> containing the names of products to use in the RubyMotion project, for example <code>["libfoo.a"]</code>. This key can be used when the project builds more than one product and you want to filter what will be used by the app. If not provided, all <code>.a</code> libraries built will be used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:bridgesupport_cflags</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>CFLAGS</code> to use when generating BridgeSupport metadata, for example <code>"-fobjc-arc"</code> to turn on ARC. This key is optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle" rowspan="4"><p class="tableblock"><code>:static</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:products</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">An <code>Array</code> containing the names of static libraries to use. The default value is the list of all <em>.a</em> files in the vendor project directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:source_files</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">An <code>Array</code> of all source files and headers to compile. The default value is the list of all files in the vendor project directory matching <code>"**/*.{c,m,cpp,cxx,mm,h}"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:cflags</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>CFLAGS</code> to use for compilation, for example <code>"-fobjc-arc"</code> to turn on ARC. This key is optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>:bridgesupport_cflags</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><code>CFLAGS</code> to use specifically when generating BridgeSupport metadata, for example <code>"-fobjc-arc"</code> to turn on ARC. This key is optional and defaults to <code>:cflags</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Continuing our example from above, assuming our video player project wants to make use of the OAuth2Client 3rd-party library, a <em>vendor</em> directory would be created and the OAuth2Client source code would be added there.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ cd AwesomeVideoPlayer
+$ ls vendor
+OAuth2Client</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, the <em>Rakefile</em> can be modified as such.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.vendor_project('vendor/OAuth2Client', :xcode,
+      :target =&gt; 'OAuth2Client',
+      :headers_dir =&gt; 'Sources/OAuth2Client')
+  app.frameworks &lt;&lt; 'Security' # OAuth2Client depends on Security.framework
+end</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_embedded_frameworks">2.7. Embedded Frameworks</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+OS X only.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>OS X applications can embed 3rd-party frameworks inside their bundle directory. This can be used as an alternative to vendoring static libraries, as described above.</p>
+</div>
+<div class="paragraph">
+<p>To embed a 3rd-party framework in your app, you can use the <code>app.embedded_frameworks</code> variable in the <em>Rakefile</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.embedded_frameworks &lt;&lt; '../MyFramework.framework'
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Embedded frameworks are copied inside the <em>Contents/Frameworks</em> directory of the application bundle. The application binary executable will also be reconfigured to have a relative link path to the framework.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_entitlements">2.8. Entitlements</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+iOS only.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Entitlements confer specific capabilities or security permissions to an application. You may be required by Apple to request an entitlement when trying to access a specific feature of the system.</p>
+</div>
+<div class="paragraph">
+<p>An application running on an iOS device that does not have the proper entitlement for a functionality will fail at runtime when trying to use such functionality. It will also not be accepted into the App Store.</p>
+</div>
+<div class="paragraph">
+<p>Entitlements are used during the code-signing part of the build process.</p>
+</div>
+<div class="paragraph">
+<p>The <code>entitlements</code> method of the <em>Rakefile</em> configuration object returns an empty <code>Hash</code> object by default, that you can modify to set appropriate keys and values.</p>
+</div>
+<div class="paragraph">
+<p>For instance, our video player might require access to the keychain to store the user credentials. According to the documentation, the <code>keychain-access-groups</code> entitlement must be requested, passing a combination of the application provisioning identifier and the application identifier, respectively exposed as <code>seed_id</code> and <code>identifier</code> in RubyMotion.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.entitlements['keychain-access-groups'] = [
+    app.seed_id + '.' + app.identifier
+  ]
+end</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_advanced_info_plist_settings">2.9. Advanced Info.plist Settings</h4>
+<div class="paragraph">
+<p>An iOS app has its configuration defined in the <em>Info.plist</em> file, which is located inside the application bundle. This file contains a set of keys and values. It is fully documented in the <a href="http://developer.apple.com/library/ios/#documentation/General/Reference/InfoPlistKeyReference/Introduction/Introduction.html">Info.plist reference</a> guide.</p>
+</div>
+<div class="paragraph">
+<p>In a RubyMotion project, the <em>Info.plist</em> file is derived from the configuration object exposed in the <em>Rakefile</em> file. For example, the <code>CFBundleName</code> variable in <em>Info.plist</em> is derived from the <code>name</code> variable in the <em>Rakefile</em>. Most of the time, the configuration object will let you control the necessary settings of his project.</p>
+</div>
+<div class="paragraph">
+<p>However, it might happen that you will want to change an advanced setting of a project. The <em>Rakefile</em> interface does not cover all the possible settings, but it exposes the internal <em>Info.plist</em> data structure that one can modify if needed.</p>
+</div>
+<div class="paragraph">
+<p>As an example, our video player might need to register a custom URI scheme, so that it can open custom URLs from the web browser, for instance, <code>x-videoplayer://play</code>. The <em>Rakefile</em> configuration object does not provide support for this.</p>
+</div>
+<div class="paragraph">
+<p>The reference suggests that the <code>CFBundleURLTypes</code> key should be used. The key can be manually set by using the <code>info_plist</code> method, which returns a mutable <code>Hash</code> object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.info_plist['CFBundleURLTypes'] = [
+    { 'CFBundleURLName' =&gt; 'com.mycompany.x-videoplayer',
+      'CFBundleURLSchemes' =&gt; ['x-videoplayer'] }
+  ]
+end</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build">3. Build</h3>
+<div class="paragraph">
+<p>The rake build task builds the project into the temporary <em>build</em> directory.</p>
+</div>
+<div class="paragraph">
+<p>In an iOS project, two different versions of the project will be built, one to run in the iOS simulator (on the Mac itself) and one to run on the iOS device. In an OS X project, only one version will be built.</p>
+</div>
+<div class="paragraph">
+<p>The following steps are performed during the build process:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>It compiles each Ruby source code file into optimized machine code, translating the Ruby syntax tree into an intermediate representation language (using <a href="http://llvm.org">LLVM</a>), then assembly. For iOS, the compiler will generate code for either the Intel 32-bit (<code>i386</code>) or ARM (<code>armv6</code>, <code>armv7</code>) instruction sets and ABIs depending on the target. For OS X, the compiler will target both Intel 32-bit (<code>i386</code>) and 64-bit (<code>x86_64</code>).</p>
+</li>
+<li>
+<p>It links the machine code with the RubyMotion runtime statically to form an executable. The linker also includes metadata for the C APIs that the project uses, as well as 3rd-party libraries vendored from the configuration.</p>
+</li>
+<li>
+<p>It creates an <em>.app</em> bundle and copies the executable there. The <em>Info.plist</em> file is generated based on the project configuration. Each resource file in the <em>resources</em> directory is copied in the bundle. Old resource files, that have since been deleted from the project, will not be present in the application bundle.</p>
+</li>
+<li>
+<p>It codesigns the bundle based on the certificate, the provisioning profile and the entitlements specified in the project configuration.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Normally the user does not need to explicitly build the project, as the <em>build</em> task is a dependency of the other tasks.</p>
+</div>
+<div class="sect3">
+<h4 id="_xcode_resource_files">3.1. Xcode Resource Files</h4>
+<div class="paragraph">
+<p>The build system will detect the following Xcode resource files in the <em>resources</em> directory and properly compile them and copy the result into the generated <em>.app</em> bundle.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Source Extension</th>
+<th class="tableblock halign-left valign-top">Compiled Extension</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>.xib</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>.nib</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interface Builder files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>.storyboard</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>.storyboardc</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storyboard files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>.xcdatamodeld</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>.momd</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CoreData model files.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The compiled files will be removed by 'rake clean'.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_parallel_compilation">3.2. Parallel Compilation</h4>
+<div class="paragraph">
+<p>The compilation of Ruby source files into machine code takes a non-negligible amount of time.</p>
+</div>
+<div class="paragraph">
+<p>If the machine used to build the project runs a multicore processor, which is very likely these days, the build system will try to spread the compilation tasks in parallel. This can be very useful when building a project that contains a significant number of files.</p>
+</div>
+<div class="paragraph">
+<p>The build system uses the value of the <code>machdep.cpu.thread_count</code> sysctl kernel variable to determine  know how many compilation tasks can be executed in parallel. For example, a MacBook Pro running an Intel Core i7 processor has 4 available cores, each one being able to run 2 concurrent threads, and the build system will therefore compile 8 files at a time.</p>
+</div>
+<div class="paragraph">
+<p>It is possible to override the number of concurrent jobs the build system should use by setting the <code>jobs</code> environment variable. It can be set to a lower number if for instance the machine is performing another CPU intensive task that should not be interrupted by the build system.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake jobs=1        # Force compilation tasks to be sequential.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cleaning">3.3. Cleaning</h4>
+<div class="paragraph">
+<p>The rake clean task empties the <em>build</em> directory and cleans the build directories of the vendored projects.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake clean</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running">4. Running</h3>
+<div class="paragraph">
+<p>The default <code>rake</code> task will build the project and run it locally on your Mac.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In an iOS project, the application will run in the iOS simulator. The default <code>rake</code> task is a shortcut to rake simulator.</p>
+</div>
+<div class="paragraph">
+<p>In an OS X project, the application will run natively. The default <code>rake</code> task is a shortcut to rake run.</p>
+</div>
+<div class="sect3">
+<h4 id="_passing_arguments">4.1. Passing Arguments</h4>
+<div class="paragraph">
+<p>During development, you may have to pass command-line arguments when launching the application.</p>
+</div>
+<div class="paragraph">
+<p>The <code>rake</code> task honors the <code>args</code> environment variable, which can be used to provide arguments. As an example, to enable CoreData SQL debug:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake args="-com.apple.CoreData.SQLDebug 1"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_interactive_console">4.2. Interactive Console</h4>
+<div class="paragraph">
+<p>An interactive shell, similar to Ruby&#8217;s own <code>irb</code> command, is available when you run your app locally.</p>
+</div>
+<div class="paragraph">
+<p>You can evaluate any expression in the shell. The shell does not block the app from running, but expressions typed into it will be sent to the app which will execute them in the main thread.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The REPL (read-eval-print-loop) support is loaded on demand in the app, via a shared library. By default, an app does not contain any REPL-related code, for example, iOS projects built for the device.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can type <code>help</code> to get more information about the built-in expressions.</p>
+</div>
+<div class="paragraph">
+<p>The interactive shell also features a way to select views in the app. Hold the <code>command</code> key while moving your mouse over the app window and you should see red borders around views you are selecting as well as the object in the shell. Once you click, the shell will open a new session whose context (the <code>self</code> object) is the view you selected.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_simulators">5. Simulators</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+iOS-only.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A universal application targets both the iPhone and iPad device families (see the <code>device_family</code> project configuration setting for more details). Additionally, there are different iPhone screen sizes you need to support.</p>
+</div>
+<div class="paragraph">
+<p>In this case, it can be convenient to specify which device you want to simulate. Xcode lets you manage and create different simulators, assigning a custom name, device type and iOS SDK version. You can access this inside Xcode in "Window &gt; Devices".</p>
+</div>
+<div class="paragraph">
+<p>The <code>device_name</code> environment variable lets you configure in which simulator the app will run.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake simulator device_name="iPad 2"</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Xcode may create multiple simulators with the same name, running different versions of iOS. In order to select which simulator will run via the device_name variable, you have to rename the simulator in Xcode (or via the xcrun simctl command line utility) to a unique name (e.g. "iPhone 5 7.0").
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_cleaning_the_sandbox">5.1. Cleaning the Sandbox</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+iOS-only.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Each application lives in its own directory inside the iOS simulator sandbox. This directory contains the application bundle, but also the <em>Documents</em> and <em>Library</em> folders, which store its filesystem state. When running an application through the simulator, the sandbox will be created if it doesn&#8217;t exist, otherwise, the application will be copied into the existing sandbox.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes, you may want to clean the application sandbox before running the simulator, in order to start from a fresh state. For instance, if resource files are removed from the project, or if the application has state data that has to be cleaned up.</p>
+</div>
+<div class="paragraph">
+<p>To perform that, the <code>clean</code> environment variable can be set to any value, which will trigger the removal of the application sandbox before running the simulator.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake simulator clean=1</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_archiving">6. Archiving</h3>
+<div class="paragraph">
+<p>RubyMotion projects can be archived in order to be distributed and submitted to the App Store.</p>
+</div>
+<div class="sect3">
+<h4 id="_development_vs_release">6.1. Development vs Release</h4>
+<div class="paragraph">
+<p>A RubyMotion project can be built for development or release. A project is built for development when you run it in the simulator, or push it to your development device. A project is built for release when you&#8217;re generating an archive for an App Store submission.</p>
+</div>
+<div class="paragraph">
+<p>Currently, the main difference between a RubyMotion app built for release and one built for development is that all symbols are stripped from the main executable. This process removes about 1MB of data from the app bundle, but at the same time makes debugging more difficult, which is why it&#8217;s not applied in development.</p>
+</div>
+<div class="paragraph">
+<p>For OS X projects, an app built for release will include full (both 32/64-bit) Intel architecture support. Development builds only target the local Intel architecture, to make builds faster.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes, you want to apply different settings in the <em>Rakefile</em> if the project builds for release. This can be done by using the <code>development</code> and <code>release</code> methods on the configuration object. These methods will yield the given block for the specified build mode.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.development do
+    # This entitlement is required during development but must not be used for release.
+    app.entitlements['get-task-allow'] = true
+  end
+end</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_install_on_device">6.2. Install on Device</h4>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+iOS-only.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The rake device task builds and uploads a development archive of the application to an iOS device.</p>
+</div>
+<div class="paragraph">
+<p>There must be one iOS device connected via USB to the Mac. The deployment task will attempt to upload the application to the first discovered iOS device on the USB channel.</p>
+</div>
+<div class="paragraph">
+<p>The process will fail in the following cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No iOS device was found on USB.</p>
+</li>
+<li>
+<p>The project builds on a version of iOS greater than the version of iOS running on the device.</p>
+</li>
+<li>
+<p>The project doesn&#8217;t use the appropriate certificate and provisioning profile linked to the device.</p>
+</li>
+<li>
+<p>There is a USB connection issue when talking to the device.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Otherwise, the process returns successfully and the application is then available on the device springboard.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_distribution">6.3. Distribution</h4>
+<div class="paragraph">
+<p>The rake archive task can be used to generate archives for both development and release modes. An archive is suitable for ad-hoc distribution and can also be used for a submission to the App Store.</p>
+</div>
+<div class="paragraph">
+<p>On iOS projects, archive files have the <em>.ipa</em> file extension. On OS X projects, they have the <em>.pkg</em> extension.</p>
+</div>
+<div class="paragraph">
+<p>For creating an archive for the App Store, use the rake archive:distribution task.</p>
+</div>
+<div class="paragraph">
+<p>The task requires a valid certificate and provisioning profile in order to codesign the app bundle.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_manifest_file">6.4. Manifest File</h4>
+<div class="paragraph">
+<p>iOS projects can have a <em>manifest.plist</em> file generated during rake archive. This file can be used to implement over-the-air ad-hoc distribution</p>
+</div>
+<div class="paragraph">
+<p>To enable the generation of this file, the <code>app.manifest_assets</code> variable, which defaults to an empty <code>Array</code>, has to include at least one <code>Hash</code> object describing an asset. Each <code>Hash</code> has to provide values for the <code>kind</code> and <code>url</code> keys. Values for the <code>kind</code> key can be <code>"software-package"</code>, <code>"display-image"</code> and <code>"full-size-image"</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following snippet describes 2 manifest assets, a pointer to the application archive and a pointer to an icon image describing the application.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.manifest_assets &lt;&lt; { :kind =&gt; 'software-package',
+                           :url =&gt; 'http://mycompany.com/files/myapp.ipa' }
+  app.manifest_assets &lt;&lt; { :kind =&gt; 'display-image',
+                           :url =&gt; 'http://mycompany.com/files/myapp.jpg' }
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At the time of this writing, Apple doesn&#8217;t provide documentation regarding the format of the properly list file, so you will have to search online to know more.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+  </div>
+</article>
+
+  </body>
+</html>

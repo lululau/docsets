@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='381521407' property='twitter:account_id'/>
+
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-16x16.png" sizes="16x16"/>
+
+
+  
+    
+  
+
+
+<title>Manuals | RubyMotion</title>
+
+<meta property="og:title" content="Manuals | RubyMotion"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://rubymotion.com"/>
+<meta property="og:image" content="/img/rubymotion-logo.png"/>
+
+<meta name="description" content="Write cross-platform apps for iOS, Android and OS X in Ruby"/>
+
+
+<meta name="viewport" content="initial-scale=1, width=device-width" />
+
+<!--[if lt IE 9]>
+<script src="/javascripts/libs/html5shiv.min.js"></script>
+<script src="/javascripts/libs/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css"/>
+<link rel="stylesheet" href="../../../../css/lightbox.css" type="text/css"/>
+
+<!-- Analytics -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1471287-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </head>
+  <body data-section="chapter_3">
+
+    <div class="container">
+      
+        <article class="guides_pages">
+  <div class="row_fluid">
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <aside class="col_4 aside_toc">
+      <div class="toc_followed">
+        <div class="toc_container">
+          <h3 class="resp_m_deploy_title">Table of contents</h3>
+          <ol class="toc_list resp_m_to_deploy">
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_object_model" class="toc_chapters anchor_links"><span class="toc_num">1. </span>Object Model</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_objective_c_messages" class="anchor_links"><span class="toc_num">1.1. </span>Objective-C Messages</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_objective_c_interfaces" class="anchor_links"><span class="toc_num">1.2. </span>Objective-C Interfaces</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_selector_shortcuts" class="anchor_links"><span class="toc_num">1.3. </span>Selector Shortcuts</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_super" class="anchor_links"><span class="toc_num">1.4. </span>Super</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_builtin_classes" class="toc_chapters anchor_links"><span class="toc_num">2. </span>Builtin Classes</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_mutability" class="anchor_links"><span class="toc_num">2.1. </span>Mutability</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_interfacing_with_c" class="toc_chapters anchor_links"><span class="toc_num">3. </span>Interfacing with C</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_basic_types" class="anchor_links"><span class="toc_num">3.1. </span>Basic Types</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_structures" class="anchor_links"><span class="toc_num">3.2. </span>Structures</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_enumerations_and_constants" class="anchor_links"><span class="toc_num">3.3. </span>Enumerations and Constants</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_functions" class="anchor_links"><span class="toc_num">3.4. </span>Functions</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_pointers" class="anchor_links"><span class="toc_num">3.5. </span>Pointers</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_function_pointers_and_blocks" class="anchor_links"><span class="toc_num">3.6. </span>Function Pointers and Blocks</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_memory_management" class="toc_chapters anchor_links"><span class="toc_num">4. </span>Memory Management</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_weak_references" class="anchor_links"><span class="toc_num">4.1. </span>Weak References</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_objective_c_and_corefoundation_objects" class="anchor_links"><span class="toc_num">4.2. </span>Objective-C  and CoreFoundation Objects</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_immediate_types" class="anchor_links"><span class="toc_num">4.3. </span>Immediate Types</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_concurrency" class="toc_chapters anchor_links"><span class="toc_num">5. </span>Concurrency</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_threads_and_mutexes" class="anchor_links"><span class="toc_num">5.1. </span>Threads and Mutexes</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_grand_central_dispatch" class="anchor_links"><span class="toc_num">5.2. </span>Grand Central Dispatch</a>
+             </li>
+            </ol>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <div class="col_9 guide_content">
+<div class="sect1">
+<h2 id="_rubymotion_runtime_guide_for_ios_and_os_x">RubyMotion Runtime Guide for iOS and OS X</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The RubyMotion runtimes implement the Ruby language functionality required during the execution of an application. The object model, built-in classes, and memory management system are part of the runtime.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion comes with a runtime for iOS and OS X, based on the Objective-C runtime and core Cocoa classes.</p>
+</div>
+<div class="paragraph">
+<p>Although similar in appearance, this RubyMotion runtime has a completely different implementation than <a href="http://www.ruby-lang.org/en/">CRuby</a>, the mainstream implementation (which is also called MRI, or simply Ruby). We will cover the main differences in the following sections.</p>
+</div>
+<div class="paragraph">
+<p>The key feature of the RubyMotion runtime is its tight integration with the Objective-C runtime, which makes it suitable for use on power efficient devices as well as for writing performance-intensive code.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion follows the Ruby 1.9 language specifications.</p>
+</div>
+<div class="sect2">
+<h3 id="_object_model">1. Object Model</h3>
+<div class="paragraph">
+<p>The object model of RubyMotion is based on <a href="http://en.wikipedia.org/wiki/Objective-C">Objective-C</a>, the underlying language runtime of the iOS and OS X SDK. Objective-C is an object-oriented flavor of C that has been, like Ruby, heavily influenced by the <a href="http://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> language.</p>
+</div>
+<div class="paragraph">
+<p>Sharing a common ancestor, the object models of Ruby and Objective-C are conceptually similar. For instance, both languages have the notion of open classes, single inheritance and single dynamic message dispatch.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion implements the Ruby object model by using the <a href="http://developer.apple.com/library/ios/#documentation/Cocoa/Reference/ObjCRuntimeRef/Reference/reference.html">Objective-C runtime</a>, the library that powers the Objective-C language and indirectly, the iOS SDK APIs.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../img/features/ios-runtime.png" alt="iOS and OS X RubyMotion Runtime">
+</div>
+</div>
+<div class="paragraph">
+<p>In RubyMotion, Ruby classes, methods and objects are Objective-C classes, methods and objects respectively. The converse is also true.  Objective-C classes, methods and objects are available in Ruby as if they were native.</p>
+</div>
+<div class="paragraph">
+<p>By sharing the same object model infrastructure, Objective-C and RubyMotion APIs can be interchangeable at no additional performance expense.</p>
+</div>
+<div class="sect3">
+<h4 id="_objective_c_messages">1.1. Objective-C Messages</h4>
+<div class="paragraph">
+<p>RubyMotion lets you send and define Objective-C messages.</p>
+</div>
+<div class="paragraph">
+<p>An Objective-C message, also called a selector, can look different than a typical Ruby message, if it contains more than one argument.</p>
+</div>
+<div class="paragraph">
+<p>Unlike Ruby messages, Objective-C messages contain keywords. Each argument has a keyword associated to it and the final Objective-C message is the combination of all keywords.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s take the following piece of Objective-C code which draws a string.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="objective-c"><span class="tok-p">[</span><span class="tok-n">string</span> <span class="tok-nl">drawAtPoint</span><span class="tok-p">:</span><span class="tok-n">point</span> <span class="tok-nl">withFont</span><span class="tok-p">:</span><span class="tok-n">font</span><span class="tok-p">];</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this code, <code>string</code>, <code>point</code> and <code>font</code> are variables. The message keywords are <code>drawAtPoint:</code> and <code>withFont:</code>. The complete message is the combination of these keywords, <code>drawAtPoint:withFont:</code> , which is sent to the <code>string</code> object, passing the <code>point</code> and <code>font</code> objects as arguments.</p>
+</div>
+<div class="paragraph">
+<p>Objective-C messages can be sent from RubyMotion using a similar syntax.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ruby"><span class="tok-n">string</span><span class="tok-o">.</span><span class="tok-n">drawAtPoint</span><span class="tok-p">(</span><span class="tok-n">point</span><span class="tok-p">,</span> <span class="tok-ss">withFont</span><span class="tok-p">:</span><span class="tok-n">font</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is important to keep in mind that the message being sent here is <code>drawAtPoint:withFont:</code>. To illustrate more, the same message can be manually dispatched using the <code>send</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>string.send(:'drawAtPoint:withFont:', point, font)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Objective-C messages can also be defined in RubyMotion. Let&#8217;s imagine we are building a class that should act as a proxy for our drawing code. The following piece of code defines the <code>drawAtPoint:withFont:</code> message on the <code>DrawingProxy</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class DrawingProxy
+  def drawAtPoint(point, withFont:font)
+    @str.drawAtPoint(point, withFont:font)
+  end
+end</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The syntax used to define Objective-C selectors was added to RubyMotion and is not part of the Ruby standard.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_objective_c_interfaces">1.2. Objective-C Interfaces</h4>
+<div class="paragraph">
+<p>As Objective-C is the main language used to describe the iOS SDK, it is necessary to understand how to read Objective-C interfaces and how to use them from Ruby.</p>
+</div>
+<div class="paragraph">
+<p>Objective-C interfaces can be found in Apple&#8217;s iOS API reference and also in the iOS framework header (<code>.h</code>) files.</p>
+</div>
+<div class="paragraph">
+<p>An Objective-C interface starts with either the minus or plus character, which is used to respectively declare instance or class methods.</p>
+</div>
+<div class="paragraph">
+<p>For example, the following interface declares the <code>foo</code> instance method on the <code>Foo</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>@class Foo
+- (id)foo;
+@end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The next one declares the <code>foo</code> class method on the same class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>@class Foo
++ (id)foo;
+@end</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>(id)</code> is the type information. Types are covered in an upcoming section, so you can omit them for now.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>As seen in the previous section, arguments in Objective-C methods can be named with a keyword. The sum of all keywords form the message name, or selector.</p>
+</div>
+<div class="paragraph">
+<p>The following interface declares the <code>sharedInstanceWithObject:andObject:</code> class method on the <code>Test</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>@class Test
++ (id)sharedInstanceWithObject:(id)obj1 andObject:(id)obj2;
+@end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This method can be called from Ruby like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code># obj1 and obj2 are variables for the arguments.
+instance = Test.sharedInstanceWithObject(obj1, andObject:obj2)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_selector_shortcuts">1.3. Selector Shortcuts</h4>
+<div class="paragraph">
+<p>The RubyMotion runtime provides convenience shortcuts for certain Objective-C selectors.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Selector</th>
+<th class="tableblock halign-left valign-top">Shortcut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>setFoo:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo=</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isFoo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo?</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>objectForKey:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[]</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>setObject:forKey:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[]=</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>As an example, the <code>setHidden:</code> and <code>isHidden</code> methods of <code>UIView</code> can be called by using the <code>hidden=</code> and <code>hidden?</code> shortcuts.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>view.hidden = true unless view.hidden?</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_super">1.4. Super</h4>
+<div class="paragraph">
+<p>In Objective-C, <code>super</code> sends a message to the superclass of the current class, invoking a specific method.  In the example below, <code>super</code> would send the <code>play</code> message to <code>MediaController</code> with <code>song</code> as the argument.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>@interface VideoController : MediaController
+@end
+
+@implementation VideoController
+- (void)play:(NSString *)song {
+  [super play:song];
+  // Customize here...
+}
+@end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Ruby (and by extension, RubyMotion), <code>super</code> sends a message to the superclass of the current class, <a href="http://stackoverflow.com/questions/4632224/super-keyword-in-ruby#answer-4632270">invoking a method of the same name</a> and <a href="http://stackoverflow.com/questions/4632224/super-keyword-in-ruby#answer-4632229">passing it the same arguments</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class VideoController &lt; MediaController
+  def play(song)
+    super
+    # Customize here...
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Objective-C it is possible to call a method on the super class and bypass the method locally. This is especially convenient when defining <code>init</code> methods.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>@interface CustomView : UIView
+@property (copy) NSString *text;
+@end
+
+@implementation CustomView
+- (id) initWithFrame:(CGRect)frame {
+  [super initWithFrame:frame];
+  self.text = @"";
+  return self;
+}
+- (id) initWithText:(NSString*)text {
+  UIFont *font = [UIFont systemFontOfSize:12];
+  CGRect size = [text sizeWithFont:font];
+  // skip local initializer
+  [super initWithFrame:CGMakeRect(0, 0, size.width, size.height)];
+  self.text = text;
+  return self;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is a contrived example because in this case it would be fine to call <code>initWithFrame</code>.  But there are cases where you do not want to call your local method, but you need to call the method on super.</p>
+</div>
+<div class="paragraph">
+<p>This is not easily accomplished in Ruby (see <a href="http://stackoverflow.com/questions/2564391/how-do-i-call-a-super-class-method">How do I call a super class method</a> on stack overflow).  In Ruby you need to <code>alias</code> the parent method and call that method instead.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class CustomView &lt; UIView
+  alias :'super_initWithFrame:' :'initWithFrame:'
+  # if your method takes multiple arguments, you can alias that as well
+  # alias :'renameWithArg1:arg2' :'methodWithArg1:arg2'
+
+  def initWithFrame(frame)
+    super.tap do
+      @text = ''
+    end
+  end
+
+  def initWithText(text)
+    font = UIFont.systemFontOfSize(12)
+    size = text.sizeWithFont(font)
+    super_initWithFrame([[0, 0], size]).tap do
+      @text = text
+    end
+  end
+end</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_builtin_classes">2. Builtin Classes</h3>
+<div class="paragraph">
+<p>Some of the built-in classes of RubyMotion are based on the <a href="http://developer.apple.com/library/ios/#documentation/Cocoa/Reference/Foundation/ObjC_classic/\_index.html">Foundation framework</a>, the base layer of iOS and OS X.</p>
+</div>
+<div class="paragraph">
+<p>The Foundation framework is an Objective-C framework, but due to the fact that RubyMotion is based on the Objective-C runtime, the classes that it defines can be naturally re-used in RubyMotion.</p>
+</div>
+<div class="paragraph">
+<p>Foundation class names typically start with the <code>NS</code> prefix, which arguably stands for NeXTSTEP, the system for which the framework was originally built.</p>
+</div>
+<div class="paragraph">
+<p>Foundation comes with the root object class, <code>NSObject</code>, as well as a set of primitive object classes. In RubyMotion, <code>Object</code> is an alias to <code>NSObject</code>, making <code>NSObject</code> the root class of all Ruby classes. Also, some of the built-in classes inherit from Foundation types.</p>
+</div>
+<div class="paragraph">
+<p>Here is a table showing the ancestors chain of a newly created class, <code>Hello</code>, as well as some of the Ruby built-in classes.</p>
+</div>
+<div class="paragraph">
+<p>A direct consequence of hosting the Ruby built-in classes on Foundation is that instances respond to more messages. For instance, the <code>NSString</code> class defines the <code>uppercaseString</code> method. Since the <code>String</code> class is a subclass of <code>NSString</code>, strings created in Ruby also respond to that method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>'hello'.uppercaseString # =&gt; 'HELLO'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Conversely, the Ruby interface of these built-in classes is implemented on their Foundation counterparts. For example, <code>Array&#8217;s `each</code> method is implemented on <code>NSArray</code>. This allows primitive types to always respond to the same interface, regardless of where they come from. <code>each</code> will always work on all arrays.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>def iterate(ary)
+  ary.each { |x| p x }
+end
+
+iterate [42]
+iterate NSArray.arrayWithObject(42)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But the main purpose of this design is to allow the exchange of primitive types between Objective-C and Ruby at no performance cost, since they don&#8217;t have to be converted. This is important as most of the types that will be exchanged in a typical application are likely going to be built-in types. A <code>String</code> object created in Ruby can have its memory address passed as the argument of an Objective-C method that expects an <code>NSString</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_mutability">2.1. Mutability</h4>
+<div class="paragraph">
+<p>The Foundation framework ships a set of classes that have both mutable and immutable variants. Mutable objects can be modified, while immutable objects cannot.</p>
+</div>
+<div class="paragraph">
+<p>Immutable Foundation types in RubyMotion behave like frozen objects (objects which received the <code>freeze</code> message).</p>
+</div>
+<div class="paragraph">
+<p>As an example, changing the content of an <code>NSString</code> is prohibited and an exception will be raised by the system if doing so. However, it is possible to change the content of an <code>NSMutableString</code> instance.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>NSString.new.strip!           # raises RuntimeError: can't modify frozen/immutable string
+NSMutableString.new.strip!    # works</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Strings created in RubyMotion inherit from <code>NSMutableString</code>, so they can be modified by default. The same goes for arrays and hashes.</p>
+</div>
+<div class="paragraph">
+<p>However, you must be aware that it is very common for iOS SDK APIs to return immutable types. In these cases, the <code>dup</code> or <code>mutableCopy</code> messages can be sent to the object in order to get a mutable version of it, that can be modified later on.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_interfacing_with_c">3. Interfacing with C</h3>
+<div class="paragraph">
+<p>You do not need to be a C programmer in order to use RubyMotion. However, some understanding of basic notions explained in this section will be required.</p>
+</div>
+<div class="paragraph">
+<p>Objective-C is a superset of the C language. Objective-C methods can therefore accept and return C types.</p>
+</div>
+<div class="paragraph">
+<p>Also, while Objective-C is the main programming language used in the iOS SDK, some frameworks are only available in C APIs.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion comes with an interface that allows Ruby to deal with the C part of APIs.</p>
+</div>
+<div class="sect3">
+<h4 id="_basic_types">3.1. Basic Types</h4>
+<div class="paragraph">
+<p>C, and indirectly Objective-C, has a set of basic types. It is common in iOS SDK APIs to accept or return these types.</p>
+</div>
+<div class="paragraph">
+<p>An example are the following methods of <code>NSFileHandle</code>, which both respectively accept and return the C integer type, <code>int</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>- (id)initWithFileDescriptor:(int)fd;
+- (int)fileDescriptor;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Basic C types cannot be created from Ruby directly, but are automatically converted from and to equivalent Ruby types.</p>
+</div>
+<div class="paragraph">
+<p>The following piece of code uses the two <code>NSFileHandle</code> methods described above. The first one, <code>initWithFileDescriptor:</code>, is called by passing a <code>Fixnum</code>. The second one, <code>fileDescriptor</code>, is called and a <code>Fixnum</code> is returned back to Ruby.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>handle = NSFileHandle.alloc.initWithFileDescriptor(2)
+handle.fileDescriptor # =&gt; 2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This table describes all basic C types and discusses how they are converted from and to Ruby types.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">C Type</th>
+<th class="tableblock halign-left valign-top">From Ruby to C</th>
+<th class="tableblock halign-left valign-top">From C to Ruby</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bool</code></p></td>
+<td class="tableblock halign-left valign-middle" rowspan="2"><p class="tableblock">If the object is <code>false</code> or <code>nil</code>, <code>false</code>, otherwise, <code>true</code>. Note: the <code>0</code> fixnum will evaluate to <code>true</code>.</p></td>
+<td class="tableblock halign-left valign-middle" rowspan="2"><p class="tableblock">Either <code>true</code> or <code>false</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOL</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code></p></td>
+<td class="tableblock halign-left valign-middle" rowspan="5"><p class="tableblock">If the object is a <code>Fixnum</code> or a <code>Bignum</code>, the value is returned. If the object is <code>true</code> or <code>false</code>, <code>1</code> or <code>0</code> are respectively returned. If the object responds to the <code>to_i</code> message, it is sent and the result is returned.</p></td>
+<td class="tableblock halign-left valign-middle" rowspan="5"><p class="tableblock">Either a <code>Fixnum</code> or a <code>Bignum</code> object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>short</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>int</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>long</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>long_long</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code></p></td>
+<td class="tableblock halign-left valign-middle" rowspan="2"><p class="tableblock">If the object is a <code>Float</code>, the value is returned. If the object is <code>true</code> or <code>false</code>, <code>1.0</code> or <code>0.0</code> are respectively returned. If the object responds to the <code>to_f</code> message, it is sent and the result is returned.</p></td>
+<td class="tableblock halign-left valign-middle" rowspan="2"><p class="tableblock">A <code>Float</code> object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>double</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When using an API that returns the <code>void</code> C type, RubyMotion will return <code>nil</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_structures">3.2. Structures</h4>
+<div class="paragraph">
+<p>C structures are mapped to classes in RubyMotion. Structures can be created in Ruby and passed to APIs expecting C structures. Similarly, APIs returning C structures will return an instance of the appropriate structure class.</p>
+</div>
+<div class="paragraph">
+<p>A structure class has an accessor method for each field of the C structure it wraps.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the following piece of code creates a <code>CGPoint</code> structure, sets its <code>x</code> and <code>y</code> fields, then passes it to the <code>drawAtPoint:withFont:</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>pt = CGPoint.new
+pt.x = 100
+pt.y = 200
+'Hello'.drawAtPoint(pt, withFont: font)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is possible to pass the field values directly to the constructor.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>pt = CGPoint.new(100, 200)
+'Hello'.drawAtPoint(pt, withFont: font)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>RubyMotion will also accept arrays as a convenience. They must contain the same number and type of objects expected in the structure.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>'Hello'.drawAtPoint([100, 200], withFont: font)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_enumerations_and_constants">3.3. Enumerations and Constants</h4>
+<div class="paragraph">
+<p>C enumerations and constants are mapped as constants of the <code>Object</code> class.</p>
+</div>
+<div class="paragraph">
+<p>For instance, both <code>NSNotFound</code> and <code>CGRectNull</code>, respectively an enumeration and a constant defined by Foundation, can be directly accessed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>if ary.indexOfObject(obj) == NSNotFound
+  # ...
+end
+# ...
+view = UIView.alloc.initWithFrame(CGRectNull)</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+Some enumerations or constants defined in the iOS and OS X SDK may start with a lower-case letter, like <code>kCLLocationAccuracyBest</code> (starting with <code>k</code>). Because Ruby constants must always start with a capital letter, their names must be corrected by changing the case of the first letter, becoming <code>KCLLocationAccuracyBest</code> (starting with <code>K</code>) in Ruby.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>locationManager.desiredAccuracy = kCLLocationAccuracyBest # NameError: undefined local variable or method
+locationManager.desiredAccuracy = KCLLocationAccuracyBest # works</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_functions">3.4. Functions</h4>
+<div class="paragraph">
+<p>C functions are available as methods of the <code>Object</code> class. Inline functions, which are implemented in the framework header files are also supported.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the <code>CGPointMake</code> function can be used in Ruby to create a <code>CGRect</code> structure.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>pt = CGPointMake(100, 200)
+'Hello'.drawAtPoint(pt, withFont: font)</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+Most functions in the iOS and OS X SDK start by a capital letter. For those who accept no argument, it is important to explicitly use parentheses when calling them, in order to avoid the expression to be evaluated as a constant lookup.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>NSHomeDirectory   # NameError: uninitialized constant NSHomeDirectory
+NSHomeDirectory() # works</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pointers">3.5. Pointers</h4>
+<div class="paragraph">
+<p>Pointers are a very basic data type of the C language. Conceptually, a pointer is a memory address that can point to an object.</p>
+</div>
+<div class="paragraph">
+<p>In the iOS and OS X SDK, pointers are typically used as arguments to return objects by reference. As an example, the <code>error</code> argument of this <code>NSData</code> method expects a pointer that will be set to an <code>NSError</code> object in case of failure.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>- (BOOL)writeToFile:(NSString *)path options:(NSDataWritingOptions)mask error:(NSError **)errorPtr</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>RubyMotion introduces the <code>Pointer</code> class in order to create and manipulate pointers. The type of the pointer to create must be provided in the <code>new</code> constructor. A pointer instance responds to <code>[]</code> to dereference its memory address and <code>[]=</code> to assign it to a new value.</p>
+</div>
+<div class="paragraph">
+<p>The <code>NSData</code> method above can be used like this in Ruby.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code># Create a new pointer to the object type.
+error_ptr = Pointer.new(:object)
+
+unless data.writeToFile(path, options: mask, error: error_ptr)
+  # De-reference the pointer.
+  error = error_ptr[0]
+
+  # Now we can use the `error' object.
+  $stderr.puts "Error when writing data: #{error}"
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the case above, we need a pointer to an object. <code>Pointer.new</code> can also be used to create pointers to various types, including the basic C types, but also structures.</p>
+</div>
+<div class="paragraph">
+<p><code>Pointer.new</code> accepts either a <code>String</code>, which should be one of the <a href="http://developer.apple.com/library/ios/#documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html">Objective-C runtime types</a> or a <code>Symbol</code>, which should be a shortcut. We recommend the use of shortcuts.</p>
+</div>
+<div class="paragraph">
+<p>Following is a table summarizing the pointers one can create.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">C Type Pointer</th>
+<th class="tableblock halign-left valign-top">Runtime Type String</th>
+<th class="tableblock halign-left valign-top">Shortcut Symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"@"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:object</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOL *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"B"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:bool / :boolean</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"c"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:char</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>unsigned char *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"C"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:uchar</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>short *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"s"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:short</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>unsigned short *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"S"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:ushort</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>int *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"i"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:int</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>unsigned int *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"I"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:uint</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>long *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"l"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:long</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>unsigned long *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"L"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:ulong</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>long long *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"q"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:long_long</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>unsigned long long *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"Q"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:ulong_long</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>float *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"f"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:float</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>double *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"d"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:double</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>RubyMotion supports the creation of structure pointers, by passing their runtime type accordingly to <code>Pointer.new</code>, which can be retrieved by sending the <code>type</code> message to the structure class in question. For instance, the following snippet creates a pointer to a <code>CGRect</code> structure.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>rect_ptr = Pointer.new(CGRect.type)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pointers to C characters, also called C strings, are automatically converted from and to <code>String</code> objects by RubyMotion.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_function_pointers_and_blocks">3.6. Function Pointers and Blocks</h4>
+<div class="paragraph">
+<p>C or Objective-C APIs accepting C function pointers or C blocks can be called by RubyMotion, by passing a <code>Proc</code> object instead.</p>
+</div>
+<div class="paragraph">
+<p>Functions pointers are pretty rare in the iOS and OS X SDK, but C blocks are common. C blocks are an extension of the C language defined by Apple. The caret (<code>^</code>) character is used to define C blocks.</p>
+</div>
+<div class="paragraph">
+<p>As an example, let&#8217;s consider the <code>addObserverForName:object:queue:usingBlock:</code> method of <code>NSNotificationCenter</code>, which accepts a C block as its last argument.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>- (id)addObserverForName:(NSString *)name object:(id)obj queue:(NSOperationQueue *)queue
+      usingBlock:(void (^)(NSNotification *))block;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The block in question returns <code>void</code> and accepts one argument, a <code>NSNotification</code> object.</p>
+</div>
+<div class="paragraph">
+<p>This method can be called from Ruby like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>notification_center.addObserverForName(name, object:object, queue:queue,
+  usingBlock:lambda do |notification|
+    # Handle notification here...
+  end)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>enumerateObjectsWithOptions:usingBlock:</code> method of <code>NSArray</code> presents a more complicated case of a C block, which accepts 3 arguments: the enumerated object, its index position in the array and a pointer to a boolean variable that can be set to <code>true</code> to stop the enumeration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>- (void)enumerateObjectsWithOptions:(NSEnumerationOptions)opts
+        usingBlock:(void (^)(id obj, NSUInteger idx, BOOL *stop))block;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Assuming we want to stop at the 10th iteration:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>ary.enumerateObjectsWithOptions(options, usingBlock:lambda do |obj, idx, stop_ptr|
+  stop_ptr[0] = true if idx == 9
+end)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(Obviously this example is used for educational purposes, in RubyMotion there is no need to use this method, because <code>NSArray</code> responds to the Ruby <code>Array</code> interface which is much more elaborate.)</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+The <code>Proc</code> object must have the same number of arguments as the C function pointer or block, otherwise an exception will be raised at runtime.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+In case of a C function pointer argument, you need to make sure the <code>Proc</code> object will not be prematurely collected. If the method will call the function pointer asynchronously, a reference to the <code>Proc</code> object must then be kept. Memory management is discussed in the following section.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memory_management">4. Memory Management</h3>
+<div class="paragraph">
+<p>RubyMotion provides automatic memory management; you do not need to reclaim unused objects.</p>
+</div>
+<div class="paragraph">
+<p>Since memory can be limited on iOS hardware, you must take care not to create large object graphs.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion implements a form of garbage collection called reference counting. An object has an initial reference count of zero, is incremented when a reference to it is created and decremented when a reference is destroyed. When the count reaches zero, the object&#8217;s memory is reclaimed by the collector.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion&#8217;s memory management system is designed to simplify the development process. Unlike traditional Objective-C programming, object references are automatically created and destroyed by the system. It is very similar to Objective-C&#8217;s ARC, in design, but it is implemented differently.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Object collections are triggered by the system and are not deterministic. RubyMotion is based on the existing autorelease pool infrastructure. The system creates and destroys autorelease pools for you, for instance, within the event run loop.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_weak_references">4.1. Weak References</h4>
+<div class="paragraph">
+<p>Object cycles, when two or more objects refer to each other, are currently not handled by the runtime. It is therefore important to explicitly create weak references in this case, to avoid the referred objects to leak memory.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion implements the <code>WeakRef</code> class, similar to the one in the Ruby&#8217;s <code>weak_ref</code> standard library. Weak references can be created using <code>WeakRef.new(obj)</code>, and the passed object will not be retained. All messages sent to the <code>WeakRef</code> object will be forwarded at the dispatcher level to the passed object.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example implementing the delegate pattern using a weak reference.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class MyView
+  def initialize(delegate)
+    @delegate = WeakRef.new(delegate)
+  end
+
+  def do_something
+    # ...
+    @delegate.did_something
+  end
+end
+
+class MyController
+  def initialize
+    @view = MyView.new(self)
+  end
+
+  def did_something
+    # ...
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Without a weak reference here, both <code>MyView</code> and <code>MyController</code> objects would leak memory.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+We expect the RubyMotion runtime to be able to deal with cyclic references at some point. Once it happens, the <code>WeakRef</code> class will be replaced with a no-operation.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_objective_c_and_corefoundation_objects">4.2. Objective-C  and CoreFoundation Objects</h4>
+<div class="paragraph">
+<p>Objects created by Objective-C or CoreFoundation-style APIs are automatically managed by RubyMotion. There is no need to send the <code>retain</code>, <code>release</code> or <code>autorelease</code> messages to them, or use the <code>CFRetain</code> or <code>CFRelease</code> functions.</p>
+</div>
+<div class="paragraph">
+<p>The following piece of code allocates two <code>NSDate</code> objects using different constructions. In typical Objective-C, the returned objects would need to be differently managed. In RubyMotion both objects will be entitled to garbage-collection.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>date1 = NSDate.alloc.init
+date2 = NSDate.date</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to prevent an object from being collected, a reference must be created to it, such as setting an instance variable to it. This will make sure the object will be kept alive as long as the instance variable receiver is alive.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>@date = date1   # date1 will not be collected until the instance variable receiver is collected</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are other ways of creating references to an object, like setting a constant, using a class variable, adding the object to a container (such as <code>Array</code> or <code>Hash</code>) and more. Objects created in RubyMotion and passed to Objective-C APIs will also be properly referenced if needed.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_immediate_types">4.3. Immediate Types</h4>
+<div class="paragraph">
+<p>The <code>Fixnum</code> and <code>Float</code> types in RubyMotion are immediates; they don&#8217;t use memory resources to be created. The runtime uses a technique called <a href="http://en.wikipedia.org/wiki/Tagged_pointer">tagged pointers</a> to implement this.</p>
+</div>
+<div class="paragraph">
+<p>The ability to use these types without affecting the memory usage is important as a sizable part of a real-world app is spent in control drawing, which can make intensive use of arithmetic algorithms.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Since iOS is using a 32-bit architecture, immediate types are encoded on a 30-bit pointer (we need 2 bits for type information). On OS X, immediate types will be encoded on a 62-bit pointer when the program runs on recent Mac computers, which are powered by a 64-bit architecture.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_concurrency">5. Concurrency</h3>
+<div class="paragraph">
+<p>The ability to run code concurrently became critical as multicore processors appeared on iOS devices. RubyMotion has been designed around this purpose.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion has the concept of virtual machine objects, which wrap the state of a thread of execution. A piece of code is running through a virtual machine.</p>
+</div>
+<div class="paragraph">
+<p>Virtual machines don&#8217;t have locks and there can be multiple virtual machines running at the same time, concurrently.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+Unlike the mainstream Ruby implementation, <a href="http://en.wikipedia.org/wiki/Race_condition#Computing">race conditions</a> are possible in RubyMotion, since there is no <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock">Global Interpreter Lock</a> (GIL) to prohibit threads from running concurrently. You must be careful to secure concurrent access to shared resources.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Different options are available to write concurrent code in RubyMotion.</p>
+</div>
+<div class="sect3">
+<h4 id="_threads_and_mutexes">5.1. Threads and Mutexes</h4>
+<div class="paragraph">
+<p>The <code>Thread</code> class spawns a new POSIX thread that will run concurrently with other threads. The <code>Mutex</code> class wraps a POSIX mutex and can be used to isolate concurrent access to a shared resource.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_grand_central_dispatch">5.2. Grand Central Dispatch</h4>
+<div class="paragraph">
+<p>RubyMotion wraps the <a href="http://developer.apple.com/library/ios/#documentation/Performance/Reference/GCD_libdispatch_Ref/Reference/reference.html">Grand Central Dispatch</a> (GCD) concurrency library under the <code>Dispatch</code> module. It is possible to execute both synchronously and asynchronously blocks of code under concurrent or serial queues.</p>
+</div>
+<div class="paragraph">
+<p>Albeit more complicated to comprehend than regular threads, sometimes GCD offers a more elegant way to run code concurrently. GCD maintains for you a pool of threads and its APIs are architectured to avoid the need to use mutexes.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+  </div>
+</article>
+
+    </div>
+
+  </body>
+</html>

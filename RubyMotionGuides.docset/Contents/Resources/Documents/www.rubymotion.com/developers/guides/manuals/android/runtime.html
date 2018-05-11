@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='381521407' property='twitter:account_id'/>
+
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-16x16.png" sizes="16x16"/>
+
+
+  
+    
+  
+
+
+<title>Manuals | RubyMotion</title>
+
+<meta property="og:title" content="Manuals | RubyMotion"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://rubymotion.com"/>
+<meta property="og:image" content="/img/rubymotion-logo.png"/>
+
+<meta name="description" content="Write cross-platform apps for iOS, Android and OS X in Ruby"/>
+
+
+<meta name="viewport" content="initial-scale=1, width=device-width" />
+
+<!--[if lt IE 9]>
+<script src="/javascripts/libs/html5shiv.min.js"></script>
+<script src="/javascripts/libs/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css"/>
+<link rel="stylesheet" href="../../../../css/lightbox.css" type="text/css"/>
+
+<!-- Analytics -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1471287-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </head>
+  <body data-section="chapter_3">
+
+    <div class="container">
+        <article class="guides_pages">
+  <div class="row_fluid">
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <aside class="col_4 aside_toc">
+      <div class="toc_followed">
+        <div class="toc_container">
+          <h3 class="resp_m_deploy_title">Table of contents</h3>
+          <ol class="toc_list resp_m_to_deploy">
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_object_model" class="toc_chapters anchor_links"><span class="toc_num">1. </span>Object Model</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_classes" class="anchor_links"><span class="toc_num">1.1. </span>Classes</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_primitive_java_types" class="anchor_links"><span class="toc_num">1.2. </span>Primitive Java Types</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_builtin_ruby_classes" class="anchor_links"><span class="toc_num">1.3. </span>Builtin Ruby Classes</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_methods" class="anchor_links"><span class="toc_num">1.4. </span>Methods</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_method_shortcuts" class="anchor_links"><span class="toc_num">1.5. </span>Method Shortcuts</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_interfacing_with_java" class="toc_chapters anchor_links"><span class="toc_num">2. </span>Interfacing with Java</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_interfaces" class="anchor_links"><span class="toc_num">2.1. </span>Interfaces</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_methods_overloading" class="anchor_links"><span class="toc_num">2.2. </span>Methods Overloading</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_fields" class="anchor_links"><span class="toc_num">2.3. </span>Fields</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="runtime.html#_annotations" class="anchor_links"><span class="toc_num">2.4. </span>Annotations</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_memory_management" class="toc_chapters anchor_links"><span class="toc_num">3. </span>Memory Management</a>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="runtime.html#_concurrency" class="toc_chapters anchor_links"><span class="toc_num">4. </span>Concurrency</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <div class="col_9 guide_content">
+<div class="sect1">
+<h2 id="_rubymotion_runtime_guide_for_android">RubyMotion Runtime Guide for Android</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The RubyMotion runtimes implement the Ruby language functionality required during the execution of an application. The object model, built-in classes, and memory management system are part of the runtime.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion comes with a runtime for Android, based on the Android runtime (Dalvik or ART) and core Java classes.</p>
+</div>
+<div class="paragraph">
+<p>Although similar in appearance, the RubyMotion Android runtime has completely different implementations than <a href="http://www.ruby-lang.org/en/">CRuby</a>, the mainstream implementation (which is also called MRI, or simply Ruby). We will cover the main differences in the following sections.</p>
+</div>
+<div class="paragraph">
+<p>The key feature of the RubyMotion Android runtime is its tight integration with the Java virtual machine, which makes it suitable for use on power efficient devices as well as for writing performance-intensive code.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion follows the Ruby 1.9 language specifications.</p>
+</div>
+<div class="sect2">
+<h3 id="_object_model">1. Object Model</h3>
+<div class="paragraph">
+<p>The RubyMotion object model is based on <a href="http://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>, the de-facto programming language of Android, Google&#8217;s mobile platform.</p>
+</div>
+<div class="paragraph">
+<p>While Java has certainly less similarities with Ruby than Objective-C, they are still close enough to make such an integration possible.</p>
+</div>
+<div class="paragraph">
+<p>More specifically, RubyMotion re-implements the Ruby language on top of the <a href="http://en.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a> (JNI) of the Android runtime.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../../../../img/features/android-runtime.png" alt="Android RubyMotion Runtime">
+</div>
+</div>
+<div class="paragraph">
+<p>In RubyMotion, all objects are Java objects, all Java classes and methods are available in Ruby, and some Ruby classes and methods are available to Java. This unified approach allows us to interface with the native Java APIs at no extra performance cost.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion is compatible with both <a href="http://en.wikipedia.org/wiki/Dalvik_(software)">Dalvik</a> and <a href="http://en.wikipedia.org/wiki/Android_Runtime">ART</a> Android runtimes.</p>
+</div>
+<div class="sect3">
+<h4 id="_classes">1.1. Classes</h4>
+<div class="paragraph">
+<p>All Java classes are natively exposed to Ruby. However, the way to access them differs from the syntax you would use in Java.</p>
+</div>
+<div class="paragraph">
+<p>Java features the notion of packages, which is a way to group a set of classes under a component that can be either accessed directly or included.</p>
+</div>
+<div class="paragraph">
+<p>As an example, <code>java.lang.Object</code> represents a path where the <code>Object</code> class is defined under the <code>java.lang</code> package. Java classes are often described using their full package path.</p>
+</div>
+<div class="paragraph">
+<p>In RubyMotion, Java packages are accessed as if they were defined as a chain of Ruby constants, where each part of the package starts with an upper-case character.</p>
+</div>
+<div class="paragraph">
+<p>In Ruby, the <code>java.lang.Object</code> path can be accessed using <code>Java::Lang::Object</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>obj = Java::Lang::Object.new</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Java classes which are not defined as <em>final</em> can be subclassed. As an example, the public non-final <a href="http://developer.android.com/reference/android/app/Activity.html"><code>android.app.Activity</code></a> class is available as <code>Android::App::Activity</code> in Ruby, and can be subclasses as following.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class MyActivity &lt; Android::App::Activity
+  # ...
+end</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+At the time of this writing, packages cannot be included in Ruby, so you have to use full paths.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_primitive_java_types">1.2. Primitive Java Types</h4>
+<div class="paragraph">
+<p>Like Objective-C, Java comes with a set of primitive / builtin data types. Java methods make use of these types, and it is important to describe how they are interfaced with Ruby code.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Java Type</th>
+<th class="tableblock halign-left valign-top">From Ruby to Java</th>
+<th class="tableblock halign-left valign-top">From Java to Ruby</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">If the object is <code>false</code> or <code>nil</code>, <code>false</code>, otherwise, <code>true</code>. Note: the <code>0</code> fixnum will evaluate to <code>true</code>.</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Either <code>true</code> or <code>false</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>byte</code></p></td>
+<td class="tableblock halign-left valign-middle" rowspan="5"><p class="tableblock">If the object is a <code>Fixnum</code> or a <code>Bignum</code>, the value is returned. If the object is <code>true</code> or <code>false</code>, <code>1</code> or <code>0</code> are respectively returned. If the object responds to the <code>to_i</code> message, it is sent and the result is returned.</p></td>
+<td class="tableblock halign-left valign-middle" rowspan="5"><p class="tableblock">Either a <code>Fixnum</code> or a <code>Bignum</code> object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>char</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>short</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>int</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>long</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>float</code></p></td>
+<td class="tableblock halign-left valign-middle" rowspan="2"><p class="tableblock">If the object is a <code>Float</code>, the value is returned. If the object is <code>true</code> or <code>false</code>, <code>1.0</code> or <code>0.0</code> are respectively returned. If the object responds to the <code>to_f</code> message, it is sent and the result is returned.</p></td>
+<td class="tableblock halign-left valign-middle" rowspan="2"><p class="tableblock">A <code>Float</code> object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>double</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_builtin_ruby_classes">1.3. Builtin Ruby Classes</h4>
+<div class="paragraph">
+<p>Some of the built-in classes of RubyMotion are based on the <a href="http://en.wikipedia.org/wiki/Java_Development_Kit">Java Class Library</a>, the core classes of the Android SDK.</p>
+</div>
+<div class="paragraph">
+<p>Java comes with a class called <a href="http://developer.android.com/reference/java/lang/Object.html:"><code>java.lang.Object</code></a>, which is the root class of all Java classes.</p>
+</div>
+<div class="paragraph">
+<p>Because of RubyMotion&#8217;s unified runtime approach, all Ruby classes are also based on <code>java.lang.Object</code>. The <code>Object</code> constant point to that class as well.</p>
+</div>
+<div class="paragraph">
+<p>Here is a table showing the base class of a newly created class, <code>Hello</code>, as well as some of the Ruby built-in classes.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Ruby Class</th>
+<th class="tableblock halign-left valign-top">Base</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Hello</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Object</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Fixnum</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Integer</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Float</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Float</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Proc</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Runnable</code> (interface)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.CharSequence</code> (interface)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.util.ArrayList</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Hash</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.util.HashMap</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Thread</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.lang.Thread</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Regexp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.util.regex.Pattern</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MatchData</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>java.util.regex.Matcher</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The main purpose of this design is to allow the exchange of primitive types between Java and Ruby at no performance cost, since they don’t have to be converted. This is important as most of the types that will be exchanged in a typical application are likely going to be built-in types.</p>
+</div>
+<div class="paragraph">
+<p>A String object created in Ruby can have its object reference passed as the argument of an Java method that expects an object that implements the <code>java.lang.CharSequence</code> interface, such as the <code>setText</code> method of <code>android.widget.TextView</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>textView.text = "foo"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_methods">1.4. Methods</h4>
+<div class="paragraph">
+<p>Java methods are natively exposed to Ruby, and can be accessed as if they have been defined as Ruby methods.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the <code>java.lang.Object</code> class implements the <code>toString()</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>String	toString()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That method can be called on all objects in Ruby.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>42.toString         #=&gt; "42"
+true.toString       #=&gt; "true"
+textView.toString   #=&gt; "android.widget.TextView{3607..."</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you are subclassing a Java class in Ruby, you can override any of its methods.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the <code>android.app.Activity</code> class implements the <code>onCreate()</code> method, which is meant to be overridden by subclasses.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>void onCreate (Bundle savedInstanceState)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can do that naturally from Ruby.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class MyActivity &lt; Android::App::Activity
+  def onCreate(saved_instance)
+    super
+    # ...
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that we use the <code>super</code> Ruby language keyword to call the super class implementation, defined in Java.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_method_shortcuts">1.5. Method Shortcuts</h4>
+<div class="paragraph">
+<p>The RubyMotion runtime provides convenience shortcuts for certain Java methods.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">Shortcut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>setFoo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo=</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>getFoo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isFoo</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>foo?</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>As an example, the <code>getText</code> and <code>setText</code> methods of <code>android.widget.TextView</code> can be called using the <code>text</code> and <code>text=</code> shortcuts.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>view.text          # instead of view.getText
+view.text = "foo"  # instead of view.setText("foo")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_interfacing_with_java">2. Interfacing with Java</h3>
+<div class="sect3">
+<h4 id="_interfaces">2.1. Interfaces</h4>
+<div class="paragraph">
+<p><a href="http://en.wikipedia.org/wiki/Interface_(Java)">Java interfaces</a> are an important concept to understand when programming Android apps with RubyMotion.</p>
+</div>
+<div class="paragraph">
+<p>In Java, an interface is basically a list of method declarations. A class is said to implement an interface when it provides definitions for all the methods in the interface.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Java interfaces are similar to protocols in Objective-C.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In RubyMotion, you can implement an interface in a class just by defining the required methods. There is no need to specify the name of the interface, the compiler will determine that for you automatically.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the <code>setOnClickListener</code> method of <code>android.view.View</code> expects an object that implements the <a href="http://developer.android.com/reference/android/view/View.OnClickListener.html"><code>android.view.View.OnClickListener</code></a> interface, which features only one method, <code>onClick</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>abstract void	onClick(View v)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to implement that interface in Ruby, you just need to provide an implementation for that method in a class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class MyButtonListener
+  def onClick(view)
+    # ...
+  end
+end
+
+# ...
+button.onClickListener = MyButtonListener.new</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_methods_overloading">2.2. Methods Overloading</h4>
+<div class="paragraph">
+<p>Java features the concept of <a href="http://en.wikipedia.org/wiki/Function_overloading">method overloading</a>, which does not exist in Ruby.</p>
+</div>
+<div class="paragraph">
+<p>In Java, it is possible to define the same method name multiple times but with different argument types. The compiler will then identify which method has to be called.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the <code>android.widget.TextView</code> Java class features the following <code>setText</code> methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>void	setText(int resid)
+void	setText(char[] text, int start, int len)
+void	setText(int resid, TextView.BufferType type)
+void	setText(CharSequence text)
+void	setText(CharSequence text, TextView.BufferType type)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, each of these methods have the same name (and return type) but have different arguments.</p>
+</div>
+<div class="paragraph">
+<p>Because Ruby is dynamically-typed, overloaded methods have to be resolved at runtime and not at compile time.</p>
+</div>
+<div class="paragraph">
+<p>The setText(int resid) method will be called if you pass a Fixnum to it. The setText(CharSequence text) method will be called if you provide an object that implements the <code>CharSequence</code> interface (such as a string).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>textView.text = 42      #=&gt; calls setText(int)
+textView.text = "foo"   #=&gt; calls setText(CharSequence)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In case the runtime cannot figure out which overloaded method to call during a method dispatch, a <code>NoMethodError</code> exception will be raised with an appropriate message.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fields">2.3. Fields</h4>
+<div class="paragraph">
+<p>Java fields are variables attached to a class. There are two types of Java fields:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Instance fields; these are similar to instance variables in Ruby.</p>
+</li>
+<li>
+<p>Static fields; these are similar to class variables in Ruby.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>In the Android SDK, constants are usually static Java fields, and can be retrieved exactly as if they were constants in Ruby.</p>
+</div>
+<div class="paragraph">
+<p>For example, the <a href="http://developer.android.com/reference/android/widget/LinearLayout.html#HORIZONTAL"><code>android/widget/LinearLayout</code></a> class has a few constants.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>public static final int HORIZONTAL
+public static final int VERTICAL
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These constants can be naturally retrieved in Ruby.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>layout = Android::Widget::LinearLayout.new(self)
+layout.orientation = Android::Widget::LinearLayout::VERTICAL</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Instance Java fields can be retrieved in Ruby as if they were defined using <code>attr_accessor</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_annotations">2.4. Annotations</h4>
+<div class="paragraph">
+<p>Java annotations are special objects that can be applied to methods (and other types).</p>
+</div>
+<div class="paragraph">
+<p>An example is the WebKit framework of Android, which requires methods to be exposed to JavaScript to be properly annotated, for security reasons.</p>
+</div>
+<div class="paragraph">
+<p>This can be done in RubyMotion using the <code><em>annotation</em></code> special method right before the definition of a method. The annotation will be retrieved at compilation time.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class DemoJavaScriptInterface
+  __annotation__("@android.webkit.JavascriptInterface")
+  def methodFromJavaScript
+  end
+end</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+At the time of this writing, only methods can be annotated in RubyMotion.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_memory_management">3. Memory Management</h3>
+<div class="paragraph">
+<p>RubyMotion relies on the Dalvik or ART garbage collector to allocate and dispose of unused memory.</p>
+</div>
+<div class="paragraph">
+<p>From a Ruby developer perspective, you do not have to think about memory management at all.</p>
+</div>
+<div class="paragraph">
+<p>Internally, RubyMotion makes use of local references for local variables and global references for everything else. The destruction of local references is determined at compilation time.</p>
+</div>
+<div class="paragraph">
+<p>There are two important things you might need to consider:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The garbage collector is multithreaded. Collections might happen on other threads. If you override the <code>finalize</code> method of <code>java.lang.Object</code> in your code, make sure it&#8217;s properly re-entrant.</p>
+</li>
+<li>
+<p>The garbage collector is able to detect and handle cyclic references. Unlike RubyMotion for iOS and OS X, you do not need to create <code>WeakRef</code> objects.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_concurrency">4. Concurrency</h3>
+<div class="paragraph">
+<p>RubyMotion has been designed for concurrency in mind.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion has the concept of virtual machine objects, which wrap the state of a thread of execution. A piece of code is running through a virtual machine.</p>
+</div>
+<div class="paragraph">
+<p>Virtual machines don&#8217;t have locks and there can be multiple virtual machines running at the same time, concurrently.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+Unlike the mainstream Ruby implementation, <a href="http://en.wikipedia.org/wiki/Race_condition#Computing">race conditions</a> are possible in RubyMotion, since there is no <a href="http://en.wikipedia.org/wiki/Global_Interpreter_Lock">Global Interpreter Lock</a> (GIL) to prohibit threads from running concurrently. You must be careful to secure concurrent access to shared resources.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>Thread</code> class is available for concurrency patterns. It is a direct subclass of <a href="http://developer.android.com/reference/java/lang/Thread.html"><code>java.lang.Thread</code></a>.</p>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+  </div>
+</article>
+  </body>
+</html>

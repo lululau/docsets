@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='381521407' property='twitter:account_id'/>
+
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-16x16.png" sizes="16x16"/>
+
+
+  
+    
+  
+
+
+<title>Manuals | RubyMotion</title>
+
+<meta property="og:title" content="Manuals | RubyMotion"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://rubymotion.com"/>
+<meta property="og:image" content="/img/rubymotion-logo.png"/>
+
+<meta name="description" content="Write cross-platform apps for iOS, Android and OS X in Ruby"/>
+
+
+<meta name="viewport" content="initial-scale=1, width=device-width" />
+
+<!--[if lt IE 9]>
+<script src="/javascripts/libs/html5shiv.min.js"></script>
+<script src="/javascripts/libs/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css"/>
+<link rel="stylesheet" href="../../../../css/lightbox.css" type="text/css"/>
+
+<!-- Analytics -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1471287-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </head>
+  <body data-section="chapter_3">
+
+    <div class="container">
+        <article class="guides_pages">
+  <div class="row_fluid">
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <aside class="col_4 aside_toc">
+      <div class="toc_followed">
+        <div class="toc_container">
+          <h3 class="resp_m_deploy_title">Table of contents</h3>
+          <ol class="toc_list resp_m_to_deploy">
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_creation" class="toc_chapters anchor_links"><span class="toc_num">1. </span>Creation</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_project_templates" class="anchor_links"><span class="toc_num">1.1. </span>Project Templates</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_project_anatomy" class="anchor_links"><span class="toc_num">1.2. </span>Project Anatomy</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_configuration" class="toc_chapters anchor_links"><span class="toc_num">2. </span>Configuration</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_options" class="anchor_links"><span class="toc_num">2.1. </span>Options</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_providing_custom_values" class="anchor_links"><span class="toc_num">2.2. </span>Providing Custom Values</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_files_dependencies" class="anchor_links"><span class="toc_num">2.3. </span>Files Dependencies</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_vendoring_3rd_party_libraries" class="anchor_links"><span class="toc_num">2.4. </span>Vendoring 3rd-Party Libraries</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_extending_classes_with_java" class="anchor_links"><span class="toc_num">2.5. </span>Extending Classes with Java</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_build" class="toc_chapters anchor_links"><span class="toc_num">3. </span>Build</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_development" class="anchor_links"><span class="toc_num">3.1. </span>Development</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_release" class="anchor_links"><span class="toc_num">3.2. </span>Release</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_cleaning" class="anchor_links"><span class="toc_num">3.3. </span>Cleaning</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="project-management.html#_running" class="toc_chapters anchor_links"><span class="toc_num">4. </span>Running</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_emulator" class="anchor_links"><span class="toc_num">4.1. </span>Emulator</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_device" class="anchor_links"><span class="toc_num">4.2. </span>Device</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="project-management.html#_interactive_console" class="anchor_links"><span class="toc_num">4.3. </span>Interactive Console</a>
+             </li>
+            </ol>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <div class="col_9 guide_content">
+<div class="sect1">
+<h2 id="_rubymotion_project_management_guide_for_android">RubyMotion Project Management Guide for Android</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this guide we will explain how to create new RubyMotion Android projects, then configure and maintain them.</p>
+</div>
+<div class="sect2">
+<h3 id="_creation">1. Creation</h3>
+<div class="paragraph">
+<p>To create a new RubyMotion project, pass the <code>create</code> command to <em>/usr/bin/motion</em> with the <code>android</code> template. It will create a new project directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ motion create --template=android Hello
+$ cd Hello
+$ ls
+Rakefile	assets		resources	vendor
+app		spec</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_project_templates">1.1. Project Templates</h4>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+By default RubyMotion creates iOS projects. Setting up the <code>android</code> template is important here, otherwise you will get an iOS project directory.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Developers can add 3rd-party templates in the <code>~/Library/RubyMotion/template</code> directory. A RubyMotion project template is a directory that includes a <code>files</code> sub-directory which will contains the files that will be created by motion create.</p>
+</div>
+<div class="paragraph">
+<p>You can refer to the builtin templates in <code>/Library/RubyMotion/lib/motion/project/template</code> for documentation.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_project_anatomy">1.2. Project Anatomy</h4>
+<div class="paragraph">
+<p>The following table illustrates the anatomy of a project directory.</p>
+</div>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">File/Directory</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Rakefile</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This file contains the configuration of the project, as well as a default set of tasks. It can be edited to change the configuration or add new tasks.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>.gitignore</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This file contains file patterns that should be ignored by the source control management software (for instance, build files). This file is used by Git, but it can be ported to other SCMs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>app/</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This directory contains the Ruby code of the project. In a new project, a <em>main_activity.rb</em> file is created automatically.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>resources/</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This directory contains the resources files of the project. In a new project, this directory is empty.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>assets/</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This directory contains the assets files of the project. In a new project, this directory is empty.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>spec/</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This directory contains the specification files of the application. In a new project, a default specification file is created automatically.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>RubyMotion projects are based on Rake. Essential rake tasks will be covered in the following sections. To see the full list of available tasks:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake -T</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Rake is the de-facto build system framework for Ruby. It is similar to make and ships by default in OS X.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration">2. Configuration</h3>
+<div class="paragraph">
+<p>The rake config task will dump the project configuration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake config</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each configuration variable has a sensible default value that can be manually overriden in the <em>Rakefile</em> file.</p>
+</div>
+<div class="sect3">
+<h4 id="_options">2.1. Options</h4>
+<table class="tableblock frame-all grid-all">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Discussion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project name, as a <code>String</code>. The default value is the name passed to motion create.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>package</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project package name, as a <code>String</code>. The default value is <code>com.yourcompany.</code> plus the name of the project, in lower case.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>icon</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project icon name, as a <code>String</code>. The value must be the basename (without the extension) of an icon file that exists inside the <code>drawable</code> resource directory. The default value is <code>nil</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>version_code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version code of the application (maps to the <code>versionCode</code> Android manifest variable), as a <code>String</code>. The default value is <code>"1"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>version_name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version name of the application (maps to the <code>versionName</code> Android manifest variable), as a <code>String</code>. The default value is <code>"1.0"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>main_activity</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main activity class name, as a <code>String</code>. The default value is <code>"MainActivity"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sub_activities</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subactivities class names, as an <code>Array</code> of <code>String</code>. The default value is an empty array.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>application_class</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Application class name, as a <code>String</code>. Set this variable if you want to provide a custom Application class for the project. The default value is <code>nil</code> which means the project will use the generic Application class.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>api_version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The minimum version of the Android API to target (maps to the <code>minSdkVersion</code> Android manifest variable), as a <code>String</code>. The default value is the higher stable version available in the currently-installed SDK.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>target_api_version</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The target version of the Android API to target (maps to the <code>targetSdkVersion</code> Android manifest variable), as a <code>String</code>. The default value is the higher stable version available in the currently-installed SDK. We recommend that you don&#8217;t change this variable and set <code>api_version</code> instead.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>arch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The CPU architecture to build the application for, as a <code>String</code>. The default value is <code>"armv5te"</code> and it must be an ARM-based architecture.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>permissions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of application permissions, as an <code>Array</code>. Permissions can be represented either in a full name pattern using a <code>String</code> (ex. <code>"android.permission.INTERNET"</code>) or a shortcut version as a <code>Symbol</code> (ex. <code>:internet</code>). The default is an empty <code>Array</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>features</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of application features (maps to the <code>&lt;uses-feature&gt;</code> Android manifest element), as an <code>Array</code> of <code>String</code>. The default is an empty <code>Array</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>services</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of application services (maps to the <code>&lt;service&gt;</code> Android manifest element), as an <code>Array</code> of <code>String</code>. The default is an empty <code>Array</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>files</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project files, as an <code>Array</code>. The default value is an array containing all <em>.rb</em> file in the <em>app</em> directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>build_dir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the directory for build products, as a <code>String</code>. It must be relative to the project directory. The directory will be created by the build system if it does not exist yet. If it cannot be created, a temporary directory will be used instead. The default value is <code>"build"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>resources_dirs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directories for resources files, as an <code>Array</code> of <code>String</code>. The default value is <code>["resources"]</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>assets_dirs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directories for assets files, as an <code>Array</code> of <code>String</code>. The default value is <code>["assets"]</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>specs_dir</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Directories for specification files, an <code>Array</code> of <code>String</code>. It must be relative to the project directory. The default value is <code>"spec"</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sdk_path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the Android SDK directory. The default value is the value of the <code>RUBYMOTION_ANDROID_SDK</code> environment variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ndk_path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Path to the Android NDK directory. The default value is the value of the <code>RUBYMOTION_ANDROID_NDK</code> environment variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logs_components</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List of components to log to the terminal when running an app in development, as an <code>Array</code> of <code>String</code>. The default value includes core Android components (such as the runtime) as well as the application component.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_providing_custom_values">2.2. Providing Custom Values</h4>
+<div class="paragraph">
+<p>Custom values for the configuration settings can be added by tweaking the <code>Motion::App.setup</code> block in the <code>Rakefile</code> file.</p>
+</div>
+<div class="paragraph">
+<p>As an example, let&#8217;s take the configuration block of a fictional app that has a custom icon file and needs permission to connect to the internet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  app.name = 'My App'
+  app.icon = 'icon'
+  app.permissions &lt;&lt; :internet
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Additionally, you can provide arbitrary values that will be added to the application manifest via the <code>app.manifest</code> property.</p>
+</div>
+<div class="paragraph">
+<p>The <code>child</code> method returns the first element of the given type in the current element. You can also pass a block which will be called with the element.</p>
+</div>
+<div class="paragraph">
+<p>Properties of the element can be set via the <code>[]=</code> method, or you can set multiple properties via the <code>update</code> method.</p>
+</div>
+<div class="paragraph">
+<p>Child nodes can be added with the <code>add_child</code> method, which also accepts a block.</p>
+</div>
+<div class="paragraph">
+<p>Finally, the <code>children</code> method returns an array with all the child elements of a given type.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  app.manifest.child('application') do |application|
+    application['android:theme'] = '@style/AppTheme'
+
+    application.update('android:destripcion' =&gt; 'My awesome app',
+                       'android:isGame'      =&gt; true)
+
+    application.add_child('uses-library').update('android:name' =&gt; 'com.google.android.maps')
+
+    application.children("uses-library")|
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a complete explanation of the valid elements and properties of the manifest file, please check the official <a href="http://developer.android.com/guide/topics/manifest/manifest-intro.html">Android Manifest guide</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_files_dependencies">2.3. Files Dependencies</h4>
+<div class="paragraph">
+<p>By default, RubyMotion will compile files in the regular sorting order of the filesystem. When a RubyMotion application starts, the main scope of each file will then be executed in that specific order.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes, you will want to customize the order, if for instance one file makes use of a constant defined in another.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ cat app/foo.rb
+class Foo
+end
+$ cat app/bar.rb
+class Bar &lt; Foo
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the example above, using the default order, <em>bar.rb</em> will be compiled before <em>foo.rb</em> resulting in a constant lookup error, because the <code>Foo</code> constant has not been defined yet when we execute the code in <em>bar.rb</em>.</p>
+</div>
+<div class="paragraph">
+<p>To fix that problem, the <code>files_dependencies</code> method can be used in the <em>Rakefile</em>. This method accepts a <code>Hash</code> which should be a set of files dependencies.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.files_dependencies 'app/bar.rb' =&gt; 'app/foo.rb'
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After this change, the build system will compile <em>foo.rb</em> before <em>bar.rb</em>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_vendoring_3rd_party_libraries">2.4. Vendoring 3rd-Party Libraries</h4>
+<div class="paragraph">
+<p>The Android SDK has a significant amount of functionality built-in that you can use in your RubyMotion project. However, sometimes you will have to use a 3rd-party library that provides a feature missing from the system.</p>
+</div>
+<div class="paragraph">
+<p>RubyMotion lets you integrate 3rd-party Java libraries. It is recommended to keep these libraries required by the project in the same place, for instance under a <em>vendor</em> directory.</p>
+</div>
+<div class="paragraph">
+<p>The <code>vendor_project</code> method can be called from the <em>Rakefile</em>. It accepts a set of key/value arguments.</p>
+</div>
+<div class="sect4">
+<h5 id="_jar_files">Jar Files</h5>
+<div class="paragraph">
+<p>To vendor a 3rd-party jar, simply provide the <code>:jar</code> key with the full path of the library as its value.</p>
+</div>
+<div class="paragraph">
+<p>As an example, to vendor the <em>android-support-v4.jar</em> library, do the following.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.vendor_project :jar =&gt; "vendor/android-support-v4.jar"
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Certain Java libraries, such as Google Play Services, come with resource files and a custom manifest file. These need to be provided to the RubyMotion build system, using the respective <code>:resources</code> and <code>:manifest</code> keys/values.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.vendor_project :jar =&gt; "vendor/google-play-services_lib/libs/google-play-services.jar",
+     :resources =&gt; "vendor/google-play-services_lib/res",
+     :manifest =&gt; "vendor/google-play-services_lib/AndroidManifest.xml"
+end</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_extending_classes_with_java">2.5. Extending Classes with Java</h4>
+<div class="paragraph">
+<p>RubyMotion lets you extend a Ruby-defined class with Java code.</p>
+</div>
+<div class="paragraph">
+<p>This is currently useful when you have to override a Java constructor. Due to technical limitations of the Java VM, RubyMotion cannot override constructors in Ruby, so it has to be done in pure Java.</p>
+</div>
+<div class="paragraph">
+<p>As an example, let&#8217;s assume you have a custom subclass of the <code>Android::App::IntentService</code> class, in a <em>app/my_service.rb</em> file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class MyService &lt; Android::App::IntentService
+  ...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This subclass does not provide a default constructor, and the Android system requires one in order to instantiate the service.</p>
+</div>
+<div class="paragraph">
+<p>We can provide Java code that will implement that constructor, in a <em>app/my_service.java</em> file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>public MyService() {
+  super("MyService");
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The build system will detect this file and automatically merge the Java code into the class implementation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The name of the file is important here, and must correspond to the name of the class. The file name must be either the name of the class, or its underscore representation. For instance, both <em>my_service.java</em> and <em>MyService.java</em> will be recognized by the build system.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build">3. Build</h3>
+<div class="paragraph">
+<p>RubyMotion will build development and release versions of the project into the temporary <em>build</em> directory. For each version there will be one package for the ARM architecture that will run on both the emulator and the device.</p>
+</div>
+<div class="paragraph">
+<p>The following steps are performed during the build process:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>It compiles each Ruby source code file into optimized machine code, translating the Ruby syntax tree into an intermediate representation language (using <a href="http://llvm.org">LLVM</a>), then assembly. The compiler will generate code for ARM instruction sets and ABIs depending on the target.</p>
+</li>
+<li>
+<p>It links the machine code with the RubyMotion runtime statically to form a shared library for JNI (Java Native Interface). The linker also includes metadata for the C APIs that the project uses, as well as 3rd-party libraries vendored from the configuration.</p>
+</li>
+<li>
+<p>It generates Android DEX bytecode for the project classes. Note that the bytecode only contains the class interfaces (such as name, subclass and method list), not the actual class and method code, which is compiled into machine code (in the JNI library).</p>
+</li>
+<li>
+<p>It creates an <em>.apk</em> archive and copies the files there. The <em>AndroidManifest.xml</em> file generated based on the project configuration. Each resource file in the <em>resources</em> and <em>assets</em> directories are copied in the bundle. 3rd-party libraries (<em>.jar</em> files) are also copied.</p>
+</li>
+<li>
+<p>It codesigns the bundle with the appropriate Java Android keystore.</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_development">3.1. Development</h4>
+<div class="paragraph">
+<p>The rake build task builds a development version of the project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake build</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Normally the user does not need to explicitly call this task, as it is a dependency of the rake emulator and rake device tasks, which are often used for development.</p>
+</div>
+<div class="paragraph">
+<p>Inside the <em>Rakefile</em>, you can determine if the project is being built in development mode by using the <code>app.development</code> or <code>app.development?</code> methods.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  if app.development?
+    # apply custom options for development
+  end
+
+  app.development do
+    # another variant
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The application will be code-signed using the debug Java Android keystore, located as <em>~/.android/debug.keystore</em>. If the keystore file does not exist, RubyMotion will create it for you.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_release">3.2. Release</h4>
+<div class="paragraph">
+<p>Release builds are created using the rake release task.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake release</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This task can be used when you want to distribute versions of your app to beta-testers, and also upload them to the Google Play Store.</p>
+</div>
+<div class="paragraph">
+<p>Inside the <em>Rakefile</em>, you can determine if the project is being built in release mode by using the <code>app.release</code> or <code>app.release?</code> methods.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  if app.release?
+    # apply custom options for release
+  end
+
+  app.release do
+    # another variant
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The task requires a proper release keystore to be configured in the project, which can be done using the <code>app.release_keystore_path</code> method, which accepts two arguments: the full path to the keystore file, and the alias name of the key.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Motion::Project::App.setup do |app|
+  # ...
+  app.release_keystore(File.expand_path("~/my-release-key.keystore"),
+      "release-key")
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more information on how to generate a release keystore file check out the <a href="http://developer.android.com/tools/publishing/app-signing.html#signing-manually">App Signing</a> document on the Android developer website.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cleaning">3.3. Cleaning</h4>
+<div class="paragraph">
+<p>The rake clean task empties the <em>build</em> directory and cleans the build directories of the vendored projects.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake clean</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running">4. Running</h3>
+<div class="paragraph">
+<p>You can run apps either in the built-in Android emulator or an USB-connected Android device you configured for development.</p>
+</div>
+<div class="sect3">
+<h4 id="_emulator">4.1. Emulator</h4>
+<div class="paragraph">
+<p>The Android SDK comes with an emulator that you can use to run apps in your computer.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+At the time of this writing, the emulator is too slow to be used efficiently in development. We highly recommend using a device instead.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The rake emulator task will build and run a version of the app in the emulator. The default <code>rake</code> task defaults to it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake
+$ rake emulator</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order for the task to work, the emulator must be up and running.</p>
+</div>
+<div class="paragraph">
+<p>First, you have to create an Android Virtual Device (AVD). To do so, follow these steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Launch the <code>android</code> command-line tool from the terminal (which should be located as <code>$RUBYMOTION_ANDROID_SDK/tools/android</code>).</p>
+</li>
+<li>
+<p>Hit the <strong>Create</strong> button.</p>
+</li>
+<li>
+<p>In the create window, make sure the <strong>CPU/ABI</strong> is set to <strong>ARM (armeabi)</strong>. This is important, as RubyMotion does not support other architectures for Android development.</p>
+</li>
+<li>
+<p>Provide a name and an appropriate API target for the device, then hit the <strong>OK</strong> button.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once that the device has been created, you can start it from the main window by selecting it from the list, then click the <strong>Start</strong> button.</p>
+</div>
+<div class="paragraph">
+<p>An emulator window will appear and the device will start. Please note that starting a virtual device can take some time. You must wait until you see the Android home screen.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_device">4.2. Device</h4>
+<div class="paragraph">
+<p>Running a RubyMotion app on an Android device is easy; just make sure it&#8217;s properly configured for development (check out the Getting Started guide for more information), then simply connect it and use the rake device task.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake device</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_interactive_console">4.3. Interactive Console</h4>
+<div class="paragraph">
+<p>Both rake emulator and rake release tasks will install and start the application, then an interactive console (read-eval-print-loop) will appear in the terminal.</p>
+</div>
+<div class="paragraph">
+<p>You can type expressions in the terminal, and they will be evaluated right in the application process.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake device
+...
+&gt;&gt; "hello".upcase
+=&gt; "HELLO"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Inside the console, the <code>self</code> variable points to the current Android activity for your convenience. By default, this will be the main activity object.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>&gt;&gt; self
+=&gt; #&lt;MainActivity:0x100502&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+  </div>
+</article>
+  </body>
+</html>

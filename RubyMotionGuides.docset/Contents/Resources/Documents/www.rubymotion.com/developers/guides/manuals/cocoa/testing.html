@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='381521407' property='twitter:account_id'/>
+
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-16x16.png" sizes="16x16"/>
+
+
+  
+    
+  
+
+
+<title>Manuals | RubyMotion</title>
+
+<meta property="og:title" content="Manuals | RubyMotion"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://rubymotion.com"/>
+<meta property="og:image" content="/img/rubymotion-logo.png"/>
+
+<meta name="description" content="Write cross-platform apps for iOS, Android and OS X in Ruby"/>
+
+
+<meta name="viewport" content="initial-scale=1, width=device-width" />
+
+<!--[if lt IE 9]>
+<script src="/javascripts/libs/html5shiv.min.js"></script>
+<script src="/javascripts/libs/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css"/>
+<link rel="stylesheet" href="../../../../css/lightbox.css" type="text/css"/>
+
+<!-- Analytics -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1471287-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </head>
+  <body data-section="chapter_3">
+
+    <div class="container">
+        <article class="guides_pages">
+  <div class="row_fluid">
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <aside class="col_4 aside_toc">
+      <div class="toc_followed">
+        <div class="toc_container">
+          <h3 class="resp_m_deploy_title">Table of contents</h3>
+          <ol class="toc_list resp_m_to_deploy">
+            <li class="toc_list_chapters">
+              <a href="testing.html#_getting_started" class="toc_chapters anchor_links"><span class="toc_num">1. </span>Getting Started</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_spec_files" class="anchor_links"><span class="toc_num">1.1. </span>Spec Files</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_spec_helpers" class="anchor_links"><span class="toc_num">1.2. </span>Spec Helpers</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_running_the_tests" class="anchor_links"><span class="toc_num">1.3. </span>Running the Tests</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_run_selected_spec_files" class="anchor_links"><span class="toc_num">1.4. </span>Run Selected Spec Files</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_output_format" class="anchor_links"><span class="toc_num">1.5. </span>Output Format</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="testing.html#_basic_testing" class="toc_chapters anchor_links"><span class="toc_num">2. </span>Basic Testing</a>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="testing.html#_views_and_controllers_testing" class="toc_chapters anchor_links"><span class="toc_num">3. </span>Views and Controllers Testing</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_configuring_your_context" class="anchor_links"><span class="toc_num">3.1. </span>Configuring your Context</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_durations" class="anchor_links"><span class="toc_num">3.2. </span>Durations</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_device_events" class="anchor_links"><span class="toc_num">3.3. </span>Device Events</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_finding_views" class="anchor_links"><span class="toc_num">3.4. </span>Finding Views</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_view_events" class="anchor_links"><span class="toc_num">3.5. </span>View Events</a>
+             </li>
+            </ol>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <div class="col_9 guide_content">
+<div class="sect1">
+<h2 id="_rubymotion_testing_guide_for_ios_and_os_x">RubyMotion Testing Guide for iOS and OS X</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document describes how to write functional tests for an existing RubyMotion iOS or OS X app. Tests provide a set of specifications an application is supposed to conform to and can be used to catch regressions after an unfortunate change in the code.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_started">1. Getting Started</h3>
+<div class="paragraph">
+<p>RubyMotion integrates <a href="https://github.com/chneukirchen/bacon/">Bacon</a>, a small clone of the popular <a href="http://rspec.info/">RSpec</a> framework written by <a href="https://github.com/chneukirchen">Christian Neukirchen</a>.</p>
+</div>
+<div class="paragraph">
+<p>More specifically, RubyMotion uses a version of Bacon called <a href="https://github.com/alloy/MacBacon">MacBacon</a> which has been extended to integrate well with runloop-based platforms. MacBacon is maintained by <a href="https://github.com/alloy">Eloy Duran</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_spec_files">1.1. Spec Files</h4>
+<div class="paragraph">
+<p>Spec files are responsible to contain the tests of your project.</p>
+</div>
+<div class="paragraph">
+<p>Spec files are created under the <em>spec</em> directory of a RubyMotion project.</p>
+</div>
+<div class="paragraph">
+<p>By default, a RubyMotion project has a <em>spec/main_spec.rb</em> file which contains a single test that ensures that the application has a window.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ cat spec/main_spec.rb
+describe "My Awesome App" do
+  it "has a window" do
+    app = UIApplication.sharedApplication
+    app.windows.size.should == 1
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Assuming the application is properly implemented to follow that specification, rake spec will gracefully exit with a status error of 0.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake spec
+...
+My Awesome App
+  - has a window
+
+1 specifications (1 requirements), 0 failures, 0 errors</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spec_helpers">1.2. Spec Helpers</h4>
+<div class="paragraph">
+<p>Spec helpers can be used to extend the testing framework, for instance by introducing a common set of classes or methods that will be used by the spec files. Spec helpers will be compiled and executed before the actual spec files.</p>
+</div>
+<div class="paragraph">
+<p>Spec helpers are created under the <em>spec/helpers</em> directory of a RubyMotion project. An example could be <em>spec/helpers/extension.rb</em>.</p>
+</div>
+<div class="paragraph">
+<p>By default, a RubyMotion project has no spec helper.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_the_tests">1.3. Running the Tests</h4>
+<div class="paragraph">
+<p>The <code>spec</code> Rake task can be used to run the test suite of a RubyMotion project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake spec
+$ rake spec:simulator
+$ rake spec:device</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command compiles a special version of your app that includes the spec framework, helpers and files and executes it in the simulator in the background.</p>
+</div>
+<div class="paragraph">
+<p>Once the specs are performed, the program yields back to the command-line prompt with a proper status code (<code>0</code> in case of success, <code>1</code> otherwise).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_run_selected_spec_files">1.4. Run Selected Spec Files</h4>
+<div class="paragraph">
+<p>Sometimes you may not want to run the entire test suite but only one or more isolated spec files.</p>
+</div>
+<div class="paragraph">
+<p>The <code>files</code> environment variable can be set to a series of comma-delimited patterns in order to filter the spec files that should be executed. Patterns can be either the basename of a spec file (without the file extension) or its path.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the following command will only run the <em>spec/foo_spec.rb</em> and <em>spec/bar_spec.rb</em> files.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake spec files=foo_spec,spec/bar_spec.rb</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_output_format">1.5. Output Format</h4>
+<div class="paragraph">
+<p>It is possible to customize the output format of rake spec by specifying a value for the <code>output</code> environment variable. Possible output formats are: <code>spec_dox</code> (default), <code>fast</code>, <code>test_unit</code>, <code>tap</code> and <code>knock</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake spec output=test_unit</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_basic_testing">2. Basic Testing</h3>
+<div class="paragraph">
+<p>You can refer to MacBacon&#8217;s <a href="https://github.com/alloy/MacBacon/blob/master/README.md">README</a> file for a list of assertions and core predicates that the framework supports.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_views_and_controllers_testing">3. Views and Controllers Testing</h3>
+<div class="paragraph">
+<p>This layer lets you write functional tests for your controllers and interact with its views through
+a set of high-level event generating APIs, by leveraging the functionality of Apple&#8217;s <a href="http://developer.apple.com/library/ios/#documentation/DeveloperTools/Reference/UIAutomationRef/_index.html">UIAutomation</a> framework without forcing you to write the tests in Javascript.</p>
+</div>
+<div class="paragraph">
+<p>This consists of a small API available to your specifications, some runloop helpers, and a couple
+of <code>UIView</code> extensions.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+This is <strong>not</strong> meant for full application acceptance tests. Therefore you should not let the application launch as normal. This can, for instance, be done by using the <code>RUBYMOTION_ENV</code> to return early from <code>application:didFinishLaunchingWithOptions:</code>:
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class AppDelegate
+  def application(application, didFinishLaunchingWithOptions:launchOptions)
+    return true if RUBYMOTION_ENV == 'test'
+    # ...</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuring_your_context">3.1. Configuring your Context</h4>
+<div class="paragraph">
+<p>You need to tell the specification context which controller will be specified and extend it with
+the required API. You do this by specifying your view controller class in the following way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>describe "The 'taking over the world' view" do
+  tests TakingOverTheWorldViewController
+
+  # Add your specifications here.
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will, before each specification, instantiate a new window and a new instance of your view
+controller class. These are available in your specifications as <code>window</code> and <code>controller</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+If you need to perform custom instantiation of either the window or controller then you can
+     do so from a <code>before</code> filter <em>before</em> calling <code>tests</code>.  The same applies to <code>after</code> filters.
+     If you want those to be able to have a reference to the controller instance used during the
+     test, then you will have to register your <code>after</code> filter <em>before</em> the <code>tests</code> method’s
+     <code>after</code> filter removes the window and controller instances. For example:
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>describe "Before and after filter order illustrated" do
+  # This `before` filter is defined __before__ the one of the `tests` method, so at this point the
+  # window instance is not yet created and you can perform controller initialization.  It is
+  # important to note, though, that once you call `window` it will be created on-demand.
+  before do
+    controller.dataThatNeedsToBeConfiguredBeforeAssigningToWindow = ['TableView Row 1', 'TableView Row 2']
+  end
+
+  # This `after` filter is defined __before__ the one of the `tests` method, so at this point the
+  # window and controller instances are not yet cleaned up and set to `nil`.
+  after do
+    controller.performCustomPostTestWork
+    window.performCustomPostTestWork
+  end
+
+  tests TakingOverTheWorldViewController
+  # Calling `tests` registers a `before` and an `after` filter that do something like the following:
+  #
+  #  before do
+  #    createWindowAndControllerIfNotCreatedYet
+  #  end
+  #
+  #  after do
+  #    cleanUpWindowAndController
+  #  end
+
+  it "performs tests" do
+    # ...
+  end
+end</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_storyboards">Storyboards</h5>
+<div class="paragraph">
+<p>You can test controllers from a <a href="http://developer.apple.com/library/ios/#DOCUMENTATION/UIKit/Reference/UIStoryboard_Class/Reference/Reference.html">storyboard</a>
+by passing the <code>tests</code> method the Xcode identifier of the controller in the <code>:id</code> option:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>tests StoryboardViewController, :id =&gt; 'controller-id'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, controllers will be loaded from the <em>MainStoryboard.storyboard</em> file in the project
+<em>resources</em> directory. You can load a controller from a different file by passing the storyboard
+name in the <code>:storyboard</code> option.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>tests StoryboardViewController, :storyboard =&gt; 'AlternateStoryboard', :id =&gt; 'controller-id'</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The <em>Identifier</em> field corresponding to the <code>:id</code> option is found within the <em>View Controller</em>
+     section of the <em>Attributes Inspector</em> in Xcode. The <em>Attributes Inspector</em> can be reached with
+     the <em>command-option-4</em> keyboard shortcut.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_durations">3.2. Durations</h4>
+<div class="paragraph">
+<p>Some methods take a <code>:duration</code> option which specifies the period of time, in seconds, during which
+events will be generated. This is <strong>always</strong> optional.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The default duration value can be changed through <code>Bacon::Functional.default_duration=</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_device_events">3.3. Device Events</h4>
+<div class="paragraph">
+<p>These methods generate events that operate on the device level. As such, they don’t take an
+accessibility label or specific view.</p>
+</div>
+<div class="sect4">
+<h5 id="_rotate_device">rotate_device</h5>
+<div class="paragraph">
+<p>Rotates the device to the specified orientation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>rotate_device(:to =&gt; orientation, :button =&gt; location)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>to</strong>: The orientation to rotate the device to, which can be either <code>:portrait</code> or <code>:landscape</code>.</p>
+</li>
+<li>
+<p><strong>button</strong>: Used to indicate a specific portrait/landscape orientation which can be either
+<code>:bottom</code> or <code>:top</code> in portrait mode, or either <code>:left</code> or <code>:right</code> in landscape
+mode. If omitted, it will default to <code>:bottom</code> in portrait mode and <code>:left</code> in
+landscape mode.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following example rotates the device to the landscape orientation with the home button on the
+left-hand side of the device:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>rotate_device :to =&gt; :landscape</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or to have the button on the right-hand side of the device:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>rotate_device :to =&gt; :landscape, :button =&gt; :right</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_accelerate">accelerate</h5>
+<div class="paragraph">
+<p>Generates accelerometer events.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>accelerate(:x =&gt; x_axis_acceleration, :y =&gt; y_axis_acceleration,
+           :z =&gt; z_axis_acceleration, :duration =&gt; duration)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From the <a href="http://bit.ly/nWAu5X">UIAcceleration class reference</a>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>x</strong>: With the device held in portrait orientation and the screen facing you, the x axis runs
+from left (negative values) to right (positive values) across the face of the device.</p>
+</li>
+<li>
+<p><strong>y</strong>: With the device held in portrait orientation and the screen facing you, the y axis runs
+from bottom (negative values) to top (positive values) across the face of the device.</p>
+</li>
+<li>
+<p><strong>z</strong>: With the device held in portrait orientation and the screen facing you, the z axis runs
+from back (negative values) to front (positive values) through the device.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This will simulate a device laying still on its back:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>accelerate :x =&gt; 0, :y =&gt; 0, :z =&gt; -1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_shake">shake</h5>
+<div class="paragraph">
+<p>Essentially generates accelerometer events.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>shake()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Use this when you want to specifically trigger a shake motion event.</p>
+</div>
+<div class="paragraph">
+<p>For more information see the <a href="http://bit.ly/MV57Y9">event handling guide</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_finding_views">3.4. Finding Views</h4>
+<div class="paragraph">
+<p>These methods allow you to retrieve views. They traverse down through the view hierarchy, starting
+from the current <code>window</code>.</p>
+</div>
+<div class="paragraph">
+<p>If no view matches, then they will keep re-trying it during the <code>timeout</code>, which defaults to three
+seconds. This means you don’t need to worry about whether or not the view you’re looking for is
+still being loaded or animated.</p>
+</div>
+<div class="paragraph">
+<p>Finally, if the timeout passes and <strong>no</strong> view matches an exception will be raised.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+The default timeout value can be changed through <code>Bacon::Functional.default_timeout=</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_view">view</h5>
+<div class="paragraph">
+<p>Returns the view that matches the specified accessibility label.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>view(label)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+button.setTitle('Take over the world', forState:UIControlStateNormal)
+window.addSubview(button)
+
+view('Take over the world') # =&gt; button</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+See <code>UIView#viewByName(accessibilityLabel, timeout)</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_views">views</h5>
+<div class="paragraph">
+<p>Returns an array of all the views that match the given class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>views(view_class)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>button1 = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+button1.setTitle('Take over the world', forState:UIControlStateNormal)
+window.addSubview(button1)
+
+button2 = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+button2.setTitle('But not tonight', forState:UIControlStateNormal)
+window.addSubview(button2)
+
+views(UIButton) # =&gt; [button1, button2]</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+See <code>UIView#viewsByClass(viewClass, timeout)</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_view_events">3.5. View Events</h4>
+<div class="paragraph">
+<p>These methods all operate on views. You specify the view to operate on by its ‘accessibility label’
+or pass in a view instance.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+In general all the UIKit controls will have decent default values for their accessibility
+      labels. E.g. a UIButton with title “Take over the world” will have the same value for its
+      accessibility label. If, however, you have custom views, or otherwise need to override the
+      default, then you can do so by setting its <code>accessibilityLabel</code> attribute.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Wherever a ‘location’ is required you can either specify a <code>CGPoint</code> instance or use one of the
+following constants:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>:top_left</code></p>
+</li>
+<li>
+<p><code>:top</code></p>
+</li>
+<li>
+<p><code>:top_right</code></p>
+</li>
+<li>
+<p><code>:right</code></p>
+</li>
+<li>
+<p><code>:bottom_right</code></p>
+</li>
+<li>
+<p><code>:bottom</code></p>
+</li>
+<li>
+<p><code>:bottom_left</code></p>
+</li>
+<li>
+<p><code>:left</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>CGPoint</code> instances have to be specified in window coordinates.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Some of the methods take a <code>:from</code> location and a <code>:to</code> location option. If <em>only</em> <code>:from</code>
+     or <code>:to</code> is specified and <em>with</em> a location constant, then the other option can be omitted
+     and will default to the opposite of the specified location. If, however, a <code>CGPoint</code> instance
+     is used, then the other option <em>has</em> to be specified as well.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_tap">tap</h5>
+<div class="paragraph">
+<p>Generates events that simulate tapping a view.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>tap(label_or_view, :at =&gt; location, :times =&gt; number_of_taps, :touches =&gt; number_of_fingers)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All of these options are optional:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>at</strong>: The location where the tap will occur. Defaults to the center of the view.</p>
+</li>
+<li>
+<p><strong>times</strong>: The number of times to tap the view. Defaults to a single tap.</p>
+</li>
+<li>
+<p><strong>touches</strong>: The number of fingers used to tap the view. Defaults to a single touch.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Tapping a view <em>once</em> only requires:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+button.setTitle('Take over the world', forState:UIControlStateNormal)
+window.addSubview(button)
+
+tap 'Take over the world'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Tapping a view twice with two fingers requires you to specify those options:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>view = UIView.alloc.initWithFrame(CGRectMake(0, 0, 100, 100))
+view.accessibilityLabel = 'tappable view'
+recognizer = UITapGestureRecognizer.alloc.initWithTarget(self, action:'handleTap:')
+recognizer.numberOfTapsRequired = 2
+recognizer.numberOfTouchesRequired = 2
+view.addGestureRecognizer(recognizer)
+
+tap 'tappable view', :times =&gt; 2, :touches =&gt; 2</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_flick">flick</h5>
+<div class="paragraph">
+<p>Generates a short fast drag gesture.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>flick(label_or_view, :from =&gt; location, :to =&gt; location, :duration =&gt; duration)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>from</strong>: The location where the drag will start.</p>
+</li>
+<li>
+<p><strong>to</strong>: The location where the drag will end.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Flicking a switch would be done like so:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>switch = UISwitch.alloc.initWithFrame(CGRectMake(0, 0, 100, 100))
+switch.accessibilityLabel = 'Enable rainbow theme'
+window.addSubview(switch)
+
+flick 'Enable rainbow theme', :to =&gt; :right</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_pinch_open">pinch_open</h5>
+<div class="paragraph">
+<p>Generates an <em>opening</em> pinch gesture.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>pinch_open(label_or_view, :from =&gt; location, :to =&gt; location, :duration =&gt; duration)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>from</strong>: The location where <em>both</em> fingers are at the start of the gesture. Defaults to
+<code>:left</code>.</p>
+</li>
+<li>
+<p><strong>to</strong>: The location where the <em>moving</em> finger will be at the end of the gesture. Defaults to
+<code>:right</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following zooms in on the content view of a <code>UIScrollView</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>view('Zooming scrollview').zoomScale # =&gt; 1.0
+pinch_open 'Zooming scrollview'
+view('Zooming scrollview').zoomScale # =&gt; 2.0</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_pinch_close">pinch_close</h5>
+<div class="paragraph">
+<p>Generates a <em>closing</em> pinch gesture.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>pinch_close(label_or_view, :from =&gt; location, :to =&gt; location, :duration =&gt; duration)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>from</strong>: The location where the <em>moving</em> finger will be at the start of the gesture. Defaults
+to <code>:right</code>.</p>
+</li>
+<li>
+<p><strong>to</strong>: The location where <em>both</em> fingers are at the end of the gesture. Defaults to <code>:left</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following zooms out of the content view of a <code>UIScrollView</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>view('Zooming scrollview').zoomScale # =&gt; 1.0
+pinch_close 'Zooming scrollview'
+view('Zooming scrollview').zoomScale # =&gt; 0.5</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_drag">drag</h5>
+<div class="paragraph">
+<p>Generates a drag gesture (i.e. panning, scrolling) over a path interpolated between the start and
+end location.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>drag(label_or_view, :from =&gt; location, :to =&gt; location, :number_of_points =&gt; steps,
+     :points =&gt; path, :touches =&gt; number_of_fingers, :duration =&gt; duration)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>from</strong>: The location where the drag will start. Not used if <code>:points</code> is specified.</p>
+</li>
+<li>
+<p><strong>to</strong>: The location where the drag will end. Not used if <code>:points</code> is specified.</p>
+</li>
+<li>
+<p><strong>number_of_points</strong>: The number of points along the path that is interpolated between <code>:from</code>
+and <code>:to</code>. Defaults to 20. Not used if <code>:points</code> is specified.</p>
+</li>
+<li>
+<p><strong>points</strong>: An array of <code>CGPoint</code> instances that specify the drag path.</p>
+</li>
+<li>
+<p><strong>touches</strong>: The number of fingers used to drag. Defaults to a single touch.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Keep in mind that <strong>scrolling</strong> into a direction means <strong>dragging</strong> into the <em>opposite</em>
+      direction.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following will scroll down in a scroll view:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>view('Scrollable scrollview').contentOffset.y # =&gt; 0
+drag 'Scrollable scrollview', :from =&gt; :bottom
+view('Scrollable scrollview').contentOffset.y # =&gt; 400</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_rotate">rotate</h5>
+<div class="paragraph">
+<p>Generates a clockwise rotation gesture around the center point of the view.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>rotate(label_or_view, :radians =&gt; angle, :degrees =&gt; angle, :touches =&gt; number_of_fingers,
+       :duration =&gt; duration)</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>radians</strong>: The angle of the rotation in radians. Defaults to π.</p>
+</li>
+<li>
+<p><strong>degrees</strong>: The angle of the rotation in degrees. Defaults to 180.</p>
+</li>
+<li>
+<p><strong>touches</strong>: The number of fingers used to rotate. Defaults to 2.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+  </div>
+</article>
+  </body>
+</html>

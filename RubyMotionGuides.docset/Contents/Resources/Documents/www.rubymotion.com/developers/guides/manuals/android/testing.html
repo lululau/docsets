@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='381521407' property='twitter:account_id'/>
+
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-16x16.png" sizes="16x16"/>
+
+
+  
+    
+  
+
+
+<title>Manuals | RubyMotion</title>
+
+<meta property="og:title" content="Manuals | RubyMotion"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://rubymotion.com"/>
+<meta property="og:image" content="/img/rubymotion-logo.png"/>
+
+<meta name="description" content="Write cross-platform apps for iOS, Android and OS X in Ruby"/>
+
+
+<meta name="viewport" content="initial-scale=1, width=device-width" />
+
+<!--[if lt IE 9]>
+<script src="/javascripts/libs/html5shiv.min.js"></script>
+<script src="/javascripts/libs/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css"/>
+<link rel="stylesheet" href="../../../../css/lightbox.css" type="text/css"/>
+
+<!-- Analytics -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1471287-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </head>
+  <body data-section="chapter_3">
+
+    <div class="container">
+        <article class="guides_pages">
+  <div class="row_fluid">
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <aside class="col_4 aside_toc">
+      <div class="toc_followed">
+        <div class="toc_container">
+          <h3 class="resp_m_deploy_title">Table of contents</h3>
+          <ol class="toc_list resp_m_to_deploy">
+            <li class="toc_list_chapters">
+              <a href="testing.html#_getting_started" class="toc_chapters anchor_links"><span class="toc_num">1. </span>Getting Started</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_spec_files" class="anchor_links"><span class="toc_num">1.1. </span>Spec Files</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_spec_helpers" class="anchor_links"><span class="toc_num">1.2. </span>Spec Helpers</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_running_the_tests" class="anchor_links"><span class="toc_num">1.3. </span>Running the Tests</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_run_selected_spec_files" class="anchor_links"><span class="toc_num">1.4. </span>Run Selected Spec Files</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="testing.html#_output_format" class="anchor_links"><span class="toc_num">1.5. </span>Output Format</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="testing.html#_basic_testing" class="toc_chapters anchor_links"><span class="toc_num">2. </span>Basic Testing</a>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="testing.html#_activity_testing" class="toc_chapters anchor_links"><span class="toc_num">3. </span>Activity Testing</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <div class="col_9 guide_content">
+<div class="sect1">
+<h2 id="_rubymotion_testing_guide_for_android">RubyMotion Testing Guide for Android</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document describes how to write functional tests for an existing RubyMotion Android app. Tests provide a set of specifications an application is supposed to conform to and can be used to catch regressions after an unfortunate change in the code.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_started">1. Getting Started</h3>
+<div class="paragraph">
+<p>RubyMotion integrates <a href="https://github.com/chneukirchen/bacon/">Bacon</a>, a small clone of the popular <a href="http://rspec.info/">RSpec</a> framework written by <a href="https://github.com/chneukirchen">Christian Neukirchen</a>.</p>
+</div>
+<div class="paragraph">
+<p>More specifically, RubyMotion uses a version of Bacon called <a href="https://github.com/alloy/MacBacon">MacBacon</a> which has been extended for runloop-based platforms. MacBacon is maintained by <a href="https://github.com/alloy">Eloy Duran</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_spec_files">1.1. Spec Files</h4>
+<div class="paragraph">
+<p>Spec files are responsible to contain the tests of your project.</p>
+</div>
+<div class="paragraph">
+<p>Spec files are created under the <em>spec</em> directory of a RubyMotion project.</p>
+</div>
+<div class="paragraph">
+<p>By default, a RubyMotion project has a <em>spec/main_spec.rb</em> file which contains a single test that ensures that the main activity has a title.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ cat spec/main_spec.rb
+describe "Main activity" do
+  it "has a title" do
+    main_activity.title.should == "Hello"
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Assuming the main activity is properly implemented to follow that specification, rake spec will gracefully exit with a status error of 0.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake spec
+...
+I/com/yourcompany/hello( 2024): Main activity
+I/com/yourcompany/hello( 2024):   - has a title
+I/com/yourcompany/hello( 2024): 1 specifications (1 requirements), 0 failures, 0 errors</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spec_helpers">1.2. Spec Helpers</h4>
+<div class="paragraph">
+<p>Spec helpers can be used to extend the testing framework, for instance by introducing a common set of classes or methods that will be used by the spec files. Spec helpers will be compiled and executed before the actual spec files.</p>
+</div>
+<div class="paragraph">
+<p>Spec helpers are created under the <em>spec/helpers</em> directory of a RubyMotion project. An example could be <em>spec/helpers/extension.rb</em>.</p>
+</div>
+<div class="paragraph">
+<p>By default, a RubyMotion project has no spec helper.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_running_the_tests">1.3. Running the Tests</h4>
+<div class="paragraph">
+<p>The <code>spec</code> Rake task can be used to run the test suite of a RubyMotion project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake spec
+$ rake spec:emulator
+$ rake spec:device</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command compiles a special version of your app that includes the spec framework, helpers and files and executes it in the emulator in the background, or in the connected device.</p>
+</div>
+<div class="paragraph">
+<p>Once the specs are performed, the program yields back to the command-line prompt with a proper status code (<code>0</code> in case of success, <code>1</code> otherwise).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_run_selected_spec_files">1.4. Run Selected Spec Files</h4>
+<div class="paragraph">
+<p>Sometimes you may not want to run the entire test suite but only one or more isolated spec files.</p>
+</div>
+<div class="paragraph">
+<p>The <code>files</code> environment variable can be set to a series of comma-delimited patterns in order to filter the spec files that should be executed. Patterns can be either the basename of a spec file (without the file extension) or its path.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the following command will only run the <em>spec/foo_spec.rb</em> and <em>spec/bar_spec.rb</em> files.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake spec files=foo_spec,spec/bar_spec.rb</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_output_format">1.5. Output Format</h4>
+<div class="paragraph">
+<p>It is possible to customize the output format of rake spec by specifying a value for the <code>output</code> environment variable. Possible output formats are: <code>spec_dox</code> (default), <code>fast</code>, <code>test_unit</code>, <code>tap</code> and <code>knock</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake spec output=test_unit</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_basic_testing">2. Basic Testing</h3>
+<div class="paragraph">
+<p>You can refer to MacBacon&#8217;s <a href="https://github.com/alloy/MacBacon/blob/master/README.md">README</a> file for a list of assertions and core predicates that the framework supports.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_activity_testing">3. Activity Testing</h3>
+<div class="paragraph">
+<p>The spec framework exposes a reference to the main Android activity with the <code>main_activity</code> method.</p>
+</div>
+<div class="paragraph">
+<p>This method is always available in the context of a spec, and you can use it to retrieve references to UI elements in your project, and start testing them.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+we will provide a higher-level library for Android UI testing (similar to what we have for iOS) in a future version of RubyMotion.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+  </div>
+</article>
+  </body>
+</html>

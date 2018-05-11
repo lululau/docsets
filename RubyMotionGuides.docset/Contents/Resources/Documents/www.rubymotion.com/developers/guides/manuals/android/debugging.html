@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='381521407' property='twitter:account_id'/>
+
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-16x16.png" sizes="16x16"/>
+
+
+  
+    
+  
+
+
+<title>Manuals | RubyMotion</title>
+
+<meta property="og:title" content="Manuals | RubyMotion"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://rubymotion.com"/>
+<meta property="og:image" content="/img/rubymotion-logo.png"/>
+
+<meta name="description" content="Write cross-platform apps for iOS, Android and OS X in Ruby"/>
+
+
+<meta name="viewport" content="initial-scale=1, width=device-width" />
+
+<!--[if lt IE 9]>
+<script src="/javascripts/libs/html5shiv.min.js"></script>
+<script src="/javascripts/libs/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css"/>
+<link rel="stylesheet" href="../../../../css/lightbox.css" type="text/css"/>
+
+<!-- Analytics -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1471287-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </head>
+  <body data-section="chapter_3">
+
+    <div class="container">
+        <article class="guides_pages">
+  <div class="row_fluid">
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <aside class="col_4 aside_toc">
+      <div class="toc_followed">
+        <div class="toc_container">
+          <h3 class="resp_m_deploy_title">Table of contents</h3>
+          <ol class="toc_list resp_m_to_deploy">
+            <li class="toc_list_chapters">
+              <a href="debugging.html#_getting_started" class="toc_chapters anchor_links"><span class="toc_num">1. </span>Getting Started</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="debugging.html#_debugging_symbols" class="anchor_links"><span class="toc_num">1.1. </span>Debugging Symbols</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="debugging.html#_attaching_the_debugger" class="anchor_links"><span class="toc_num">1.2. </span>Attaching the Debugger</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="debugging.html#_managing_breakpoints" class="toc_chapters anchor_links"><span class="toc_num">2. </span>Managing Breakpoints</a>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="debugging.html#_getting_the_backtrace" class="toc_chapters anchor_links"><span class="toc_num">3. </span>Getting the Backtrace</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="debugging.html#_frames" class="anchor_links"><span class="toc_num">3.1. </span>Frames</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="debugging.html#_threads" class="anchor_links"><span class="toc_num">3.2. </span>Threads</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="debugging.html#_inspecting_objects" class="toc_chapters anchor_links"><span class="toc_num">4. </span>Inspecting Objects</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="debugging.html#_local_variables" class="anchor_links"><span class="toc_num">4.1. </span>Local Variables</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="debugging.html#_instance_variables" class="anchor_links"><span class="toc_num">4.2. </span>Instance Variables</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="debugging.html#_control_flow" class="toc_chapters anchor_links"><span class="toc_num">5. </span>Control Flow</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <div class="col_9 guide_content">
+<div class="sect1">
+<h2 id="_rubymotion_debugging_guide_for_android">RubyMotion Debugging Guide for Android</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This article covers how to debug RubyMotion Android projects using the builtin debugging facility. RubyMotion apps can be debugged either on the emulator or the device.</p>
+</div>
+<div class="paragraph">
+<p>At the time of this writing, the debugging experience in RubyMotion is still a work in progress, and this document might change any time to reflect the progresses that have been made in this regard.</p>
+</div>
+<div class="sect2">
+<h3 id="_getting_started">1. Getting Started</h3>
+<div class="paragraph">
+<p>The RubyMotion debugger for Android projects is based on <a href="http://www.gnu.org/software/gdb/">GDB</a>, the Android NDK debugger.</p>
+</div>
+<div class="paragraph">
+<p>GDB is traditionally used to debug programs written in C-based languages, however, RubyMotion brings Ruby support to GDB, allowing it to connect and introspect RubyMotion processes.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The GDB support is at this point experimental and also quite low-level. Our goal is to build a higher-level, friendlier debugger on top of GDB that will provide a better experience for Ruby developers.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This document aims at covering the main features that one might need in order to debug a RubyMotion app with GDB. This document is not a complete GDB manual. We highly recommend reading <a href="https://sourceware.org/gdb/current/onlinedocs/gdb/">the official user manual</a> if an exhaustive guide is needed.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+In this guide we will use the longhand versions of all debugger commands, but most, if not all, have shorthand versions which you can find in the official user manual.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_debugging_symbols">1.1. Debugging Symbols</h4>
+<div class="paragraph">
+<p>The RubyMotion compiler implements the <a href="http://www.dwarfstd.org">DWARF</a> debugging format metadata for the Ruby language. This allows external programs such as debuggers or profilers to retrieve source-level information about an existing RubyMotion application.</p>
+</div>
+<div class="paragraph">
+<p>In Android, the metadata is saved right inside the application <code>ELF</code> shared library, in the <em>build</em> directory of your project.</p>
+</div>
+<div class="paragraph">
+<p>Both <code>development</code> and <code>release</code> modes have debugging symbols, however, as the <code>release</code> mode activates compilation optimizations, the debugging experience will be better under the <code>development</code> mode. For example, in the <code>release</code> mode, certain local variables and arguments might not be accessible in the debugger as they could be optimized.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_attaching_the_debugger">1.2. Attaching the Debugger</h4>
+<div class="paragraph">
+<p>In order to start the debugger, the <code>debug</code> option can be set to any value on the appropriate rake target.</p>
+</div>
+<div class="paragraph">
+<p>When working with the <code>emulator</code> rake task, the debugger will directly attach itself to the app and replace the interactive shell (REPL).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake emulator debug=1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When working with the <code>device</code> rake task, the build system will start the iOS debugging server on the device then remotely attach the debugger on your shell right after the application has been deployed on the device.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake device debug=1</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_managing_breakpoints">2. Managing Breakpoints</h3>
+<div class="paragraph">
+<p>To set a breakpoint to a given location in the source code, use the <code>break</code> command and pass both the file and the line number, separated by <code>:</code>.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the following command sets a breakpoint on the 16th line of the <em>hello_view.rb</em> file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) break main_activity.rb:16
+Breakpoint 1 at 0x5ec294d0: file main_activity.rb, line 16.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The info breakpoints command can be used to list the breakpoints that have been set in the current debugger environment.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) info breakpoints
+Num     Type           Disp Enb Address    What
+1       breakpoint     keep y   0x5ec294d0 in rb_scope__dispatchTouchEvent__ at main_activity.rb:16</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see our breakpoint <code>main_activity.rb:16</code> is right there and is enabled. The <code>enable</code> and <code>disable</code> commands can respectively enable or disable a given breakpoint using its number.</p>
+</div>
+<div class="paragraph">
+<p>Since our breakpoint is number 1 in the list, we can disable it like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(lldb) disable 1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_getting_the_backtrace">3. Getting the Backtrace</h3>
+<div class="paragraph">
+<p>Once you hit a breakpoint, it is often interesting to check out the execution backtrace, which will tell you where the method is called from.</p>
+</div>
+<div class="paragraph">
+<p>This can be done by using the <code>backtrace</code> command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) backtrace
+#0  rb_scope__dispatchTouchEvent__ (_self=0x53e00025, event=0x53e0fe29)
+    at main_activity.rb:16
+#1  0x5ec29e10 in __unnamed_3070 ()
+   from /Users/lrz/src/RubyMotionSamples/android/Hello/build/Development-19/lib/armeabi/libpayload.so
+#2  0x4164c350 in ?? ()
+#3  0x4164c350 in ?? ()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Backtrace frames in your code can be identified with the <code>rb_scope__</code> prefix and the <code>file:line</code> information.</p>
+</div>
+<div class="sect3">
+<h4 id="_frames">3.1. Frames</h4>
+<div class="paragraph">
+<p>Here, the very first frame in the backtrace is the method defined in the breakpoint location: <code>dispatchTouchEvent</code>. The other frames below the breakpoint are native Android NDK calls.</p>
+</div>
+<div class="paragraph">
+<p>The <code>frame</code> command lets you switch to a specific frame in the backtrace. By default you will be at the top frame (#0), but assuming you want to go down to frame #2, in order to inspect its context, you can type the following command to do so.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) frame select 2</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Obviously it mainly matters when you want to go down to a specific Ruby-defined location in the backtrace.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_threads">3.2. Threads</h4>
+<div class="paragraph">
+<p>The <code>backtrace</code> command only returns the backtrace of the current thread. When dealing with a multithreaded program, you may sometimes want to print the backtrace of all running threads, for instance when you are debugging a race condition.</p>
+</div>
+<div class="paragraph">
+<p>The following command will print the backtrace of all the running threads in the terminal.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) thread apply all backtrace</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Similar to switching frames, the debugger will let you switch threads using the <code>thread</code> command. This can be useful if you want to inspect a specific Ruby method frame in another running thread. The following command will switch the debugger prompt to the thread #4.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) thread 4
+[Switching to thread 4 (Thread 10224)]
+#0  0x401434b0 in recvmsg ()
+   from /Users/lrz/src/RubyMotionSamples/android/Hello/build/Development-19/obj/local/armeabi/libc.so</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inspecting_objects">4. Inspecting Objects</h3>
+<div class="paragraph">
+<p>After checking the backtrace, you may want to inspect the objects around. The debugger will let you print them using specialized commands.</p>
+</div>
+<div class="sect3">
+<h4 id="_local_variables">4.1. Local Variables</h4>
+<div class="paragraph">
+<p>We just hit a breakpoint defined in the <code>onCreate</code> method. As you can see from the breakpoint, we are inside a function that accepts two arguments: <code>_self</code> and <code>savedInstanceState</code>.</p>
+</div>
+<div class="paragraph">
+<p>In RubyMotion, the <code>_self</code> argument is a pointer to the <code>self</code> object exposed in Ruby, which represents a reference to the receiver of the method. In the debugger, <code>_self</code> is visible as the first argument of the method.</p>
+</div>
+<div class="paragraph">
+<p>We can inspect the values of both <code>_self</code> and <code>savedInstanceState</code> by using the <code>print-ruby-object</code> command. This RubyMotion-defined command sends the <code>inspect</code> message to the given object and returns its value. The command can also be called using the <code>pro</code> shortcut which we will use as a convenience.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Breakpoint 1, rb_scope__onCreate__ (_self=0xc3e00019, savedInstanceState=0x67c0001d)
+    at main_activity.rb:13
+13	  end
+(gdb) pro _self
+#&lt;MainActivity:0xc3e00019&gt;
+(gdb) pro savedInstanceState
+#&lt;android.os.Bundle:0x67c0001d&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The list of local variables can be printed using the info locals command. The list will also include the addresses of each local variable.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>5	    elems = []
+(gdb) info locals
+elems = 0x5d800025</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These local variables can also be individually inspected on the terminal by using the <code>pro</code> command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) pro elems
+[]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_instance_variables">4.2. Instance Variables</h4>
+<div class="paragraph">
+<p>Instance variables of an object can be printed using the <code>print-ruby-ivars</code> command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) print-ruby-ivars
+@text = #&lt;android.widget.TextView:0x1ef00059&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_control_flow">5. Control Flow</h3>
+<div class="paragraph">
+<p>The <code>next</code> command will continue the execution of the program until the next source-level location. This is usually the very next line in the Ruby source code. This means that the debugger has not yet executed the line that it indicates is the current line, keep this in mind when inspecting variables and their values.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>Breakpoint 1, rb_scope__onCreate__ (_self=&lt;optimized out&gt;, savedInstanceState=&lt;optimized out&gt;)
+    at main_activity.rb:5
+5	    elems = []
+(gdb) n
+6	    elems &lt;&lt; 1
+(gdb) pro elems
+[]
+(gdb) n
+7	    elems &lt;&lt; 2
+(gdb) pro elems
+[1]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>continue</code> command will continue the execution of the program until it reaches a breakpoint.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) continue
+Continuing.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When the program runs, you can always stop its execution and go back to the debugger prompt by typing the <code>control`c+ (</code>^C`) keyboard shortcut.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>^C
+Program received signal SIGINT, Interrupt.
+[...]
+(gdb)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to quit the debugger, just type the <code>quit</code> command and confirm that you want to exit. It will terminate the application and return you back to the shell prompt.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [Remote target] will be detached.
+
+Quit anyway? (y or n)
+y
+$</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+  </div>
+</article>
+  </body>
+</html>

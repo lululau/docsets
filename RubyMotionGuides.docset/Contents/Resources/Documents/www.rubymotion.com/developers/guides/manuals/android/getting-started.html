@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='381521407' property='twitter:account_id'/>
+
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-32x32.png" sizes="32x32"/>
+<link rel="icon" type="image/png" href="http://www.rubymotion.com/img/favicon-16x16.png" sizes="16x16"/>
+
+
+  
+    
+  
+
+
+<title>Manuals | RubyMotion</title>
+
+<meta property="og:title" content="Manuals | RubyMotion"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://rubymotion.com"/>
+<meta property="og:image" content="/img/rubymotion-logo.png"/>
+
+<meta name="description" content="Write cross-platform apps for iOS, Android and OS X in Ruby"/>
+
+
+<meta name="viewport" content="initial-scale=1, width=device-width" />
+
+<!--[if lt IE 9]>
+<script src="/javascripts/libs/html5shiv.min.js"></script>
+<script src="/javascripts/libs/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css"/>
+<link rel="stylesheet" href="../../../../css/lightbox.css" type="text/css"/>
+
+<!-- Analytics -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1471287-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </head>
+  <body data-section="chapter_3">
+
+    <div class="container">
+        <article class="guides_pages">
+  <div class="row_fluid">
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <aside class="col_4 aside_toc">
+      <div class="toc_followed">
+        <div class="toc_container">
+          <h3 class="resp_m_deploy_title">Table of contents</h3>
+          <ol class="toc_list resp_m_to_deploy">
+            <li class="toc_list_chapters">
+              <a href="getting-started.html#_overview" class="toc_chapters anchor_links"><span class="toc_num">1. </span>Overview</a>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="getting-started.html#_prerequisites" class="toc_chapters anchor_links"><span class="toc_num">2. </span>Prerequisites</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_installing_java" class="anchor_links"><span class="toc_num">2.1. </span>Installing Java</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_downloading_the_sdk" class="anchor_links"><span class="toc_num">2.2. </span>Downloading the SDK</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_setting_up_the_sdk" class="anchor_links"><span class="toc_num">2.3. </span>Setting Up the SDK</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_downloading_the_ndk" class="anchor_links"><span class="toc_num">2.4. </span>Downloading the NDK</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_configuring_rubymotion" class="anchor_links"><span class="toc_num">2.5. </span>Configuring RubyMotion</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_configuring_your_device_for_development" class="anchor_links"><span class="toc_num">2.6. </span>Configuring Your Device For Development</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="getting-started.html#_text_editor" class="toc_chapters anchor_links"><span class="toc_num">3. </span>Text Editor</a>
+            <ol class="toc_sub">
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_rubymine" class="anchor_links"><span class="toc_num">3.1. </span>RubyMine</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_textmate" class="anchor_links"><span class="toc_num">3.2. </span>TextMate</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_sublime_text" class="anchor_links"><span class="toc_num">3.3. </span>Sublime Text</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_redcar" class="anchor_links"><span class="toc_num">3.4. </span>Redcar</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_vim" class="anchor_links"><span class="toc_num">3.5. </span>Vim</a>
+             </li>
+             <li class="toc_list_subchapters">
+               <a href="getting-started.html#_emacs" class="anchor_links"><span class="toc_num">3.6. </span>Emacs</a>
+             </li>
+            </ol>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="getting-started.html#_software_updates" class="toc_chapters anchor_links"><span class="toc_num">4. </span>Software Updates</a>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="getting-started.html#_support" class="toc_chapters anchor_links"><span class="toc_num">5. </span>Support</a>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="getting-started.html#_hello_world" class="toc_chapters anchor_links"><span class="toc_num">6. </span>Hello World</a>
+            </li>
+            <li class="toc_list_chapters">
+              <a href="getting-started.html#_and_now" class="toc_chapters anchor_links"><span class="toc_num">7. </span>And Now?</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </aside>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+    <div class="col_9 guide_content">
+<div class="sect1">
+<h2 id="_getting_started_with_rubymotion_for_android">Getting Started with RubyMotion for Android</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Thank you for downloading RubyMotion. This guide will help you get started with RubyMotion for Android.</p>
+</div>
+<div class="sect2">
+<h3 id="_overview">1. Overview</h3>
+<div class="paragraph">
+<p><a href="http://www.rubymotion.com">RubyMotion</a> is a toolchain that permits the development of iOS, OS X and Android applications using the Ruby programming language.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.apple.com/ios">iOS</a> is Apple&#8217;s mobile operating system, powering a variety of devices such as the iPhone, iPod touch and iPad. <a href="http://www.apple.com/osx">OS X</a> is Apple&#8217;s desktop operating system, powering Mac computers such as the iMac or the MacBook Air. <a href="http://www.android.com">Android</a> is Google&#8217;s mobile operating system, powering a huge array of devices from different manufacturers.</p>
+</div>
+<div class="paragraph">
+<p>Developers can write applications for iOS and OS X and submit them to the App Store, Apple&#8217;s application distribution system. Alternatively, RubyMotion can be used to conceive applications for Android that can be submitted to the Google Play store.</p>
+</div>
+<div class="paragraph">
+<p>Conceptually, RubyMotion is a combination of two major components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Runtimes</strong>: Brand-new implementations of the Ruby language, tightly integrated with the native Apple or Google runtime and optimized for embedded device constraints.</p>
+</li>
+<li>
+<p><strong>Project Management</strong>: A command-line interface to create, manage, and interactively develop RubyMotion projects. It also includes a static compiler that compiles Ruby into optimized machine code and an interactive console where you can evaluate expressions on the fly and change the way your app behaves in real-time.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>RubyMotion installs itself into '/Library/RubyMotion'. A symbolic link to the command-line interface is created as '/usr/bin/motion'.</p>
+</div>
+<div class="paragraph">
+<p>This document focuses on RubyMotion for Android. For iOS and OS X, check out the <a href="http://www.rubymotion.com/developers/guides/manuals/cocoa/getting-started">Getting Started With iOS and OS X</a> document instead.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites">2. Prerequisites</h3>
+<div class="paragraph">
+<p>RubyMotion requires a 64-bit Mac running OS X 10.8.4 or higher. OS X 10.9 Mavericks or higher is however recommended.</p>
+</div>
+<div class="paragraph">
+<p>A proper Android development environment is required in order to use RubyMotion for Android.</p>
+</div>
+<div class="sect3">
+<h4 id="_installing_java">2.1. Installing Java</h4>
+<div class="paragraph">
+<p>The RubyMotion build system requires a Java compiler to be installed. By default, OS X does not come with Java.</p>
+</div>
+<div class="paragraph">
+<p>Follow the steps <a href="http://support.apple.com/kb/DL1572">on this page</a> to get Java installed on your environment.</p>
+</div>
+<div class="paragraph">
+<p>After doing that you can verify that Java has been properly installed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ javac -version
+javac 1.6.0_65</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Java 1.7 should work but we recommend sticking to Java 1.6.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_downloading_the_sdk">2.2. Downloading the SDK</h4>
+<div class="paragraph">
+<p>Download the <a href="http://developer.android.com/sdk/index.html">Eclipse ADT</a> bundle from the official Android website. You will have to accept the terms of conditions before the download.</p>
+</div>
+<div class="paragraph">
+<p>Despite its name, the Android SDK resides within this bundle.</p>
+</div>
+<div class="paragraph">
+<p>Once downloaded, open the .zip file. You will see 2 directories inside, <em>eclipse</em> and <em>sdk</em>. The later is the one that RubyMotion will need.</p>
+</div>
+<div class="paragraph">
+<p>We recommend that you copy the <em>sdk</em> directory somewhere in your home directory. In this document we will use <em>~/android-rubymotion</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ mkdir ~/android-rubymotion
+$ cp -r ~/Downloads/adt-bundle-mac-x86_64-20140702/sdk ~/android-rubymotion</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once you do that make sure the <em>~/android-rubymotion/sdk</em> directory has been properly copied. This is what it should contain (at the time of this writing):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ ls ~/android-rubymotion/sdk
+build-tools	extras		platform-tools	platforms	tools</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unless you plan to use Eclipse, you can safely delete the .zip file as well as the directory that was extracted from it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_setting_up_the_sdk">2.3. Setting Up the SDK</h4>
+<div class="paragraph">
+<p>Now that the Android SDK has been copied, you still need to set it up by downloading internal packages. Run the <em>android</em> tool:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ ~/android-rubymotion/sdk/tools/android</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will pop up a window titled <strong>Android SDK Manager</strong> with a selection of packages that should be installed. Click the <strong>Install</strong> button and wait until it&#8217;s done. It can take some time.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_downloading_the_ndk">2.4. Downloading the NDK</h4>
+<div class="paragraph">
+<p>Download the <a href="https://developer.android.com/tools/sdk/ndk/index.html">Mac OS X 64-bit</a> package from the official Android website. You will have to accept the terms of conditions before the download.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It is important that you download the right NDK package. The Mac OS X 32-bit package will not work with RubyMotion at the time of this writing.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The Android NDK package is a self-contained installer. Once downloaded, you can mark the binary as executable, run it, then rename it as <em>~/android-rubymotion/ndk</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ chmod +x ~/Downloads/android-ndk-r10c-darwin-x86_64.bin
+$ ~/Downloads/android-ndk-r10c-darwin-x86_64.bin
+$ mv ~/Downloads/android-ndk-r10c ~/android-rubymotion/ndk</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To confirm that the installation was successful, this is what the <em>~/android-rubymotion/ndk</em> should contain (at the time of this writing):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ ls ~/android-rubymotion/ndk
+GNUmakefile			ndk-gdb-py.cmd
+README.TXT			ndk-gdb.py
+RELEASE.TXT			ndk-stack
+build				ndk-which
+docs				platforms
+find-win-host.cmd		prebuilt
+ndk-build			remove-windows-symlink.sh
+ndk-build.cmd			samples
+ndk-depends			sources
+ndk-gdb				tests
+ndk-gdb-py			toolchains</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After that, you can safely delete the .bin file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuring_rubymotion">2.5. Configuring RubyMotion</h4>
+<div class="paragraph">
+<p>We are almost finished! It is now time to point RubyMotion to the Android SDK and NDK directories.</p>
+</div>
+<div class="paragraph">
+<p>Add the following lines to your <em>~/.profile</em> file (you can create the file if it does not exist yet):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>export RUBYMOTION_ANDROID_SDK=~/android-rubymotion/sdk
+export RUBYMOTION_ANDROID_NDK=~/android-rubymotion/ndk</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once done, restart your terminal so that these environmental changes are taken into account.</p>
+</div>
+<div class="paragraph">
+<p>You can verify that the environment variables are properly set:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ env | grep RUBYMOTION_ANDROID
+RUBYMOTION_ANDROID_SDK=...
+RUBYMOTION_ANDROID_NDK=...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuring_your_device_for_development">2.6. Configuring Your Device For Development</h4>
+<div class="paragraph">
+<p>You will need a functional Android device configured for development when writing Android apps in RubyMotion. (The provided emulator is way too slow.)</p>
+</div>
+<div class="paragraph">
+<p>In case you haven&#8217;t done it already, make sure your device is connected to your Mac via a USB cable, then perform the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open the <strong>Settings</strong> app.</p>
+</li>
+<li>
+<p>Scroll down and tap on the <strong>About phone</strong> or <strong>About tablet</strong> item, depending of the type of the device you are using. This will open a new screen.</p>
+</li>
+<li>
+<p>Scroll down again and tap 7 times on the <strong>Build number</strong> item. A message should appear after that, clarifying that you are now in developer mode.</p>
+</li>
+<li>
+<p>Go back to the previous screen and scroll down again, a <strong>Developer options</strong> item is now available. Tap on it.</p>
+</li>
+<li>
+<p>Check the <strong>USB debugging</strong> item. This will allow your Mac to communicate with the device for development tasks. A window will appear on the device, asking you to authorize the Mac. Make sure to confirm that.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You should now be good to go!</p>
+</div>
+<div class="paragraph">
+<p>If you are running an older version of Android these steps might not work for you. We recommend that you do a Google search for <strong>enable developer mode</strong> with your Android version number.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_text_editor">3. Text Editor</h3>
+<div class="paragraph">
+<p>After having installed RubyMotion you need to set up a text editor for development. RubyMotion does not come with a proprietary IDE and lets you use the editor of your choice.</p>
+</div>
+<div class="sect3">
+<h4 id="_rubymine">3.1. RubyMine</h4>
+<div class="paragraph">
+<p><a href="http://http://www.jetbrains.com/ruby/">RubyMine</a> is a commercial IDE for Ruby built on JetBrains' IntelliJ IDEA platform.</p>
+</div>
+<div class="paragraph">
+<p>It is at the time of this writing the best environment to work with RubyMotion. RubyMine features context-based auto-completion, point-and-click debugging (on both the simulator and the device), inline documentation, and so on.</p>
+</div>
+<div class="paragraph">
+<p>Please refer to the <a href="http://confluence.jetbrains.com/display/RUBYDEV/Getting+Started+with+RubyMotion">Getting Started with RubyMotion</a> guide on JetBrains' developer website for more information.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_textmate">3.2. TextMate</h4>
+<div class="paragraph">
+<p><a href="http://macromates.com/">TextMate</a> is a popular editor on OS X.</p>
+</div>
+<div class="paragraph">
+<p>A <a href="https://github.com/libin/RubyMotion.tmbundle">RubyMotion.tmbundle</a> plugin is available. It provides code completion and an integration with the build system. It is developed by <a href="https://github.com/libin">Libin Pan</a> and <a href="https://github.com/berklee">Berklee</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sublime_text">3.3. Sublime Text</h4>
+<div class="paragraph">
+<p><a href="http://www.sublimetext.com/">Sublime Text</a> is a relatively new editor for OS X, Windows and Linux that is gaining a lot of interest.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/haraken3/SublimeRubyMotionBuilder">SublimeRubyMotionBuilder</a> is a plugin that provides code completion and an integration with the build system. It is developed by <a href="https://github.com/haraken3">Kentaro Hara</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_redcar">3.4. Redcar</h4>
+<div class="paragraph">
+<p><a href="http://redcareditor.com/">Redcar</a> is an Open Source editor written in Ruby.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/kattrali/redcar-rubymotion">redcar-rubymotion</a> is a plugin that integrates the RubyMotion workflow in Redcar. All features of RubyMotion are integrated. It is developed by <a href="https://github.com/kattrali">Delisa Mason</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_vim">3.5. Vim</h4>
+<div class="paragraph">
+<p><a href="http://www.vim.org/">Vim</a> is the most popular clone of <a href="http://en.wikipedia.org/wiki/Vi">vi</a>. Vim ships in OS X. <a href="http://code.google.com/p/macvim/">MacVim</a> is a flavor of Vim for OS X that runs outside the terminal.</p>
+</div>
+<div class="paragraph">
+<p>The builtin rake ctags task can be used to generate a tags file containing all the APIs the project can call into. This file can then be used to automatically complete API calls in the editor. RubyMotion uses <a href="http://ctags.sourceforge.net/">Exuberant Ctags</a>. Ctags is a format understood by a variety of text editors, Vim included.</p>
+</div>
+<div class="paragraph">
+<p>Better auto-completion can be provided by using the <a href="https://github.com/rcyrus/snipmate-snippets-rubymotion">snipmate-snippets-rubymotion</a> plugin, courtesy of <a href="https://github.com/rcyrus">Rajeev Cyrus</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_emacs">3.6. Emacs</h4>
+<div class="paragraph">
+<p><a href="http://www.gnu.org/software/emacs/">Emacs</a> is a popular text editor. Emacs ships in OS X.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/ainame/motion-mode">motion-mode</a> is a plugin that provides code completion and an integration with the build system. It is developed by <a href="https://github.com/ainame">Satoshi Namai</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_software_updates">4. Software Updates</h3>
+<div class="paragraph">
+<p>Software updates can be applied via the command-line.</p>
+</div>
+<div class="paragraph">
+<p>The following command will grab the latest version of RubyMotion from the network and install it. You must be connected to the Internet to successfully update RubyMotion.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ sudo motion update</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can run the following command to check the version of RubyMotion installed on your computer.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ motion --version
+3.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once a day, the RubyMotion build system pings the software update server in order to see if a new version of RubyMotion is available to install.</p>
+</div>
+<div class="paragraph">
+<p>If a new version is available RubyMotion prints a message to your terminal suggesting that you to upgrade. The build system will also print a message if your license is about to expire.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_support">5. Support</h3>
+<div class="paragraph">
+<p>If you are experiencing an issue, would like to request a feature, or simply have a question, you can file a support ticket from the command-line too.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ motion support</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will open a new window in your browser where you can fill up a support ticket. Your license key and some useful information regarding your environment will be added automatically.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Support tickets are available to Professional and Enterprise customers only. If you are not entitled to use support tickets you can make use of the community forum for support enquiries instead.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hello_world">6. Hello World</h3>
+<div class="paragraph">
+<p>Let&#8217;s create a Hello World app for Android.</p>
+</div>
+<div class="paragraph">
+<p>Go to a directory of your choice, then type the following command to create a new Android project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ motion create --template=android Hello
+$ cd Hello</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Note that we pass <code>--template=android</code> to the toolchain. By default, RubyMotion will create iOS projects, so we have to select the Android template.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A new <em>Hello</em> directory has been created. Check out the <em>Rakefile</em> and the <em>app/main_activity.rb</em> files.</p>
+</div>
+<div class="paragraph">
+<p>You can try to run the app on your device. Make sure it&#8217;s connected via USB, then run the following command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>$ rake device</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The app should start right away (make sure you unlocked the device screen first). The window should be empty, which is expected given that we have not written any code yet.</p>
+</div>
+<div class="paragraph">
+<p>Now, edit the <em>app/main_activity.rb</em> file and change its content to the following code.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>class MainActivity &lt; Android::App::Activity
+  def onCreate(savedInstanceState)
+    puts "Hello World!"
+    super
+    view = Android::Widget::TextView.new(self)
+    view.text = "Hello World!"
+    self.contentView = view
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you run rake device again, you should see the hello world message appearing on your device. Also, the same message will be printed on your terminal, due to the <code>#puts</code> call.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_and_now">7. And Now?</h3>
+<div class="paragraph">
+<p>Congratulations, you successfully created your first RubyMotion Android app. That wasn’t too hard, was it?</p>
+</div>
+<div class="paragraph">
+<p>To continue, we recommend that you check the <a href="http://www.rubymotion.com/developers/samples">Samples</a> page as well as the <a href="https://github.com/HipByte/RubyMotionSamples">Sample Code Repository</a> on GitHub. Each of the sub-folders contains a RubyMotion project as introduced above. You can type rake in each directory to build and run them and check their source code by reading the files in the 'app' directory.</p>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    <div class="col_1 resp_t_none">&nbsp;</div>
+  </div>
+</article>
+  </body>
+</html>
