@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+  <link href='../../../fonts.googleapis.com/css%3Ffamily=Inconsolata.css' rel='stylesheet' type='text/css'>
+    <title>Installation</title><link rel="shortcut icon" href="../../../media.mongodb.org/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index" />
+
+  <meta name="release" content="3.0"/>
+  <meta name="version" content="3.0"/>
+  <meta name="DC.Source" content="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-installation.txt"/>
+  
+   <link rel="stylesheet" href="../_static/mongodb-docs.css" type="text/css" />
+   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+     URL_ROOT:    '../../',
+     VERSION:     '3.0',
+     COLLAPSE_INDEX: false,
+     FILE_SUFFIX: '',
+     HAS_SOURCE:  false,
+    };
+  </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="../_static/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/navbar.js"></script>
+
+  <script defer type="text/javascript" src="../_static/feedback.js"></script>
+      <link rel="search" type="application/opensearchdescription+xml" href="https://docs.mongodb.com/osd.xml" title="MongoDB Help"/>
+<link rel="top" title="MongoDB Ecosystem" href="https://docs.mongodb.com/ecosystem/" />
+<link rel="up" title="Mongoid Documentation (5.1.0)" href="https://docs.mongodb.com/ecosystem/tutorial/ruby-mongoid-tutorial/" />
+<link rel="next" title="Documents" href="mongoid-documents.html" />
+<link rel="prev" title="Mongoid Documentation (5.1.0)" href="https://docs.mongodb.com/ecosystem/tutorial/ruby-mongoid-tutorial/" />
+      <script type="text/javascript">
+        (function() {
+           var cx = '017213726194841070573:WMX6838984';
+           var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+           gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//www.google.com/cse/cse.js?cx=' + cx;
+           gcse.onload = gcse.onreadystatechange = function() {
+            $(function() {
+              // hack to set a placeholder in google's custom search input
+              var pollInput = window.setInterval(function() {
+                var $input = $('.gsc-input input.gsc-input'),
+                    $div = $('.search-db');
+
+                if ($input.length) {
+                  $input.on('focus', function(e) { $div.addClass('wide').removeClass('narrow'); });
+                  $input.on('blur', function(e) {
+                    if (!$input.val().length) { $div.addClass('narrow').removeClass('wide'); }
+                  });
+                  $input.attr('placeholder', "Search mongodb.com");
+                  window.clearInterval(pollInput);
+                }
+              }, 10);
+            });
+           };
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+           })();
+      </script><script type='text/javascript'>
+   var gptadslots=[];
+   var googletag = googletag || {};
+   googletag.cmd = googletag.cmd || [];
+   (function(){ var gads = document.createElement('script');
+      gads.async = true; gads.type = 'text/javascript';
+      var useSSL = 'https:' == document.location.protocol;
+      gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+      var node = document.getElementsByTagName('script')[0];
+      node.parentNode.insertBefore(gads, node);
+   })();
+</script>
+
+<script type="text/javascript">
+   googletag.cmd.push(function() {
+
+      //Adslot 1 declaration
+      gptadslots[1]= googletag.defineSlot('/40039723/docs.mongodb.org/ecosystem', [[160,600],[243,202],[293,244]],'mongodb-docs-eco-1').addService(googletag.pubads());
+
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().enableAsyncRendering();
+      googletag.enableServices();
+   });
+</script></head>
+<body data-project="mongodb-ecosystem">
+  
+    <script
+    async
+    id='mongodb-nav-data'
+    data-props='{"environment":"docs","isOpaque":true,
+                 "includeSearch":true,
+                 "searchUrl":"https://docs.mongodb.com/manual/search/?query=",
+                 "contactUrl":"https://www.mongodb.com/contact?jmp=docs"}'
+    data-container='#header-db'
+    src="../_static/header.js"></script>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="../../../www.googletagmanager.com/ns.html%3Fid=GTM-JQHP.html"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+     {'gtm.start': new Date().getTime(),event:'gtm.js'}
+   );var f=d.getElementsByTagName(s)[0],
+   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+   '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+   })(window,document,'script','dataLayer','GTM-JQHP');</script>
+
+
+  <div class="content">
+    <div class="main-column pull-left">
+
+      
+        <div class="document">
+            <div class="documentwrapper"><div class="bodywrapper">
+              <div class="body" data-pagename="tutorial/mongoid-installation">
+                   <a class="edit-link" href="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-installation.txt" target="_blank" title="Edit tutorial/mongoid-installation.txt on GitHub">
+    
+      <span class="icon-edit"></span>
+    
+  </a>
+                
+                
+                
+                  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="mongoid-installation.html#installation" title="Permalink to this headline">¶</a></h1>
+<div class="contents singlecol local topic" id="on-this-page">
+<p class="topic-title first">On this page</p>
+<ul class="simple">
+<li><a class="reference internal" href="mongoid-installation.html#install-the-gem" id="id1">Install the Gem</a></li>
+<li><a class="reference internal" href="mongoid-installation.html#compatibility" id="id2">Compatibility</a></li>
+<li><a class="reference internal" href="mongoid-installation.html#configuration" id="id3">Configuration</a></li>
+</ul>
+</div>
+<div class="section" id="install-the-gem">
+<h2>Install the Gem<a class="headerlink" href="mongoid-installation.html#install-the-gem" title="Permalink to this headline">¶</a></h2>
+<p>Mongoid is bundled as a gem, and is hosted on <a class="reference external" href="http://rubygems.org">Rubygems</a>.
+It can be installed manually or with bundler.</p>
+<p>To install the gem manually:</p>
+<div class="highlight-sh"><div class="highlight"><pre>gem install mongoid
+</pre></div>
+</div>
+<p>To install the gem with bundler, include the following in your Gemfile:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">gem</span> <span class="s1">&#39;mongoid&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 5.1.0&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="compatibility">
+<h2>Compatibility<a class="headerlink" href="mongoid-installation.html#compatibility" title="Permalink to this headline">¶</a></h2>
+<p>Note the following compatibility matrix to determine if Mongoid is
+supported on your runtime and server.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Ruby Version</th>
+<th class="head">2.4.x</th>
+<th class="head">2.6.x</th>
+<th class="head">3.0.x</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>MRI 1.8.x</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>MRI 1.9.x</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>MRI 2.0.x</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>MRI 2.1.x</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>MRI 2.2.x</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>JRuby 1.7.x</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="configuration">
+<span id="mongoid-configuration"></span><h2>Configuration<a class="headerlink" href="mongoid-installation.html#configuration" title="Permalink to this headline">¶</a></h2>
+<p>Mongoid configuration can be done through a <tt class="docutils literal"><span class="pre">mongoid.yml</span></tt> that specifies your
+options and clients. The simplest configuration is as follows, which sets the default
+client to &#8220;localhost:27017&#8221; and provides a single database in that client named &#8220;mongoid&#8221;.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">clients</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mongoid</span>
+      <span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">localhost:27017</span>
+</pre></div>
+</div>
+<div class="section" id="rails-applications">
+<h3>Rails Applications<a class="headerlink" href="mongoid-installation.html#rails-applications" title="Permalink to this headline">¶</a></h3>
+<p>You can generate a config file by executing the generator and then editing
+<tt class="docutils literal"><span class="pre">myapp/config/mongoid.yml</span></tt> to your heart&#8217;s desire. Mongoid will then handle
+everything else from there.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>rails g mongoid:config
+</pre></div>
+</div>
+<p>When Mongoid loads its configuration, it chooses the environment to use based
+on the following order:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Rails.env</span></tt> if using Rails.</li>
+<li><tt class="docutils literal"><span class="pre">Sinatra::Base.environment</span></tt> if using Sinatra.</li>
+<li><tt class="docutils literal"><span class="pre">RACK_ENV</span></tt> environment variable.</li>
+<li><tt class="docutils literal"><span class="pre">MONGOID_ENV</span></tt> environment variable.</li>
+</ul>
+<p>If you are not using any rack based application and want to override the
+environment programatically, you can pass a second paramter to <tt class="docutils literal"><span class="pre">load!</span></tt> and
+Mongoid will use that.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Mongoid</span><span class="o">.</span><span class="n">load!</span><span class="p">(</span><span class="s2">&quot;path/to/your/mongoid.yml&quot;</span><span class="p">,</span> <span class="ss">:production</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Depending on your version of Rails, you may also need to configure the orm to be Mongoid in application.rb.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">config</span><span class="o">.</span><span class="n">generators</span> <span class="k">do</span> <span class="o">|</span><span class="n">g</span><span class="o">|</span>
+  <span class="n">g</span><span class="o">.</span><span class="n">orm</span> <span class="ss">:mongoid</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="anatomy-of-a-mongoid-config">
+<h3>Anatomy of a Mongoid Config<a class="headerlink" href="mongoid-installation.html#anatomy-of-a-mongoid-config" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s have a look at a full-blown <tt class="docutils literal"><span class="pre">mongoid.yml</span></tt> and explain the full power
+of what Mongoid can do. The following configuration has its explanation in the
+comments above each key.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
+  <span class="c1"># Configure available database clients. (required)</span>
+  <span class="l-Scalar-Plain">clients</span><span class="p-Indicator">:</span>
+    <span class="c1"># Defines the default client. (required)</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span>
+      <span class="c1"># A uri may be defined for a client:</span>
+      <span class="c1"># uri: &#39;mongodb://user:password@myhost1.mydomain.com:27017/my_db&#39;</span>
+      <span class="c1"># Please see driver documentation for details. Alternatively, you can define the following:</span>
+      <span class="c1">#</span>
+      <span class="c1"># Defines the name of the default database that Mongoid can connect to.</span>
+      <span class="c1"># (required).</span>
+      <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">my_db</span>
+      <span class="c1"># Provides the hosts the default client can connect to. Must be an array</span>
+      <span class="c1"># of host:port pairs. (required)</span>
+      <span class="l-Scalar-Plain">hosts</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">myhost1.mydomain.com:27017</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">myhost2.mydomain.com:27017</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">myhost3.mydomain.com:27017</span>
+      <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+        <span class="c1"># Change the default write concern. (default = { w: 1 })</span>
+        <span class="l-Scalar-Plain">write</span><span class="p-Indicator">:</span>
+          <span class="l-Scalar-Plain">w</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1</span>
+
+        <span class="c1"># Change the default read preference. Valid options for mode are: :secondary,</span>
+        <span class="c1"># :secondary_preferred, :primary, :primary_preferred, :nearest</span>
+        <span class="c1"># (default: primary)</span>
+        <span class="l-Scalar-Plain">read</span><span class="p-Indicator">:</span>
+          <span class="l-Scalar-Plain">mode</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:secondary_preferred</span>
+          <span class="l-Scalar-Plain">tag_sets</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">use</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">web</span>
+
+        <span class="c1"># The name of the user for authentication.</span>
+        <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="s">&#39;user&#39;</span>
+
+        <span class="c1"># The password of the user for authentication.</span>
+        <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="s">&#39;password&#39;</span>
+
+        <span class="c1"># The user&#39;s database roles.</span>
+        <span class="l-Scalar-Plain">roles</span><span class="p-Indicator">:</span>
+          <span class="p-Indicator">-</span> <span class="s">&#39;dbOwner&#39;</span>
+
+        <span class="c1"># Change the default authentication mechanism. Valid options are: :scram,</span>
+        <span class="c1"># :mongodb_cr, :mongodb_x509, and :plain. (default on 3.0 is :scram, default</span>
+        <span class="c1"># on 2.4 and 2.6 is :plain)</span>
+        <span class="l-Scalar-Plain">auth_mech</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:scram</span>
+
+        <span class="c1"># The database or source to authenticate the user against. (default: admin)</span>
+        <span class="l-Scalar-Plain">auth_source</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">admin</span>
+
+        <span class="c1"># Force a the driver cluster to behave in a certain manner instead of auto-</span>
+        <span class="c1"># discovering. Can be one of: :direct, :replica_set, :sharded. Set to :direct</span>
+        <span class="c1"># when connecting to hidden members of a replica set.</span>
+        <span class="l-Scalar-Plain">connect</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:direct</span>
+
+        <span class="c1"># Changes the default time in seconds the server monitors refresh their status</span>
+        <span class="c1"># via ismaster commands. (default: 10)</span>
+        <span class="l-Scalar-Plain">heartbeat_frequency</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10</span>
+
+        <span class="c1"># The time in seconds for selecting servers for a near read preference. (default: 5)</span>
+        <span class="l-Scalar-Plain">local_threshold</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5</span>
+
+        <span class="c1"># The timeout in seconds for selecting a server for an operation. (default: 30)</span>
+        <span class="l-Scalar-Plain">server_selection_timeout</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">30</span>
+
+        <span class="c1"># The maximum number of connections in the connection pool. (default: 5)</span>
+        <span class="l-Scalar-Plain">max_pool_size</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5</span>
+
+        <span class="c1"># The minimum number of connections in the connection pool. (default: 1)</span>
+        <span class="l-Scalar-Plain">min_pool_size</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1</span>
+
+        <span class="c1"># The time to wait, in seconds, in the connection pool for a connection</span>
+        <span class="c1"># to be checked in before timing out. (default: 5)</span>
+        <span class="l-Scalar-Plain">wait_queue_timeout</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5</span>
+
+        <span class="c1"># The time to wait to establish a connection before timing out, in seconds.</span>
+        <span class="c1"># (default: 10)</span>
+        <span class="l-Scalar-Plain">connect_timeout</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10</span>
+
+        <span class="c1"># The timeout to wait to execute operations on a socket before raising an error.</span>
+        <span class="c1"># (default: 5)</span>
+        <span class="l-Scalar-Plain">socket_timeout</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5</span>
+
+        <span class="c1"># The name of the replica set to connect to. Servers provided as seeds that do</span>
+        <span class="c1"># not belong to this replica set will be ignored.</span>
+        <span class="l-Scalar-Plain">replica_set</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">my_replica_set</span>
+
+        <span class="c1"># Whether to connect to the servers via ssl. (default: false)</span>
+        <span class="l-Scalar-Plain">ssl</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+
+        <span class="c1"># The certificate file used to identify the connection against MongoDB.</span>
+        <span class="l-Scalar-Plain">ssl_cert</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/path/to/my.cert</span>
+
+        <span class="c1"># The private keyfile used to identify the connection against MongoDB.</span>
+        <span class="c1"># Note that even if the key is stored in the same file as the certificate,</span>
+        <span class="c1"># both need to be explicitly specified.</span>
+        <span class="l-Scalar-Plain">ssl_key</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/path/to/my.key</span>
+
+        <span class="c1"># A passphrase for the private key.</span>
+        <span class="l-Scalar-Plain">ssl_key_pass_phrase</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span>
+
+        <span class="c1"># Whether or not to do peer certification validation. (default: true)</span>
+        <span class="l-Scalar-Plain">ssl_verify</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+
+        <span class="c1"># The file containing a set of concatenated certification authority certifications</span>
+        <span class="c1"># used to validate certs passed from the other end of the connection.</span>
+        <span class="l-Scalar-Plain">ssl_ca_cert</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/path/to/ca.cert</span>
+
+  <span class="c1"># Configure Mongoid specific options. (optional)</span>
+  <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+    <span class="c1"># Includes the root model name in json serialization. (default: false)</span>
+    <span class="l-Scalar-Plain">include_root_in_json</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+
+    <span class="c1"># Include the _type field in serialization. (default: false)</span>
+    <span class="l-Scalar-Plain">include_type_for_serialization</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+
+    <span class="c1"># Preload all models in development, needed when models use</span>
+    <span class="c1"># inheritance. (default: false)</span>
+    <span class="l-Scalar-Plain">preload_models</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+
+    <span class="c1"># Raise an error when performing a #find and the document is not found.</span>
+    <span class="c1"># (default: true)</span>
+    <span class="l-Scalar-Plain">raise_not_found_error</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+
+    <span class="c1"># Raise an error when defining a scope with the same name as an</span>
+    <span class="c1"># existing method. (default: false)</span>
+    <span class="l-Scalar-Plain">scope_overwrite_exception</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+
+    <span class="c1"># Use Active Support&#39;s time zone in conversions. (default: true)</span>
+    <span class="l-Scalar-Plain">use_activesupport_time_zone</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+
+    <span class="c1"># Ensure all times are UTC in the app side. (default: false)</span>
+    <span class="l-Scalar-Plain">use_utc</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+
+    <span class="c1"># Set the Mongoid and Ruby driver log levels. (default: :info)</span>
+    <span class="l-Scalar-Plain">log_level</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">:info</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging">
+<h3>Logging<a class="headerlink" href="mongoid-installation.html#logging" title="Permalink to this headline">¶</a></h3>
+<p>Changing logging options is done simply by telling Mongoid or the driver&#8217;s logger to have
+a different level. Logging level is <tt class="docutils literal"><span class="pre">DEBUG</span></tt> by default.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Mongoid</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">::</span><span class="no">DEBUG</span>
+<span class="no">Mongo</span><span class="o">::</span><span class="no">Logger</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">::</span><span class="no">DEBUG</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+                
+                  <div class="footer">
+                    <div class="copyright">
+                      <p>&copy; MongoDB, Inc 2008-2016. MongoDB, Mongo, and the leaf logo are registered trademarks of MongoDB, Inc.</p>
+                    </div>
+                  </div>
+              </div></div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  
+
+  <script type="text/javascript">
+  window.fullDocsPath = function(base) {
+    var body = document.getElementsByClassName('body')[0]
+    var path = body.getAttribute('data-pagename');
+
+    // skip if pagename is undefined (index.html)
+    if (path == 'index') {
+        path = '';
+    } else if (path) {
+      path = path + '/';
+    }
+
+    return '/' + base + '/' + path;
+  }
+  // Bootstrap array of links that should trigger a full page reload
+  window.docsExcludedNav = ['/drivers', '/drivers/c', '/drivers/cpp', '/drivers/csharp', '/drivers/go', '/drivers/erlang', '/drivers/node-js', '/drivers/perl', '/drivers/php', '/drivers/python', '/drivers/ruby', '/drivers/scala'];
+
+  $(document).ready(function(){
+    $(".version-selector").on('click', function(e) {
+      e.preventDefault();
+      var base = $(e.currentTarget).data('path');
+      window.location.href = fullDocsPath(base);
+    });
+
+    $("select.language-selector").on('change', function(e) {
+      var path = $(e.currentTarget).find('option:selected').data('path');
+      window.location.href = path;
+    });
+  });
+
+  </script></body>
+</html>

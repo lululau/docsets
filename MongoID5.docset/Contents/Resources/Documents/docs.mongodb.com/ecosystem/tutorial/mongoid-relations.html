@@ -1,0 +1,864 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+  <link href='../../../fonts.googleapis.com/css%3Ffamily=Inconsolata.css' rel='stylesheet' type='text/css'>
+    <title>Relations</title><link rel="shortcut icon" href="../../../media.mongodb.org/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index" />
+
+  <meta name="release" content="3.0"/>
+  <meta name="version" content="3.0"/>
+  <meta name="DC.Source" content="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-relations.txt"/>
+  
+   <link rel="stylesheet" href="../_static/mongodb-docs.css" type="text/css" />
+   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+     URL_ROOT:    '../../',
+     VERSION:     '3.0',
+     COLLAPSE_INDEX: false,
+     FILE_SUFFIX: '',
+     HAS_SOURCE:  false,
+    };
+  </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="../_static/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/navbar.js"></script>
+
+  <script defer type="text/javascript" src="../_static/feedback.js"></script>
+      <link rel="search" type="application/opensearchdescription+xml" href="https://docs.mongodb.com/osd.xml" title="MongoDB Help"/>
+<link rel="top" title="MongoDB Ecosystem" href="https://docs.mongodb.com/ecosystem/" />
+<link rel="up" title="Mongoid Documentation (5.1.0)" href="https://docs.mongodb.com/ecosystem/tutorial/ruby-mongoid-tutorial/" />
+<link rel="next" title="Nested Attributes" href="mongoid-nested-attributes.html" />
+<link rel="prev" title="Queries" href="mongoid-queries.html" />
+      <script type="text/javascript">
+        (function() {
+           var cx = '017213726194841070573:WMX6838984';
+           var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+           gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//www.google.com/cse/cse.js?cx=' + cx;
+           gcse.onload = gcse.onreadystatechange = function() {
+            $(function() {
+              // hack to set a placeholder in google's custom search input
+              var pollInput = window.setInterval(function() {
+                var $input = $('.gsc-input input.gsc-input'),
+                    $div = $('.search-db');
+
+                if ($input.length) {
+                  $input.on('focus', function(e) { $div.addClass('wide').removeClass('narrow'); });
+                  $input.on('blur', function(e) {
+                    if (!$input.val().length) { $div.addClass('narrow').removeClass('wide'); }
+                  });
+                  $input.attr('placeholder', "Search mongodb.com");
+                  window.clearInterval(pollInput);
+                }
+              }, 10);
+            });
+           };
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+           })();
+      </script><script type='text/javascript'>
+   var gptadslots=[];
+   var googletag = googletag || {};
+   googletag.cmd = googletag.cmd || [];
+   (function(){ var gads = document.createElement('script');
+      gads.async = true; gads.type = 'text/javascript';
+      var useSSL = 'https:' == document.location.protocol;
+      gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+      var node = document.getElementsByTagName('script')[0];
+      node.parentNode.insertBefore(gads, node);
+   })();
+</script>
+
+<script type="text/javascript">
+   googletag.cmd.push(function() {
+
+      //Adslot 1 declaration
+      gptadslots[1]= googletag.defineSlot('/40039723/docs.mongodb.org/ecosystem', [[160,600],[243,202],[293,244]],'mongodb-docs-eco-1').addService(googletag.pubads());
+
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().enableAsyncRendering();
+      googletag.enableServices();
+   });
+</script></head>
+<body data-project="mongodb-ecosystem">
+  
+    <script
+    async
+    id='mongodb-nav-data'
+    data-props='{"environment":"docs","isOpaque":true,
+                 "includeSearch":true,
+                 "searchUrl":"https://docs.mongodb.com/manual/search/?query=",
+                 "contactUrl":"https://www.mongodb.com/contact?jmp=docs"}'
+    data-container='#header-db'
+    src="../_static/header.js"></script>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="../../../www.googletagmanager.com/ns.html%3Fid=GTM-JQHP.html"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+     {'gtm.start': new Date().getTime(),event:'gtm.js'}
+   );var f=d.getElementsByTagName(s)[0],
+   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+   '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+   })(window,document,'script','dataLayer','GTM-JQHP');</script>
+  <div class="content">
+    <div class="main-column pull-left">
+
+      
+        <div class="document">
+            <div class="documentwrapper"><div class="bodywrapper">
+              <div class="body" data-pagename="tutorial/mongoid-relations">
+                   <a class="edit-link" href="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-relations.txt" target="_blank" title="Edit tutorial/mongoid-relations.txt on GitHub">
+    
+      <span class="icon-edit"></span>
+    
+  </a>
+                
+                
+   
+                
+                  <div class="section" id="relations">
+<h1>Relations<a class="headerlink" href="mongoid-relations.html#relations" title="Permalink to this headline">¶</a></h1>
+<div class="contents singlecol local topic" id="on-this-page">
+<p class="topic-title first">On this page</p>
+<ul class="simple">
+<li><a class="reference internal" href="mongoid-relations.html#common-behaviour" id="id9">Common Behaviour</a></li>
+<li><a class="reference internal" href="mongoid-relations.html#metadata" id="id10">Metadata</a></li>
+<li><a class="reference internal" href="mongoid-relations.html#embeds-one" id="id11">Embeds One</a></li>
+<li><a class="reference internal" href="mongoid-relations.html#embeds-many" id="id12">Embeds Many</a></li>
+<li><a class="reference internal" href="mongoid-relations.html#has-one" id="id13">Has One</a></li>
+<li><a class="reference internal" href="mongoid-relations.html#has-many" id="id14">Has Many</a></li>
+<li><a class="reference internal" href="mongoid-relations.html#has-and-belongs-to-many" id="id15">Has And Belongs To Many</a></li>
+<li><a class="reference internal" href="mongoid-relations.html#the-counter-cache-option" id="id16">The counter_cache option</a></li>
+</ul>
+</div>
+<div class="section" id="common-behaviour">
+<h2>Common Behaviour<a class="headerlink" href="mongoid-relations.html#common-behaviour" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="mongoid-relations.html#attributes" title="Permalink to this headline">¶</a></h3>
+<p>All relations contain a <tt class="docutils literal"><span class="pre">target</span></tt>, which is the proxied document or documents, a <tt class="docutils literal"><span class="pre">base</span></tt>
+which is the document the relation hangs off, and <tt class="docutils literal"><span class="pre">metadata</span></tt> which provides information
+about the relation.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_many</span> <span class="ss">:addresses</span>
+<span class="k">end</span>
+
+<span class="n">person</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="o">[</span> <span class="n">address</span> <span class="o">]</span>
+<span class="n">person</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">target</span> <span class="c1"># returns [ address ]</span>
+<span class="n">person</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">base</span> <span class="c1"># returns person</span>
+<span class="n">person</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">metadata</span> <span class="c1"># returns the metadata</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extensions">
+<h3>Extensions<a class="headerlink" href="mongoid-relations.html#extensions" title="Permalink to this headline">¶</a></h3>
+<p>All relations can have extensions, which provides a way to add application specific
+functionality to the relation. They are defined by providing a block to the relation definition.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_many</span> <span class="ss">:addresses</span> <span class="k">do</span>
+    <span class="k">def</span> <span class="nf">find_by_country</span><span class="p">(</span><span class="n">country</span><span class="p">)</span>
+      <span class="n">where</span><span class="p">(</span><span class="ss">country</span><span class="p">:</span> <span class="n">country</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+    <span class="k">end</span>
+    <span class="k">def</span> <span class="nf">chinese</span>
+      <span class="vi">@target</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">address</span><span class="o">|</span> <span class="n">address</span><span class="o">.</span><span class="n">country</span> <span class="o">==</span> <span class="s2">&quot;China&quot;</span> <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">person</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">find_by_country</span><span class="p">(</span><span class="s2">&quot;Mongolia&quot;</span><span class="p">)</span> <span class="c1"># returns address</span>
+<span class="n">person</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">chinese</span> <span class="c1"># returns [ address ]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-relation-names">
+<h3>Custom Relation Names<a class="headerlink" href="mongoid-relations.html#custom-relation-names" title="Permalink to this headline">¶</a></h3>
+<p>You can name your relations whatever you like, but if the class cannot be inferred by
+Mongoid from the name, and neither can the opposite side you&#8217;ll want to provide the
+macro with some additional options to tell Mongoid how to hook them up.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Lush</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_one</span> <span class="ss">:whiskey</span><span class="p">,</span> <span class="ss">class_name</span><span class="p">:</span> <span class="s2">&quot;Drink&quot;</span><span class="p">,</span> <span class="ss">inverse_of</span><span class="p">:</span> <span class="ss">:alcoholic</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Drink</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embedded_in</span> <span class="ss">:alcoholic</span><span class="p">,</span> <span class="ss">class_name</span><span class="p">:</span> <span class="s2">&quot;Lush&quot;</span><span class="p">,</span> <span class="ss">inverse_of</span><span class="p">:</span> <span class="ss">:whiskey</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="validations">
+<h3>Validations<a class="headerlink" href="mongoid-relations.html#validations" title="Permalink to this headline">¶</a></h3>
+<p>It is important to note that by default, Mongoid will validate the children of any
+relation that are loaded into memory via a <tt class="docutils literal"><span class="pre">validates_associated</span></tt>. The relations that
+this applies to are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">embeds_many</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">embeds_one</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">has_many</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">has_one</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">has_and_belongs_to_many</span></tt></li>
+</ul>
+<p>If you do not want this behavior, you may turn it off when defining the relation.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+
+  <span class="n">embeds_many</span> <span class="ss">:addresses</span><span class="p">,</span> <span class="ss">validate</span><span class="p">:</span> <span class="kp">false</span>
+  <span class="n">has_many</span> <span class="ss">:posts</span><span class="p">,</span> <span class="ss">validate</span><span class="p">:</span> <span class="kp">false</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="polymorphism">
+<h3>Polymorphism<a class="headerlink" href="mongoid-relations.html#polymorphism" title="Permalink to this headline">¶</a></h3>
+<p>When a child embedded document can belong to more than one type of parent document, you can
+tell Mongoid to support this by adding the <tt class="docutils literal"><span class="pre">as</span></tt> option to the definition on the parents,
+and the <tt class="docutils literal"><span class="pre">polymorphic</span></tt> option on the child. On the child object, an additional field will
+be stored that indicates the type of the parent. Polymorphic behavior is allowed on all
+relations with the exception of <tt class="docutils literal"><span class="pre">has_and_belongs_to_many</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_many</span> <span class="ss">:photos</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:photographic</span>
+  <span class="n">has_one</span> <span class="ss">:address</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:addressable</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Photo</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embedded_in</span> <span class="ss">:photographic</span><span class="p">,</span> <span class="ss">polymorphic</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Address</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">belongs_to</span> <span class="ss">:addressable</span><span class="p">,</span> <span class="ss">polymorphic</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cascading-callbacks">
+<h3>Cascading Callbacks<a class="headerlink" href="mongoid-relations.html#cascading-callbacks" title="Permalink to this headline">¶</a></h3>
+<p>If you want the embedded document callbacks to fire when calling a persistence operation on
+its parent, you will need to provide the cascade callbacks option to the relation.</p>
+<div class="highlight-ruby"><div class="highlight"><pre> <span class="k">class</span> <span class="nc">Band</span>
+   <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+   <span class="n">embeds_many</span> <span class="ss">:albums</span><span class="p">,</span> <span class="ss">cascade_callbacks</span><span class="p">:</span> <span class="kp">true</span>
+   <span class="n">embeds_one</span> <span class="ss">:label</span><span class="p">,</span> <span class="ss">cascade_callbacks</span><span class="p">:</span> <span class="kp">true</span>
+ <span class="k">end</span>
+
+<span class="n">band</span><span class="o">.</span><span class="n">save</span> <span class="c1"># Fires all save callbacks on the band, albums, and label.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dependent-behaviour">
+<h3>Dependent Behaviour<a class="headerlink" href="mongoid-relations.html#dependent-behaviour" title="Permalink to this headline">¶</a></h3>
+<p>You can provide dependent options to referenced associations to instruct Mongoid
+how to handle situations where one side of the relation is deleted, or is attempted
+to be deleted. The options are as follows:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">:delete</span></tt>: Delete the child document without running any of the model callbacks.</li>
+<li><tt class="docutils literal"><span class="pre">:destroy</span></tt>: Destroy the child document and run all of the model callbacks.</li>
+<li><tt class="docutils literal"><span class="pre">:nullify</span></tt>: Orphan the child document.</li>
+<li><tt class="docutils literal"><span class="pre">:restrict</span></tt>: Raise an error if the child is not empty.</li>
+</ul>
+<p>The default behavior of each association when no dependent option is provided is to nullify.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">has_many</span> <span class="ss">:albums</span><span class="p">,</span> <span class="ss">dependent</span><span class="p">:</span> <span class="ss">:delete</span>
+  <span class="n">belongs_to</span> <span class="ss">:label</span><span class="p">,</span> <span class="ss">dependent</span><span class="p">:</span> <span class="ss">:nullify</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Album</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">belongs_to</span> <span class="ss">:band</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Label</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">has_many</span> <span class="ss">:bands</span><span class="p">,</span> <span class="ss">dependent</span><span class="p">:</span> <span class="ss">:restrict</span>
+<span class="k">end</span>
+
+<span class="n">label</span> <span class="o">=</span> <span class="no">Label</span><span class="o">.</span><span class="n">first</span>
+<span class="n">label</span><span class="o">.</span><span class="n">bands</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="no">Band</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+<span class="n">label</span><span class="o">.</span><span class="n">delete</span> <span class="c1"># Raises an error since bands is not empty.</span>
+
+<span class="no">Band</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">delete</span> <span class="c1"># Will delete all associated albums.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="autosaving">
+<h3>Autosaving<a class="headerlink" href="mongoid-relations.html#autosaving" title="Permalink to this headline">¶</a></h3>
+<p>One core difference between Mongoid and Active Record from a behavior standpoint
+is that Mongoid does not automatically save child relations for relational associations.
+This is for performance reasons.</p>
+<p>To enable an autosave on a relational association (embedded associations do not need
+this since they are actually part of the parent in the database) add the autosave
+option to the relation.</p>
+<p>Note that autosave functionality will automatically be added to a relation when using
+<tt class="docutils literal"><span class="pre">accepts_nested_attributes_for</span></tt> or validating presence of the relation.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">has_many</span> <span class="ss">:albums</span><span class="p">,</span> <span class="ss">autosave</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span>
+
+<span class="n">band</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">first</span>
+<span class="n">band</span><span class="o">.</span><span class="n">albums</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;101&quot;</span><span class="p">)</span>
+<span class="n">band</span><span class="o">.</span><span class="n">save</span> <span class="c1">#=&gt; Will save the album as well.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="recursive-embedding">
+<h3>Recursive Embedding<a class="headerlink" href="mongoid-relations.html#recursive-embedding" title="Permalink to this headline">¶</a></h3>
+<p>A document can recursively embed itself using <tt class="docutils literal"><span class="pre">recursively_embeds_one</span></tt> or <tt class="docutils literal"><span class="pre">recursively_embeds_many</span></tt>,
+which provides accessors for the parent and children via <tt class="docutils literal"><span class="pre">parent_</span></tt> and <tt class="docutils literal"><span class="pre">child_</span></tt> methods.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Tag</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">recursively_embeds_many</span>
+<span class="k">end</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="no">Tag</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;programming&quot;</span><span class="p">)</span>
+<span class="n">child_one</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">child_tags</span><span class="o">.</span><span class="n">build</span>
+<span class="n">child_two</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">child_tags</span><span class="o">.</span><span class="n">build</span>
+
+<span class="n">root</span><span class="o">.</span><span class="n">child_tags</span> <span class="c1"># [ child_one, child_two ]</span>
+<span class="n">child_one</span><span class="o">.</span><span class="n">parent_tag</span> <span class="c1"># [ root ]</span>
+<span class="n">child_two</span><span class="o">.</span><span class="n">parent_tag</span> <span class="c1"># [ root ]</span>
+
+<span class="k">class</span> <span class="nc">Node</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">recursively_embeds_one</span>
+<span class="k">end</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="no">Node</span><span class="o">.</span><span class="n">new</span>
+<span class="n">child</span> <span class="o">=</span> <span class="no">Node</span><span class="o">.</span><span class="n">new</span>
+<span class="n">root</span><span class="o">.</span><span class="n">child_node</span> <span class="o">=</span> <span class="n">child</span>
+
+<span class="n">root</span><span class="o">.</span><span class="n">child</span> <span class="c1"># child</span>
+<span class="n">child</span><span class="o">.</span><span class="n">parent_node</span> <span class="c1"># root</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="existence-predicates">
+<h3>Existence Predicates<a class="headerlink" href="mongoid-relations.html#existence-predicates" title="Permalink to this headline">¶</a></h3>
+<p>All relations have existence predicates on them in the form of <tt class="docutils literal"><span class="pre">name?</span></tt> and <tt class="docutils literal"><span class="pre">has_name?</span></tt>
+to check if the relation is blank.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_one</span> <span class="ss">:label</span>
+  <span class="n">embeds_many</span> <span class="ss">:albums</span>
+<span class="k">end</span>
+
+<span class="n">band</span><span class="o">.</span><span class="n">label?</span>
+<span class="n">band</span><span class="o">.</span><span class="n">has_label?</span>
+<span class="n">band</span><span class="o">.</span><span class="n">albums?</span>
+<span class="n">band</span><span class="o">.</span><span class="n">has_albums?</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="autobuilding">
+<h3>Autobuilding<a class="headerlink" href="mongoid-relations.html#autobuilding" title="Permalink to this headline">¶</a></h3>
+<p>One to one relations (<tt class="docutils literal"><span class="pre">embeds_one</span></tt>, <tt class="docutils literal"><span class="pre">has_one</span></tt>) have an autobuild option which tells
+Mongoid to instantiate a new document when the relation is accessed and it is <tt class="docutils literal"><span class="pre">nil</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_one</span> <span class="ss">:label</span><span class="p">,</span> <span class="ss">autobuild</span><span class="p">:</span> <span class="kp">true</span>
+  <span class="n">has_one</span> <span class="ss">:producer</span><span class="p">,</span> <span class="ss">autobuild</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span>
+
+<span class="n">band</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">new</span>
+<span class="n">band</span><span class="o">.</span><span class="n">label</span> <span class="c1"># Returns a new empty label.</span>
+<span class="n">band</span><span class="o">.</span><span class="n">producer</span> <span class="c1"># Returns a new empty producer.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="touching">
+<h3>Touching<a class="headerlink" href="mongoid-relations.html#touching" title="Permalink to this headline">¶</a></h3>
+<p>Any <tt class="docutils literal"><span class="pre">belongs_to</span></tt> relation, no matter where it hangs off from, can take an optional <tt class="docutils literal"><span class="pre">:touch</span></tt>
+option which will call the touch method on it and any parent relations with the option defined
+when the base document calls <tt class="docutils literal"><span class="pre">#touch</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">belongs_to</span> <span class="ss">:label</span><span class="p">,</span> <span class="ss">touch</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span>
+
+<span class="n">band</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">first</span>
+<span class="n">band</span><span class="o">.</span><span class="n">touch</span> <span class="c1">#=&gt; Calls touch on the parent label.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="metadata">
+<h2>Metadata<a class="headerlink" href="mongoid-relations.html#metadata" title="Permalink to this headline">¶</a></h2>
+<p>All relations in Mongoid contain metadata that holds information about the relation in
+question, and is a valuable tool for third party developers to use to extend Mongoid.</p>
+<p>You can access the metadata of the relation in a few different ways.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># Get the metadata for a named relation from the class or document.</span>
+<span class="no">Model</span><span class="o">.</span><span class="n">reflect_on_association</span><span class="p">(</span><span class="ss">:relation_name</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">reflect_on_association</span><span class="p">(</span><span class="ss">:relation_name</span><span class="p">)</span>
+
+<span class="c1"># Get the metadata that the current object has in its relation.</span>
+<span class="n">model</span><span class="o">.</span><span class="n">metadata</span>
+
+<span class="c1"># Get the metadata with a specific relation itself on a specific</span>
+<span class="c1"># document.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">metadata</span>
+</pre></div>
+</div>
+<div class="section" id="the-metadata-object">
+<h3>The Metadata Object<a class="headerlink" href="mongoid-relations.html#the-metadata-object" title="Permalink to this headline">¶</a></h3>
+<p>The metadata object itself contains more information than one might know what to do
+with, and is useful for developers of extensions to Mongoid.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#as</span></tt></td>
+<td>Returns the name of the parent to a polymorphic child.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#as?</span></tt></td>
+<td>Returns whether or not an as option exists.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#autobuilding?</span></tt></td>
+<td>Returns whether or not the relation is autobuilding.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#autosaving?</span></tt></td>
+<td>Returns whether or not the relation is autosaving.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#cascading_callbacks?</span></tt></td>
+<td>Returns whether the relation has callbacks cascaded down from the parent.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#class_name</span></tt></td>
+<td>Returns the class name of the proxied document.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#cyclic?</span></tt></td>
+<td>Returns whether the relation is a cyclic relation.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#dependent</span></tt></td>
+<td>Returns the relation&#8217;s dependent option.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#dependent?</span></tt></td>
+<td>Returns whether the relation is a dependent relation.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#destructive?</span></tt></td>
+<td>Returns true if the relation has a dependent delete or destroy.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#embedded?</span></tt></td>
+<td>Returns whether the relation is embedded in another document.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#forced_nil_inverse?</span></tt></td>
+<td>Returns whether the relation has a nil inverse defined.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#foreign_key</span></tt></td>
+<td>Returns the name of the foreign key field.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#foreign_key_check</span></tt></td>
+<td>Returns the name of the foreign key field dirty check method.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#foreign_key_setter</span></tt></td>
+<td>Returns the name of the foreign key field setter.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#indexed?</span></tt></td>
+<td>Returns whether the foreign key is auto indexed.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#inverses</span></tt></td>
+<td>Returns the names of all inverse relation.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#inverse</span></tt></td>
+<td>Returns the name of a single inverse relation.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_class_name</span></tt></td>
+<td>Returns the class name of the relation on the inverse side.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_foreign_key</span></tt></td>
+<td>Returns the name of the foreign key field on the inverse side.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_klass</span></tt></td>
+<td>Returns the class of the relation on the inverse side.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_metadata</span></tt></td>
+<td>Returns the metadata of the relation on the inverse side.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_of</span></tt></td>
+<td>Returns the explicitly defined name of the inverse relation.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_of?</span></tt></td>
+<td>Returns whether an inverse_of option is defined.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_setter</span></tt></td>
+<td>Returns the name of the method used to set the inverse.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_type</span></tt></td>
+<td>Returns the name for the polymorphic type field of the inverse.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#inverse_type_setter</span></tt></td>
+<td>Returns the name for the polymorphic type field setter of the inverse.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#key</span></tt></td>
+<td>Returns the name of the field in the attributes hash to use to get the relation.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#klass</span></tt></td>
+<td>Returns the class of the proxied documents in the relation.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#macro</span></tt></td>
+<td>Returns the relation&#8217;s macro.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#name</span></tt></td>
+<td>Returns the relation name.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#options</span></tt></td>
+<td>Returns self, for API compatibility with Active Record.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#order</span></tt></td>
+<td>Returns the custom sorting options on the relation.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#order?</span></tt></td>
+<td>Returns whether custom sorting options are set.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#polymorphic?</span></tt></td>
+<td>Returns whether the relation is polymorphic.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#setter</span></tt></td>
+<td>Returns the name of the field to set the relation.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#store_as</span></tt></td>
+<td>Returns the name of the attribute to store an embedded relation in.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#touchable?</span></tt></td>
+<td>Returns whether or not the relation has a touch option.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#type</span></tt></td>
+<td>Returns the name of the field to get the polymorphic type.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Metadata#type_setter</span></tt></td>
+<td>Returns the name of the field to set the polymorphic type.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Metadata#validate?</span></tt></td>
+<td>Returns whether the relation has an associated validation.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="embeds-one">
+<h2>Embeds One<a class="headerlink" href="mongoid-relations.html#embeds-one" title="Permalink to this headline">¶</a></h2>
+<p>One to one relationships where the children are embedded in the parent document are defined
+using Mongoid&#8217;s <tt class="docutils literal"><span class="pre">embeds_one</span></tt> and <tt class="docutils literal"><span class="pre">embedded_in</span></tt> macros.</p>
+<div class="section" id="defining">
+<h3>Defining<a class="headerlink" href="mongoid-relations.html#defining" title="Permalink to this headline">¶</a></h3>
+<p>The parent document of the relation should use the <tt class="docutils literal"><span class="pre">embeds_one</span></tt> macro to indicate is has 1
+embedded child, where the document that is embedded uses <tt class="docutils literal"><span class="pre">embedded_in</span></tt>. Definitions are required
+on both sides to the relation in order for it to work properly.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_one</span> <span class="ss">:label</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Label</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">embedded_in</span> <span class="ss">:band</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="storage">
+<h3>Storage<a class="headerlink" href="mongoid-relations.html#storage" title="Permalink to this headline">¶</a></h3>
+<p>Documents that are embedded using the <tt class="docutils literal"><span class="pre">embeds_one</span></tt> macro are stored as a hash inside the
+parent in the parent&#8217;s database collection.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">),</span>
+  <span class="s2">&quot;label&quot;</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e0&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;Mute&quot;</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can optionally tell Mongoid to store the embedded document in a different attribute other
+than the name, by providing a <tt class="docutils literal"><span class="pre">:store_as</span></tt> option.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_one</span> <span class="ss">:label</span><span class="p">,</span> <span class="ss">store_as</span><span class="p">:</span> <span class="s2">&quot;lab&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="embeds-many">
+<h2>Embeds Many<a class="headerlink" href="mongoid-relations.html#embeds-many" title="Permalink to this headline">¶</a></h2>
+<p>One to many relationships where the children are embedded in the parent document are defined
+using Mongoid&#8217;s <tt class="docutils literal"><span class="pre">embeds_many</span></tt> and <tt class="docutils literal"><span class="pre">embedded_in</span></tt> macros.</p>
+<div class="section" id="id1">
+<h3>Defining<a class="headerlink" href="mongoid-relations.html#id1" title="Permalink to this headline">¶</a></h3>
+<p>The parent document of the relation should use the <tt class="docutils literal"><span class="pre">embeds_many</span></tt> macro to indicate it has n
+number of embedded children, where the document that is embedded uses <tt class="docutils literal"><span class="pre">embedded_in</span></tt>. Definitions
+are required on both sides to the relation in order for it to work properly.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_many</span> <span class="ss">:albums</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Album</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">embedded_in</span> <span class="ss">:band</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Storage<a class="headerlink" href="mongoid-relations.html#id2" title="Permalink to this headline">¶</a></h3>
+<p>Documents that are embedded using the <tt class="docutils literal"><span class="pre">embeds_many</span></tt> macro are stored as an array of hashes
+inside the parent in the parent&#8217;s database collection.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">),</span>
+  <span class="s2">&quot;albums&quot;</span> <span class="p">:</span> <span class="o">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e0&quot;</span><span class="p">),</span>
+      <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;Violator&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="o">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can optionally tell Mongoid to store the embedded document in a different attribute other
+than the name, by providing a <tt class="docutils literal"><span class="pre">:store_as</span></tt> option.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">embeds_many</span> <span class="ss">:albums</span><span class="p">,</span> <span class="ss">store_as</span><span class="p">:</span> <span class="s2">&quot;albs&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="has-one">
+<h2>Has One<a class="headerlink" href="mongoid-relations.html#has-one" title="Permalink to this headline">¶</a></h2>
+<p>One to one relationships where the children are referenced in the parent document are defined
+using Mongoid&#8217;s <tt class="docutils literal"><span class="pre">has_one</span></tt> and <tt class="docutils literal"><span class="pre">belongs_to</span></tt> macros.</p>
+<div class="section" id="id3">
+<h3>Defining<a class="headerlink" href="mongoid-relations.html#id3" title="Permalink to this headline">¶</a></h3>
+<p>The parent document of the relation should use the <tt class="docutils literal"><span class="pre">has_one</span></tt> macro to indicate is has 1 referenced
+child, where the document that is referenced in it uses <tt class="docutils literal"><span class="pre">belongs_to</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">has_one</span> <span class="ss">:studio</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Studio</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">belongs_to</span> <span class="ss">:band</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Definitions are required on both sides to the relation in order for it to work properly, unless
+one of the models is embedded.</p>
+</div>
+<div class="section" id="id4">
+<h3>Storage<a class="headerlink" href="mongoid-relations.html#id4" title="Permalink to this headline">¶</a></h3>
+<p>When defining a relation of this nature, each document is stored in its respective collection,
+but the child document contains a &#8220;foreign key&#8221; reference to the parent.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># The parent band document.</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="c1"># The child studio document.</span>
+<span class="p">{</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7f1&quot;</span><span class="p">),</span>
+  <span class="s2">&quot;band_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="has-many">
+<h2>Has Many<a class="headerlink" href="mongoid-relations.html#has-many" title="Permalink to this headline">¶</a></h2>
+<p>One to many relationships where the children are stored in a separate collection from the parent
+document are defined using Mongoid&#8217;s <tt class="docutils literal"><span class="pre">has_many</span></tt> and <tt class="docutils literal"><span class="pre">belongs_to</span></tt> macros. This exhibits similar
+behavior to Active Record.</p>
+<div class="section" id="id5">
+<h3>Defining<a class="headerlink" href="mongoid-relations.html#id5" title="Permalink to this headline">¶</a></h3>
+<p>The parent document of the relation should use the <tt class="docutils literal"><span class="pre">has_many</span></tt> macro to indicate is has n number
+of referenced children, where the document that is referenced uses <tt class="docutils literal"><span class="pre">belongs_to</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">has_many</span> <span class="ss">:members</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Member</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">belongs_to</span> <span class="ss">:band</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Definitions are required on both sides to the relation in order for it to work properly,
+unless one of the models is embedded.</p>
+</div>
+<div class="section" id="id6">
+<h3>Storage<a class="headerlink" href="mongoid-relations.html#id6" title="Permalink to this headline">¶</a></h3>
+<p>When defining a relation of this nature, each document is stored in its respective collection,
+but the child document contains a &#8220;foreign key&#8221; reference to the parent.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># The parent band document.</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="c1"># A child member document.</span>
+<span class="p">{</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7f1&quot;</span><span class="p">),</span>
+  <span class="s2">&quot;band_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="has-and-belongs-to-many">
+<h2>Has And Belongs To Many<a class="headerlink" href="mongoid-relations.html#has-and-belongs-to-many" title="Permalink to this headline">¶</a></h2>
+<p>Many to many relationships where the inverse documents are stored in a separate collection
+from the base document are defined using Mongoid&#8217;s <tt class="docutils literal"><span class="pre">has_and_belongs_to_many</span></tt> macro. This
+exhibits similar behavior to Active Record with the exception that no join collection is needed,
+the foreign key ids are stored as arrays on either side of the relation.</p>
+<div class="section" id="id7">
+<h3>Defining<a class="headerlink" href="mongoid-relations.html#id7" title="Permalink to this headline">¶</a></h3>
+<p>Both sides of the relation use the same macro.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">has_and_belongs_to_many</span> <span class="ss">:tags</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Tag</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">has_and_belongs_to_many</span> <span class="ss">:bands</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>You can create a one sided many to many if you want to mimic a has_many that stores the keys
+as an array on the parent.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">has_and_belongs_to_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">inverse_of</span><span class="p">:</span> <span class="kp">nil</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Tag</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>Storage<a class="headerlink" href="mongoid-relations.html#id8" title="Permalink to this headline">¶</a></h3>
+<p>When defining a relation of this nature, each document is stored in its respective collection,
+and each document contains a &#8220;foreign key&#8221; reference to the other in the form of an array.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># The band document.</span>
+<span class="p">{</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">),</span>
+  <span class="s2">&quot;tag_ids&quot;</span> <span class="p">:</span> <span class="o">[</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7f2&quot;</span><span class="p">)</span> <span class="o">]</span>
+<span class="p">}</span>
+
+<span class="c1"># The tag document.</span>
+<span class="p">{</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7f2&quot;</span><span class="p">),</span>
+  <span class="s2">&quot;band_ids&quot;</span> <span class="p">:</span> <span class="o">[</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">)</span> <span class="o">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-counter-cache-option">
+<h2>The counter_cache option<a class="headerlink" href="mongoid-relations.html#the-counter-cache-option" title="Permalink to this headline">¶</a></h2>
+<p>As with ActiveRecord, the :counter_cache option can be used on a relation to make finding the
+number of belonging objects more efficient. Also similar to ActiveRecord, you must take into
+account that there will be an extra attribute on the associated model. This means that with Mongoid,
+you need to include <tt class="docutils literal"><span class="pre">Mongoid::Attributes::Dynamic</span></tt> on the associated model.
+For example:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Order</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">belongs_to</span> <span class="ss">:customer</span><span class="p">,</span> <span class="ss">counter_cache</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Customer</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Attributes</span><span class="o">::</span><span class="no">Dynamic</span>
+  <span class="n">has_many</span> <span class="ss">:orders</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+                
+    
+                  <div class="footer">
+                    <div class="copyright">
+                      <p>&copy; MongoDB, Inc 2008-2016. MongoDB, Mongo, and the leaf logo are registered trademarks of MongoDB, Inc.</p>
+                    </div>
+                  </div>
+              </div></div>
+            </div>
+        </div>
+    </div>
+    <div class="right-column">
+      <div class="wrapper"> 
+          <div class="report-link">
+            <a class="jira-link jirafeedback" href="https://jira.mongodb.org/secure/CreateIssueDetails!init.jspa?pid=10380&issuetype=4&priority=4&summary=Comment+on%3a+%22tutorial/mongoid-relations%2Etxt%22" target="_blank" title="Report a problem with tutorial/mongoid-relations.txt on Jira">Report a Problem</a>
+          </div>
+        
+           <div class="social">
+             <a class="twitter-icon" href="https://twitter.com/MongoDB"><i class="fa fa-twitter-square"></i></a>
+             <a class="youtube-icon" href="https://www.youtube.com/user/MongoDB"><i class="fa fa-youtube-square"></i></a>
+             <a class="facebook-icon" href="https://www.facebook.com/mongodb"><i class="fa fa-facebook-square"></i></a>
+             <a class="gplus-icon" href="https://plus.google.com/u/1/101024085748034940765/posts?cfem=1"><i class="fa fa-google-plus-square"></i></a>
+           </div>
+        
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  
+
+  <script type="text/javascript">
+  window.fullDocsPath = function(base) {
+    var body = document.getElementsByClassName('body')[0]
+    var path = body.getAttribute('data-pagename');
+
+    // skip if pagename is undefined (index.html)
+    if (path == 'index') {
+        path = '';
+    } else if (path) {
+      path = path + '/';
+    }
+
+    return '/' + base + '/' + path;
+  }
+  // Bootstrap array of links that should trigger a full page reload
+  window.docsExcludedNav = ['/drivers', '/drivers/c', '/drivers/cpp', '/drivers/csharp', '/drivers/go', '/drivers/erlang', '/drivers/node-js', '/drivers/perl', '/drivers/php', '/drivers/python', '/drivers/ruby', '/drivers/scala'];
+
+  $(document).ready(function(){
+    $(".version-selector").on('click', function(e) {
+      e.preventDefault();
+      var base = $(e.currentTarget).data('path');
+      window.location.href = fullDocsPath(base);
+    });
+
+    $("select.language-selector").on('change', function(e) {
+      var path = $(e.currentTarget).find('option:selected').data('path');
+      window.location.href = path;
+    });
+  });
+
+  </script></body>
+</html>

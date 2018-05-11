@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta content='A Ruby ODM for MongoDB' name='description' />
+    <meta content='mongoid, mongodb, ruby, rails, odm, durran jordan' name='keywords' />
+    <link href="../../stylesheets/coderay.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="../../stylesheets/site.css" media="screen" rel="stylesheet" type="text/css" />
+    <title>Mongoid: Rails [ Multi Parameter Attributes ]</title>
+  </head>
+  <body>
+    <div id='container'>
+      <div class='navigation'>
+        <a href="../../index.html"><img src="../../images/mongoid-logo-small.png" />
+        </a>
+        
+        <ul class='navigation'>
+          <li class='area'><a class="area" href="../../index.html">home</a></li>
+          <li class='area'><a class="area" href="../../docs.html">docs</a></li>
+          <li><a class="section" href="../installation.html">installation</a></li>
+          <li><a class="section" href="../documents.html">documents</a></li>
+          <li><a class="section" href="../persistence.html">persistence</a></li>
+          <li><a class="section" href="../querying.html">querying</a></li>
+          <li><a class="section" href="../relations.html">relations</a></li>
+          <li><a class="section" href="../identity_map.html">identity map</a></li>
+          <li><a class="section" href="../callbacks.html">callbacks</a></li>
+          <li><a class="section" href="../validation.html">validation</a></li>
+          <li><a class="section" href="../indexing.html">indexing</a></li>
+          <li><a class="section" href="../extras.html">extras</a></li>
+          <li><a class="section" href="../rails.html">rails</a></li>
+          <li><a class="subsection active" href="multi_parameter_attributes.html">multi-param attributes</a></li>
+          <li><a class="subsection" href="rake.html">rake tasks</a></li>
+          <li><a class="subsection" href="railties.html">railties</a></li>
+          <li><a class="section" href="../extensions.html">extensions</a></li>
+          <li><a class="section" href="../upgrading.html">upgrading</a></li>
+          <li><a class="section" href="../contributing.html">contributing</a></li>
+          <li class='area'><a class="area" href="../../performance.html">performance</a></li>
+          <li class='area'><a class="area" href="../../credits.html">credits</a></li>
+          <li class='area'><a class="area" href="../../links.html">links</a></li>
+        </ul>
+      </div>
+      <div class='main'>
+        <div class='header'>
+          <a href="http://twitter.com/mongoid/"><img src="../../images/twitter-logo.png" />
+          </a>
+          <a href="http://github.com/mongoid/"><img src="../../images/github-logo.png" />
+          </a>
+        </div>
+        <div class='content'>
+          <h1>multi parameter attributes</h1>
+          <p>
+            If you want to use multi-paramater attributes with Rails, you will
+            need to include an extra Mongoid module to support it.
+          </p>
+          <div class="CodeRay">
+            <div class="code"><pre><span class="keyword">class</span> <span class="class">Person</span>&#x000A;  include <span class="constant">Mongoid</span>::<span class="constant">Document</span>&#x000A;  include <span class="constant">Mongoid</span>::<span class="constant">MultiParameterAttributes</span>&#x000A;<span class="keyword">end</span>&#x000A;</pre></div>
+          </div>
+          <p>
+            An example of this is the date_select or datetime_select helper methods:
+          </p>
+          <div class="CodeRay">
+            <div class="code"><pre>= f.date_select(<span class="symbol">:birthday</span>, <span class="symbol">:prompt</span> =&gt; {<span class="symbol">:day</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">Day</span><span class="delimiter">'</span></span>, <span class="symbol">:month</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">Month</span><span class="delimiter">'</span></span>, <span class="symbol">:year</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">Year</span><span class="delimiter">'</span></span>})&#x000A;</pre></div>
+          </div>
+          will send the date as multi param:
+          birthday(1i)
+          birthday(2i)
+          birthday(3i)
+        </div>
+        <div class='footer'>
+          Mongoid, 2009-2011, written and maintained by
+          <a href="http://github.com/durran">Durran Jordan</a>.
+        </div>
+        <div class='clear'></div>
+      </div>
+    </div>
+  </body>
+</html>

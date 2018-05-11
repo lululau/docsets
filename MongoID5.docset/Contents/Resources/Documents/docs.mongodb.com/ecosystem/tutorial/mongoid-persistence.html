@@ -1,0 +1,588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+  <link href='../../../fonts.googleapis.com/css%3Ffamily=Inconsolata.css' rel='stylesheet' type='text/css'>
+    <title>Persistence Methods</title><link rel="shortcut icon" href="../../../media.mongodb.org/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index" />
+
+  <meta name="release" content="3.0"/>
+  <meta name="version" content="3.0"/>
+  <meta name="DC.Source" content="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-persistence.txt"/>
+  
+   <link rel="stylesheet" href="../_static/mongodb-docs.css" type="text/css" />
+   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+     URL_ROOT:    '../../',
+     VERSION:     '3.0',
+     COLLAPSE_INDEX: false,
+     FILE_SUFFIX: '',
+     HAS_SOURCE:  false,
+    };
+  </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="../_static/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/navbar.js"></script>
+
+  <script defer type="text/javascript" src="../_static/feedback.js"></script>
+      <link rel="search" type="application/opensearchdescription+xml" href="https://docs.mongodb.com/osd.xml" title="MongoDB Help"/>
+<link rel="top" title="MongoDB Ecosystem" href="https://docs.mongodb.com/ecosystem/" />
+<link rel="up" title="Mongoid Documentation (5.1.0)" href="https://docs.mongodb.com/ecosystem/tutorial/ruby-mongoid-tutorial/" />
+<link rel="next" title="Queries" href="mongoid-queries.html" />
+<link rel="prev" title="Documents" href="mongoid-documents.html" />
+      <script type="text/javascript">
+        (function() {
+           var cx = '017213726194841070573:WMX6838984';
+           var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+           gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//www.google.com/cse/cse.js?cx=' + cx;
+           gcse.onload = gcse.onreadystatechange = function() {
+            $(function() {
+              // hack to set a placeholder in google's custom search input
+              var pollInput = window.setInterval(function() {
+                var $input = $('.gsc-input input.gsc-input'),
+                    $div = $('.search-db');
+
+                if ($input.length) {
+                  $input.on('focus', function(e) { $div.addClass('wide').removeClass('narrow'); });
+                  $input.on('blur', function(e) {
+                    if (!$input.val().length) { $div.addClass('narrow').removeClass('wide'); }
+                  });
+                  $input.attr('placeholder', "Search mongodb.com");
+                  window.clearInterval(pollInput);
+                }
+              }, 10);
+            });
+           };
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+           })();
+      </script><script type='text/javascript'>
+   var gptadslots=[];
+   var googletag = googletag || {};
+   googletag.cmd = googletag.cmd || [];
+   (function(){ var gads = document.createElement('script');
+      gads.async = true; gads.type = 'text/javascript';
+      var useSSL = 'https:' == document.location.protocol;
+      gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+      var node = document.getElementsByTagName('script')[0];
+      node.parentNode.insertBefore(gads, node);
+   })();
+</script>
+
+<script type="text/javascript">
+   googletag.cmd.push(function() {
+
+      //Adslot 1 declaration
+      gptadslots[1]= googletag.defineSlot('/40039723/docs.mongodb.org/ecosystem', [[160,600],[243,202],[293,244]],'mongodb-docs-eco-1').addService(googletag.pubads());
+
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().enableAsyncRendering();
+      googletag.enableServices();
+   });
+</script></head>
+<body data-project="mongodb-ecosystem">
+  
+    <script
+    async
+    id='mongodb-nav-data'
+    data-props='{"environment":"docs","isOpaque":true,
+                 "includeSearch":true,
+                 "searchUrl":"https://docs.mongodb.com/manual/search/?query=",
+                 "contactUrl":"https://www.mongodb.com/contact?jmp=docs"}'
+    data-container='#header-db'
+    src="../_static/header.js"></script>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="../../../www.googletagmanager.com/ns.html%3Fid=GTM-JQHP.html"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+     {'gtm.start': new Date().getTime(),event:'gtm.js'}
+   );var f=d.getElementsByTagName(s)[0],
+   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+   '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+   })(window,document,'script','dataLayer','GTM-JQHP');</script>
+  <div class="content">
+    <div class="main-column pull-left">
+
+      
+        <div class="document">
+            <div class="documentwrapper"><div class="bodywrapper">
+              <div class="body" data-pagename="tutorial/mongoid-persistence">
+                   <a class="edit-link" href="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-persistence.txt" target="_blank" title="Edit tutorial/mongoid-persistence.txt on GitHub">
+    
+      <span class="icon-edit"></span>
+    
+  </a>
+                
+                
+   
+                
+                  <div class="section" id="persistence-methods">
+<h1>Persistence Methods<a class="headerlink" href="mongoid-persistence.html#persistence-methods" title="Permalink to this headline">¶</a></h1>
+<div class="contents singlecol local topic" id="on-this-page">
+<p class="topic-title first">On this page</p>
+<ul class="simple">
+<li><a class="reference internal" href="mongoid-persistence.html#standard" id="id1">Standard</a></li>
+<li><a class="reference internal" href="mongoid-persistence.html#atomic" id="id2">Atomic</a></li>
+<li><a class="reference internal" href="mongoid-persistence.html#custom" id="id3">Custom</a></li>
+</ul>
+</div>
+<p>Mongoid supports all expected CRUD operations for those familiar with other Ruby mappers
+like Active Record or Data Mapper. What distinguishes Mongoid from other mappers for MongoDB
+is that the general persistence operations perform atomic updates on only the fields that have
+changed instead of writing the entire document to the database each time.</p>
+<p>The persistence sections will provide examples on what database operation is performed
+when executing the documented command.</p>
+<div class="section" id="standard">
+<h2>Standard<a class="headerlink" href="mongoid-persistence.html#standard" title="Permalink to this headline">¶</a></h2>
+<p>Mongoid&#8217;s standard persistence methods come in the form of common methods you would find
+in other mapping frameworks. The following table shows all standard operations with
+examples.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operation</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model.create</span></tt></p>
+<p class="last"><em>Insert a document or multiple documents into the database.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="no">Person</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+  <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">,</span>
+  <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Heine&quot;</span>
+<span class="p">)</span>
+
+<span class="no">Person</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">[</span>
+  <span class="p">{</span> <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">,</span> <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Heine&quot;</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Willy&quot;</span><span class="p">,</span> <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Brandt&quot;</span> <span class="p">}</span>
+<span class="o">]</span><span class="p">)</span>
+
+<span class="no">Person</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">doc</span><span class="o">|</span>
+  <span class="n">doc</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="s2">&quot;Heine&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model.create!</span></tt></p>
+<p class="last"><em>Insert a document or multiple documents into the database, raising an error
+if a validation error occurs.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="no">Person</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span>
+  <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">,</span>
+  <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Heine&quot;</span>
+<span class="p">)</span>
+
+<span class="no">Person</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="o">[</span>
+  <span class="p">{</span> <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">,</span> <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Heine&quot;</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Willy&quot;</span><span class="p">,</span> <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Brandt&quot;</span> <span class="p">}</span>
+<span class="o">]</span><span class="p">)</span>
+
+<span class="no">Person</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">doc</span><span class="o">|</span>
+  <span class="n">doc</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="s2">&quot;Heine&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#save</span></tt></p>
+<p class="last"><em>Saves the changed attributes to the database atomically, or insert the document
+if flagged as a new record via</em> <tt class="docutils literal"><span class="pre">Model#new_record?</span></tt> <em>. Can bypass validations if wanted.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+  <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">,</span>
+  <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Heine&quot;</span>
+<span class="p">)</span>
+<span class="n">person</span><span class="o">.</span><span class="n">save</span>
+<span class="n">person</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="ss">validate</span><span class="p">:</span> <span class="kp">false</span><span class="p">)</span>
+
+<span class="n">person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s2">&quot;Christian Johan&quot;</span>
+<span class="n">person</span><span class="o">.</span><span class="n">save</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#save!</span></tt></p>
+<p class="last"><em>Saves the changed attributes to the database atomically, or insert the document if
+new. Will raise an error of validations fail.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+  <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">,</span>
+  <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Heine&quot;</span>
+<span class="p">)</span>
+<span class="n">person</span><span class="o">.</span><span class="n">save!</span>
+
+<span class="n">person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s2">&quot;Christian Johan&quot;</span>
+<span class="n">person</span><span class="o">.</span><span class="n">save!</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#update_attributes</span></tt></p>
+<p class="last"><em>Update the provided attributes (and any other dirty fields).</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">update_attributes!</span><span class="p">(</span>
+  <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Jean&quot;</span><span class="p">,</span>
+  <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Zorg&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#update_attribute</span></tt></p>
+<p class="last"><em>Update a single attribute, bypassing validations.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">update_attribute</span><span class="p">(</span><span class="ss">:first_name</span><span class="p">,</span> <span class="s2">&quot;Jean&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#upsert</span></tt></p>
+<p class="last"><em>Performs a MongoDB upsert on the document. If the document exists in the database,
+it will get overwritten with the current attributes of the document in memory.
+If the document does not exist in the database, it will be inserted. Note that
+this only runs the</em> <tt class="docutils literal"><span class="pre">{before|after|around}_upsert</span></tt> <em>callbacks.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+  <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Heinrich&quot;</span><span class="p">,</span>
+  <span class="ss">last_name</span><span class="p">:</span> <span class="s2">&quot;Heine&quot;</span>
+<span class="p">)</span>
+<span class="n">person</span><span class="o">.</span><span class="n">upsert</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#touch</span></tt></p>
+<p class="last"><em>Update the document&#8217;s updated_at timestamp, optionally with one extra provided
+time field. This will cascade the touch to all</em> <tt class="docutils literal"><span class="pre">belongs_to</span></tt> <em>relations of the document
+with the option set. This operation skips validations and callbacks.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">touch</span>
+<span class="n">person</span><span class="o">.</span><span class="n">touch</span><span class="p">(</span><span class="ss">:audited_at</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#delete</span></tt></p>
+<p class="last"><em>Deletes the document from the database without running callbacks.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">delete</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#destroy</span></tt></p>
+<p class="last"><em>Deletes the document from the database while running destroy callbacks.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">destroy</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model.delete_all</span></tt></p>
+<p class="last"><em>Deletes all documents from the database without running any callbacks.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="no">Person</span><span class="o">.</span><span class="n">delete_all</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model.destroy_all</span></tt></p>
+<p class="last"><em>Deletes all documents from the database while running callbacks. This is a
+potentially expensive operation since all documents will be loaded into memory.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="no">Person</span><span class="o">.</span><span class="n">destroy_all</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="atomic">
+<h2>Atomic<a class="headerlink" href="mongoid-persistence.html#atomic" title="Permalink to this headline">¶</a></h2>
+<p>Although Mongoid performs atomic operations under the covers by default, there may be cases
+where you want to do this explicitly without persisting other fields. Mongoid provides support
+for all of these operations as well. When executing atomic operations via these methods,
+no callbacks will ever get run, nor will any validations.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operation</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#add_to_set</span></tt></p>
+<p class="last"><em>Performs an atomic $addToSet on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">add_to_set</span><span class="p">(</span><span class="ss">aliases</span><span class="p">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#bit</span></tt></p>
+<p class="last"><em>Performs an atomic $bit on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">bit</span><span class="p">(</span><span class="ss">age</span><span class="p">:</span> <span class="p">{</span> <span class="ow">and</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="ow">or</span><span class="p">:</span> <span class="mi">12</span> <span class="p">})</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#inc</span></tt></p>
+<p class="last"><em>Performs an atomic $inc on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">inc</span><span class="p">(</span><span class="ss">age</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#pop</span></tt></p>
+<p class="last"><em>Performs an atomic $pop on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="ss">aliases</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#pull</span></tt></p>
+<p class="last"><em>Performs an atomic $pull on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="ss">aliases</span><span class="p">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#pull_all</span></tt></p>
+<p class="last"><em>Performs an atomic $pullAll on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">pull_all</span><span class="p">(</span><span class="ss">aliases</span><span class="p">:</span> <span class="o">[</span> <span class="s2">&quot;Bond&quot;</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span> <span class="o">]</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#push</span></tt></p>
+<p class="last"><em>Performs an atomic $push on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="ss">aliases</span><span class="p">:</span> <span class="o">[</span><span class="s2">&quot;007&quot;</span><span class="p">,</span><span class="s2">&quot;008&quot;</span><span class="o">]</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#rename</span></tt></p>
+<p class="last"><em>Performs an atomic $rename on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="ss">bday</span><span class="p">:</span> <span class="ss">:dob</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#set</span></tt></p>
+<p class="last"><em>Performs an atomic $set on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Tyler Durden&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><tt class="docutils literal"><span class="pre">Model#unset</span></tt></p>
+<p class="last"><em>Performs an atomic $unset on the field.</em></p>
+</td>
+<td><div class="first last highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">unset</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="custom">
+<h2>Custom<a class="headerlink" href="mongoid-persistence.html#custom" title="Permalink to this headline">¶</a></h2>
+<p>There may be cases where you want to persist documents to different sources from their
+defaults, or with different options from the default. Mongoid provides run-time support
+for this as well as support on a per-model basis.</p>
+<div class="section" id="model-level-persistence-options">
+<h3>Model Level Persistence Options<a class="headerlink" href="mongoid-persistence.html#model-level-persistence-options" title="Permalink to this headline">¶</a></h3>
+<p>On a per-model basis, you can tell it to store in a custom collection name, a different
+database, or a different client. The following example would store the Band class by
+default into a collection named &#8220;artists&#8221; in the database named &#8220;music&#8221;, with the client &#8220;secondary&#8221;.</p>
+<p>Note that the value supplied to the <tt class="docutils literal"><span class="pre">client</span></tt> option must be configured under <tt class="docutils literal"><span class="pre">clients</span></tt>
+in your mongoid.yml.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">store_in</span> <span class="ss">collection</span><span class="p">:</span> <span class="s2">&quot;artists&quot;</span><span class="p">,</span> <span class="ss">database</span><span class="p">:</span> <span class="s2">&quot;music&quot;</span><span class="p">,</span> <span class="ss">client</span><span class="p">:</span> <span class="s2">&quot;secondary&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>If no <tt class="docutils literal"><span class="pre">store_in</span></tt> macro would have been provided, Mongoid would store the model in a
+collection named &#8220;bands&#8221; in the default database in the default client.</p>
+</div>
+<div class="section" id="runtime-persistence-options">
+<h3>Runtime Persistence Options<a class="headerlink" href="mongoid-persistence.html#runtime-persistence-options" title="Permalink to this headline">¶</a></h3>
+<p>You can change at runtime where to store, query, update, or remove documents by prefixing
+any operation with <tt class="docutils literal"><span class="pre">#with</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Band</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">database</span><span class="p">:</span> <span class="s2">&quot;music-non-stop&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">create</span>
+<span class="no">Band</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">collection</span><span class="p">:</span> <span class="s2">&quot;artists&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">delete_all</span>
+<span class="n">band</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">client</span><span class="p">:</span> <span class="ss">:tertiary</span><span class="p">)</span><span class="o">.</span><span class="n">save!</span>
+</pre></div>
+</div>
+<p>Persisting using with is a one time switch in the persistence context - it creates a new
+client under the covers which will get garbage collected after use. Mongoid will not remember
+anything specific on the document level regarding how it was saved when using this method.
+A potential gotcha with this is persisting a document via with and then immediately updating it after.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">band</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Scuba&quot;</span><span class="p">)</span>
+<span class="n">band</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">collection</span><span class="p">:</span> <span class="s2">&quot;artists&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">save!</span>
+<span class="n">band</span><span class="o">.</span><span class="n">update_attribute</span><span class="p">(</span><span class="ss">likes</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span> <span class="c1"># This will not save - tries the collection &quot;bands&quot;</span>
+<span class="n">band</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">collection</span><span class="p">:</span> <span class="s2">&quot;artists&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">update_attribute</span><span class="p">(</span><span class="ss">likes</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span> <span class="c1"># This will update the document.</span>
+</pre></div>
+</div>
+<p>Also note another important gotcha that could result in the number of connections continually growing
+with each use of #with. Because a new client is created under the covers in #with, any options that would
+cause a driver cluster configuration change will instantiate a client that would <em>never</em> get garbage collected
+due to the new cluster&#8217;s monitor threads.
+There are two ways to avoid opening up new connections via the driver that are never closed.</p>
+<p>As of Mongoid 5.1, you can pass a block to #with. If a new cluster is created, then its monitoring threads
+will be stopped and the client will be closed when the block completes.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Band</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">connect_timeout</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">klass</span><span class="o">|</span>
+  <span class="n">klass</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;emily&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>
+<span class="k">end</span>
+<span class="c1"># The new cluster&#39;s monitoring threads are stopped and the client is closed.</span>
+</pre></div>
+</div>
+<p>The second way to avoid this is to <em>only</em> use <tt class="docutils literal"><span class="pre">with</span></tt> when changing the following options, as a new cluster
+will not be created:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">database</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">collection</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">client</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">read</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">write</span></tt></li>
+</ul>
+<p>If you want to switch the persistence context for all operations at runtime, but don&#8217;t want
+to be using with all over your code, Mongoid provides the ability to do this as the client
+and database level globally. The methods for this are <tt class="docutils literal"><span class="pre">Mongoid.override_client</span></tt> and
+<tt class="docutils literal"><span class="pre">Mongoid.override_database</span></tt>. A useful case for this are internationalized applications
+that store information for different locales in different databases or clients, but the
+schema in each remains the same.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BandsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="n">before_filter</span> <span class="ss">:switch_database</span>
+  <span class="n">after_filter</span> <span class="ss">:reset_database</span>
+
+  <span class="kp">private</span>
+
+  <span class="k">def</span> <span class="nf">switch_database</span>
+    <span class="no">I18n</span><span class="o">.</span><span class="n">locale</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:locale</span><span class="o">]</span> <span class="o">||</span> <span class="no">I18n</span><span class="o">.</span><span class="n">default_locale</span>
+    <span class="no">Mongoid</span><span class="o">.</span><span class="n">override_database</span><span class="p">(</span><span class="s2">&quot;my_db_name_</span><span class="si">#{</span><span class="no">I18n</span><span class="o">.</span><span class="n">locale</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">reset_database</span>
+    <span class="no">Mongoid</span><span class="o">.</span><span class="n">override_database</span><span class="p">(</span><span class="kp">nil</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>In the above example, all persistence operations would be stored in the alternative
+database for all remaining operations on this thread. This is why the after request
+set the override back to nil - it ensures subsequent requests with no local params
+use the default option.</p>
+</div>
+<div class="section" id="client-and-collection-access">
+<h3>Client and Collection Access<a class="headerlink" href="mongoid-persistence.html#client-and-collection-access" title="Permalink to this headline">¶</a></h3>
+<p>If you want to drop down to the driver level to perform operations, you can grab
+the Mongo client or collection from the model or document instance.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Band</span><span class="o">.</span><span class="n">mongo_client</span>
+<span class="n">band</span><span class="o">.</span><span class="n">mongo_client</span>
+<span class="no">Band</span><span class="o">.</span><span class="n">collection</span>
+<span class="n">band</span><span class="o">.</span><span class="n">collection</span>
+</pre></div>
+</div>
+<p>From here you also have the same runtime persistence options using the client&#8217;s <tt class="docutils literal"><span class="pre">#with</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">client</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">mongo_client</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">write</span><span class="p">:</span> <span class="p">{</span> <span class="ss">w</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="ss">database</span><span class="p">:</span> <span class="s2">&quot;musik&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">[</span><span class="ss">:artists</span><span class="o">].</span><span class="n">find</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also override the :read or :write options on the collection using the collections <tt class="docutils literal"><span class="pre">#with</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">collection_w_0</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="ss">write</span><span class="p">:</span> <span class="p">{</span> <span class="ss">w</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span>
+<span class="n">collection_w_0</span><span class="o">[</span><span class="ss">:artists</span><span class="o">].</span><span class="n">find</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="capped-collections">
+<h3>Capped Collections<a class="headerlink" href="mongoid-persistence.html#capped-collections" title="Permalink to this headline">¶</a></h3>
+<p>Mongoid does not provide a mechanism for creating capped collections on the fly - you
+will need to create these yourself one time up front either with the driver or via the
+Mongo console.</p>
+<p>To create a capped collection with the driver:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">client</span><span class="o">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="ss">:capped</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:size</span> <span class="o">=&gt;</span> <span class="mi">1024</span><span class="o">].</span><span class="n">create</span>
+</pre></div>
+</div>
+<p>To create a capped collection from the Mongo console:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">db</span><span class="p">.</span><span class="nx">createCollection</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">capped</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">size</span><span class="o">:</span> <span class="mi">1024</span> <span class="p">});</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+                
+    
+                  <div class="footer">
+                    <div class="copyright">
+                      <p>&copy; MongoDB, Inc 2008-2016. MongoDB, Mongo, and the leaf logo are registered trademarks of MongoDB, Inc.</p>
+                    </div>
+                  </div>
+              </div></div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  
+
+  <script type="text/javascript">
+  window.fullDocsPath = function(base) {
+    var body = document.getElementsByClassName('body')[0]
+    var path = body.getAttribute('data-pagename');
+
+    // skip if pagename is undefined (index.html)
+    if (path == 'index') {
+        path = '';
+    } else if (path) {
+      path = path + '/';
+    }
+
+    return '/' + base + '/' + path;
+  }
+  // Bootstrap array of links that should trigger a full page reload
+  window.docsExcludedNav = ['/drivers', '/drivers/c', '/drivers/cpp', '/drivers/csharp', '/drivers/go', '/drivers/erlang', '/drivers/node-js', '/drivers/perl', '/drivers/php', '/drivers/python', '/drivers/ruby', '/drivers/scala'];
+
+  $(document).ready(function(){
+    $(".version-selector").on('click', function(e) {
+      e.preventDefault();
+      var base = $(e.currentTarget).data('path');
+      window.location.href = fullDocsPath(base);
+    });
+
+    $("select.language-selector").on('change', function(e) {
+      var path = $(e.currentTarget).find('option:selected').data('path');
+      window.location.href = path;
+    });
+  });
+
+  </script></body>
+</html>

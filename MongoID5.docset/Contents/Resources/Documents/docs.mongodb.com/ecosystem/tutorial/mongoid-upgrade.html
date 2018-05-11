@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+  <link href='../../../fonts.googleapis.com/css%3Ffamily=Inconsolata.css' rel='stylesheet' type='text/css'>
+    <title>Upgrade Mongoid</title><link rel="shortcut icon" href="../../../media.mongodb.org/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index" />
+
+  <meta name="release" content="3.0"/>
+  <meta name="version" content="3.0"/>
+  <meta name="DC.Source" content="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-upgrade.txt"/>
+  
+   <link rel="stylesheet" href="../_static/mongodb-docs.css" type="text/css" />
+   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+     URL_ROOT:    '../../',
+     VERSION:     '3.0',
+     COLLAPSE_INDEX: false,
+     FILE_SUFFIX: '',
+     HAS_SOURCE:  false,
+    };
+  </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="../_static/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/navbar.js"></script>
+
+  <script defer type="text/javascript" src="../_static/feedback.js"></script>
+      <link rel="search" type="application/opensearchdescription+xml" href="https://docs.mongodb.com/osd.xml" title="MongoDB Help"/>
+<link rel="top" title="MongoDB Ecosystem" href="https://docs.mongodb.com/ecosystem/" />
+<link rel="up" title="Mongoid Documentation (5.1.0)" href="https://docs.mongodb.com/ecosystem/tutorial/ruby-mongoid-tutorial/" />
+<link rel="next" title="MongoDB Scala Drivers" href="https://docs.mongodb.com/ecosystem/drivers/scala/" />
+<link rel="prev" title="Rails Considerations" href="mongoid-rails.html" />
+      <script type="text/javascript">
+        (function() {
+           var cx = '017213726194841070573:WMX6838984';
+           var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+           gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//www.google.com/cse/cse.js?cx=' + cx;
+           gcse.onload = gcse.onreadystatechange = function() {
+            $(function() {
+              // hack to set a placeholder in google's custom search input
+              var pollInput = window.setInterval(function() {
+                var $input = $('.gsc-input input.gsc-input'),
+                    $div = $('.search-db');
+
+                if ($input.length) {
+                  $input.on('focus', function(e) { $div.addClass('wide').removeClass('narrow'); });
+                  $input.on('blur', function(e) {
+                    if (!$input.val().length) { $div.addClass('narrow').removeClass('wide'); }
+                  });
+                  $input.attr('placeholder', "Search mongodb.com");
+                  window.clearInterval(pollInput);
+                }
+              }, 10);
+            });
+           };
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+           })();
+      </script><script type='text/javascript'>
+   var gptadslots=[];
+   var googletag = googletag || {};
+   googletag.cmd = googletag.cmd || [];
+   (function(){ var gads = document.createElement('script');
+      gads.async = true; gads.type = 'text/javascript';
+      var useSSL = 'https:' == document.location.protocol;
+      gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+      var node = document.getElementsByTagName('script')[0];
+      node.parentNode.insertBefore(gads, node);
+   })();
+</script>
+
+<script type="text/javascript">
+   googletag.cmd.push(function() {
+
+      //Adslot 1 declaration
+      gptadslots[1]= googletag.defineSlot('/40039723/docs.mongodb.org/ecosystem', [[160,600],[243,202],[293,244]],'mongodb-docs-eco-1').addService(googletag.pubads());
+
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().enableAsyncRendering();
+      googletag.enableServices();
+   });
+</script></head>
+<body data-project="mongodb-ecosystem">
+  
+    <script
+    async
+    id='mongodb-nav-data'
+    data-props='{"environment":"docs","isOpaque":true,
+                 "includeSearch":true,
+                 "searchUrl":"https://docs.mongodb.com/manual/search/?query=",
+                 "contactUrl":"https://www.mongodb.com/contact?jmp=docs"}'
+    data-container='#header-db'
+    src="../_static/header.js"></script>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="../../../www.googletagmanager.com/ns.html%3Fid=GTM-JQHP.html"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+     {'gtm.start': new Date().getTime(),event:'gtm.js'}
+   );var f=d.getElementsByTagName(s)[0],
+   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+   '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+   })(window,document,'script','dataLayer','GTM-JQHP');</script>
+  <div class="content">
+    <div class="main-column pull-left">
+
+      
+        <div class="document">
+            <div class="documentwrapper"><div class="bodywrapper">
+              <div class="body" data-pagename="tutorial/mongoid-upgrade">
+                   <a class="edit-link" href="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-upgrade.txt" target="_blank" title="Edit tutorial/mongoid-upgrade.txt on GitHub">
+    
+      <span class="icon-edit"></span>
+    
+  </a>
+                  <div class="section" id="upgrade-mongoid">
+<h1>Upgrade Mongoid<a class="headerlink" href="mongoid-upgrade.html#upgrade-mongoid" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="upgrade-to-5-x-series">
+<h2>Upgrade to 5.x Series<a class="headerlink" href="mongoid-upgrade.html#upgrade-to-5-x-series" title="Permalink to this headline">¶</a></h2>
+<p>The underlying driver has changed from Moped to the official MongoDB Ruby driver.
+For all users dropping down to the driver level for operations, please see the driver
+documentation for help with that API.</p>
+<p>All Mongoid configuration options have changed, as the underlying driver has changed
+from Moped to the core MongoDB Ruby driver. Please see the
+<a class="reference internal" href="mongoid-installation.html#mongoid-configuration"><em>configuration section</em></a> for a detailed description of all new options.</p>
+<p>All references to session are now replaced with client. This includes the <tt class="docutils literal"><span class="pre">mongoid.yml</span></tt>
+configuration, <tt class="docutils literal"><span class="pre">store_in</span></tt> options, and all exceptions and modules with Session in the name.</p>
+<p><tt class="docutils literal"><span class="pre">find_and_modify</span></tt> has been removed and replaced with 3 options: <tt class="docutils literal"><span class="pre">find_one_and_update</span></tt>,
+<tt class="docutils literal"><span class="pre">find_one_and_delete</span></tt> and <tt class="docutils literal"><span class="pre">find_one_and_replace</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">text_search</span></tt> has been removed as it is now a $text option in a query from 2.6 on.</p>
+<p>Mongoid no longer supports MongoDB 2.2 - support is now for only 2.4 and higher.</p>
+<p><tt class="docutils literal"><span class="pre">first</span></tt> and <tt class="docutils literal"><span class="pre">last</span></tt> no longer add an <tt class="docutils literal"><span class="pre">_id</span></tt> sort when no sorting options have been
+provided. In order to guarantee that a document is the first or last, it needs to now
+contain an explicit sort.</p>
+</div>
+</div>
+
+                  <div class="footer">
+                    <div class="copyright">
+                      <p>&copy; MongoDB, Inc 2008-2016. MongoDB, Mongo, and the leaf logo are registered trademarks of MongoDB, Inc.</p>
+                    </div>
+                  </div>
+              </div></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="clearfix"></div>
+  </div>
+  
+
+  <script type="text/javascript">
+  window.fullDocsPath = function(base) {
+    var body = document.getElementsByClassName('body')[0]
+    var path = body.getAttribute('data-pagename');
+
+    // skip if pagename is undefined (index.html)
+    if (path == 'index') {
+        path = '';
+    } else if (path) {
+      path = path + '/';
+    }
+
+    return '/' + base + '/' + path;
+  }
+  // Bootstrap array of links that should trigger a full page reload
+  window.docsExcludedNav = ['/drivers', '/drivers/c', '/drivers/cpp', '/drivers/csharp', '/drivers/go', '/drivers/erlang', '/drivers/node-js', '/drivers/perl', '/drivers/php', '/drivers/python', '/drivers/ruby', '/drivers/scala'];
+
+  $(document).ready(function(){
+    $(".version-selector").on('click', function(e) {
+      e.preventDefault();
+      var base = $(e.currentTarget).data('path');
+      window.location.href = fullDocsPath(base);
+    });
+
+    $("select.language-selector").on('change', function(e) {
+      var path = $(e.currentTarget).find('option:selected').data('path');
+      window.location.href = path;
+    });
+  });
+
+  </script></body>
+</html>

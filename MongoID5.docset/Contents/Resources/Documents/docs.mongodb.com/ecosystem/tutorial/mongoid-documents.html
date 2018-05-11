@@ -1,0 +1,891 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+  <link href='../../../fonts.googleapis.com/css%3Ffamily=Inconsolata.css' rel='stylesheet' type='text/css'>
+    <title>Documents</title><link rel="shortcut icon" href="../../../media.mongodb.org/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="index" />
+
+  <meta name="release" content="3.0"/>
+  <meta name="version" content="3.0"/>
+  <meta name="DC.Source" content="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-documents.txt"/>
+  
+   <link rel="stylesheet" href="../_static/mongodb-docs.css" type="text/css" />
+   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+     URL_ROOT:    '../../',
+     VERSION:     '3.0',
+     COLLAPSE_INDEX: false,
+     FILE_SUFFIX: '',
+     HAS_SOURCE:  false,
+    };
+  </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/lib/bootstrap.js"></script>
+    <script type="text/javascript" src="../_static/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../_static/navbar.js"></script>
+
+  <script defer type="text/javascript" src="../_static/feedback.js"></script>
+      <link rel="search" type="application/opensearchdescription+xml" href="https://docs.mongodb.com/osd.xml" title="MongoDB Help"/>
+<link rel="top" title="MongoDB Ecosystem" href="https://docs.mongodb.com/ecosystem/" />
+<link rel="up" title="Mongoid Documentation (5.1.0)" href="https://docs.mongodb.com/ecosystem/tutorial/ruby-mongoid-tutorial/" />
+<link rel="next" title="Persistence Methods" href="mongoid-persistence.html" />
+<link rel="prev" title="Installation" href="mongoid-installation.html" />
+      <script type="text/javascript">
+        (function() {
+           var cx = '017213726194841070573:WMX6838984';
+           var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+           gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//www.google.com/cse/cse.js?cx=' + cx;
+           gcse.onload = gcse.onreadystatechange = function() {
+            $(function() {
+              // hack to set a placeholder in google's custom search input
+              var pollInput = window.setInterval(function() {
+                var $input = $('.gsc-input input.gsc-input'),
+                    $div = $('.search-db');
+
+                if ($input.length) {
+                  $input.on('focus', function(e) { $div.addClass('wide').removeClass('narrow'); });
+                  $input.on('blur', function(e) {
+                    if (!$input.val().length) { $div.addClass('narrow').removeClass('wide'); }
+                  });
+                  $input.attr('placeholder', "Search mongodb.com");
+                  window.clearInterval(pollInput);
+                }
+              }, 10);
+            });
+           };
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+           })();
+      </script><script type='text/javascript'>
+   var gptadslots=[];
+   var googletag = googletag || {};
+   googletag.cmd = googletag.cmd || [];
+   (function(){ var gads = document.createElement('script');
+      gads.async = true; gads.type = 'text/javascript';
+      var useSSL = 'https:' == document.location.protocol;
+      gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+      var node = document.getElementsByTagName('script')[0];
+      node.parentNode.insertBefore(gads, node);
+   })();
+</script>
+
+<script type="text/javascript">
+   googletag.cmd.push(function() {
+
+      //Adslot 1 declaration
+      gptadslots[1]= googletag.defineSlot('/40039723/docs.mongodb.org/ecosystem', [[160,600],[243,202],[293,244]],'mongodb-docs-eco-1').addService(googletag.pubads());
+
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().enableAsyncRendering();
+      googletag.enableServices();
+   });
+</script></head>
+<body data-project="mongodb-ecosystem">
+  
+    <script
+    async
+    id='mongodb-nav-data'
+    data-props='{"environment":"docs","isOpaque":true,
+                 "includeSearch":true,
+                 "searchUrl":"https://docs.mongodb.com/manual/search/?query=",
+                 "contactUrl":"https://www.mongodb.com/contact?jmp=docs"}'
+    data-container='#header-db'
+    src="../_static/header.js"></script>
+  
+  <!-- Google Tag Manager -->
+  <noscript><iframe src="../../../www.googletagmanager.com/ns.html%3Fid=GTM-JQHP.html"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+     {'gtm.start': new Date().getTime(),event:'gtm.js'}
+   );var f=d.getElementsByTagName(s)[0],
+   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+   '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+   })(window,document,'script','dataLayer','GTM-JQHP');</script>
+  <div class="content">
+    <div class="main-column pull-left">
+
+      
+        <div class="document">
+            <div class="documentwrapper"><div class="bodywrapper">
+              <div class="body" data-pagename="tutorial/mongoid-documents">
+                   <a class="edit-link" href="https://github.com/mongodb/docs-ecosystem/blob/master/source/tutorial/mongoid-documents.txt" target="_blank" title="Edit tutorial/mongoid-documents.txt on GitHub">
+    
+      <span class="icon-edit"></span>
+    
+  </a>
+                
+                
+   
+                
+                  <div class="section" id="documents">
+<h1>Documents<a class="headerlink" href="mongoid-documents.html#documents" title="Permalink to this headline">¶</a></h1>
+<div class="contents singlecol local topic" id="on-this-page">
+<p class="topic-title first">On this page</p>
+<ul class="simple">
+<li><a class="reference internal" href="mongoid-documents.html#storage" id="id1">Storage</a></li>
+<li><a class="reference internal" href="mongoid-documents.html#fields" id="id2">Fields</a></li>
+<li><a class="reference internal" href="mongoid-documents.html#dynamic-fields" id="id3">Dynamic Fields</a></li>
+<li><a class="reference internal" href="mongoid-documents.html#localized-fields" id="id4">Localized Fields</a></li>
+<li><a class="reference internal" href="mongoid-documents.html#dirty-tracking" id="id5">Dirty Tracking</a></li>
+<li><a class="reference internal" href="mongoid-documents.html#readonly-attributes" id="id6">Readonly Attributes</a></li>
+<li><a class="reference internal" href="mongoid-documents.html#inheritance" id="id7">Inheritance</a></li>
+<li><a class="reference internal" href="mongoid-documents.html#timestamping" id="id8">Timestamping</a></li>
+</ul>
+</div>
+<p>Documents are the core objects in Mongoid and any object that is to be persisted to the
+database must include <tt class="docutils literal"><span class="pre">Mongoid::Document</span></tt>. The representation of a Document in MongoDB
+is a BSON object that is very similar to a Ruby hash or JSON object. Documents can be stored
+in their own collections in the database, or can be embedded in other Documents n levels deep.</p>
+<div class="section" id="storage">
+<h2>Storage<a class="headerlink" href="mongoid-documents.html#storage" title="Permalink to this headline">¶</a></h2>
+<p>Mongoid by default stores documents in a collection that is the pluralized form of the class name.
+For the following <tt class="docutils literal"><span class="pre">Person</span></tt> class, the collection the document would get stored in would be named <tt class="docutils literal"><span class="pre">people</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Model class names cannot end with &#8220;s&#8221;, because it will be considered as the pluralized form of
+the word. For example &#8220;Status&#8221; would be considered as the plural form of &#8220;Statu&#8221;,
+which will cause a few known problems.</p>
+<p>This is a limitation of the <tt class="docutils literal"><span class="pre">ActiveSupport::Inflector#classify</span></tt> which Mongoid uses to convert
+from filenames and collection names to class names. You can overcome this by specifying a custom
+inflection rule for your model class. For example, the following code will take care of the model
+named <tt class="docutils literal"><span class="pre">Status</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Inflector</span><span class="o">.</span><span class="n">inflections</span> <span class="k">do</span> <span class="o">|</span><span class="n">inflect</span><span class="o">|</span>
+  <span class="n">inflect</span><span class="o">.</span><span class="n">singular</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The collection for the model&#8217;s documents can be changed at the class level if you would like
+them persisted elsewhere. You can also change the database and client the model gets persisted
+in from the defaults.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">store_in</span> <span class="ss">collection</span><span class="p">:</span> <span class="s2">&quot;citizens&quot;</span><span class="p">,</span> <span class="ss">database</span><span class="p">:</span> <span class="s2">&quot;other&quot;</span><span class="p">,</span> <span class="ss">client</span><span class="p">:</span> <span class="s2">&quot;secondary&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">store_in</span></tt> macro can also take lambdas - a common case for this is multi-tenant applications.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">store_in</span> <span class="ss">database</span><span class="p">:</span> <span class="o">-&gt;</span><span class="p">{</span> <span class="no">Thread</span><span class="o">.</span><span class="n">current</span><span class="o">[</span><span class="ss">:database</span><span class="o">]</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>When a document is stored in the database the ruby object will get serialized into BSON
+and have a structure like so:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e9&quot;</span><span class="p">),</span>
+  <span class="s2">&quot;title&quot;</span> <span class="p">:</span> <span class="s2">&quot;Sir&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7ff&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;first_name&quot;</span> <span class="p">:</span> <span class="s2">&quot;Durran&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;addresses&quot;</span> <span class="p">:</span> <span class="o">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="no">ObjectId</span><span class="p">(</span><span class="s2">&quot;4d3ed089fb60ab534684b7e0&quot;</span><span class="p">),</span>
+      <span class="s2">&quot;city&quot;</span> <span class="p">:</span> <span class="s2">&quot;Berlin&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;country&quot;</span> <span class="p">:</span> <span class="s2">&quot;Deutschland&quot;</span>
+    <span class="p">}</span>
+  <span class="o">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fields">
+<h2>Fields<a class="headerlink" href="mongoid-documents.html#fields" title="Permalink to this headline">¶</a></h2>
+<p>Even though MongoDB is a schemaless database, most uses will be with web applications where
+form parameters always come to the server as strings. Mongoid provides an easy mechanism for
+transforming these strings into their appropriate types through the definition of fields
+in a <tt class="docutils literal"><span class="pre">Mongoid::Document</span></tt>.</p>
+<p>Consider a simple class for modeling a person in an application. A person may have a first name,
+last name, and middle name. We can define these attributes on a person by using the fields macro.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:first_name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">field</span> <span class="ss">:middle_name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">field</span> <span class="ss">:last_name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Below is a list of valid types for fields.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Array</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">BigDecimal</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Boolean</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Date</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DateTime</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Float</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Hash</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Integer</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">BSON::ObjectId</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">BSON::Binary</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Range</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Regexp</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">String</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Symbol</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Time</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">TimeWithZone</span></tt></li>
+</ul>
+<p>If you decide not to specify the type of field with the definition, Mongoid will treat
+it as an object and not try to typecast it when sending the values to the database.
+This can be advantageous in 2 places, since the lack of attempted conversion will yield
+a slight performance gain. However some fields are not supported if not defined as fields.
+A rule of thumb for what fields you can use are:</p>
+<ul class="simple">
+<li>You&#8217;re not using a web front end and values are already properly cast.</li>
+<li>All of your fields are strings.</li>
+</ul>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:first_name</span>
+  <span class="n">field</span> <span class="ss">:middle_name</span>
+  <span class="n">field</span> <span class="ss">:last_name</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Types that are not supported as dynamic attributes since they cannot be cast are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">BigDecimal</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Date</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DateTime</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Range</span></tt></li>
+</ul>
+<div class="section" id="accessing-field-values">
+<h3>Accessing Field Values<a class="headerlink" href="mongoid-documents.html#accessing-field-values" title="Permalink to this headline">¶</a></h3>
+<p>When a field is defined, Mongoid provides several different ways of accessing the field.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># Get the value of the first_name field</span>
+<span class="n">person</span><span class="o">.</span><span class="n">first_name</span>
+<span class="n">person</span><span class="o">[</span><span class="ss">:first_name</span><span class="o">]</span>
+<span class="n">person</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="ss">:first_name</span><span class="p">)</span>
+
+
+<span class="c1"># Set the value for the first_name field</span>
+<span class="n">person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s2">&quot;Jean&quot;</span>
+<span class="n">person</span><span class="o">[</span><span class="ss">:first_name</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Jean&quot;</span>
+<span class="n">person</span><span class="o">.</span><span class="n">write_attribute</span><span class="p">(</span><span class="ss">:first_name</span><span class="p">,</span> <span class="s2">&quot;Jean&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have defined custom getter/setter, those will be used when using the dot notation.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+
+  <span class="n">field</span> <span class="ss">:first_name</span>
+
+  <span class="c1"># custom getter</span>
+  <span class="k">def</span> <span class="nf">first_name</span>
+    <span class="s2">&quot;My name is Johnny&quot;</span>
+  <span class="k">end</span>
+
+  <span class="c1"># custom setter</span>
+  <span class="k">def</span> <span class="nf">first_name</span><span class="o">=</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="nb">p</span> <span class="s1">&#39;Setting.. &#39;</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="nb">p</span> <span class="s1">&#39;.. done!&#39;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1"># Like this:</span>
+<span class="n">person</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;John&#39;</span>
+<span class="c1"># Setting..</span>
+<span class="c1"># .. done!</span>
+
+<span class="n">person</span><span class="o">.</span><span class="n">first_name</span>                  <span class="c1"># My name is Johnny</span>
+<span class="n">person</span><span class="o">[</span><span class="ss">:first_name</span><span class="o">]</span>                <span class="c1"># John</span>
+<span class="n">person</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="ss">:first_name</span><span class="p">)</span> <span class="c1"># John</span>
+</pre></div>
+</div>
+<p>In cases where you want to set multiple field values at once, there are a few different ways
+of handling this as well.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># Get the field values as a hash.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">attributes</span>
+
+<span class="c1"># Set the field values in the document.</span>
+<span class="no">Person</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Jean-Baptiste&quot;</span><span class="p">,</span> <span class="ss">middle_name</span><span class="p">:</span> <span class="s2">&quot;Emmanuel&quot;</span><span class="p">)</span>
+<span class="n">person</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Jean-Baptiste&quot;</span><span class="p">,</span> <span class="ss">middle_name</span><span class="p">:</span> <span class="s2">&quot;Emmanuel&quot;</span> <span class="p">}</span>
+<span class="n">person</span><span class="o">.</span><span class="n">write_attributes</span><span class="p">(</span>
+  <span class="ss">first_name</span><span class="p">:</span> <span class="s2">&quot;Jean-Baptiste&quot;</span><span class="p">,</span>
+  <span class="ss">middle_name</span><span class="p">:</span> <span class="s2">&quot;Emmanuel&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hash-fields">
+<h3>Hash Fields<a class="headerlink" href="mongoid-documents.html#hash-fields" title="Permalink to this headline">¶</a></h3>
+<p>When using a field of type Hash, be wary of adhering to the
+<a class="reference external" href="http://docs.mongodb.com/manual/reference/limits/#naming-restrictions">legal key names for mongoDB</a>,
+or else the values will not store properly.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:first_name</span>
+  <span class="n">field</span> <span class="ss">:url</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="no">Hash</span>
+
+  <span class="c1"># will update the fields properly and save the values</span>
+  <span class="k">def</span> <span class="nf">set_vals</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;Daniel&#39;</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;home_page&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://www.homepage.com&#39;</span><span class="p">}</span>
+    <span class="n">save</span>
+  <span class="k">end</span>
+
+  <span class="c1"># all data will fail to save due to the illegal hashkey</span>
+  <span class="k">def</span> <span class="nf">set_vals_fail</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="s1">&#39;Daniel&#39;</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;home.page&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;http://www.homepage.com&#39;</span><span class="p">}</span>
+    <span class="n">save</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defaults">
+<h3>Defaults<a class="headerlink" href="mongoid-documents.html#defaults" title="Permalink to this headline">¶</a></h3>
+<p>You can tell a field in Mongoid to always have a default value if nothing has been provided.
+Defaults are either static values or lambdas.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:blood_alcohol_level</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Float</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">40</span>
+  <span class="n">field</span> <span class="ss">:last_drink</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="no">Time</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="o">-&gt;</span><span class="p">{</span> <span class="mi">10</span><span class="o">.</span><span class="n">minutes</span><span class="o">.</span><span class="n">ago</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Be wary that default values that are not defined as lambdas or procs are evaluated
+at class load time, so the following 2 definitions are not equivalent.
+(One would probably prefer the second, which is at document creation time.)</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">field</span> <span class="ss">:dob</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="no">Time</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span>
+<span class="n">field</span> <span class="ss">:dob</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="no">Time</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="o">-&gt;</span><span class="p">{</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>If you want to set a default with a dependency on the document&#8217;s state, self inside a lambda
+or proc evaluates to the document instance.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">field</span> <span class="ss">:intoxicated_at</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="no">Time</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="o">-&gt;</span><span class="p">{</span> <span class="n">new_record?</span> <span class="p">?</span> <span class="mi">2</span><span class="o">.</span><span class="n">hours</span><span class="o">.</span><span class="n">ago</span> <span class="p">:</span> <span class="no">Time</span><span class="o">.</span><span class="n">now</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>When defining a default value as a proc, Mongoid will apply the default after all other
+attributes are set. If you want this to happen before the other attributes, set <tt class="docutils literal"><span class="pre">pre_processed:</span> <span class="pre">true</span></tt>.</p>
+</div>
+<div class="section" id="aliasing-fields">
+<h3>Aliasing Fields<a class="headerlink" href="mongoid-documents.html#aliasing-fields" title="Permalink to this headline">¶</a></h3>
+<p>One of the drawbacks of having a schemaless database is that MongoDB must store all field
+information along with every document, meaning that it takes up a lot of storage space in RAM
+and on disk. A common pattern to limit this is to alias fields to a small number of characters,
+while keeping the domain in the application expressive. Mongoid allows you to do this and
+reference the fields in the domain via their long names in getters, setters, and criteria while
+performing the conversion for you.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:n</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+<span class="k">end</span>
+
+<span class="n">band</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Placebo&quot;</span><span class="p">)</span>
+<span class="n">band</span><span class="o">.</span><span class="n">attributes</span> <span class="c1">#=&gt; { &quot;n&quot; =&gt; &quot;Placebo&quot; }</span>
+
+<span class="n">criteria</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Placebo&quot;</span><span class="p">)</span>
+<span class="n">criteria</span><span class="o">.</span><span class="n">selector</span> <span class="c1">#=&gt; { &quot;n&quot; =&gt; &quot;Placebo&quot; }</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-fields">
+<h3>Custom Fields<a class="headerlink" href="mongoid-documents.html#custom-fields" title="Permalink to this headline">¶</a></h3>
+<p>You can define custom types in Mongoid and determine how they are serialized and deserialized.
+You simply need to provide 3 methods on it for Mongoid to call to convert your object to and
+from MongoDB friendly values.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Venue</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:location</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="no">Point</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Point</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:x</span><span class="p">,</span> <span class="ss">:y</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Converts an object of this instance into a database friendly value.</span>
+  <span class="k">def</span> <span class="nf">mongoize</span>
+    <span class="o">[</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">]</span>
+  <span class="k">end</span>
+
+  <span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+
+    <span class="c1"># Get the object as it was stored in the database, and instantiate</span>
+    <span class="c1"># this custom class from it.</span>
+    <span class="k">def</span> <span class="nf">demongoize</span><span class="p">(</span><span class="n">object</span><span class="p">)</span>
+      <span class="no">Point</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">object</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="n">object</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="c1"># Takes any possible object and converts it to how it would be</span>
+    <span class="c1"># stored in the database.</span>
+    <span class="k">def</span> <span class="nf">mongoize</span><span class="p">(</span><span class="n">object</span><span class="p">)</span>
+      <span class="k">case</span> <span class="n">object</span>
+      <span class="k">when</span> <span class="no">Point</span> <span class="k">then</span> <span class="n">object</span><span class="o">.</span><span class="n">mongoize</span>
+      <span class="k">when</span> <span class="no">Hash</span> <span class="k">then</span> <span class="no">Point</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">object</span><span class="o">[</span><span class="ss">:x</span><span class="o">]</span><span class="p">,</span> <span class="n">object</span><span class="o">[</span><span class="ss">:y</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">mongoize</span>
+      <span class="k">else</span> <span class="n">object</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="c1"># Converts the object that was supplied to a criteria and converts it</span>
+    <span class="c1"># into a database friendly form.</span>
+    <span class="k">def</span> <span class="nf">evolve</span><span class="p">(</span><span class="n">object</span><span class="p">)</span>
+      <span class="k">case</span> <span class="n">object</span>
+      <span class="k">when</span> <span class="no">Point</span> <span class="k">then</span> <span class="n">object</span><span class="o">.</span><span class="n">mongoize</span>
+      <span class="k">else</span> <span class="n">object</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The instance method <tt class="docutils literal"><span class="pre">mongoize</span></tt> takes an instance of your object, and converts it
+into how it will be stored in the database. In our example above, we want to store our
+point object as an array in the form <tt class="docutils literal"><span class="pre">[</span> <span class="pre">x,</span> <span class="pre">y</span> <span class="pre">]</span></tt>.</p>
+<p>The class method <tt class="docutils literal"><span class="pre">demongoize</span></tt> takes an object as how it was stored in the database,
+and is responsible for instantiating an object of your custom type. In this case, we
+take an array and instantiate a <tt class="docutils literal"><span class="pre">Point</span></tt> from it.</p>
+<p>The class method <tt class="docutils literal"><span class="pre">mongoize</span></tt> takes an object that you would use to set on your model
+from your application code, and create the object as it would be stored in the database.
+This is for cases where you are not passing your model instances of your custom type in the setter:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">point</span> <span class="o">=</span> <span class="no">Point</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">venue</span> <span class="o">=</span> <span class="no">Venue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">location</span><span class="p">:</span> <span class="n">point</span><span class="p">)</span> <span class="c1">#=&gt; This uses the mongoize instance method.</span>
+<span class="n">venue</span> <span class="o">=</span> <span class="no">Venue</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">location</span><span class="p">:</span> <span class="o">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">24</span> <span class="o">]</span><span class="p">)</span> <span class="c1">#=&gt; This uses the mongoize class method.</span>
+</pre></div>
+</div>
+<p>The class method <tt class="docutils literal"><span class="pre">evolve</span></tt> takes an object, and determines how it is to be transformed
+for use in criteria. For example we may want to write a query like so:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">point</span> <span class="o">=</span> <span class="no">Point</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+<span class="no">Venue</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">location</span><span class="p">:</span> <span class="n">point</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that when accessing custom fields from the document, you will get a new instance
+of that object with each call to the getter. This is because Mongoid is generating a new
+object from the object from the raw attributes on each access.</p>
+<p>We need the point object in the criteria to be transformed to a Mongo friendly value when
+it is not as well, <tt class="docutils literal"><span class="pre">evolve</span></tt> is the method that takes care of this. We check if the passed
+in object is a <tt class="docutils literal"><span class="pre">Point</span></tt> first, in case we also want to be able to pass in ordinary arrays instead.</p>
+</div>
+<div class="section" id="reserved-names">
+<h3>Reserved Names<a class="headerlink" href="mongoid-documents.html#reserved-names" title="Permalink to this headline">¶</a></h3>
+<p>If you define a field on your document that conflicts with a reserved method name in Mongoid,
+the configuration will raise an error. For a list of these you may look at
+<tt class="docutils literal"><span class="pre">Mongoid.destructive_fields</span></tt>.</p>
+</div>
+<div class="section" id="custom-ids">
+<h3>Custom Ids<a class="headerlink" href="mongoid-documents.html#custom-ids" title="Permalink to this headline">¶</a></h3>
+<p>For cases when you do not want to have <tt class="docutils literal"><span class="pre">BSON::ObjectId</span></tt> ids, you can override Mongoid&#8217;s
+<tt class="docutils literal"><span class="pre">_id</span></tt> field and set them to whatever you like.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">field</span> <span class="ss">:_id</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="o">-&gt;</span><span class="p">{</span> <span class="nb">name</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dynamic-fields">
+<h2>Dynamic Fields<a class="headerlink" href="mongoid-documents.html#dynamic-fields" title="Permalink to this headline">¶</a></h2>
+<p>By default Mongoid doesn&#8217;t supports dynamic fields. You can tell mongoid that you want
+to add dynamic fields by including <tt class="docutils literal"><span class="pre">Mongoid::Attributes::Dynamic</span></tt> in model.
+<tt class="docutils literal"><span class="pre">Mongoid::Attributes::Dynamic</span></tt> will allow attributes to get set and persisted on the
+document even if a field was not defined for them. There is a slight &#8216;gotcha&#8217; however when
+dealing with dynamic attributes in that Mongoid is not completely lenient about the use of
+<tt class="docutils literal"><span class="pre">method_missing</span></tt> and breaking the public interface of the Document class.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Attributes</span><span class="o">::</span><span class="no">Dynamic</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>When dealing with dynamic attributes the following rules apply:</p>
+<p>If the attribute exists in the document, Mongoid will provide you with your standard
+getter and setter methods. For example, consider a person who has an attribute of
+&#8220;gender&#8221; set on the document:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># Set the person&#39;s gender to male.</span>
+<span class="n">person</span><span class="o">[</span><span class="ss">:gender</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Male&quot;</span>
+<span class="n">person</span><span class="o">.</span><span class="n">gender</span> <span class="o">=</span> <span class="s2">&quot;Male&quot;</span>
+
+<span class="c1"># Get the person&#39;s gender.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">gender</span>
+</pre></div>
+</div>
+<p>If the attribute does not already exist on the document, Mongoid will not provide you with
+the getters and setters and will enforce normal <tt class="docutils literal"><span class="pre">method_missing</span></tt> behavior. In this case you
+must use the other provided accessor methods:
+(<tt class="docutils literal"><span class="pre">[]</span></tt> and <tt class="docutils literal"><span class="pre">[]=</span></tt>) or (<tt class="docutils literal"><span class="pre">read_attribute</span></tt> and <tt class="docutils literal"><span class="pre">write_attribute</span></tt>).</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># Raise a NoMethodError if value isn&#39;t set.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">gender</span>
+<span class="n">person</span><span class="o">.</span><span class="n">gender</span> <span class="o">=</span> <span class="s2">&quot;Male&quot;</span>
+
+<span class="c1"># Retrieve a dynamic field safely.</span>
+<span class="n">person</span><span class="o">[</span><span class="ss">:gender</span><span class="o">]</span>
+<span class="n">person</span><span class="o">.</span><span class="n">read_attribute</span><span class="p">(</span><span class="ss">:gender</span><span class="p">)</span>
+
+<span class="c1"># Write a dynamic field safely.</span>
+<span class="n">person</span><span class="o">[</span><span class="ss">:gender</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Male&quot;</span>
+<span class="n">person</span><span class="o">.</span><span class="n">write_attribute</span><span class="p">(</span><span class="ss">:gender</span><span class="p">,</span> <span class="s2">&quot;Male&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="localized-fields">
+<h2>Localized Fields<a class="headerlink" href="mongoid-documents.html#localized-fields" title="Permalink to this headline">¶</a></h2>
+<p>Mongoid now supports localized fields without the need of any external gem.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Product</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">localize</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>By telling the field to <tt class="docutils literal"><span class="pre">localize</span></tt>, Mongoid will under the covers store the field
+as a hash of locale/value pairs, but normal access to it will behave like a string.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">I18n</span><span class="o">.</span><span class="n">default_locale</span> <span class="o">=</span> <span class="ss">:en</span>
+<span class="n">product</span> <span class="o">=</span> <span class="no">Product</span><span class="o">.</span><span class="n">new</span>
+<span class="n">product</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Marvelous!&quot;</span>
+<span class="no">I18n</span><span class="o">.</span><span class="n">locale</span> <span class="o">=</span> <span class="ss">:de</span>
+<span class="n">product</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Fantastisch!&quot;</span>
+
+<span class="n">product</span><span class="o">.</span><span class="n">attributes</span>
+<span class="c1">#=&gt; { &quot;description&quot; =&gt; { &quot;en&quot; =&gt; &quot;Marvelous!&quot;, &quot;de&quot; =&gt; &quot;Fantastisch!&quot; }</span>
+</pre></div>
+</div>
+<p>You can get and set all the translations at once by using the corresponding <tt class="docutils literal"><span class="pre">_translations</span></tt> method.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">product</span><span class="o">.</span><span class="n">description_translations</span>
+<span class="c1">#=&gt; { &quot;en&quot; =&gt; &quot;Marvelous!&quot;, &quot;de&quot; =&gt; &quot;Fantastisch!&quot; }</span>
+<span class="n">product</span><span class="o">.</span><span class="n">description_translations</span> <span class="o">=</span>
+  <span class="p">{</span> <span class="s2">&quot;en&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Marvelous!&quot;</span><span class="p">,</span> <span class="s2">&quot;de&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Wunderbar!&quot;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="fallbacks">
+<h3>Fallbacks<a class="headerlink" href="mongoid-documents.html#fallbacks" title="Permalink to this headline">¶</a></h3>
+<p>When using fallbacks, Mongoid will automatically use them when a translation is not available.</p>
+<p>For Rails applications, set the fallbacks configuration setting to true in your environment.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">config</span><span class="o">.</span><span class="n">i18n</span><span class="o">.</span><span class="n">fallbacks</span> <span class="o">=</span> <span class="kp">true</span>
+</pre></div>
+</div>
+<p>For non-rails applications, you must include the fallbacks module straight to the I18n gem.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="nb">require</span> <span class="s2">&quot;i18n/backend/fallbacks&quot;</span>
+<span class="no">I18n</span><span class="o">::</span><span class="no">Backend</span><span class="o">::</span><span class="no">Simple</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:include</span><span class="p">,</span> <span class="no">I18n</span><span class="o">::</span><span class="no">Backend</span><span class="o">::</span><span class="no">Fallbacks</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then when the fallbacks are defined, if a translation is not present Mongoid will fallback
+in order of the defined locales.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">I18n</span><span class="o">.</span><span class="n">default_locale</span> <span class="o">=</span> <span class="ss">:en</span>
+<span class="no">I18n</span><span class="o">.</span><span class="n">fallbacks</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="o">::</span><span class="no">I18n</span><span class="o">.</span><span class="n">fallbacks</span><span class="o">[</span><span class="ss">:de</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span> <span class="ss">:de</span><span class="p">,</span> <span class="ss">:en</span><span class="p">,</span> <span class="ss">:es</span> <span class="o">]</span>
+<span class="n">product</span> <span class="o">=</span> <span class="no">Product</span><span class="o">.</span><span class="n">new</span>
+<span class="n">product</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Marvelous!&quot;</span>
+<span class="no">I18n</span><span class="o">.</span><span class="n">locale</span> <span class="o">=</span> <span class="ss">:de</span>
+<span class="n">product</span><span class="o">.</span><span class="n">description</span> <span class="c1">#=&gt; &quot;Marvelous!&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="querying">
+<h3>Querying<a class="headerlink" href="mongoid-documents.html#querying" title="Permalink to this headline">¶</a></h3>
+<p>When querying for localized fields using Mongoid&#8217;s criteria API, Mongoid will automatically
+alter the criteria to match the current locale.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># Match all prodcucts with Marvelous as the description. Locale is en.</span>
+<span class="no">Product</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">description</span><span class="p">:</span> <span class="s2">&quot;Marvelous!&quot;</span><span class="p">)</span>
+<span class="c1"># The resulting MongoDB query filter: { &quot;description.en&quot; : &quot;Marvelous!&quot; }</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="indexing">
+<h3>Indexing<a class="headerlink" href="mongoid-documents.html#indexing" title="Permalink to this headline">¶</a></h3>
+<p>If you plan to be querying extensively on localized fields, you should index each of the
+locales that you plan on searching on.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Product</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:description</span><span class="p">,</span> <span class="ss">localize</span><span class="p">:</span> <span class="kp">true</span>
+
+  <span class="n">index</span> <span class="s2">&quot;description.de&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span>
+  <span class="n">index</span> <span class="s2">&quot;description.en&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dirty-tracking">
+<h2>Dirty Tracking<a class="headerlink" href="mongoid-documents.html#dirty-tracking" title="Permalink to this headline">¶</a></h2>
+<p>Mongoid supports tracking of changed or &#8220;dirty&#8221; fields with an API that mirrors that of
+Active Model. If a defined field has been modified in a model the model will be marked as
+dirty and some additional behavior comes into play.</p>
+<div class="section" id="viewing-changes">
+<h3>Viewing Changes<a class="headerlink" href="mongoid-documents.html#viewing-changes" title="Permalink to this headline">¶</a></h3>
+<p>There are various ways to view what has been altered on a model. Changes are recorded
+from the time a document is instantiated, either as a new document or via loading from
+the database up to the time it is saved. Any persistence operation clears the changes.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+<span class="k">end</span>
+
+<span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">first</span>
+<span class="n">person</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Alan Garner&quot;</span>
+
+<span class="c1"># Check to see if the document has changed.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">changed?</span> <span class="c1">#=&gt; true</span>
+
+<span class="c1"># Get an array of the names of the changed fields.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">changed</span> <span class="c1">#=&gt; [ :name ]</span>
+
+<span class="c1"># Get a hash of the old and changed values for each field.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">changes</span> <span class="c1">#=&gt; { &quot;name&quot; =&gt; [ &quot;Alan Parsons&quot;, &quot;Alan Garner&quot; ] }</span>
+
+<span class="c1"># Check if a specific field has changed.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">name_changed?</span> <span class="c1">#=&gt; true</span>
+
+<span class="c1"># Get the changes for a specific field.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">name_change</span> <span class="c1">#=&gt; [ &quot;Alan Parsons&quot;, &quot;Alan Garner&quot; ]</span>
+
+<span class="c1"># Get the previous value for a field.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">name_was</span> <span class="c1">#=&gt; &quot;Alan Parsons&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="resetting-changes">
+<h3>Resetting Changes<a class="headerlink" href="mongoid-documents.html#resetting-changes" title="Permalink to this headline">¶</a></h3>
+<p>You can reset changes of a field to its previous value by calling the reset method.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">first</span>
+<span class="n">person</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Alan Garner&quot;</span>
+
+<span class="c1"># Reset the changed name back to the original</span>
+<span class="n">person</span><span class="o">.</span><span class="n">reset_name!</span>
+<span class="n">person</span><span class="o">.</span><span class="n">name</span> <span class="c1">#=&gt; &quot;Alan Parsons&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="notes-on-persistence">
+<h3>Notes On Persistence<a class="headerlink" href="mongoid-documents.html#notes-on-persistence" title="Permalink to this headline">¶</a></h3>
+<p>Mongoid uses dirty tracking as the core of its persistence operations. It looks at the
+changes on a document and atomically updates only what has changed unlike other frameworks
+that write the entire document on each save. If no changes have been made, Mongoid will
+not hit the database on a call to <tt class="docutils literal"><span class="pre">Model#save</span></tt>.</p>
+</div>
+<div class="section" id="viewing-previous-changes">
+<h3>Viewing Previous Changes<a class="headerlink" href="mongoid-documents.html#viewing-previous-changes" title="Permalink to this headline">¶</a></h3>
+<p>After a document has been persisted, you can see what the changes were previously by
+calling <tt class="docutils literal"><span class="pre">Model#previous_changes</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">person</span> <span class="o">=</span> <span class="no">Person</span><span class="o">.</span><span class="n">first</span>
+<span class="n">person</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Alan Garner&quot;</span>
+<span class="n">person</span><span class="o">.</span><span class="n">save</span> <span class="c1">#=&gt; Clears out current changes.</span>
+
+<span class="c1"># View the previous changes.</span>
+<span class="n">person</span><span class="o">.</span><span class="n">previous_changes</span> <span class="c1">#=&gt; { &quot;name&quot; =&gt; [ &quot;Alan Parsons&quot;, &quot;Alan Garner&quot; ] }</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="readonly-attributes">
+<h2>Readonly Attributes<a class="headerlink" href="mongoid-documents.html#readonly-attributes" title="Permalink to this headline">¶</a></h2>
+<p>You can tell Mongoid that certain attributes are readonly. This will allow documents to be
+created with theses attributes, but changes to them will be filtered out.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">field</span> <span class="ss">:origin</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+
+  <span class="n">attr_readonly</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:origin</span>
+<span class="k">end</span>
+
+<span class="n">band</span> <span class="o">=</span> <span class="no">Band</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Placebo&quot;</span><span class="p">)</span>
+<span class="n">band</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Tool&quot;</span><span class="p">)</span> <span class="c1"># Filters out the name change.</span>
+</pre></div>
+</div>
+<p>If you explicitly try to update or remove the attribute by itself, then a <tt class="docutils literal"><span class="pre">ReadonlyAttribute</span></tt>
+error will be raised.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">band</span><span class="o">.</span><span class="n">update_attribute</span><span class="p">(</span><span class="ss">:name</span><span class="p">,</span> <span class="s2">&quot;Tool&quot;</span><span class="p">)</span> <span class="c1"># Raises the error.</span>
+<span class="n">band</span><span class="o">.</span><span class="n">remove_attribute</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span> <span class="c1"># Raises the error.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inheritance">
+<h2>Inheritance<a class="headerlink" href="mongoid-documents.html#inheritance" title="Permalink to this headline">¶</a></h2>
+<p>Mongoid supports inheritance in both root and embedded documents. In scenarios where
+documents are inherited from their fields, relations, validations and scopes get copied
+down into their child documents, but not vise-versa.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Canvas</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">String</span>
+  <span class="n">embeds_many</span> <span class="ss">:shapes</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Browser</span> <span class="o">&lt;</span> <span class="no">Canvas</span>
+  <span class="n">field</span> <span class="ss">:version</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+  <span class="n">scope</span> <span class="ss">:recent</span><span class="p">,</span> <span class="n">where</span><span class="p">(</span><span class="ss">:version</span><span class="o">.</span><span class="n">gt</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Firefox</span> <span class="o">&lt;</span> <span class="no">Browser</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Shape</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="n">field</span> <span class="ss">:x</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+  <span class="n">field</span> <span class="ss">:y</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Integer</span>
+  <span class="n">embedded_in</span> <span class="ss">:canvas</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Circle</span> <span class="o">&lt;</span> <span class="no">Shape</span>
+  <span class="n">field</span> <span class="ss">:radius</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Float</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Rectangle</span> <span class="o">&lt;</span> <span class="no">Shape</span>
+  <span class="n">field</span> <span class="ss">:width</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Float</span>
+  <span class="n">field</span> <span class="ss">:height</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="nb">Float</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>In the above example, <tt class="docutils literal"><span class="pre">Canvas</span></tt>, <tt class="docutils literal"><span class="pre">Browser</span></tt> and <tt class="docutils literal"><span class="pre">Firefox</span></tt> will all save in the canvases
+collection. An additional attribute <tt class="docutils literal"><span class="pre">_type</span></tt> is stored in order to make sure when loaded
+from the database the correct document is returned. This also holds true for the embedded
+documents <tt class="docutils literal"><span class="pre">Circle</span></tt>, <tt class="docutils literal"><span class="pre">Rectangle</span></tt>, and <tt class="docutils literal"><span class="pre">Shape</span></tt>.</p>
+<div class="section" id="querying-subclasses">
+<h3>Querying Subclasses<a class="headerlink" href="mongoid-documents.html#querying-subclasses" title="Permalink to this headline">¶</a></h3>
+<p>Querying for subclasses is handled in the normal manner, and although the documents are
+all in the same collection, queries will only return documents of the correct type,
+similar to Single Table Inheritance in ActiveRecord.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># Returns Canvas documents and subclasses</span>
+<span class="no">Canvas</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Paper&quot;</span><span class="p">)</span>
+<span class="c1"># Returns only Firefox documents</span>
+<span class="no">Firefox</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Window 1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="associations">
+<h3>Associations<a class="headerlink" href="mongoid-documents.html#associations" title="Permalink to this headline">¶</a></h3>
+<p>You can add any type of subclass to a has one or has many association, through either normal
+setting or through the build and create methods on the association:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">firefox</span> <span class="o">=</span> <span class="no">Firefox</span><span class="o">.</span><span class="n">new</span>
+<span class="c1"># Builds a Shape object</span>
+<span class="n">firefox</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">build</span><span class="p">({</span> <span class="ss">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="mi">0</span> <span class="p">})</span>
+<span class="c1"># Builds a Circle object</span>
+<span class="n">firefox</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">build</span><span class="p">({</span> <span class="ss">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="no">Circle</span><span class="p">)</span>
+<span class="c1"># Creates a Rectangle object</span>
+<span class="n">firefox</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">create</span><span class="p">({</span> <span class="ss">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">y</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="no">Rectangle</span><span class="p">)</span>
+
+<span class="n">rect</span> <span class="o">=</span> <span class="no">Rectangle</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">width</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="ss">height</span><span class="p">:</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">firefox</span><span class="o">.</span><span class="n">shapes</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="timestamping">
+<h2>Timestamping<a class="headerlink" href="mongoid-documents.html#timestamping" title="Permalink to this headline">¶</a></h2>
+<p>Mongoid supplies a timestamping module in <tt class="docutils literal"><span class="pre">Mongoid::Timestamps</span></tt> which
+can be included to get basic behavior for <tt class="docutils literal"><span class="pre">created_at</span></tt> and
+<tt class="docutils literal"><span class="pre">updated_at</span></tt> fields.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Timestamps</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>You may also choose to only have specific timestamps for creation or
+modification.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Person</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Timestamps</span><span class="o">::</span><span class="no">Created</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Post</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Timestamps</span><span class="o">::</span><span class="no">Updated</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>If you want to turn off timestamping for specific calls, use the timeless
+method:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">person</span><span class="o">.</span><span class="n">timeless</span><span class="o">.</span><span class="n">save</span>
+<span class="no">Person</span><span class="o">.</span><span class="n">timeless</span><span class="o">.</span><span class="n">create!</span>
+</pre></div>
+</div>
+<p>If you&#8217;d like shorter timestamp fields with aliases on them to save space,
+you can include the short versions of the modules.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Timestamps</span><span class="o">::</span><span class="no">Short</span> <span class="c1"># For c_at and u_at.</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Timestamps</span><span class="o">::</span><span class="no">Created</span><span class="o">::</span><span class="no">Short</span> <span class="c1"># For c_at only.</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Band</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Document</span>
+  <span class="kp">include</span> <span class="no">Mongoid</span><span class="o">::</span><span class="no">Timestamps</span><span class="o">::</span><span class="no">Updated</span><span class="o">::</span><span class="no">Short</span> <span class="c1"># For u_at only.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+                
+    
+                  <div class="footer">
+                    <div class="copyright">
+                      <p>&copy; MongoDB, Inc 2008-2016. MongoDB, Mongo, and the leaf logo are registered trademarks of MongoDB, Inc.</p>
+                    </div>
+                  </div>
+              </div></div>
+            </div>
+        </div>
+    </div>
+    <div class="right-column">
+      <div class="wrapper"> 
+          <div class="report-link">
+            <a class="jira-link jirafeedback" href="https://jira.mongodb.org/secure/CreateIssueDetails!init.jspa?pid=10380&issuetype=4&priority=4&summary=Comment+on%3a+%22tutorial/mongoid-documents%2Etxt%22" target="_blank" title="Report a problem with tutorial/mongoid-documents.txt on Jira">Report a Problem</a>
+          </div>
+        
+           <div class="social">
+             <a class="twitter-icon" href="https://twitter.com/MongoDB"><i class="fa fa-twitter-square"></i></a>
+             <a class="youtube-icon" href="https://www.youtube.com/user/MongoDB"><i class="fa fa-youtube-square"></i></a>
+             <a class="facebook-icon" href="https://www.facebook.com/mongodb"><i class="fa fa-facebook-square"></i></a>
+             <a class="gplus-icon" href="https://plus.google.com/u/1/101024085748034940765/posts?cfem=1"><i class="fa fa-google-plus-square"></i></a>
+           </div>
+        
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  
+
+  <script type="text/javascript">
+  window.fullDocsPath = function(base) {
+    var body = document.getElementsByClassName('body')[0]
+    var path = body.getAttribute('data-pagename');
+
+    // skip if pagename is undefined (index.html)
+    if (path == 'index') {
+        path = '';
+    } else if (path) {
+      path = path + '/';
+    }
+
+    return '/' + base + '/' + path;
+  }
+  // Bootstrap array of links that should trigger a full page reload
+  window.docsExcludedNav = ['/drivers', '/drivers/c', '/drivers/cpp', '/drivers/csharp', '/drivers/go', '/drivers/erlang', '/drivers/node-js', '/drivers/perl', '/drivers/php', '/drivers/python', '/drivers/ruby', '/drivers/scala'];
+
+  $(document).ready(function(){
+    $(".version-selector").on('click', function(e) {
+      e.preventDefault();
+      var base = $(e.currentTarget).data('path');
+      window.location.href = fullDocsPath(base);
+    });
+
+    $("select.language-selector").on('change', function(e) {
+      var path = $(e.currentTarget).find('option:selected').data('path');
+      window.location.href = path;
+    });
+  });
+
+  </script></body>
+</html>
