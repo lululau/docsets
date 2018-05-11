@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleIdentifier</key>
+  <string>Modern Emacs Libraries</string>
+  <key>CFBundleName</key>
+  <string>Modern Emacs Libraries</string>
+  <key>DocSetPlatformFamily</key>
+  <string>mel</string>
+  <key>dashIndexFilePath</key>
+  <string>dash.html</string>
+  <key>isDashDocset</key>
+  <true/>
+  <key>isJavaScriptEnabled</key>
+  <true/>
+</dict>
+</plist>

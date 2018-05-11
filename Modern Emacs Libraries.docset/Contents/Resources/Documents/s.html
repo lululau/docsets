@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<title>s</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">s.el <a href="http://travis-ci.org/magnars/s.el"><img src="https://secure.travis-ci.org/magnars/s.el.png" alt="Build Status"></a> <a href="https://coveralls.io/r/magnars/s.el?branch=master"><img src="https://coveralls.io/repos/magnars/s.el/badge.svg?branch=master" alt="Coverage Status"></a></h1>
+
+<p>The long lost Emacs string manipulation library.</p>
+
+<h2 id="toc_1">Installation</h2>
+
+<p>It&#39;s available on <a href="http://marmalade-repo.org/">marmalade</a> and <a href="https://melpa.org/">Melpa</a>:</p>
+
+<div><pre><code class="language-none">M-x package-install s</code></pre></div>
+
+<p>Or you can just dump <code>s.el</code> in your load path somewhere.</p>
+
+<h2 id="toc_2">Functions</h2>
+
+<h3 id="toc_3">Tweak whitespace</h3>
+
+<ul>
+<li><a href="#s-trim-s">s-trim</a> <code>(s)</code></li>
+<li><a href="#s-trim-left-s">s-trim-left</a> <code>(s)</code></li>
+<li><a href="#s-trim-right-s">s-trim-right</a> <code>(s)</code></li>
+<li><a href="#s-chomp-s">s-chomp</a> <code>(s)</code></li>
+<li><a href="#s-collapse-whitespace-s">s-collapse-whitespace</a> <code>(s)</code></li>
+<li><a href="#s-word-wrap-len-s">s-word-wrap</a> <code>(len s)</code></li>
+<li><a href="#s-center-len-s">s-center</a> <code>(len s)</code></li>
+<li><a href="#s-pad-left-len-padding-s">s-pad-left</a> <code>(len padding s)</code></li>
+<li><a href="#s-pad-right-len-padding-s">s-pad-right</a> <code>(len padding s)</code></li>
+</ul>
+
+<h3 id="toc_4">To shorter string</h3>
+
+<ul>
+<li><a href="#s-truncate-len-s">s-truncate</a> <code>(len s)</code></li>
+<li><a href="#s-left-len-s">s-left</a> <code>(len s)</code></li>
+<li><a href="#s-right-len-s">s-right</a> <code>(len s)</code></li>
+<li><a href="#s-chop-suffix-suffix-s">s-chop-suffix</a> <code>(suffix s)</code></li>
+<li><a href="#s-chop-suffixes-suffixes-s">s-chop-suffixes</a> <code>(suffixes s)</code></li>
+<li><a href="#s-chop-prefix-prefix-s">s-chop-prefix</a> <code>(prefix s)</code></li>
+<li><a href="#s-chop-prefixes-prefixes-s">s-chop-prefixes</a> <code>(prefixes s)</code></li>
+<li><a href="#s-shared-start-s1-s2">s-shared-start</a> <code>(s1 s2)</code></li>
+<li><a href="#s-shared-end-s1-s2">s-shared-end</a> <code>(s1 s2)</code></li>
+</ul>
+
+<h3 id="toc_5">To longer string</h3>
+
+<ul>
+<li><a href="#s-repeat-num-s">s-repeat</a> <code>(num s)</code></li>
+<li><a href="#s-concat-rest-strings">s-concat</a> <code>(&amp;rest strings)</code></li>
+<li><a href="#s-prepend-prefix-s">s-prepend</a> <code>(prefix s)</code></li>
+<li><a href="#s-append-suffix-s">s-append</a> <code>(suffix s)</code></li>
+</ul>
+
+<h3 id="toc_6">To and from lists</h3>
+
+<ul>
+<li><a href="#s-lines-s">s-lines</a> <code>(s)</code></li>
+<li><a href="#s-match-regexp-s-optional-start">s-match</a> <code>(regexp s &amp;optional start)</code></li>
+<li><a href="#s-match-strings-all-regex-string">s-match-strings-all</a> <code>(regex string)</code></li>
+<li><a href="#s-matched-positions-all-regexp-string-optional-subexp-depth">s-matched-positions-all</a> <code>(regexp string &amp;optional subexp-depth)</code></li>
+<li><a href="#s-slice-at-regexp-s">s-slice-at</a> <code>(regexp s)</code></li>
+<li><a href="#s-split-separator-s-optional-omit-nulls">s-split</a> <code>(separator s &amp;optional omit-nulls)</code></li>
+<li><a href="#s-split-up-to-separator-s-n-optional-omit-nulls">s-split-up-to</a> <code>(separator s n &amp;optional omit-nulls)</code></li>
+<li><a href="#s-join-separator-strings">s-join</a> <code>(separator strings)</code></li>
+</ul>
+
+<h3 id="toc_7">Predicates</h3>
+
+<ul>
+<li><a href="#s-equals-s1-s2">s-equals?</a> <code>(s1 s2)</code></li>
+<li><a href="#s-less-s1-s2">s-less?</a> <code>(s1 s2)</code></li>
+<li><a href="#s-matches-regexp-s-optional-start">s-matches?</a> <code>(regexp s &amp;optional start)</code></li>
+<li><a href="#s-blank-s">s-blank?</a> <code>(s)</code></li>
+<li><a href="#s-present-s">s-present?</a> <code>(s)</code></li>
+<li><a href="#s-ends-with-suffix-s-optional-ignore-case">s-ends-with?</a> <code>(suffix s &amp;optional ignore-case)</code></li>
+<li><a href="#s-starts-with-prefix-s-optional-ignore-case">s-starts-with?</a> <code>(prefix s &amp;optional ignore-case)</code></li>
+<li><a href="#s-contains-needle-s-optional-ignore-case">s-contains?</a> <code>(needle s &amp;optional ignore-case)</code></li>
+<li><a href="#s-lowercase-s">s-lowercase?</a> <code>(s)</code></li>
+<li><a href="#s-uppercase-s">s-uppercase?</a> <code>(s)</code></li>
+<li><a href="#s-mixedcase-s">s-mixedcase?</a> <code>(s)</code></li>
+<li><a href="#s-capitalized-s">s-capitalized?</a> <code>(s)</code></li>
+<li><a href="#s-numeric-s">s-numeric?</a> <code>(s)</code></li>
+</ul>
+
+<h3 id="toc_8">The misc bucket</h3>
+
+<ul>
+<li><a href="#s-replace-old-new-s">s-replace</a> <code>(old new s)</code></li>
+<li><a href="#s-replace-all-replacements-s">s-replace-all</a> <code>(replacements s)</code></li>
+<li><a href="#s-downcase-s">s-downcase</a> <code>(s)</code></li>
+<li><a href="#s-upcase-s">s-upcase</a> <code>(s)</code></li>
+<li><a href="#s-capitalize-s">s-capitalize</a> <code>(s)</code></li>
+<li><a href="#s-titleize-s">s-titleize</a> <code>(s)</code></li>
+<li><a href="#s-with-s-form-rest-more">s-with</a> <code>(s form &amp;rest more)</code></li>
+<li><a href="#s-index-of-needle-s-optional-ignore-case">s-index-of</a> <code>(needle s &amp;optional ignore-case)</code></li>
+<li><a href="#s-reverse-s">s-reverse</a> <code>(s)</code></li>
+<li><a href="#s-presence-s">s-presence</a> <code>(s)</code></li>
+<li><a href="#s-format-template-replacer-optional-extra">s-format</a> <code>(template replacer &amp;optional extra)</code></li>
+<li><a href="#s-lex-format-format-str">s-lex-format</a> <code>(format-str)</code></li>
+<li><a href="#s-count-matches-regexp-s-optional-start-end">s-count-matches</a> <code>(regexp s &amp;optional start end)</code></li>
+<li><a href="#s-wrap-s-prefix-optional-suffix">s-wrap</a> <code>(s prefix &amp;optional suffix)</code></li>
+</ul>
+
+<h3 id="toc_9">Pertaining to words</h3>
+
+<ul>
+<li><a href="#s-split-words-s">s-split-words</a> <code>(s)</code></li>
+<li><a href="#s-lower-camel-case-s">s-lower-camel-case</a> <code>(s)</code></li>
+<li><a href="#s-upper-camel-case-s">s-upper-camel-case</a> <code>(s)</code></li>
+<li><a href="#s-snake-case-s">s-snake-case</a> <code>(s)</code></li>
+<li><a href="#s-dashed-words-s">s-dashed-words</a> <code>(s)</code></li>
+<li><a href="#s-capitalized-words-s">s-capitalized-words</a> <code>(s)</code></li>
+<li><a href="#s-titleized-words-s">s-titleized-words</a> <code>(s)</code></li>
+<li><a href="#s-word-initials-s">s-word-initials</a> <code>(s)</code></li>
+</ul>
+
+<h2 id="toc_10">Documentation and examples</h2>
+
+<h3 id="toc_11">s-trim <code>(s)</code></h3>
+
+<p>Remove whitespace at the beginning and end of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-trim &quot;trim &quot;) ;; =&gt; &quot;trim&quot;
+(s-trim &quot; this&quot;) ;; =&gt; &quot;this&quot;
+(s-trim &quot; only  trims beg and end  &quot;) ;; =&gt; &quot;only  trims beg and end&quot;</code></pre></div>
+
+<h3 id="toc_12">s-trim-left <code>(s)</code></h3>
+
+<p>Remove whitespace at the beginning of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-trim-left &quot;trim &quot;) ;; =&gt; &quot;trim &quot;
+(s-trim-left &quot; this&quot;) ;; =&gt; &quot;this&quot;</code></pre></div>
+
+<h3 id="toc_13">s-trim-right <code>(s)</code></h3>
+
+<p>Remove whitespace at the end of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-trim-right &quot;trim &quot;) ;; =&gt; &quot;trim&quot;
+(s-trim-right &quot; this&quot;) ;; =&gt; &quot; this&quot;</code></pre></div>
+
+<h3 id="toc_14">s-chomp <code>(s)</code></h3>
+
+<p>Remove one trailing <code>\n</code>, <code>\r</code> or <code>\r\n</code> from <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-chomp &quot;no newlines\n&quot;) ;; =&gt; &quot;no newlines&quot;
+(s-chomp &quot;no newlines\r\n&quot;) ;; =&gt; &quot;no newlines&quot;
+(s-chomp &quot;some newlines\n\n&quot;) ;; =&gt; &quot;some newlines\n&quot;</code></pre></div>
+
+<h3 id="toc_15">s-collapse-whitespace <code>(s)</code></h3>
+
+<p>Convert all adjacent whitespace characters to a single space.</p>
+
+<div><pre><code class="language-cl">(s-collapse-whitespace &quot;only   one space   please&quot;) ;; =&gt; &quot;only one space please&quot;
+(s-collapse-whitespace &quot;collapse \n all \t sorts of \r whitespace&quot;) ;; =&gt; &quot;collapse all sorts of whitespace&quot;</code></pre></div>
+
+<h3 id="toc_16">s-word-wrap <code>(len s)</code></h3>
+
+<p>If <code>s</code> is longer than <code>len</code>, wrap the words with newlines.</p>
+
+<div><pre><code class="language-cl">(s-word-wrap 10 &quot;This is too long&quot;) ;; =&gt; &quot;This is\ntoo long&quot;
+(s-word-wrap 10 &quot;This is way way too long&quot;) ;; =&gt; &quot;This is\nway way\ntoo long&quot;
+(s-word-wrap 10 &quot;It-wraps-words-but-does-not-break-them&quot;) ;; =&gt; &quot;It-wraps-words-but-does-not-break-them&quot;</code></pre></div>
+
+<h3 id="toc_17">s-center <code>(len s)</code></h3>
+
+<p>If <code>s</code> is shorter than <code>len</code>, pad it with spaces so it is centered.</p>
+
+<div><pre><code class="language-cl">(s-center 5 &quot;a&quot;) ;; =&gt; &quot;  a  &quot;
+(s-center 5 &quot;ab&quot;) ;; =&gt; &quot;  ab &quot;
+(s-center 1 &quot;abc&quot;) ;; =&gt; &quot;abc&quot;</code></pre></div>
+
+<h3 id="toc_18">s-pad-left <code>(len padding s)</code></h3>
+
+<p>If <code>s</code> is shorter than <code>len</code>, pad it with <code>padding</code> on the left.</p>
+
+<div><pre><code class="language-cl">(s-pad-left 3 &quot;0&quot; &quot;3&quot;) ;; =&gt; &quot;003&quot;
+(s-pad-left 3 &quot;0&quot; &quot;23&quot;) ;; =&gt; &quot;023&quot;
+(s-pad-left 3 &quot;0&quot; &quot;1234&quot;) ;; =&gt; &quot;1234&quot;</code></pre></div>
+
+<h3 id="toc_19">s-pad-right <code>(len padding s)</code></h3>
+
+<p>If <code>s</code> is shorter than <code>len</code>, pad it with <code>padding</code> on the right.</p>
+
+<div><pre><code class="language-cl">(s-pad-right 3 &quot;.&quot; &quot;3&quot;) ;; =&gt; &quot;3..&quot;
+(s-pad-right 3 &quot;.&quot; &quot;23&quot;) ;; =&gt; &quot;23.&quot;
+(s-pad-right 3 &quot;.&quot; &quot;1234&quot;) ;; =&gt; &quot;1234&quot;</code></pre></div>
+
+<h3 id="toc_20">s-truncate <code>(len s)</code></h3>
+
+<p>If <code>s</code> is longer than <code>len</code>, cut it down to <code>len</code> - 3 and add ... at the end.</p>
+
+<div><pre><code class="language-cl">(s-truncate 6 &quot;This is too long&quot;) ;; =&gt; &quot;Thi...&quot;
+(s-truncate 16 &quot;This is also too long&quot;) ;; =&gt; &quot;This is also ...&quot;
+(s-truncate 16 &quot;But this is not!&quot;) ;; =&gt; &quot;But this is not!&quot;</code></pre></div>
+
+<h3 id="toc_21">s-left <code>(len s)</code></h3>
+
+<p>Returns up to the <code>len</code> first chars of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-left 3 &quot;lib/file.js&quot;) ;; =&gt; &quot;lib&quot;
+(s-left 3 &quot;li&quot;) ;; =&gt; &quot;li&quot;</code></pre></div>
+
+<h3 id="toc_22">s-right <code>(len s)</code></h3>
+
+<p>Returns up to the <code>len</code> last chars of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-right 3 &quot;lib/file.js&quot;) ;; =&gt; &quot;.js&quot;
+(s-right 3 &quot;li&quot;) ;; =&gt; &quot;li&quot;</code></pre></div>
+
+<h3 id="toc_23">s-chop-suffix <code>(suffix s)</code></h3>
+
+<p>Remove <code>suffix</code> if it is at end of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-chop-suffix &quot;-test.js&quot; &quot;penguin-test.js&quot;) ;; =&gt; &quot;penguin&quot;
+(s-chop-suffix &quot;\n&quot; &quot;no newlines\n&quot;) ;; =&gt; &quot;no newlines&quot;
+(s-chop-suffix &quot;\n&quot; &quot;some newlines\n\n&quot;) ;; =&gt; &quot;some newlines\n&quot;</code></pre></div>
+
+<h3 id="toc_24">s-chop-suffixes <code>(suffixes s)</code></h3>
+
+<p>Remove <code>suffixes</code> one by one in order, if they are at the end of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-chop-suffixes &#39;(&quot;_test.js&quot; &quot;-test.js&quot; &quot;Test.js&quot;) &quot;penguin-test.js&quot;) ;; =&gt; &quot;penguin&quot;
+(s-chop-suffixes &#39;(&quot;\r&quot; &quot;\n&quot;) &quot;penguin\r\n&quot;) ;; =&gt; &quot;penguin\r&quot;
+(s-chop-suffixes &#39;(&quot;\n&quot; &quot;\r&quot;) &quot;penguin\r\n&quot;) ;; =&gt; &quot;penguin&quot;</code></pre></div>
+
+<h3 id="toc_25">s-chop-prefix <code>(prefix s)</code></h3>
+
+<p>Remove <code>prefix</code> if it is at the start of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-chop-prefix &quot;/tmp&quot; &quot;/tmp/file.js&quot;) ;; =&gt; &quot;/file.js&quot;
+(s-chop-prefix &quot;/tmp&quot; &quot;/tmp/tmp/file.js&quot;) ;; =&gt; &quot;/tmp/file.js&quot;</code></pre></div>
+
+<h3 id="toc_26">s-chop-prefixes <code>(prefixes s)</code></h3>
+
+<p>Remove <code>prefixes</code> one by one in order, if they are at the start of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-chop-prefixes &#39;(&quot;/tmp&quot; &quot;/my&quot;) &quot;/tmp/my/file.js&quot;) ;; =&gt; &quot;/file.js&quot;
+(s-chop-prefixes &#39;(&quot;/my&quot; &quot;/tmp&quot;) &quot;/tmp/my/file.js&quot;) ;; =&gt; &quot;/my/file.js&quot;</code></pre></div>
+
+<h3 id="toc_27">s-shared-start <code>(s1 s2)</code></h3>
+
+<p>Returns the longest prefix <code>s1</code> and <code>s2</code> have in common.</p>
+
+<div><pre><code class="language-cl">(s-shared-start &quot;bar&quot; &quot;baz&quot;) ;; =&gt; &quot;ba&quot;
+(s-shared-start &quot;foobar&quot; &quot;foo&quot;) ;; =&gt; &quot;foo&quot;
+(s-shared-start &quot;bar&quot; &quot;foo&quot;) ;; =&gt; &quot;&quot;</code></pre></div>
+
+<h3 id="toc_28">s-shared-end <code>(s1 s2)</code></h3>
+
+<p>Returns the longest suffix <code>s1</code> and <code>s2</code> have in common.</p>
+
+<div><pre><code class="language-cl">(s-shared-end &quot;bar&quot; &quot;var&quot;) ;; =&gt; &quot;ar&quot;
+(s-shared-end &quot;foo&quot; &quot;foo&quot;) ;; =&gt; &quot;foo&quot;
+(s-shared-end &quot;bar&quot; &quot;foo&quot;) ;; =&gt; &quot;&quot;</code></pre></div>
+
+<h3 id="toc_29">s-repeat <code>(num s)</code></h3>
+
+<p>Make a string of <code>s</code> repeated <code>num</code> times.</p>
+
+<div><pre><code class="language-cl">(s-repeat 10 &quot; &quot;) ;; =&gt; &quot;          &quot;
+(s-concat (s-repeat 8 &quot;Na&quot;) &quot; Batman!&quot;) ;; =&gt; &quot;NaNaNaNaNaNaNaNa Batman!&quot;</code></pre></div>
+
+<h3 id="toc_30">s-concat <code>(&amp;rest strings)</code></h3>
+
+<p>Join all the string arguments into one string.</p>
+
+<div><pre><code class="language-cl">(s-concat &quot;abc&quot; &quot;def&quot; &quot;ghi&quot;) ;; =&gt; &quot;abcdefghi&quot;</code></pre></div>
+
+<h3 id="toc_31">s-prepend <code>(prefix s)</code></h3>
+
+<p>Concatenate <code>prefix</code> and <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-prepend &quot;abc&quot; &quot;def&quot;) ;; =&gt; &quot;abcdef&quot;</code></pre></div>
+
+<h3 id="toc_32">s-append <code>(suffix s)</code></h3>
+
+<p>Concatenate <code>s</code> and <code>suffix</code>.</p>
+
+<div><pre><code class="language-cl">(s-append &quot;abc&quot; &quot;def&quot;) ;; =&gt; &quot;defabc&quot;</code></pre></div>
+
+<h3 id="toc_33">s-lines <code>(s)</code></h3>
+
+<p>Splits <code>s</code> into a list of strings on newline characters.</p>
+
+<div><pre><code class="language-cl">(s-lines &quot;abc\ndef\nghi&quot;) ;; =&gt; &#39;(&quot;abc&quot; &quot;def&quot; &quot;ghi&quot;)
+(s-lines &quot;abc\rdef\rghi&quot;) ;; =&gt; &#39;(&quot;abc&quot; &quot;def&quot; &quot;ghi&quot;)
+(s-lines &quot;abc\r\ndef\r\nghi&quot;) ;; =&gt; &#39;(&quot;abc&quot; &quot;def&quot; &quot;ghi&quot;)</code></pre></div>
+
+<h3 id="toc_34">s-match <code>(regexp s &amp;optional start)</code></h3>
+
+<p>When the given expression matches the string, this function returns a list
+of the whole matching string and a string for each matched subexpressions.
+If it did not match the returned value is an empty list (nil).</p>
+
+<p>When <code>start</code> is non-nil the search will start at that index.</p>
+
+<div><pre><code class="language-cl">(s-match &quot;^def&quot; &quot;abcdefg&quot;) ;; =&gt; nil
+(s-match &quot;^abc&quot; &quot;abcdefg&quot;) ;; =&gt; &#39;(&quot;abc&quot;)
+(s-match &quot;^/.*/\\([a-z]+\\)\\.\\([a-z]+\\)&quot; &quot;/some/weird/file.html&quot;) ;; =&gt; &#39;(&quot;/some/weird/file.html&quot; &quot;file&quot; &quot;html&quot;)</code></pre></div>
+
+<h3 id="toc_35">s-match-strings-all <code>(regex string)</code></h3>
+
+<p>Return a list of matches for <code>regex</code> in <code>string</code>.</p>
+
+<p>Each element itself is a list of matches, as per
+<code>match-string</code>. Multiple matches at the same position will be
+ignored after the first.</p>
+
+<div><pre><code class="language-cl">(s-match-strings-all &quot;{\\([^}]+\\)}&quot; &quot;x is {x} and y is {y}&quot;) ;; =&gt; &#39;((&quot;{x}&quot; &quot;x&quot;) (&quot;{y}&quot; &quot;y&quot;))
+(s-match-strings-all &quot;ab.&quot; &quot;abXabY&quot;) ;; =&gt; &#39;((&quot;abX&quot;) (&quot;abY&quot;))
+(s-match-strings-all &quot;\\&lt;&quot; &quot;foo bar baz&quot;) ;; =&gt; &#39;((&quot;&quot;) (&quot;&quot;) (&quot;&quot;))</code></pre></div>
+
+<h3 id="toc_36">s-matched-positions-all <code>(regexp string &amp;optional subexp-depth)</code></h3>
+
+<p>Return a list of matched positions for <code>regexp</code> in <code>string</code>.
+<code>subexp-depth</code> is 0 by default.</p>
+
+<div><pre><code class="language-cl">(s-matched-positions-all &quot;l+&quot; &quot;{{Hello}} World, {{Emacs}}!&quot; 0) ;; =&gt; &#39;((4 . 6) (13 . 14))
+(s-matched-positions-all &quot;{{\\(.+?\\)}}&quot; &quot;{{Hello}} World, {{Emacs}}!&quot; 0) ;; =&gt; &#39;((0 . 9) (17 . 26))
+(s-matched-positions-all &quot;{{\\(.+?\\)}}&quot; &quot;{{Hello}} World, {{Emacs}}!&quot; 1) ;; =&gt; &#39;((2 . 7) (19 . 24))</code></pre></div>
+
+<h3 id="toc_37">s-slice-at <code>(regexp s)</code></h3>
+
+<p>Slices <code>s</code> up at every index matching <code>regexp</code>.</p>
+
+<div><pre><code class="language-cl">(s-slice-at &quot;-&quot; &quot;abc&quot;) ;; =&gt; &#39;(&quot;abc&quot;)
+(s-slice-at &quot;-&quot; &quot;abc-def&quot;) ;; =&gt; &#39;(&quot;abc&quot; &quot;-def&quot;)
+(s-slice-at &quot;[.#]&quot; &quot;abc.def.ghi#id&quot;) ;; =&gt; &#39;(&quot;abc&quot; &quot;.def&quot; &quot;.ghi&quot; &quot;#id&quot;)</code></pre></div>
+
+<h3 id="toc_38">s-split <code>(separator s &amp;optional omit-nulls)</code></h3>
+
+<p>Split <code>s</code> into substrings bounded by matches for regexp <code>separator</code>.
+If <code>omit-nulls</code> is non-nil, zero-length substrings are omitted.</p>
+
+<p>This is a simple wrapper around the built-in <code>split-string</code>.</p>
+
+<div><pre><code class="language-cl">(s-split &quot;|&quot; &quot;a|bc|12|3&quot;) ;; =&gt; &#39;(&quot;a&quot; &quot;bc&quot; &quot;12&quot; &quot;3&quot;)
+(s-split &quot;:&quot; &quot;a,c,d&quot;) ;; =&gt; &#39;(&quot;a,c,d&quot;)
+(s-split &quot;\n&quot; &quot;z\nefg\n&quot;) ;; =&gt; &#39;(&quot;z&quot; &quot;efg&quot; &quot;&quot;)</code></pre></div>
+
+<h3 id="toc_39">s-split-up-to <code>(separator s n &amp;optional omit-nulls)</code></h3>
+
+<p>Split <code>s</code> up to <code>n</code> times into substrings bounded by matches for regexp <code>separator</code>.</p>
+
+<p>If <code>omit-nulls</code> is non-nil, zero-length substrings are omitted.</p>
+
+<p>See also <code>s-split</code>.</p>
+
+<div><pre><code class="language-cl">(s-split-up-to &quot;\\s-*-\\s-*&quot; &quot;Author - Track-number-one&quot; 1) ;; =&gt; &#39;(&quot;Author&quot; &quot;Track-number-one&quot;)
+(s-split-up-to &quot;\\s-*-\\s-*&quot; &quot;Author - Track-number-one&quot; 2) ;; =&gt; &#39;(&quot;Author&quot; &quot;Track&quot; &quot;number-one&quot;)
+(s-split-up-to &quot;|&quot; &quot;foo||bar|baz|qux&quot; 3 t) ;; =&gt; &#39;(&quot;foo&quot; &quot;bar&quot; &quot;baz|qux&quot;)</code></pre></div>
+
+<h3 id="toc_40">s-join <code>(separator strings)</code></h3>
+
+<p>Join all the strings in <code>strings</code> with <code>separator</code> in between.</p>
+
+<div><pre><code class="language-cl">(s-join &quot;+&quot; &#39;(&quot;abc&quot; &quot;def&quot; &quot;ghi&quot;)) ;; =&gt; &quot;abc+def+ghi&quot;
+(s-join &quot;\n&quot; &#39;(&quot;abc&quot; &quot;def&quot; &quot;ghi&quot;)) ;; =&gt; &quot;abc\ndef\nghi&quot;</code></pre></div>
+
+<h3 id="toc_41">s-equals? <code>(s1 s2)</code></h3>
+
+<p>Is <code>s1</code> equal to <code>s2</code>?</p>
+
+<p>This is a simple wrapper around the built-in <code>string-equal</code>.</p>
+
+<div><pre><code class="language-cl">(s-equals? &quot;abc&quot; &quot;ABC&quot;) ;; =&gt; nil
+(s-equals? &quot;abc&quot; &quot;abc&quot;) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_42">s-less? <code>(s1 s2)</code></h3>
+
+<p>Is <code>s1</code> less than <code>s2</code>?</p>
+
+<p>This is a simple wrapper around the built-in <code>string-lessp</code>.</p>
+
+<div><pre><code class="language-cl">(s-less? &quot;abc&quot; &quot;abd&quot;) ;; =&gt; t
+(s-less? &quot;abd&quot; &quot;abc&quot;) ;; =&gt; nil
+(s-less? &quot;abc&quot; &quot;abc&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_43">s-matches? <code>(regexp s &amp;optional start)</code></h3>
+
+<p>Does <code>regexp</code> match <code>s</code>?
+If <code>start</code> is non-nil the search starts at that index.</p>
+
+<p>This is a simple wrapper around the built-in <code>string-match-p</code>.</p>
+
+<div><pre><code class="language-cl">(s-matches? &quot;^[0-9]+$&quot; &quot;123&quot;) ;; =&gt; t
+(s-matches? &quot;^[0-9]+$&quot; &quot;a123&quot;) ;; =&gt; nil
+(s-matches? &quot;1&quot; &quot;1a&quot; 1) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_44">s-blank? <code>(s)</code></h3>
+
+<p>Is <code>s</code> nil or the empty string?</p>
+
+<div><pre><code class="language-cl">(s-blank? &quot;&quot;) ;; =&gt; t
+(s-blank? nil) ;; =&gt; t
+(s-blank? &quot; &quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_45">s-present? <code>(s)</code></h3>
+
+<p>Is <code>s</code> anything but nil or the empty string?</p>
+
+<div><pre><code class="language-cl">(s-present? &quot;&quot;) ;; =&gt; nil
+(s-present? nil) ;; =&gt; nil
+(s-present? &quot; &quot;) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_46">s-ends-with? <code>(suffix s &amp;optional ignore-case)</code></h3>
+
+<p>Does <code>s</code> end with <code>suffix</code>?</p>
+
+<p>If <code>ignore-case</code> is non-nil, the comparison is done without paying
+attention to case differences.</p>
+
+<p>Alias: <code>s-suffix?</code></p>
+
+<div><pre><code class="language-cl">(s-ends-with? &quot;.md&quot; &quot;readme.md&quot;) ;; =&gt; t
+(s-ends-with? &quot;.MD&quot; &quot;readme.md&quot;) ;; =&gt; nil
+(s-ends-with? &quot;.MD&quot; &quot;readme.md&quot; t) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_47">s-starts-with? <code>(prefix s &amp;optional ignore-case)</code></h3>
+
+<p>Does <code>s</code> start with <code>prefix</code>?</p>
+
+<p>If <code>ignore-case</code> is non-nil, the comparison is done without paying
+attention to case differences.</p>
+
+<p>Alias: <code>s-prefix?</code>. This is a simple wrapper around the built-in
+<code>string-prefix-p</code>.</p>
+
+<div><pre><code class="language-cl">(s-starts-with? &quot;lib/&quot; &quot;lib/file.js&quot;) ;; =&gt; t
+(s-starts-with? &quot;LIB/&quot; &quot;lib/file.js&quot;) ;; =&gt; nil
+(s-starts-with? &quot;LIB/&quot; &quot;lib/file.js&quot; t) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_48">s-contains? <code>(needle s &amp;optional ignore-case)</code></h3>
+
+<p>Does <code>s</code> contain <code>needle</code>?</p>
+
+<p>If <code>ignore-case</code> is non-nil, the comparison is done without paying
+attention to case differences.</p>
+
+<div><pre><code class="language-cl">(s-contains? &quot;file&quot; &quot;lib/file.js&quot;) ;; =&gt; t
+(s-contains? &quot;nope&quot; &quot;lib/file.js&quot;) ;; =&gt; nil
+(s-contains? &quot;^a&quot; &quot;it&#39;s not ^a regexp&quot;) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_49">s-lowercase? <code>(s)</code></h3>
+
+<p>Are all the letters in <code>s</code> in lower case?</p>
+
+<div><pre><code class="language-cl">(s-lowercase? &quot;file&quot;) ;; =&gt; t
+(s-lowercase? &quot;File&quot;) ;; =&gt; nil
+(s-lowercase? &quot;filä&quot;) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_50">s-uppercase? <code>(s)</code></h3>
+
+<p>Are all the letters in <code>s</code> in upper case?</p>
+
+<div><pre><code class="language-cl">(s-uppercase? &quot;HULK SMASH&quot;) ;; =&gt; t
+(s-uppercase? &quot;Bruce no smash&quot;) ;; =&gt; nil
+(s-uppercase? &quot;FöB&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_51">s-mixedcase? <code>(s)</code></h3>
+
+<p>Are there both lower case and upper case letters in <code>s</code>?</p>
+
+<div><pre><code class="language-cl">(s-mixedcase? &quot;HULK SMASH&quot;) ;; =&gt; nil
+(s-mixedcase? &quot;Bruce no smash&quot;) ;; =&gt; t
+(s-mixedcase? &quot;BRÜCE&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_52">s-capitalized? <code>(s)</code></h3>
+
+<p>In <code>s</code>, is the first letter upper case, and all other letters lower case?</p>
+
+<div><pre><code class="language-cl">(s-capitalized? &quot;Capitalized&quot;) ;; =&gt; t
+(s-capitalized? &quot;I am capitalized&quot;) ;; =&gt; t
+(s-capitalized? &quot;I Am Titleized&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_53">s-numeric? <code>(s)</code></h3>
+
+<p>Is <code>s</code> a number?</p>
+
+<div><pre><code class="language-cl">(s-numeric? &quot;123&quot;) ;; =&gt; t
+(s-numeric? &quot;onetwothree&quot;) ;; =&gt; nil
+(s-numeric? &quot;7a&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_54">s-replace <code>(old new s)</code></h3>
+
+<p>Replaces <code>old</code> with <code>new</code> in <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-replace &quot;file&quot; &quot;nope&quot; &quot;lib/file.js&quot;) ;; =&gt; &quot;lib/nope.js&quot;
+(s-replace &quot;^a&quot; &quot;\\1&quot; &quot;it&#39;s not ^a regexp&quot;) ;; =&gt; &quot;it&#39;s not \\1 regexp&quot;</code></pre></div>
+
+<h3 id="toc_55">s-replace-all <code>(replacements s)</code></h3>
+
+<p><code>replacements</code> is a list of cons-cells. Each <code>car</code> is replaced with <code>cdr</code> in <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-replace-all &#39;((&quot;lib&quot; . &quot;test&quot;) (&quot;file&quot; . &quot;file_test&quot;)) &quot;lib/file.js&quot;) ;; =&gt; &quot;test/file_test.js&quot;
+(s-replace-all &#39;((&quot;lib&quot; . &quot;test&quot;) (&quot;test&quot; . &quot;lib&quot;)) &quot;lib/test.js&quot;) ;; =&gt; &quot;test/lib.js&quot;</code></pre></div>
+
+<h3 id="toc_56">s-downcase <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to lower case.</p>
+
+<p>This is a simple wrapper around the built-in <code>downcase</code>.</p>
+
+<div><pre><code class="language-cl">(s-downcase &quot;ABC&quot;) ;; =&gt; &quot;abc&quot;</code></pre></div>
+
+<h3 id="toc_57">s-upcase <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to upper case.</p>
+
+<p>This is a simple wrapper around the built-in <code>upcase</code>.</p>
+
+<div><pre><code class="language-cl">(s-upcase &quot;abc&quot;) ;; =&gt; &quot;ABC&quot;</code></pre></div>
+
+<h3 id="toc_58">s-capitalize <code>(s)</code></h3>
+
+<p>Convert the first word&#39;s first character to upper case and the rest to lower case in <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-capitalize &quot;abc DEF&quot;) ;; =&gt; &quot;Abc def&quot;
+(s-capitalize &quot;abc.DEF&quot;) ;; =&gt; &quot;Abc.def&quot;</code></pre></div>
+
+<h3 id="toc_59">s-titleize <code>(s)</code></h3>
+
+<p>Convert each word&#39;s first character to upper case and the rest to lower case in <code>s</code>.</p>
+
+<p>This is a simple wrapper around the built-in <code>capitalize</code>.</p>
+
+<div><pre><code class="language-cl">(s-titleize &quot;abc DEF&quot;) ;; =&gt; &quot;Abc Def&quot;
+(s-titleize &quot;abc.DEF&quot;) ;; =&gt; &quot;Abc.Def&quot;</code></pre></div>
+
+<h3 id="toc_60">s-with <code>(s form &amp;rest more)</code></h3>
+
+<p>Threads <code>s</code> through the forms. Inserts <code>s</code> as the last item
+in the first form, making a list of it if it is not a list
+already. If there are more forms, inserts the first form as the
+last item in second form, etc.</p>
+
+<div><pre><code class="language-cl">(s-with &quot;   hulk smash   &quot; s-trim s-upcase) ;; =&gt; &quot;HULK SMASH&quot;
+(s-with &quot;My car is a Toyota&quot; (s-replace &quot;car&quot; &quot;name&quot;) (s-replace &quot;a Toyota&quot; &quot;Bond&quot;) (s-append &quot;, James Bond&quot;)) ;; =&gt; &quot;My name is Bond, James Bond&quot;
+(s-with &quot;abc \ndef  \nghi&quot; s-lines (mapcar &#39;s-trim) (s-join &quot;-&quot;) s-reverse) ;; =&gt; &quot;ihg-fed-cba&quot;</code></pre></div>
+
+<h3 id="toc_61">s-index-of <code>(needle s &amp;optional ignore-case)</code></h3>
+
+<p>Returns first index of <code>needle</code> in <code>s</code>, or nil.</p>
+
+<p>If <code>ignore-case</code> is non-nil, the comparison is done without paying
+attention to case differences.</p>
+
+<div><pre><code class="language-cl">(s-index-of &quot;abc&quot; &quot;abcdef&quot;) ;; =&gt; 0
+(s-index-of &quot;CDE&quot; &quot;abcdef&quot; t) ;; =&gt; 2
+(s-index-of &quot;n.t&quot; &quot;not a regexp&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_62">s-reverse <code>(s)</code></h3>
+
+<p>Return the reverse of <code>s</code>.</p>
+
+<div><pre><code class="language-cl">(s-reverse &quot;abc&quot;) ;; =&gt; &quot;cba&quot;
+(s-reverse &quot;ab xyz&quot;) ;; =&gt; &quot;zyx ba&quot;
+(s-reverse &quot;&quot;) ;; =&gt; &quot;&quot;</code></pre></div>
+
+<h3 id="toc_63">s-presence <code>(s)</code></h3>
+
+<p>Return <code>s</code> if it&#39;s <code>s-present?</code>, otherwise return nil.</p>
+
+<div><pre><code class="language-cl">(s-presence nil) ;; =&gt; nil
+(s-presence &quot;&quot;) ;; =&gt; nil
+(s-presence &quot;foo&quot;) ;; =&gt; &quot;foo&quot;</code></pre></div>
+
+<h3 id="toc_64">s-format <code>(template replacer &amp;optional extra)</code></h3>
+
+<p>Format <code>template</code> with the function <code>replacer</code>.</p>
+
+<p><code>replacer</code> takes an argument of the format variable and optionally
+an extra argument which is the <code>extra</code> value from the call to
+<code>s-format</code>.</p>
+
+<p>Several standard <code>s-format</code> helper functions are recognized and
+adapted for this:</p>
+
+<div><pre><code class="language-none">(s-format &quot;${name}&quot; &#39;gethash hash-table)
+(s-format &quot;${name}&quot; &#39;aget alist)
+(s-format &quot;$0&quot; &#39;elt sequence)</code></pre></div>
+
+<p>The <code>replacer</code> function may be used to do any other kind of
+transformation.</p>
+
+<div><pre><code class="language-cl">(s-format &quot;help ${name}! I&#39;m ${malady}&quot; &#39;aget &#39;((&quot;name&quot; . &quot;nic&quot;) (&quot;malady&quot; . &quot;on fire&quot;))) ;; =&gt; &quot;help nic! I&#39;m on fire&quot;
+(s-format &quot;hello ${name}, nice day&quot; (lambda (var-name) &quot;nic&quot;)) ;; =&gt; &quot;hello nic, nice day&quot;
+(s-format &quot;hello $0, nice $1&quot; &#39;elt &#39;(&quot;nic&quot; &quot;day&quot;)) ;; =&gt; &quot;hello nic, nice day&quot;</code></pre></div>
+
+<h3 id="toc_65">s-lex-format <code>(format-str)</code></h3>
+
+<p><code>s-format</code> with the current environment.</p>
+
+<p><code>format-str</code> may use the <code>s-format</code> variable reference to refer to
+any variable:</p>
+
+<p>(let ((x 1))
+   (s-lex-format &quot;x is: ${x}&quot;))</p>
+
+<p>The values of the variables are interpolated with &quot;%s&quot; unless
+the variable <code>s-lex-value-as-lisp</code> is <code>t</code> and then they are
+interpolated with &quot;%S&quot;.</p>
+
+<div><pre><code class="language-cl">(let ((x 1)) (s-lex-format &quot;x is ${x}&quot;)) ;; =&gt; &quot;x is 1&quot;
+(let ((str1 &quot;this&quot;) (str2 &quot;that&quot;)) (s-lex-format &quot;${str1} and ${str2}&quot;)) ;; =&gt; &quot;this and that&quot;
+(let ((foo &quot;Hello\\nWorld&quot;)) (s-lex-format &quot;${foo}&quot;)) ;; =&gt; &quot;Hello\\nWorld&quot;</code></pre></div>
+
+<h3 id="toc_66">s-count-matches <code>(regexp s &amp;optional start end)</code></h3>
+
+<p>Count occurrences of <code>regexp</code> in `s&#39;.</p>
+
+<p><code>start</code>, inclusive, and <code>end</code>, exclusive, delimit the part of <code>s</code>
+to match. </p>
+
+<div><pre><code class="language-cl">(s-count-matches &quot;a&quot; &quot;aba&quot;) ;; =&gt; 2
+(s-count-matches &quot;a&quot; &quot;aba&quot; 0 2) ;; =&gt; 1
+(s-count-matches &quot;\\w\\{2\\}[0-9]+&quot; &quot;ab1bab2frobinator&quot;) ;; =&gt; 2</code></pre></div>
+
+<h3 id="toc_67">s-wrap <code>(s prefix &amp;optional suffix)</code></h3>
+
+<p>Wrap string <code>s</code> with <code>prefix</code> and optionally <code>suffix</code>.</p>
+
+<p>Return string <code>s</code> with <code>prefix</code> prepended.  If <code>suffix</code> is present, it
+is appended, otherwise <code>prefix</code> is used as both prefix and
+suffix.</p>
+
+<div><pre><code class="language-cl">(s-wrap &quot;foo&quot; &quot;\&quot;&quot;) ;; =&gt; &quot;\&quot;foo\&quot;&quot;
+(s-wrap &quot;foo&quot; &quot;(&quot; &quot;)&quot;) ;; =&gt; &quot;(foo)&quot;
+(s-wrap &quot;foo&quot; &quot;bar&quot;) ;; =&gt; &quot;barfoobar&quot;</code></pre></div>
+
+<h3 id="toc_68">s-split-words <code>(s)</code></h3>
+
+<p>Split <code>s</code> into list of words.</p>
+
+<div><pre><code class="language-cl">(s-split-words &quot;under_score&quot;) ;; =&gt; &#39;(&quot;under&quot; &quot;score&quot;)
+(s-split-words &quot;some-dashed-words&quot;) ;; =&gt; &#39;(&quot;some&quot; &quot;dashed&quot; &quot;words&quot;)
+(s-split-words &quot;evenCamelCase&quot;) ;; =&gt; &#39;(&quot;even&quot; &quot;Camel&quot; &quot;Case&quot;)</code></pre></div>
+
+<h3 id="toc_69">s-lower-camel-case <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to lowerCamelCase.</p>
+
+<div><pre><code class="language-cl">(s-lower-camel-case &quot;some words&quot;) ;; =&gt; &quot;someWords&quot;
+(s-lower-camel-case &quot;dashed-words&quot;) ;; =&gt; &quot;dashedWords&quot;
+(s-lower-camel-case &quot;under_scored_words&quot;) ;; =&gt; &quot;underScoredWords&quot;</code></pre></div>
+
+<h3 id="toc_70">s-upper-camel-case <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to UpperCamelCase.</p>
+
+<div><pre><code class="language-cl">(s-upper-camel-case &quot;some words&quot;) ;; =&gt; &quot;SomeWords&quot;
+(s-upper-camel-case &quot;dashed-words&quot;) ;; =&gt; &quot;DashedWords&quot;
+(s-upper-camel-case &quot;under_scored_words&quot;) ;; =&gt; &quot;UnderScoredWords&quot;</code></pre></div>
+
+<h3 id="toc_71">s-snake-case <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to snake_case.</p>
+
+<div><pre><code class="language-cl">(s-snake-case &quot;some words&quot;) ;; =&gt; &quot;some_words&quot;
+(s-snake-case &quot;dashed-words&quot;) ;; =&gt; &quot;dashed_words&quot;
+(s-snake-case &quot;camelCasedWords&quot;) ;; =&gt; &quot;camel_cased_words&quot;</code></pre></div>
+
+<h3 id="toc_72">s-dashed-words <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to dashed-words.</p>
+
+<div><pre><code class="language-cl">(s-dashed-words &quot;some words&quot;) ;; =&gt; &quot;some-words&quot;
+(s-dashed-words &quot;under_scored_words&quot;) ;; =&gt; &quot;under-scored-words&quot;
+(s-dashed-words &quot;camelCasedWords&quot;) ;; =&gt; &quot;camel-cased-words&quot;</code></pre></div>
+
+<h3 id="toc_73">s-capitalized-words <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to Capitalized words.</p>
+
+<div><pre><code class="language-cl">(s-capitalized-words &quot;some words&quot;) ;; =&gt; &quot;Some words&quot;
+(s-capitalized-words &quot;under_scored_words&quot;) ;; =&gt; &quot;Under scored words&quot;
+(s-capitalized-words &quot;camelCasedWords&quot;) ;; =&gt; &quot;Camel cased words&quot;</code></pre></div>
+
+<h3 id="toc_74">s-titleized-words <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to Titleized Words.</p>
+
+<div><pre><code class="language-cl">(s-titleized-words &quot;some words&quot;) ;; =&gt; &quot;Some Words&quot;
+(s-titleized-words &quot;under_scored_words&quot;) ;; =&gt; &quot;Under Scored Words&quot;
+(s-titleized-words &quot;camelCasedWords&quot;) ;; =&gt; &quot;Camel Cased Words&quot;</code></pre></div>
+
+<h3 id="toc_75">s-word-initials <code>(s)</code></h3>
+
+<p>Convert <code>s</code> to its initials.</p>
+
+<div><pre><code class="language-cl">(s-word-initials &quot;some words&quot;) ;; =&gt; &quot;sw&quot;
+(s-word-initials &quot;under_scored_words&quot;) ;; =&gt; &quot;usw&quot;
+(s-word-initials &quot;camelCasedWords&quot;) ;; =&gt; &quot;cCW&quot;</code></pre></div>
+
+<h2 id="toc_76">What&#39;s with the built-in wrappers?</h2>
+
+<p>Imagine looking through the function list and seeing <code>s-ends-with?</code>, but
+<code>s-starts-with?</code> is nowhere to be found. Why? Well, because Emacs already has
+<code>string-prefix-p</code>. Now you&#39;re starting out slightly confused, then have to go
+somewhere else to dig for the command you were looking for.</p>
+
+<p>The wrapping functions serve as both documentation for existing functions and
+makes for a consistent API.</p>
+
+<h2 id="toc_77">Other string related libraries</h2>
+
+<ul>
+<li><p><a href="https://github.com/eschulte/jump.el/blob/master/inflections.el">inflections</a> package
+provides functions for strings pluralization and singularization.</p></li>
+<li><p><a href="http://emacswiki.org/emacs/levenshtein.el">levenshtein</a> package provides a function to
+calculate the Levenshtein distance between two strings.</p></li>
+<li><p><a href="https://github.com/rolandwalker/string-utils">string-utils</a> is another general string manipulation library.</p></li>
+</ul>
+
+<h2 id="toc_78">Changelist</h2>
+
+<h3 id="toc_79">From 1.10.0 to 1.11.0</h3>
+
+<ul>
+<li>Add <code>s-matched-positions-all</code> (ono hiroko)</li>
+</ul>
+
+<h3 id="toc_80">From 1.9.0 to 1.10.0</h3>
+
+<ul>
+<li>Add <code>s-wrap</code> (Johan Andersson)</li>
+<li>Add <code>s-split-up-to</code> (Matus Goljer)</li>
+<li>Fix <code>s-reverse</code> for Unicode combining characters. (Christopher Wellons)</li>
+</ul>
+
+<h3 id="toc_81">From 1.8.0 to 1.9.0</h3>
+
+<ul>
+<li>Add <code>s-count-matches</code> (Lars Andersen)</li>
+</ul>
+
+<h3 id="toc_82">From 1.7.0 to 1.8.0</h3>
+
+<ul>
+<li>Add <code>s-present?</code> and <code>s-present?</code> (Johan Andersson)</li>
+<li>Better handling of international characters</li>
+</ul>
+
+<h3 id="toc_83">From 1.6.0 to 1.7.0</h3>
+
+<ul>
+<li>Add <code>s-word-initials</code> (Sylvain Rousseau)</li>
+<li>Better handling of camel cased strings (@Bruce-Connor)</li>
+</ul>
+
+<h3 id="toc_84">From 1.5.0 to 1.6.0</h3>
+
+<ul>
+<li>Add <code>s-pad-left</code> and <code>s-pad-right</code></li>
+<li>Bugfixes for <code>s-format</code> (Nic Ferrier)</li>
+</ul>
+
+<h3 id="toc_85">From 1.4.0 to 1.5.0</h3>
+
+<ul>
+<li>Add <code>s-all-match-strings</code> (Geoff Gole)</li>
+<li>Add <code>s-lex-format</code> (Nic Ferrier)</li>
+</ul>
+
+<h3 id="toc_86">From 1.3.1 to 1.4.0</h3>
+
+<ul>
+<li>Add <code>s-capitalized?</code></li>
+<li>Add <code>s-replace-all</code></li>
+<li>Add <code>s-slice-at</code></li>
+<li>Add <code>s-split</code> alias for <code>split-string</code> (Rüdiger Sonderfeld)</li>
+<li>Add <code>s-less?</code> predicate (Rüdiger Sonderfeld)</li>
+<li>Add START parameter to <code>s-matches?</code> (Rüdiger Sonderfeld)</li>
+<li>Bugfixes</li>
+</ul>
+
+<h3 id="toc_87">From 1.3.0 to 1.3.1</h3>
+
+<ul>
+<li>Add <code>s-numeric?</code></li>
+<li>Add <code>s-match</code> (Arthur Andersen)</li>
+<li>Add <code>s-format</code> (Nic Ferrier)</li>
+<li>Move .el files out of root to avoid problems with require.</li>
+</ul>
+
+<h3 id="toc_88">From 1.2.1 to 1.3.0</h3>
+
+<ul>
+<li><p><strong>Breaking change:</strong> <code>s-capitalize</code> now converts the first word&#39;s first
+character to upper case and the rest to lower case. <code>s-titleize</code>
+works like the old <code>s-capitalize</code> and capitalizes each word.
+(Johan Andersson)</p></li>
+<li><p><code>s-capitalized-words</code> and <code>s-titleized-words</code> mirror this change.</p></li>
+</ul>
+
+<h2 id="toc_89">Contributors</h2>
+
+<ul>
+<li><a href="https://github.com/leoc">Arthur Andersen</a> contributed <code>s-match</code></li>
+<li><a href="https://github.com/rolando2424">Rolando</a> contributed <code>s-shared-start</code> and <code>s-shared-end</code></li>
+<li><a href="https://github.com/rejeep">Johan Andersson</a> contributed <code>s-presence</code>, <code>s-present?</code> and fixed <code>s-titleize</code> vs <code>s-capitalize</code></li>
+<li><a href="https://github.com/nicferrier">Nic Ferrier</a> added <code>s-format</code> and <code>s-lex-format</code></li>
+<li><a href="https://github.com/ruediger">Rüdiger Sonderfeld</a> contributed <code>s-less?</code>, <code>s-split</code> and several bugfixes.</li>
+<li><a href="https://github.com/gsg">Geoff Gole</a> contributed <code>s-all-match-strings</code></li>
+<li><a href="https://github.com/thisirs">Sylvain Rousseau</a> contributed <code>s-word-initials</code></li>
+<li><a href="https://github.com/expez">Lars Andersen</a> contributed <code>s-count-matches</code></li>
+<li><a href="https://github.com/kuanyui">ono hiroko</a> contributed <code>s-matched-positions-all</code></li>
+</ul>
+
+<p>Thanks!</p>
+
+<h2 id="toc_90">Contribute</h2>
+
+<p>Yes, please do. Pure functions in the string manipulation realm only,
+please. There&#39;s a suite of tests in <code>dev/examples.el</code>, so remember to add
+tests for your function, or I might break it later.</p>
+
+<p>You&#39;ll find the repo at:</p>
+
+<div><pre><code class="language-none">https://github.com/magnars/s.el</code></pre></div>
+
+<p>Run the tests with</p>
+
+<div><pre><code class="language-none">./run-tests.sh</code></pre></div>
+
+<p>Create the docs with</p>
+
+<div><pre><code class="language-none">./create-docs.sh</code></pre></div>
+
+<p>I highly recommend that you install these as a pre-commit hook, so that
+the tests are always running and the docs are always in sync:</p>
+
+<div><pre><code class="language-none">cp pre-commit.sh .git/hooks/pre-commit</code></pre></div>
+
+<p>Oh, and don&#39;t edit <code>README.md</code> directly, it is auto-generated.
+Change <code>readme-template.md</code> or <code>examples-to-docs.el</code> instead.</p>
+
+<h2 id="toc_91">License</h2>
+
+<p>Copyright (C) 2012-2015 Magnar Sveen</p>
+
+<p>Authors: Magnar Sveen <a href="mailto:magnars@gmail.com">magnars@gmail.com</a>
+Keywords: strings</p>
+
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+</body>
+
+</html>

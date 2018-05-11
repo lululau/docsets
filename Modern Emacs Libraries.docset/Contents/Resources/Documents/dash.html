@@ -1,0 +1,2697 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<title>dash</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0"><img align="right" src="https://raw.github.com/magnars/dash.el/master/rainbow-dash.png"> dash.el <a href="http://travis-ci.org/magnars/dash.el"><img src="https://secure.travis-ci.org/magnars/dash.el.png" alt="Build Status"></a></h1>
+
+<p>A modern list api for Emacs. No &#39;cl required.</p>
+
+<h2 id="toc_1">Installation</h2>
+
+<p>It&#39;s available on <a href="http://marmalade-repo.org/">marmalade</a> and <a href="https://melpa.org/">Melpa</a>:</p>
+
+<div><pre><code class="language-none">M-x package-install dash</code></pre></div>
+
+<p>Or you can just dump <code>dash.el</code> in your load
+path somewhere.</p>
+
+<p>If you want the function combinators, then also:</p>
+
+<div><pre><code class="language-none">M-x package-install dash-functional</code></pre></div>
+
+<h2 id="toc_2">Using in a package</h2>
+
+<p>Add this to the big comment block at the top:</p>
+
+<div><pre><code class="language-none">;; Package-Requires: ((dash &quot;2.12.1&quot;))</code></pre></div>
+
+<p>To get function combinators:</p>
+
+<div><pre><code class="language-none">;; Package-Requires: ((dash &quot;2.12.1&quot;) (dash-functional &quot;1.2.0&quot;) (emacs &quot;24&quot;))</code></pre></div>
+
+<h2 id="toc_3">Upcoming breaking change!</h2>
+
+<ul>
+<li>For backward compatibility reasons <code>-zip</code> return a cons-cell instead of a list
+with two elements when called on two lists. This is a clunky API, and in an
+upcoming 3.0 release of Dash it will always return a list. If you rely on the
+cons-cell return value, use <code>-zip-pair</code> instead.</li>
+</ul>
+
+<h2 id="toc_4">Syntax highlighting of dash functions</h2>
+
+<p>Font lock of dash functions in emacs lisp buffers is now optional.
+Include this in your emacs settings to get syntax highlighting:</p>
+
+<div><pre><code class="language-none">(eval-after-load &quot;dash&quot; &#39;(dash-enable-font-lock))</code></pre></div>
+
+<h2 id="toc_5">Functions</h2>
+
+<p>All functions and constructs in the library are prefixed with a dash (-).</p>
+
+<p>There are also anaphoric versions of functions where that makes sense,
+prefixed with two dashes instead of one.</p>
+
+<p>While <code>-map</code> takes a function to map over the list, you can also use
+the anaphoric form with double dashes - which will then be executed
+with <code>it</code> exposed as the list item. Here&#39;s an example:</p>
+
+<div><pre><code class="language-el">(-map (lambda (n) (* n n)) &#39;(1 2 3 4)) ;; normal version
+
+(--map (* it it) &#39;(1 2 3 4)) ;; anaphoric version</code></pre></div>
+
+<p>of course the original can also be written like</p>
+
+<div><pre><code class="language-el">(defun square (n) (* n n))
+
+(-map &#39;square &#39;(1 2 3 4))</code></pre></div>
+
+<p>which demonstrates the usefulness of both versions.</p>
+
+<h3 id="toc_6">Maps</h3>
+
+<p>Functions in this category take a transforming function, which
+is then applied sequentially to each or selected elements of the
+input list.  The results are collected in order and returned as
+new list.</p>
+
+<ul>
+<li><a href="#-map-fn-list">-map</a> <code>(fn list)</code></li>
+<li><a href="#-map-when-pred-rep-list">-map-when</a> <code>(pred rep list)</code></li>
+<li><a href="#-map-first-pred-rep-list">-map-first</a> <code>(pred rep list)</code></li>
+<li><a href="#-map-last-pred-rep-list">-map-last</a> <code>(pred rep list)</code></li>
+<li><a href="#-map-indexed-fn-list">-map-indexed</a> <code>(fn list)</code></li>
+<li><a href="#-annotate-fn-list">-annotate</a> <code>(fn list)</code></li>
+<li><a href="#-splice-pred-fun-list">-splice</a> <code>(pred fun list)</code></li>
+<li><a href="#-splice-list-pred-new-list-list">-splice-list</a> <code>(pred new-list list)</code></li>
+<li><a href="#-mapcat-fn-list">-mapcat</a> <code>(fn list)</code></li>
+<li><a href="#-copy-arg">-copy</a> <code>(arg)</code></li>
+</ul>
+
+<h3 id="toc_7">Sublist selection</h3>
+
+<p>Functions returning a sublist of the original list.</p>
+
+<ul>
+<li><a href="#-filter-pred-list">-filter</a> <code>(pred list)</code></li>
+<li><a href="#-remove-pred-list">-remove</a> <code>(pred list)</code></li>
+<li><a href="#-remove-first-pred-list">-remove-first</a> <code>(pred list)</code></li>
+<li><a href="#-remove-last-pred-list">-remove-last</a> <code>(pred list)</code></li>
+<li><a href="#-remove-item-item-list">-remove-item</a> <code>(item list)</code></li>
+<li><a href="#-non-nil-list">-non-nil</a> <code>(list)</code></li>
+<li><a href="#-slice-list-from-optional-to-step">-slice</a> <code>(list from &amp;optional to step)</code></li>
+<li><a href="#-take-n-list">-take</a> <code>(n list)</code></li>
+<li><a href="#-take-last-n-list">-take-last</a> <code>(n list)</code></li>
+<li><a href="#-drop-n-list">-drop</a> <code>(n list)</code></li>
+<li><a href="#-drop-last-n-list">-drop-last</a> <code>(n list)</code></li>
+<li><a href="#-take-while-pred-list">-take-while</a> <code>(pred list)</code></li>
+<li><a href="#-drop-while-pred-list">-drop-while</a> <code>(pred list)</code></li>
+<li><a href="#-select-by-indices-indices-list">-select-by-indices</a> <code>(indices list)</code></li>
+<li><a href="#-select-columns-columns-table">-select-columns</a> <code>(columns table)</code></li>
+<li><a href="#-select-column-column-table">-select-column</a> <code>(column table)</code></li>
+</ul>
+
+<h3 id="toc_8">List to list</h3>
+
+<p>Bag of various functions which modify input list.</p>
+
+<ul>
+<li><a href="#-keep-fn-list">-keep</a> <code>(fn list)</code></li>
+<li><a href="#-concat-rest-lists">-concat</a> <code>(&amp;rest lists)</code></li>
+<li><a href="#-flatten-l">-flatten</a> <code>(l)</code></li>
+<li><a href="#-flatten-n-num-list">-flatten-n</a> <code>(num list)</code></li>
+<li><a href="#-replace-old-new-list">-replace</a> <code>(old new list)</code></li>
+<li><a href="#-replace-first-old-new-list">-replace-first</a> <code>(old new list)</code></li>
+<li><a href="#-replace-last-old-new-list">-replace-last</a> <code>(old new list)</code></li>
+<li><a href="#-insert-at-n-x-list">-insert-at</a> <code>(n x list)</code></li>
+<li><a href="#-replace-at-n-x-list">-replace-at</a> <code>(n x list)</code></li>
+<li><a href="#-update-at-n-func-list">-update-at</a> <code>(n func list)</code></li>
+<li><a href="#-remove-at-n-list">-remove-at</a> <code>(n list)</code></li>
+<li><a href="#-remove-at-indices-indices-list">-remove-at-indices</a> <code>(indices list)</code></li>
+</ul>
+
+<h3 id="toc_9">Reductions</h3>
+
+<p>Functions reducing lists into single value.</p>
+
+<ul>
+<li><a href="#-reduce-from-fn-initial-value-list">-reduce-from</a> <code>(fn initial-value list)</code></li>
+<li><a href="#-reduce-r-from-fn-initial-value-list">-reduce-r-from</a> <code>(fn initial-value list)</code></li>
+<li><a href="#-reduce-fn-list">-reduce</a> <code>(fn list)</code></li>
+<li><a href="#-reduce-r-fn-list">-reduce-r</a> <code>(fn list)</code></li>
+<li><a href="#-count-pred-list">-count</a> <code>(pred list)</code></li>
+<li><a href="#-sum-list">-sum</a> <code>(list)</code></li>
+<li><a href="#-product-list">-product</a> <code>(list)</code></li>
+<li><a href="#-min-list">-min</a> <code>(list)</code></li>
+<li><a href="#-min-by-comparator-list">-min-by</a> <code>(comparator list)</code></li>
+<li><a href="#-max-list">-max</a> <code>(list)</code></li>
+<li><a href="#-max-by-comparator-list">-max-by</a> <code>(comparator list)</code></li>
+</ul>
+
+<h3 id="toc_10">Unfolding</h3>
+
+<p>Operations dual to reductions, building lists from seed value rather than consuming a list to produce a single value.</p>
+
+<ul>
+<li><a href="#-iterate-fun-init-n">-iterate</a> <code>(fun init n)</code></li>
+<li><a href="#-unfold-fun-seed">-unfold</a> <code>(fun seed)</code></li>
+</ul>
+
+<h3 id="toc_11">Predicates</h3>
+
+<ul>
+<li><a href="#-any-pred-list">-any?</a> <code>(pred list)</code></li>
+<li><a href="#-all-pred-list">-all?</a> <code>(pred list)</code></li>
+<li><a href="#-none-pred-list">-none?</a> <code>(pred list)</code></li>
+<li><a href="#-only-some-pred-list">-only-some?</a> <code>(pred list)</code></li>
+<li><a href="#-contains-list-element">-contains?</a> <code>(list element)</code></li>
+<li><a href="#-same-items-list-list2">-same-items?</a> <code>(list list2)</code></li>
+<li><a href="#-is-prefix-prefix-list">-is-prefix?</a> <code>(prefix list)</code></li>
+<li><a href="#-is-suffix-suffix-list">-is-suffix?</a> <code>(suffix list)</code></li>
+<li><a href="#-is-infix-infix-list">-is-infix?</a> <code>(infix list)</code></li>
+</ul>
+
+<h3 id="toc_12">Partitioning</h3>
+
+<p>Functions partitioning the input list into a list of lists.</p>
+
+<ul>
+<li><a href="#-split-at-n-list">-split-at</a> <code>(n list)</code></li>
+<li><a href="#-split-with-pred-list">-split-with</a> <code>(pred list)</code></li>
+<li><a href="#-split-on-item-list">-split-on</a> <code>(item list)</code></li>
+<li><a href="#-split-when-fn-list">-split-when</a> <code>(fn list)</code></li>
+<li><a href="#-separate-pred-list">-separate</a> <code>(pred list)</code></li>
+<li><a href="#-partition-n-list">-partition</a> <code>(n list)</code></li>
+<li><a href="#-partition-all-n-list">-partition-all</a> <code>(n list)</code></li>
+<li><a href="#-partition-in-steps-n-step-list">-partition-in-steps</a> <code>(n step list)</code></li>
+<li><a href="#-partition-all-in-steps-n-step-list">-partition-all-in-steps</a> <code>(n step list)</code></li>
+<li><a href="#-partition-by-fn-list">-partition-by</a> <code>(fn list)</code></li>
+<li><a href="#-partition-by-header-fn-list">-partition-by-header</a> <code>(fn list)</code></li>
+<li><a href="#-group-by-fn-list">-group-by</a> <code>(fn list)</code></li>
+</ul>
+
+<h3 id="toc_13">Indexing</h3>
+
+<p>Return indices of elements based on predicates, sort elements by indices etc.</p>
+
+<ul>
+<li><a href="#-elem-index-elem-list">-elem-index</a> <code>(elem list)</code></li>
+<li><a href="#-elem-indices-elem-list">-elem-indices</a> <code>(elem list)</code></li>
+<li><a href="#-find-index-pred-list">-find-index</a> <code>(pred list)</code></li>
+<li><a href="#-find-last-index-pred-list">-find-last-index</a> <code>(pred list)</code></li>
+<li><a href="#-find-indices-pred-list">-find-indices</a> <code>(pred list)</code></li>
+<li><a href="#-grade-up-comparator-list">-grade-up</a> <code>(comparator list)</code></li>
+<li><a href="#-grade-down-comparator-list">-grade-down</a> <code>(comparator list)</code></li>
+</ul>
+
+<h3 id="toc_14">Set operations</h3>
+
+<p>Operations pretending lists are sets.</p>
+
+<ul>
+<li><a href="#-union-list-list2">-union</a> <code>(list list2)</code></li>
+<li><a href="#-difference-list-list2">-difference</a> <code>(list list2)</code></li>
+<li><a href="#-intersection-list-list2">-intersection</a> <code>(list list2)</code></li>
+<li><a href="#-distinct-list">-distinct</a> <code>(list)</code></li>
+</ul>
+
+<h3 id="toc_15">Other list operations</h3>
+
+<p>Other list functions not fit to be classified elsewhere.</p>
+
+<ul>
+<li><a href="#-rotate-n-list">-rotate</a> <code>(n list)</code></li>
+<li><a href="#-repeat-n-x">-repeat</a> <code>(n x)</code></li>
+<li><a href="#-cons-rest-args">-cons*</a> <code>(&amp;rest args)</code></li>
+<li><a href="#-snoc-list-elem-rest-elements">-snoc</a> <code>(list elem &amp;rest elements)</code></li>
+<li><a href="#-interpose-sep-list">-interpose</a> <code>(sep list)</code></li>
+<li><a href="#-interleave-rest-lists">-interleave</a> <code>(&amp;rest lists)</code></li>
+<li><a href="#-zip-with-fn-list1-list2">-zip-with</a> <code>(fn list1 list2)</code></li>
+<li><a href="#-zip-rest-lists">-zip</a> <code>(&amp;rest lists)</code></li>
+<li><a href="#-zip-fill-fill-value-rest-lists">-zip-fill</a> <code>(fill-value &amp;rest lists)</code></li>
+<li><a href="#-cycle-list">-cycle</a> <code>(list)</code></li>
+<li><a href="#-pad-fill-value-rest-lists">-pad</a> <code>(fill-value &amp;rest lists)</code></li>
+<li><a href="#-table-fn-rest-lists">-table</a> <code>(fn &amp;rest lists)</code></li>
+<li><a href="#-table-flat-fn-rest-lists">-table-flat</a> <code>(fn &amp;rest lists)</code></li>
+<li><a href="#-first-pred-list">-first</a> <code>(pred list)</code></li>
+<li><a href="#-some-pred-list">-some</a> <code>(pred list)</code></li>
+<li><a href="#-last-pred-list">-last</a> <code>(pred list)</code></li>
+<li><a href="#-first-item-list">-first-item</a> <code>(list)</code></li>
+<li><a href="#-last-item-list">-last-item</a> <code>(list)</code></li>
+<li><a href="#-butlast-list">-butlast</a> <code>(list)</code></li>
+<li><a href="#-sort-comparator-list">-sort</a> <code>(comparator list)</code></li>
+<li><a href="#-list-rest-args">-list</a> <code>(&amp;rest args)</code></li>
+<li><a href="#-fix-fn-list">-fix</a> <code>(fn list)</code></li>
+</ul>
+
+<h3 id="toc_16">Tree operations</h3>
+
+<p>Functions pretending lists are trees.</p>
+
+<ul>
+<li><a href="#-tree-seq-branch-children-tree">-tree-seq</a> <code>(branch children tree)</code></li>
+<li><a href="#-tree-map-fn-tree">-tree-map</a> <code>(fn tree)</code></li>
+<li><a href="#-tree-map-nodes-pred-fun-tree">-tree-map-nodes</a> <code>(pred fun tree)</code></li>
+<li><a href="#-tree-reduce-fn-tree">-tree-reduce</a> <code>(fn tree)</code></li>
+<li><a href="#-tree-reduce-from-fn-init-value-tree">-tree-reduce-from</a> <code>(fn init-value tree)</code></li>
+<li><a href="#-tree-mapreduce-fn-folder-tree">-tree-mapreduce</a> <code>(fn folder tree)</code></li>
+<li><a href="#-tree-mapreduce-from-fn-folder-init-value-tree">-tree-mapreduce-from</a> <code>(fn folder init-value tree)</code></li>
+<li><a href="#-clone-list">-clone</a> <code>(list)</code></li>
+</ul>
+
+<h3 id="toc_17">Threading macros</h3>
+
+<ul>
+<li><a href="#--x-optional-form-rest-more">-&gt;</a> <code>(x &amp;optional form &amp;rest more)</code></li>
+<li><a href="#--x-optional-form-rest-more">-&gt;&gt;</a> <code>(x &amp;optional form &amp;rest more)</code></li>
+<li><a href="#---x-form-rest-more">--&gt;</a> <code>(x form &amp;rest more)</code></li>
+<li><a href="#-some--x-optional-form-rest-more">-some-&gt;</a> <code>(x &amp;optional form &amp;rest more)</code></li>
+<li><a href="#-some--x-optional-form-rest-more">-some-&gt;&gt;</a> <code>(x &amp;optional form &amp;rest more)</code></li>
+<li><a href="#-some---x-optional-form-rest-more">-some--&gt;</a> <code>(x &amp;optional form &amp;rest more)</code></li>
+</ul>
+
+<h3 id="toc_18">Binding</h3>
+
+<p>Convenient versions of <code>let</code> and <code>let*</code> constructs combined with flow control.</p>
+
+<ul>
+<li><a href="#-when-let-var-val-rest-body">-when-let</a> <code>(var-val &amp;rest body)</code></li>
+<li><a href="#-when-let-vars-vals-rest-body">-when-let*</a> <code>(vars-vals &amp;rest body)</code></li>
+<li><a href="#-if-let-var-val-then-rest-else">-if-let</a> <code>(var-val then &amp;rest else)</code></li>
+<li><a href="#-if-let-vars-vals-then-rest-else">-if-let*</a> <code>(vars-vals then &amp;rest else)</code></li>
+<li><a href="#-let-varlist-rest-body">-let</a> <code>(varlist &amp;rest body)</code></li>
+<li><a href="#-let-varlist-rest-body">-let*</a> <code>(varlist &amp;rest body)</code></li>
+<li><a href="#-lambda-match-form-rest-body">-lambda</a> <code>(match-form &amp;rest body)</code></li>
+</ul>
+
+<h3 id="toc_19">Side-effects</h3>
+
+<p>Functions iterating over lists for side-effect only.</p>
+
+<ul>
+<li><a href="#-each-list-fn">-each</a> <code>(list fn)</code></li>
+<li><a href="#-each-while-list-pred-fn">-each-while</a> <code>(list pred fn)</code></li>
+<li><a href="#-each-indexed-list-fn">-each-indexed</a> <code>(list fn)</code></li>
+<li><a href="#-dotimes-num-fn">-dotimes</a> <code>(num fn)</code></li>
+<li><a href="#-doto-eval-initial-value-rest-forms">-doto</a> <code>(eval-initial-value &amp;rest forms)</code></li>
+</ul>
+
+<h3 id="toc_20">Destructive operations</h3>
+
+<ul>
+<li><a href="#cons-car-cdr">!cons</a> <code>(car cdr)</code></li>
+<li><a href="#cdr-list">!cdr</a> <code>(list)</code></li>
+</ul>
+
+<h3 id="toc_21">Function combinators</h3>
+
+<p>These combinators require Emacs 24 for its lexical scope. So they are offered in a separate package: <code>dash-functional</code>.</p>
+
+<ul>
+<li><a href="#-partial-fn-rest-args">-partial</a> <code>(fn &amp;rest args)</code></li>
+<li><a href="#-rpartial-fn-rest-args">-rpartial</a> <code>(fn &amp;rest args)</code></li>
+<li><a href="#-juxt-rest-fns">-juxt</a> <code>(&amp;rest fns)</code></li>
+<li><a href="#-compose-rest-fns">-compose</a> <code>(&amp;rest fns)</code></li>
+<li><a href="#-applify-fn">-applify</a> <code>(fn)</code></li>
+<li><a href="#-on-operator-transformer">-on</a> <code>(operator transformer)</code></li>
+<li><a href="#-flip-func">-flip</a> <code>(func)</code></li>
+<li><a href="#-const-c">-const</a> <code>(c)</code></li>
+<li><a href="#-cut-rest-params">-cut</a> <code>(&amp;rest params)</code></li>
+<li><a href="#-not-pred">-not</a> <code>(pred)</code></li>
+<li><a href="#-orfn-rest-preds">-orfn</a> <code>(&amp;rest preds)</code></li>
+<li><a href="#-andfn-rest-preds">-andfn</a> <code>(&amp;rest preds)</code></li>
+<li><a href="#-iteratefn-fn-n">-iteratefn</a> <code>(fn n)</code></li>
+<li><a href="#-fixfn-fn-optional-equal-test-halt-test">-fixfn</a> <code>(fn &amp;optional equal-test halt-test)</code></li>
+<li><a href="#-prodfn-rest-fns">-prodfn</a> <code>(&amp;rest fns)</code></li>
+</ul>
+
+<h2 id="toc_22">Maps</h2>
+
+<p>Functions in this category take a transforming function, which
+is then applied sequentially to each or selected elements of the
+input list.  The results are collected in order and returned as
+new list.</p>
+
+<h4 id="toc_23">-map <code>(fn list)</code></h4>
+
+<p>Return a new list consisting of the result of applying <code>fn</code> to the items in <code>list</code>.</p>
+
+<div><pre><code class="language-el">(-map (lambda (num) (* num num)) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 4 9 16)
+(-map &#39;square &#39;(1 2 3 4)) ;; =&gt; &#39;(1 4 9 16)
+(--map (* it it) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 4 9 16)</code></pre></div>
+
+<h4 id="toc_24">-map-when <code>(pred rep list)</code></h4>
+
+<p>Return a new list where the elements in <code>list</code> that does not match the <code>pred</code> function
+are unchanged, and where the elements in <code>list</code> that do match the <code>pred</code> function are mapped
+through the <code>rep</code> function.</p>
+
+<p>Alias: <code>-replace-where</code></p>
+
+<p>See also: <a href="#-update-at-n-func-list"><code>-update-at</code></a></p>
+
+<div><pre><code class="language-el">(-map-when &#39;even? &#39;square &#39;(1 2 3 4)) ;; =&gt; &#39;(1 4 3 16)
+(--map-when (&gt; it 2) (* it it) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 2 9 16)
+(--map-when (= it 2) 17 &#39;(1 2 3 4)) ;; =&gt; &#39;(1 17 3 4)</code></pre></div>
+
+<h4 id="toc_25">-map-first <code>(pred rep list)</code></h4>
+
+<p>Replace first item in <code>list</code> satisfying <code>pred</code> with result of <code>rep</code> called on this item.</p>
+
+<p>See also: <a href="#-map-when-pred-rep-list"><code>-map-when</code></a>, <a href="#-replace-first-old-new-list"><code>-replace-first</code></a></p>
+
+<div><pre><code class="language-el">(-map-first &#39;even? &#39;square &#39;(1 2 3 4)) ;; =&gt; &#39;(1 4 3 4)
+(--map-first (&gt; it 2) (* it it) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 2 9 4)
+(--map-first (= it 2) 17 &#39;(1 2 3 2)) ;; =&gt; &#39;(1 17 3 2)</code></pre></div>
+
+<h4 id="toc_26">-map-last <code>(pred rep list)</code></h4>
+
+<p>Replace first item in <code>list</code> satisfying <code>pred</code> with result of <code>rep</code> called on this item.</p>
+
+<p>See also: <a href="#-map-when-pred-rep-list"><code>-map-when</code></a>, <a href="#-replace-last-old-new-list"><code>-replace-last</code></a></p>
+
+<div><pre><code class="language-el">(-map-last &#39;even? &#39;square &#39;(1 2 3 4)) ;; =&gt; &#39;(1 2 3 16)
+(--map-last (&gt; it 2) (* it it) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 2 3 16)
+(--map-last (= it 2) 17 &#39;(1 2 3 2)) ;; =&gt; &#39;(1 2 3 17)</code></pre></div>
+
+<h4 id="toc_27">-map-indexed <code>(fn list)</code></h4>
+
+<p>Return a new list consisting of the result of (<code>fn</code> index item) for each item in <code>list</code>.</p>
+
+<p>In the anaphoric form <code>--map-indexed</code>, the index is exposed as <code>it-index</code>.</p>
+
+<p>See also: <a href="#-each-indexed-list-fn"><code>-each-indexed</code></a>.</p>
+
+<div><pre><code class="language-el">(-map-indexed (lambda (index item) (- item index)) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 1 1 1)
+(--map-indexed (- it it-index) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 1 1 1)</code></pre></div>
+
+<h4 id="toc_28">-annotate <code>(fn list)</code></h4>
+
+<p>Return a list of cons cells where each cell is <code>fn</code> applied to each
+element of <code>list</code> paired with the unmodified element of <code>list</code>.</p>
+
+<div><pre><code class="language-el">(-annotate &#39;1+ &#39;(1 2 3)) ;; =&gt; &#39;((2 . 1) (3 . 2) (4 . 3))
+(-annotate &#39;length &#39;((&quot;h&quot; &quot;e&quot; &quot;l&quot; &quot;l&quot; &quot;o&quot;) (&quot;hello&quot; &quot;world&quot;))) ;; =&gt; &#39;((5 &quot;h&quot; &quot;e&quot; &quot;l&quot; &quot;l&quot; &quot;o&quot;) (2 &quot;hello&quot; &quot;world&quot;))
+(--annotate (&lt; 1 it) &#39;(0 1 2 3)) ;; =&gt; &#39;((nil . 0) (nil . 1) (t . 2) (t . 3))</code></pre></div>
+
+<h4 id="toc_29">-splice <code>(pred fun list)</code></h4>
+
+<p>Splice lists generated by <code>fun</code> in place of elements matching <code>pred</code> in <code>list</code>.</p>
+
+<p><code>fun</code> takes the element matching <code>pred</code> as input.</p>
+
+<p>This function can be used as replacement for <code>,@</code> in case you
+need to splice several lists at marked positions (for example
+with keywords).</p>
+
+<p>See also: <a href="#-splice-list-pred-new-list-list"><code>-splice-list</code></a>, <a href="#-insert-at-n-x-list"><code>-insert-at</code></a></p>
+
+<div><pre><code class="language-el">(-splice &#39;even? (lambda (x) (list x x)) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 2 2 3 4 4)
+(--splice &#39;t (list it it) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 1 2 2 3 3 4 4)
+(--splice (equal it :magic) &#39;((list of) (magical) (code)) &#39;((foo) (bar) :magic (baz))) ;; =&gt; &#39;((foo) (bar) (list of) (magical) (code) (baz))</code></pre></div>
+
+<h4 id="toc_30">-splice-list <code>(pred new-list list)</code></h4>
+
+<p>Splice <code>new-list</code> in place of elements matching <code>pred</code> in <code>list</code>.</p>
+
+<p>See also: <a href="#-splice-pred-fun-list"><code>-splice</code></a>, <a href="#-insert-at-n-x-list"><code>-insert-at</code></a></p>
+
+<div><pre><code class="language-el">(-splice-list &#39;keywordp &#39;(a b c) &#39;(1 :foo 2)) ;; =&gt; &#39;(1 a b c 2)
+(-splice-list &#39;keywordp nil &#39;(1 :foo 2)) ;; =&gt; &#39;(1 2)
+(--splice-list (keywordp it) &#39;(a b c) &#39;(1 :foo 2)) ;; =&gt; &#39;(1 a b c 2)</code></pre></div>
+
+<h4 id="toc_31">-mapcat <code>(fn list)</code></h4>
+
+<p>Return the concatenation of the result of mapping <code>fn</code> over <code>list</code>.
+Thus function <code>fn</code> should return a list.</p>
+
+<div><pre><code class="language-el">(-mapcat &#39;list &#39;(1 2 3)) ;; =&gt; &#39;(1 2 3)
+(-mapcat (lambda (item) (list 0 item)) &#39;(1 2 3)) ;; =&gt; &#39;(0 1 0 2 0 3)
+(--mapcat (list 0 it) &#39;(1 2 3)) ;; =&gt; &#39;(0 1 0 2 0 3)</code></pre></div>
+
+<h4 id="toc_32">-copy <code>(arg)</code></h4>
+
+<p>Create a shallow copy of <code>list</code>.</p>
+
+<div><pre><code class="language-el">(-copy &#39;(1 2 3)) ;; =&gt; &#39;(1 2 3)
+(let ((a &#39;(1 2 3))) (eq a (-copy a))) ;; =&gt; nil</code></pre></div>
+
+<h2 id="toc_33">Sublist selection</h2>
+
+<p>Functions returning a sublist of the original list.</p>
+
+<h4 id="toc_34">-filter <code>(pred list)</code></h4>
+
+<p>Return a new list of the items in <code>list</code> for which <code>pred</code> returns a non-nil value.</p>
+
+<p>Alias: <code>-select</code></p>
+
+<p>See also: <a href="#-keep-fn-list"><code>-keep</code></a></p>
+
+<div><pre><code class="language-el">(-filter (lambda (num) (= 0 (% num 2))) &#39;(1 2 3 4)) ;; =&gt; &#39;(2 4)
+(-filter &#39;even? &#39;(1 2 3 4)) ;; =&gt; &#39;(2 4)
+(--filter (= 0 (% it 2)) &#39;(1 2 3 4)) ;; =&gt; &#39;(2 4)</code></pre></div>
+
+<h4 id="toc_35">-remove <code>(pred list)</code></h4>
+
+<p>Return a new list of the items in <code>list</code> for which <code>pred</code> returns nil.</p>
+
+<p>Alias: <code>-reject</code></p>
+
+<div><pre><code class="language-el">(-remove (lambda (num) (= 0 (% num 2))) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 3)
+(-remove &#39;even? &#39;(1 2 3 4)) ;; =&gt; &#39;(1 3)
+(--remove (= 0 (% it 2)) &#39;(1 2 3 4)) ;; =&gt; &#39;(1 3)</code></pre></div>
+
+<h4 id="toc_36">-remove-first <code>(pred list)</code></h4>
+
+<p>Return a new list with the first item matching <code>pred</code> removed.</p>
+
+<p>Alias: <code>-reject-first</code></p>
+
+<p>See also: <a href="#-remove-pred-list"><code>-remove</code></a>, <a href="#-map-first-pred-rep-list"><code>-map-first</code></a></p>
+
+<div><pre><code class="language-el">(-remove-first &#39;even? &#39;(1 3 5 4 7 8 10)) ;; =&gt; &#39;(1 3 5 7 8 10)
+(-remove-first &#39;stringp &#39;(1 2 &quot;first&quot; &quot;second&quot; &quot;third&quot;)) ;; =&gt; &#39;(1 2 &quot;second&quot; &quot;third&quot;)
+(--remove-first (&gt; it 3) &#39;(1 2 3 4 5 6 7 8 9 10)) ;; =&gt; &#39;(1 2 3 5 6 7 8 9 10)</code></pre></div>
+
+<h4 id="toc_37">-remove-last <code>(pred list)</code></h4>
+
+<p>Return a new list with the last item matching <code>pred</code> removed.</p>
+
+<p>Alias: <code>-reject-last</code></p>
+
+<p>See also: <a href="#-remove-pred-list"><code>-remove</code></a>, <a href="#-map-last-pred-rep-list"><code>-map-last</code></a></p>
+
+<div><pre><code class="language-el">(-remove-last &#39;even? &#39;(1 3 5 4 7 8 10 11)) ;; =&gt; &#39;(1 3 5 4 7 8 11)
+(-remove-last &#39;stringp &#39;(1 2 &quot;last&quot; &quot;second&quot; &quot;third&quot;)) ;; =&gt; &#39;(1 2 &quot;last&quot; &quot;second&quot;)
+(--remove-last (&gt; it 3) &#39;(1 2 3 4 5 6 7 8 9 10)) ;; =&gt; &#39;(1 2 3 4 5 6 7 8 9)</code></pre></div>
+
+<h4 id="toc_38">-remove-item <code>(item list)</code></h4>
+
+<p>Remove all occurences of <code>item</code> from <code>list</code>.</p>
+
+<p>Comparison is done with <code>equal</code>.</p>
+
+<div><pre><code class="language-el">(-remove-item 3 &#39;(1 2 3 2 3 4 5 3)) ;; =&gt; &#39;(1 2 2 4 5)
+(-remove-item &#39;foo &#39;(foo bar baz foo)) ;; =&gt; &#39;(bar baz)
+(-remove-item &quot;bob&quot; &#39;(&quot;alice&quot; &quot;bob&quot; &quot;eve&quot; &quot;bob&quot; &quot;dave&quot;)) ;; =&gt; &#39;(&quot;alice&quot; &quot;eve&quot; &quot;dave&quot;)</code></pre></div>
+
+<h4 id="toc_39">-non-nil <code>(list)</code></h4>
+
+<p>Return all non-nil elements of <code>list</code>.</p>
+
+<div><pre><code class="language-el">(-non-nil &#39;(1 nil 2 nil nil 3 4 nil 5 nil)) ;; =&gt; &#39;(1 2 3 4 5)</code></pre></div>
+
+<h4 id="toc_40">-slice <code>(list from &amp;optional to step)</code></h4>
+
+<p>Return copy of <code>list</code>, starting from index <code>from</code> to index <code>to</code>.</p>
+
+<p><code>from</code> or <code>to</code> may be negative.  These values are then interpreted
+modulo the length of the list.</p>
+
+<p>If <code>step</code> is a number, only each STEPth item in the resulting
+section is returned.  Defaults to 1.</p>
+
+<div><pre><code class="language-el">(-slice &#39;(1 2 3 4 5) 1) ;; =&gt; &#39;(2 3 4 5)
+(-slice &#39;(1 2 3 4 5) 0 3) ;; =&gt; &#39;(1 2 3)
+(-slice &#39;(1 2 3 4 5 6 7 8 9) 1 -1 2) ;; =&gt; &#39;(2 4 6 8)</code></pre></div>
+
+<h4 id="toc_41">-take <code>(n list)</code></h4>
+
+<p>Return a new list of the first <code>n</code> items in <code>list</code>, or all items if there are fewer than <code>n</code>.</p>
+
+<p>See also: <a href="#-take-last-n-list"><code>-take-last</code></a></p>
+
+<div><pre><code class="language-el">(-take 3 &#39;(1 2 3 4 5)) ;; =&gt; &#39;(1 2 3)
+(-take 17 &#39;(1 2 3 4 5)) ;; =&gt; &#39;(1 2 3 4 5)</code></pre></div>
+
+<h4 id="toc_42">-take-last <code>(n list)</code></h4>
+
+<p>Return the last <code>n</code> items of <code>list</code> in order.</p>
+
+<p>See also: <a href="#-take-n-list"><code>-take</code></a></p>
+
+<div><pre><code class="language-el">(-take-last 3 &#39;(1 2 3 4 5)) ;; =&gt; &#39;(3 4 5)
+(-take-last 17 &#39;(1 2 3 4 5)) ;; =&gt; &#39;(1 2 3 4 5)
+(-take-last 1 &#39;(1 2 3 4 5)) ;; =&gt; &#39;(5)</code></pre></div>
+
+<h4 id="toc_43">-drop <code>(n list)</code></h4>
+
+<p>Return the tail of <code>list</code> without the first <code>n</code> items.</p>
+
+<p>See also: <a href="#-drop-last-n-list"><code>-drop-last</code></a></p>
+
+<div><pre><code class="language-el">(-drop 3 &#39;(1 2 3 4 5)) ;; =&gt; &#39;(4 5)
+(-drop 17 &#39;(1 2 3 4 5)) ;; =&gt; &#39;()</code></pre></div>
+
+<h4 id="toc_44">-drop-last <code>(n list)</code></h4>
+
+<p>Remove the last <code>n</code> items of <code>list</code> and return a copy.</p>
+
+<p>See also: <a href="#-drop-n-list"><code>-drop</code></a></p>
+
+<div><pre><code class="language-el">(-drop-last 3 &#39;(1 2 3 4 5)) ;; =&gt; &#39;(1 2)
+(-drop-last 17 &#39;(1 2 3 4 5)) ;; =&gt; &#39;()</code></pre></div>
+
+<h4 id="toc_45">-take-while <code>(pred list)</code></h4>
+
+<p>Return a new list of successive items from <code>list</code> while (<code>pred</code> item) returns a non-nil value.</p>
+
+<div><pre><code class="language-el">(-take-while &#39;even? &#39;(1 2 3 4)) ;; =&gt; &#39;()
+(-take-while &#39;even? &#39;(2 4 5 6)) ;; =&gt; &#39;(2 4)
+(--take-while (&lt; it 4) &#39;(1 2 3 4 3 2 1)) ;; =&gt; &#39;(1 2 3)</code></pre></div>
+
+<h4 id="toc_46">-drop-while <code>(pred list)</code></h4>
+
+<p>Return the tail of <code>list</code> starting from the first item for which (<code>pred</code> item) returns nil.</p>
+
+<div><pre><code class="language-el">(-drop-while &#39;even? &#39;(1 2 3 4)) ;; =&gt; &#39;(1 2 3 4)
+(-drop-while &#39;even? &#39;(2 4 5 6)) ;; =&gt; &#39;(5 6)
+(--drop-while (&lt; it 4) &#39;(1 2 3 4 3 2 1)) ;; =&gt; &#39;(4 3 2 1)</code></pre></div>
+
+<h4 id="toc_47">-select-by-indices <code>(indices list)</code></h4>
+
+<p>Return a list whose elements are elements from <code>list</code> selected
+as <code>(nth i list)</code> for all i from <code>indices</code>.</p>
+
+<div><pre><code class="language-el">(-select-by-indices &#39;(4 10 2 3 6) &#39;(&quot;v&quot; &quot;e&quot; &quot;l&quot; &quot;o&quot; &quot;c&quot; &quot;i&quot; &quot;r&quot; &quot;a&quot; &quot;p&quot; &quot;t&quot; &quot;o&quot; &quot;r&quot;)) ;; =&gt; &#39;(&quot;c&quot; &quot;o&quot; &quot;l&quot; &quot;o&quot; &quot;r&quot;)
+(-select-by-indices &#39;(2 1 0) &#39;(&quot;a&quot; &quot;b&quot; &quot;c&quot;)) ;; =&gt; &#39;(&quot;c&quot; &quot;b&quot; &quot;a&quot;)
+(-select-by-indices &#39;(0 1 2 0 1 3 3 1) &#39;(&quot;f&quot; &quot;a&quot; &quot;r&quot; &quot;l&quot;)) ;; =&gt; &#39;(&quot;f&quot; &quot;a&quot; &quot;r&quot; &quot;f&quot; &quot;a&quot; &quot;l&quot; &quot;l&quot; &quot;a&quot;)</code></pre></div>
+
+<h4 id="toc_48">-select-columns <code>(columns table)</code></h4>
+
+<p>Select <code>columns</code> from <code>table</code>.</p>
+
+<p><code>table</code> is a list of lists where each element represents one row.
+It is assumed each row has the same length.</p>
+
+<p>Each row is transformed such that only the specified <code>columns</code> are
+selected.</p>
+
+<p>See also: <a href="#-select-column-column-table"><code>-select-column</code></a>, <a href="#-select-by-indices-indices-list"><code>-select-by-indices</code></a></p>
+
+<div><pre><code class="language-el">(-select-columns &#39;(0 2) &#39;((1 2 3) (a b c) (:a :b :c))) ;; =&gt; &#39;((1 3) (a c) (:a :c))
+(-select-columns &#39;(1) &#39;((1 2 3) (a b c) (:a :b :c))) ;; =&gt; &#39;((2) (b) (:b))
+(-select-columns nil &#39;((1 2 3) (a b c) (:a :b :c))) ;; =&gt; &#39;(nil nil nil)</code></pre></div>
+
+<h4 id="toc_49">-select-column <code>(column table)</code></h4>
+
+<p>Select <code>column</code> from <code>table</code>.</p>
+
+<p><code>table</code> is a list of lists where each element represents one row.
+It is assumed each row has the same length.</p>
+
+<p>The single selected column is returned as a list.</p>
+
+<p>See also: <a href="#-select-columns-columns-table"><code>-select-columns</code></a>, <a href="#-select-by-indices-indices-list"><code>-select-by-indices</code></a></p>
+
+<div><pre><code class="language-el">(-select-column 1 &#39;((1 2 3) (a b c) (:a :b :c))) ;; =&gt; &#39;(2 b :b)</code></pre></div>
+
+<h2 id="toc_50">List to list</h2>
+
+<p>Bag of various functions which modify input list.</p>
+
+<h4 id="toc_51">-keep <code>(fn list)</code></h4>
+
+<p>Return a new list of the non-nil results of applying <code>fn</code> to the items in <code>list</code>.</p>
+
+<p>If you want to select the original items satisfying a predicate use <a href="#-filter-pred-list"><code>-filter</code></a>.</p>
+
+<div><pre><code class="language-el">(-keep &#39;cdr &#39;((1 2 3) (4 5) (6))) ;; =&gt; &#39;((2 3) (5))
+(-keep (lambda (num) (when (&gt; num 3) (* 10 num))) &#39;(1 2 3 4 5 6)) ;; =&gt; &#39;(40 50 60)
+(--keep (when (&gt; it 3) (* 10 it)) &#39;(1 2 3 4 5 6)) ;; =&gt; &#39;(40 50 60)</code></pre></div>
+
+<h4 id="toc_52">-concat <code>(&amp;rest lists)</code></h4>
+
+<p>Return a new list with the concatenation of the elements in the supplied <code>lists</code>.</p>
+
+<div><pre><code class="language-el">(-concat &#39;(1)) ;; =&gt; &#39;(1)
+(-concat &#39;(1) &#39;(2)) ;; =&gt; &#39;(1 2)
+(-concat &#39;(1) &#39;(2 3) &#39;(4)) ;; =&gt; &#39;(1 2 3 4)</code></pre></div>
+
+<h4 id="toc_53">-flatten <code>(l)</code></h4>
+
+<p>Take a nested list <code>l</code> and return its contents as a single, flat list.</p>
+
+<p>Note that because <code>nil</code> represents a list of zero elements (an
+empty list), any mention of nil in <code>l</code> will disappear after
+flattening.  If you need to preserve nils, consider <a href="#-flatten-n-num-list"><code>-flatten-n</code></a>
+or map them to some unique symbol and then map them back.</p>
+
+<p>Conses of two atoms are considered &quot;terminals&quot;, that is, they
+aren&#39;t flattened further.</p>
+
+<p>See also: <a href="#-flatten-n-num-list"><code>-flatten-n</code></a></p>
+
+<div><pre><code class="language-el">(-flatten &#39;((1))) ;; =&gt; &#39;(1)
+(-flatten &#39;((1 (2 3) (((4 (5))))))) ;; =&gt; &#39;(1 2 3 4 5)
+(-flatten &#39;(1 2 (3 . 4))) ;; =&gt; &#39;(1 2 (3 . 4))</code></pre></div>
+
+<h4 id="toc_54">-flatten-n <code>(num list)</code></h4>
+
+<p>Flatten <code>num</code> levels of a nested <code>list</code>.</p>
+
+<p>See also: <a href="#-flatten-l"><code>-flatten</code></a></p>
+
+<div><pre><code class="language-el">(-flatten-n 1 &#39;((1 2) ((3 4) ((5 6))))) ;; =&gt; &#39;(1 2 (3 4) ((5 6)))
+(-flatten-n 2 &#39;((1 2) ((3 4) ((5 6))))) ;; =&gt; &#39;(1 2 3 4 (5 6))
+(-flatten-n 3 &#39;((1 2) ((3 4) ((5 6))))) ;; =&gt; &#39;(1 2 3 4 5 6)</code></pre></div>
+
+<h4 id="toc_55">-replace <code>(old new list)</code></h4>
+
+<p>Replace all <code>old</code> items in <code>list</code> with <code>new</code>.</p>
+
+<p>Elements are compared using <code>equal</code>.</p>
+
+<p>See also: <a href="#-replace-at-n-x-list"><code>-replace-at</code></a></p>
+
+<div><pre><code class="language-el">(-replace 1 &quot;1&quot; &#39;(1 2 3 4 3 2 1)) ;; =&gt; &#39;(&quot;1&quot; 2 3 4 3 2 &quot;1&quot;)
+(-replace &quot;foo&quot; &quot;bar&quot; &#39;(&quot;a&quot; &quot;nice&quot; &quot;foo&quot; &quot;sentence&quot; &quot;about&quot; &quot;foo&quot;)) ;; =&gt; &#39;(&quot;a&quot; &quot;nice&quot; &quot;bar&quot; &quot;sentence&quot; &quot;about&quot; &quot;bar&quot;)
+(-replace 1 2 nil) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_56">-replace-first <code>(old new list)</code></h4>
+
+<p>Replace the first occurence of <code>old</code> with <code>new</code> in <code>list</code>.</p>
+
+<p>Elements are compared using <code>equal</code>.</p>
+
+<p>See also: <a href="#-map-first-pred-rep-list"><code>-map-first</code></a></p>
+
+<div><pre><code class="language-el">(-replace-first 1 &quot;1&quot; &#39;(1 2 3 4 3 2 1)) ;; =&gt; &#39;(&quot;1&quot; 2 3 4 3 2 1)
+(-replace-first &quot;foo&quot; &quot;bar&quot; &#39;(&quot;a&quot; &quot;nice&quot; &quot;foo&quot; &quot;sentence&quot; &quot;about&quot; &quot;foo&quot;)) ;; =&gt; &#39;(&quot;a&quot; &quot;nice&quot; &quot;bar&quot; &quot;sentence&quot; &quot;about&quot; &quot;foo&quot;)
+(-replace-first 1 2 nil) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_57">-replace-last <code>(old new list)</code></h4>
+
+<p>Replace the last occurence of <code>old</code> with <code>new</code> in <code>list</code>.</p>
+
+<p>Elements are compared using <code>equal</code>.</p>
+
+<p>See also: <a href="#-map-last-pred-rep-list"><code>-map-last</code></a></p>
+
+<div><pre><code class="language-el">(-replace-last 1 &quot;1&quot; &#39;(1 2 3 4 3 2 1)) ;; =&gt; &#39;(1 2 3 4 3 2 &quot;1&quot;)
+(-replace-last &quot;foo&quot; &quot;bar&quot; &#39;(&quot;a&quot; &quot;nice&quot; &quot;foo&quot; &quot;sentence&quot; &quot;about&quot; &quot;foo&quot;)) ;; =&gt; &#39;(&quot;a&quot; &quot;nice&quot; &quot;foo&quot; &quot;sentence&quot; &quot;about&quot; &quot;bar&quot;)
+(-replace-last 1 2 nil) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_58">-insert-at <code>(n x list)</code></h4>
+
+<p>Return a list with <code>x</code> inserted into <code>list</code> at position <code>n</code>.</p>
+
+<p>See also: <a href="#-splice-pred-fun-list"><code>-splice</code></a>, <a href="#-splice-list-pred-new-list-list"><code>-splice-list</code></a></p>
+
+<div><pre><code class="language-el">(-insert-at 1 &#39;x &#39;(a b c)) ;; =&gt; &#39;(a x b c)
+(-insert-at 12 &#39;x &#39;(a b c)) ;; =&gt; &#39;(a b c x)</code></pre></div>
+
+<h4 id="toc_59">-replace-at <code>(n x list)</code></h4>
+
+<p>Return a list with element at Nth position in <code>list</code> replaced with <code>x</code>.</p>
+
+<p>See also: <a href="#-replace-old-new-list"><code>-replace</code></a></p>
+
+<div><pre><code class="language-el">(-replace-at 0 9 &#39;(0 1 2 3 4 5)) ;; =&gt; &#39;(9 1 2 3 4 5)
+(-replace-at 1 9 &#39;(0 1 2 3 4 5)) ;; =&gt; &#39;(0 9 2 3 4 5)
+(-replace-at 4 9 &#39;(0 1 2 3 4 5)) ;; =&gt; &#39;(0 1 2 3 9 5)</code></pre></div>
+
+<h4 id="toc_60">-update-at <code>(n func list)</code></h4>
+
+<p>Return a list with element at Nth position in <code>list</code> replaced with <code>(func (nth n list))</code>.</p>
+
+<p>See also: <a href="#-map-when-pred-rep-list"><code>-map-when</code></a></p>
+
+<div><pre><code class="language-el">(-update-at 0 (lambda (x) (+ x 9)) &#39;(0 1 2 3 4 5)) ;; =&gt; &#39;(9 1 2 3 4 5)
+(-update-at 1 (lambda (x) (+ x 8)) &#39;(0 1 2 3 4 5)) ;; =&gt; &#39;(0 9 2 3 4 5)
+(--update-at 2 (length it) &#39;(&quot;foo&quot; &quot;bar&quot; &quot;baz&quot; &quot;quux&quot;)) ;; =&gt; &#39;(&quot;foo&quot; &quot;bar&quot; 3 &quot;quux&quot;)</code></pre></div>
+
+<h4 id="toc_61">-remove-at <code>(n list)</code></h4>
+
+<p>Return a list with element at Nth position in <code>list</code> removed.</p>
+
+<p>See also: <a href="#-remove-at-indices-indices-list"><code>-remove-at-indices</code></a>, <a href="#-remove-pred-list"><code>-remove</code></a></p>
+
+<div><pre><code class="language-el">(-remove-at 0 &#39;(&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)) ;; =&gt; &#39;(&quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)
+(-remove-at 1 &#39;(&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)) ;; =&gt; &#39;(&quot;0&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)
+(-remove-at 2 &#39;(&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)) ;; =&gt; &#39;(&quot;0&quot; &quot;1&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)</code></pre></div>
+
+<h4 id="toc_62">-remove-at-indices <code>(indices list)</code></h4>
+
+<p>Return a list whose elements are elements from <code>list</code> without
+elements selected as <code>(nth i list)</code> for all i
+from <code>indices</code>.</p>
+
+<p>See also: <a href="#-remove-at-n-list"><code>-remove-at</code></a>, <a href="#-remove-pred-list"><code>-remove</code></a></p>
+
+<div><pre><code class="language-el">(-remove-at-indices &#39;(0) &#39;(&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)) ;; =&gt; &#39;(&quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)
+(-remove-at-indices &#39;(0 2 4) &#39;(&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)) ;; =&gt; &#39;(&quot;1&quot; &quot;3&quot; &quot;5&quot;)
+(-remove-at-indices &#39;(0 5) &#39;(&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;)) ;; =&gt; &#39;(&quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot;)</code></pre></div>
+
+<h2 id="toc_63">Reductions</h2>
+
+<p>Functions reducing lists into single value.</p>
+
+<h4 id="toc_64">-reduce-from <code>(fn initial-value list)</code></h4>
+
+<p>Return the result of applying <code>fn</code> to <code>initial-value</code> and the
+first item in <code>list</code>, then applying <code>fn</code> to that result and the 2nd
+item, etc. If <code>list</code> contains no items, return <code>initial-value</code> and
+<code>fn</code> is not called.</p>
+
+<p>In the anaphoric form <code>--reduce-from</code>, the accumulated value is
+exposed as <code>acc</code>.</p>
+
+<p>See also: <a href="#-reduce-fn-list"><code>-reduce</code></a>, <a href="#-reduce-r-fn-list"><code>-reduce-r</code></a></p>
+
+<div><pre><code class="language-el">(-reduce-from &#39;- 10 &#39;(1 2 3)) ;; =&gt; 4
+(-reduce-from (lambda (memo item) (concat &quot;(&quot; memo &quot; - &quot; (int-to-string item) &quot;)&quot;)) &quot;10&quot; &#39;(1 2 3)) ;; =&gt; &quot;(((10 - 1) - 2) - 3)&quot;
+(--reduce-from (concat acc &quot; &quot; it) &quot;START&quot; &#39;(&quot;a&quot; &quot;b&quot; &quot;c&quot;)) ;; =&gt; &quot;START a b c&quot;</code></pre></div>
+
+<h4 id="toc_65">-reduce-r-from <code>(fn initial-value list)</code></h4>
+
+<p>Replace conses with <code>fn</code>, nil with <code>initial-value</code> and evaluate
+the resulting expression. If <code>list</code> is empty, <code>initial-value</code> is
+returned and <code>fn</code> is not called.</p>
+
+<p>Note: this function works the same as <a href="#-reduce-from-fn-initial-value-list"><code>-reduce-from</code></a> but the
+operation associates from right instead of from left.</p>
+
+<p>See also: <a href="#-reduce-r-fn-list"><code>-reduce-r</code></a>, <a href="#-reduce-fn-list"><code>-reduce</code></a></p>
+
+<div><pre><code class="language-el">(-reduce-r-from &#39;- 10 &#39;(1 2 3)) ;; =&gt; -8
+(-reduce-r-from (lambda (item memo) (concat &quot;(&quot; (int-to-string item) &quot; - &quot; memo &quot;)&quot;)) &quot;10&quot; &#39;(1 2 3)) ;; =&gt; &quot;(1 - (2 - (3 - 10)))&quot;
+(--reduce-r-from (concat it &quot; &quot; acc) &quot;END&quot; &#39;(&quot;a&quot; &quot;b&quot; &quot;c&quot;)) ;; =&gt; &quot;a b c END&quot;</code></pre></div>
+
+<h4 id="toc_66">-reduce <code>(fn list)</code></h4>
+
+<p>Return the result of applying <code>fn</code> to the first 2 items in <code>list</code>,
+then applying <code>fn</code> to that result and the 3rd item, etc. If <code>list</code>
+contains no items, <code>fn</code> must accept no arguments as well, and
+reduce return the result of calling <code>fn</code> with no arguments. If
+<code>list</code> has only 1 item, it is returned and <code>fn</code> is not called.</p>
+
+<p>In the anaphoric form <code>--reduce</code>, the accumulated value is
+exposed as <code>acc</code>.</p>
+
+<p>See also: <a href="#-reduce-from-fn-initial-value-list"><code>-reduce-from</code></a>, <a href="#-reduce-r-fn-list"><code>-reduce-r</code></a></p>
+
+<div><pre><code class="language-el">(-reduce &#39;- &#39;(1 2 3 4)) ;; =&gt; -8
+(-reduce (lambda (memo item) (format &quot;%s-%s&quot; memo item)) &#39;(1 2 3)) ;; =&gt; &quot;1-2-3&quot;
+(--reduce (format &quot;%s-%s&quot; acc it) &#39;(1 2 3)) ;; =&gt; &quot;1-2-3&quot;</code></pre></div>
+
+<h4 id="toc_67">-reduce-r <code>(fn list)</code></h4>
+
+<p>Replace conses with <code>fn</code> and evaluate the resulting expression.
+The final nil is ignored. If <code>list</code> contains no items, <code>fn</code> must
+accept no arguments as well, and reduce return the result of
+calling <code>fn</code> with no arguments. If <code>list</code> has only 1 item, it is
+returned and <code>fn</code> is not called.</p>
+
+<p>The first argument of <code>fn</code> is the new item, the second is the
+accumulated value.</p>
+
+<p>Note: this function works the same as <a href="#-reduce-fn-list"><code>-reduce</code></a> but the operation
+associates from right instead of from left.</p>
+
+<p>See also: <a href="#-reduce-r-from-fn-initial-value-list"><code>-reduce-r-from</code></a>, <a href="#-reduce-fn-list"><code>-reduce</code></a></p>
+
+<div><pre><code class="language-el">(-reduce-r &#39;- &#39;(1 2 3 4)) ;; =&gt; -2
+(-reduce-r (lambda (item memo) (format &quot;%s-%s&quot; memo item)) &#39;(1 2 3)) ;; =&gt; &quot;3-2-1&quot;
+(--reduce-r (format &quot;%s-%s&quot; acc it) &#39;(1 2 3)) ;; =&gt; &quot;3-2-1&quot;</code></pre></div>
+
+<h4 id="toc_68">-count <code>(pred list)</code></h4>
+
+<p>Counts the number of items in <code>list</code> where (<code>pred</code> item) is non-nil.</p>
+
+<div><pre><code class="language-el">(-count &#39;even? &#39;(1 2 3 4 5)) ;; =&gt; 2
+(--count (&lt; it 4) &#39;(1 2 3 4)) ;; =&gt; 3</code></pre></div>
+
+<h4 id="toc_69">-sum <code>(list)</code></h4>
+
+<p>Return the sum of <code>list</code>.</p>
+
+<div><pre><code class="language-el">(-sum &#39;()) ;; =&gt; 0
+(-sum &#39;(1)) ;; =&gt; 1
+(-sum &#39;(1 2 3 4)) ;; =&gt; 10</code></pre></div>
+
+<h4 id="toc_70">-product <code>(list)</code></h4>
+
+<p>Return the product of <code>list</code>.</p>
+
+<div><pre><code class="language-el">(-product &#39;()) ;; =&gt; 1
+(-product &#39;(1)) ;; =&gt; 1
+(-product &#39;(1 2 3 4)) ;; =&gt; 24</code></pre></div>
+
+<h4 id="toc_71">-min <code>(list)</code></h4>
+
+<p>Return the smallest value from <code>list</code> of numbers or markers.</p>
+
+<div><pre><code class="language-el">(-min &#39;(0)) ;; =&gt; 0
+(-min &#39;(3 2 1)) ;; =&gt; 1
+(-min &#39;(1 2 3)) ;; =&gt; 1</code></pre></div>
+
+<h4 id="toc_72">-min-by <code>(comparator list)</code></h4>
+
+<p>Take a comparison function <code>comparator</code> and a <code>list</code> and return
+the least element of the list by the comparison function.</p>
+
+<p>See also combinator <a href="#-on-operator-transformer"><code>-on</code></a> which can transform the values before
+comparing them.</p>
+
+<div><pre><code class="language-el">(-min-by &#39;&gt; &#39;(4 3 6 1)) ;; =&gt; 1
+(--min-by (&gt; (car it) (car other)) &#39;((1 2 3) (2) (3 2))) ;; =&gt; &#39;(1 2 3)
+(--min-by (&gt; (length it) (length other)) &#39;((1 2 3) (2) (3 2))) ;; =&gt; &#39;(2)</code></pre></div>
+
+<h4 id="toc_73">-max <code>(list)</code></h4>
+
+<p>Return the largest value from <code>list</code> of numbers or markers.</p>
+
+<div><pre><code class="language-el">(-max &#39;(0)) ;; =&gt; 0
+(-max &#39;(3 2 1)) ;; =&gt; 3
+(-max &#39;(1 2 3)) ;; =&gt; 3</code></pre></div>
+
+<h4 id="toc_74">-max-by <code>(comparator list)</code></h4>
+
+<p>Take a comparison function <code>comparator</code> and a <code>list</code> and return
+the greatest element of the list by the comparison function.</p>
+
+<p>See also combinator <a href="#-on-operator-transformer"><code>-on</code></a> which can transform the values before
+comparing them.</p>
+
+<div><pre><code class="language-el">(-max-by &#39;&gt; &#39;(4 3 6 1)) ;; =&gt; 6
+(--max-by (&gt; (car it) (car other)) &#39;((1 2 3) (2) (3 2))) ;; =&gt; &#39;(3 2)
+(--max-by (&gt; (length it) (length other)) &#39;((1 2 3) (2) (3 2))) ;; =&gt; &#39;(1 2 3)</code></pre></div>
+
+<h2 id="toc_75">Unfolding</h2>
+
+<p>Operations dual to reductions, building lists from seed value rather than consuming a list to produce a single value.</p>
+
+<h4 id="toc_76">-iterate <code>(fun init n)</code></h4>
+
+<p>Return a list of iterated applications of <code>fun</code> to <code>init</code>.</p>
+
+<p>This means a list of form:</p>
+
+<div><pre><code class="language-none">(init (fun init) (fun (fun init)) ...)</code></pre></div>
+
+<p><code>n</code> is the length of the returned list.</p>
+
+<div><pre><code class="language-el">(-iterate &#39;1+ 1 10) ;; =&gt; &#39;(1 2 3 4 5 6 7 8 9 10)
+(-iterate (lambda (x) (+ x x)) 2 5) ;; =&gt; &#39;(2 4 8 16 32)
+(--iterate (* it it) 2 5) ;; =&gt; &#39;(2 4 16 256 65536)</code></pre></div>
+
+<h4 id="toc_77">-unfold <code>(fun seed)</code></h4>
+
+<p>Build a list from <code>seed</code> using <code>fun</code>.</p>
+
+<p>This is &quot;dual&quot; operation to <a href="#-reduce-r-fn-list"><code>-reduce-r</code></a>: while -reduce-r
+consumes a list to produce a single value, <a href="#-unfold-fun-seed"><code>-unfold</code></a> takes a
+seed value and builds a (potentially infinite!) list.</p>
+
+<p><code>fun</code> should return <code>nil</code> to stop the generating process, or a
+cons (<code>a</code> . <code>b</code>), where <code>a</code> will be prepended to the result and <code>b</code> is
+the new seed.</p>
+
+<div><pre><code class="language-el">(-unfold (lambda (x) (unless (= x 0) (cons x (1- x)))) 10) ;; =&gt; &#39;(10 9 8 7 6 5 4 3 2 1)
+(--unfold (when it (cons it (cdr it))) &#39;(1 2 3 4)) ;; =&gt; &#39;((1 2 3 4) (2 3 4) (3 4) (4))
+(--unfold (when it (cons it (butlast it))) &#39;(1 2 3 4)) ;; =&gt; &#39;((1 2 3 4) (1 2 3) (1 2) (1))</code></pre></div>
+
+<h2 id="toc_78">Predicates</h2>
+
+<h4 id="toc_79">-any? <code>(pred list)</code></h4>
+
+<p>Return t if (<code>pred</code> x) is non-nil for any x in <code>list</code>, else nil.</p>
+
+<p>Alias: <code>-any-p</code>, <code>-some?</code>, <code>-some-p</code></p>
+
+<div><pre><code class="language-el">(-any? &#39;even? &#39;(1 2 3)) ;; =&gt; t
+(-any? &#39;even? &#39;(1 3 5)) ;; =&gt; nil
+(--any? (= 0 (% it 2)) &#39;(1 2 3)) ;; =&gt; t</code></pre></div>
+
+<h4 id="toc_80">-all? <code>(pred list)</code></h4>
+
+<p>Return t if (<code>pred</code> x) is non-nil for all x in <code>list</code>, else nil.</p>
+
+<p>Alias: <code>-all-p</code>, <code>-every?</code>, <code>-every-p</code></p>
+
+<div><pre><code class="language-el">(-all? &#39;even? &#39;(1 2 3)) ;; =&gt; nil
+(-all? &#39;even? &#39;(2 4 6)) ;; =&gt; t
+(--all? (= 0 (% it 2)) &#39;(2 4 6)) ;; =&gt; t</code></pre></div>
+
+<h4 id="toc_81">-none? <code>(pred list)</code></h4>
+
+<p>Return t if (<code>pred</code> x) is nil for all x in <code>list</code>, else nil.</p>
+
+<p>Alias: <code>-none-p</code></p>
+
+<div><pre><code class="language-el">(-none? &#39;even? &#39;(1 2 3)) ;; =&gt; nil
+(-none? &#39;even? &#39;(1 3 5)) ;; =&gt; t
+(--none? (= 0 (% it 2)) &#39;(1 2 3)) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_82">-only-some? <code>(pred list)</code></h4>
+
+<p>Return <code>t</code> if at least one item of <code>list</code> matches <code>pred</code> and at least one item of <code>list</code> does not match <code>pred</code>.
+Return <code>nil</code> both if all items match the predicate or if none of the items match the predicate.</p>
+
+<p>Alias: <code>-only-some-p</code></p>
+
+<div><pre><code class="language-el">(-only-some? &#39;even? &#39;(1 2 3)) ;; =&gt; t
+(-only-some? &#39;even? &#39;(1 3 5)) ;; =&gt; nil
+(-only-some? &#39;even? &#39;(2 4 6)) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_83">-contains? <code>(list element)</code></h4>
+
+<p>Return non-nil if <code>list</code> contains <code>element</code>.</p>
+
+<p>The test for equality is done with <code>equal</code>, or with <code>-compare-fn</code>
+if that&#39;s non-nil.</p>
+
+<p>Alias: <code>-contains-p</code></p>
+
+<div><pre><code class="language-el">(-contains? &#39;(1 2 3) 1) ;; =&gt; t
+(-contains? &#39;(1 2 3) 2) ;; =&gt; t
+(-contains? &#39;(1 2 3) 4) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_84">-same-items? <code>(list list2)</code></h4>
+
+<p>Return true if <code>list</code> and <code>list2</code> has the same items.</p>
+
+<p>The order of the elements in the lists does not matter.</p>
+
+<p>Alias: <code>-same-items-p</code></p>
+
+<div><pre><code class="language-el">(-same-items? &#39;(1 2 3) &#39;(1 2 3)) ;; =&gt; t
+(-same-items? &#39;(1 2 3) &#39;(3 2 1)) ;; =&gt; t
+(-same-items? &#39;(1 2 3) &#39;(1 2 3 4)) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_85">-is-prefix? <code>(prefix list)</code></h4>
+
+<p>Return non-nil if <code>prefix</code> is prefix of <code>list</code>.</p>
+
+<p>Alias: <code>-is-prefix-p</code></p>
+
+<div><pre><code class="language-el">(-is-prefix? &#39;(1 2 3) &#39;(1 2 3 4 5)) ;; =&gt; t
+(-is-prefix? &#39;(1 2 3 4 5) &#39;(1 2 3)) ;; =&gt; nil
+(-is-prefix? &#39;(1 3) &#39;(1 2 3 4 5)) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_86">-is-suffix? <code>(suffix list)</code></h4>
+
+<p>Return non-nil if <code>suffix</code> is suffix of <code>list</code>.</p>
+
+<p>Alias: <code>-is-suffix-p</code></p>
+
+<div><pre><code class="language-el">(-is-suffix? &#39;(3 4 5) &#39;(1 2 3 4 5)) ;; =&gt; t
+(-is-suffix? &#39;(1 2 3 4 5) &#39;(3 4 5)) ;; =&gt; nil
+(-is-suffix? &#39;(3 5) &#39;(1 2 3 4 5)) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_87">-is-infix? <code>(infix list)</code></h4>
+
+<p>Return non-nil if <code>infix</code> is infix of <code>list</code>.</p>
+
+<p>This operation runs in <code>o</code>(n^2) time</p>
+
+<p>Alias: <code>-is-infix-p</code></p>
+
+<div><pre><code class="language-el">(-is-infix? &#39;(1 2 3) &#39;(1 2 3 4 5)) ;; =&gt; t
+(-is-infix? &#39;(2 3 4) &#39;(1 2 3 4 5)) ;; =&gt; t
+(-is-infix? &#39;(3 4 5) &#39;(1 2 3 4 5)) ;; =&gt; t</code></pre></div>
+
+<h2 id="toc_88">Partitioning</h2>
+
+<p>Functions partitioning the input list into a list of lists.</p>
+
+<h4 id="toc_89">-split-at <code>(n list)</code></h4>
+
+<p>Return a list of ((-take <code>n</code> <code>list</code>) (-drop <code>n</code> <code>list</code>)), in no more than one pass through the list.</p>
+
+<div><pre><code class="language-el">(-split-at 3 &#39;(1 2 3 4 5)) ;; =&gt; &#39;((1 2 3) (4 5))
+(-split-at 17 &#39;(1 2 3 4 5)) ;; =&gt; &#39;((1 2 3 4 5) nil)</code></pre></div>
+
+<h4 id="toc_90">-split-with <code>(pred list)</code></h4>
+
+<p>Return a list of ((-take-while <code>pred</code> <code>list</code>) (-drop-while <code>pred</code> <code>list</code>)), in no more than one pass through the list.</p>
+
+<div><pre><code class="language-el">(-split-with &#39;even? &#39;(1 2 3 4)) ;; =&gt; &#39;(nil (1 2 3 4))
+(-split-with &#39;even? &#39;(2 4 5 6)) ;; =&gt; &#39;((2 4) (5 6))
+(--split-with (&lt; it 4) &#39;(1 2 3 4 3 2 1)) ;; =&gt; &#39;((1 2 3) (4 3 2 1))</code></pre></div>
+
+<h4 id="toc_91">-split-on <code>(item list)</code></h4>
+
+<p>Split the <code>list</code> each time <code>item</code> is found.</p>
+
+<p>Unlike <a href="#-partition-by-fn-list"><code>-partition-by</code></a>, the <code>item</code> is discarded from the results.
+Empty lists are also removed from the result.</p>
+
+<p>Comparison is done by <code>equal</code>.</p>
+
+<p>See also <a href="#-split-when-fn-list"><code>-split-when</code></a></p>
+
+<div><pre><code class="language-el">(-split-on &#39;| &#39;(Nil | Leaf a | Node [Tree a])) ;; =&gt; &#39;((Nil) (Leaf a) (Node [Tree a]))
+(-split-on &#39;:endgroup &#39;(&quot;a&quot; &quot;b&quot; :endgroup &quot;c&quot; :endgroup &quot;d&quot; &quot;e&quot;)) ;; =&gt; &#39;((&quot;a&quot; &quot;b&quot;) (&quot;c&quot;) (&quot;d&quot; &quot;e&quot;))
+(-split-on &#39;:endgroup &#39;(&quot;a&quot; &quot;b&quot; :endgroup :endgroup &quot;d&quot; &quot;e&quot;)) ;; =&gt; &#39;((&quot;a&quot; &quot;b&quot;) (&quot;d&quot; &quot;e&quot;))</code></pre></div>
+
+<h4 id="toc_92">-split-when <code>(fn list)</code></h4>
+
+<p>Split the <code>list</code> on each element where <code>fn</code> returns non-nil.</p>
+
+<p>Unlike <a href="#-partition-by-fn-list"><code>-partition-by</code></a>, the &quot;matched&quot; element is discarded from
+the results.  Empty lists are also removed from the result.</p>
+
+<p>This function can be thought of as a generalization of
+<code>split-string</code>.</p>
+
+<div><pre><code class="language-el">(-split-when &#39;even? &#39;(1 2 3 4 5 6)) ;; =&gt; &#39;((1) (3) (5))
+(-split-when &#39;even? &#39;(1 2 3 4 6 8 9)) ;; =&gt; &#39;((1) (3) (9))
+(--split-when (memq it &#39;(&amp;optional &amp;rest)) &#39;(a b &amp;optional c d &amp;rest args)) ;; =&gt; &#39;((a b) (c d) (args))</code></pre></div>
+
+<h4 id="toc_93">-separate <code>(pred list)</code></h4>
+
+<p>Return a list of ((-filter <code>pred</code> <code>list</code>) (-remove <code>pred</code> <code>list</code>)), in one pass through the list.</p>
+
+<div><pre><code class="language-el">(-separate (lambda (num) (= 0 (% num 2))) &#39;(1 2 3 4 5 6 7)) ;; =&gt; &#39;((2 4 6) (1 3 5 7))
+(--separate (&lt; it 5) &#39;(3 7 5 9 3 2 1 4 6)) ;; =&gt; &#39;((3 3 2 1 4) (7 5 9 6))
+(-separate &#39;cdr &#39;((1 2) (1) (1 2 3) (4))) ;; =&gt; &#39;(((1 2) (1 2 3)) ((1) (4)))</code></pre></div>
+
+<h4 id="toc_94">-partition <code>(n list)</code></h4>
+
+<p>Return a new list with the items in <code>list</code> grouped into <code>n-</code>sized sublists.
+If there are not enough items to make the last group <code>n-</code>sized,
+those items are discarded.</p>
+
+<div><pre><code class="language-el">(-partition 2 &#39;(1 2 3 4 5 6)) ;; =&gt; &#39;((1 2) (3 4) (5 6))
+(-partition 2 &#39;(1 2 3 4 5 6 7)) ;; =&gt; &#39;((1 2) (3 4) (5 6))
+(-partition 3 &#39;(1 2 3 4 5 6 7)) ;; =&gt; &#39;((1 2 3) (4 5 6))</code></pre></div>
+
+<h4 id="toc_95">-partition-all <code>(n list)</code></h4>
+
+<p>Return a new list with the items in <code>list</code> grouped into <code>n-</code>sized sublists.
+The last group may contain less than <code>n</code> items.</p>
+
+<div><pre><code class="language-el">(-partition-all 2 &#39;(1 2 3 4 5 6)) ;; =&gt; &#39;((1 2) (3 4) (5 6))
+(-partition-all 2 &#39;(1 2 3 4 5 6 7)) ;; =&gt; &#39;((1 2) (3 4) (5 6) (7))
+(-partition-all 3 &#39;(1 2 3 4 5 6 7)) ;; =&gt; &#39;((1 2 3) (4 5 6) (7))</code></pre></div>
+
+<h4 id="toc_96">-partition-in-steps <code>(n step list)</code></h4>
+
+<p>Return a new list with the items in <code>list</code> grouped into <code>n-</code>sized sublists at offsets <code>step</code> apart.
+If there are not enough items to make the last group <code>n-</code>sized,
+those items are discarded.</p>
+
+<div><pre><code class="language-el">(-partition-in-steps 2 1 &#39;(1 2 3 4)) ;; =&gt; &#39;((1 2) (2 3) (3 4))
+(-partition-in-steps 3 2 &#39;(1 2 3 4)) ;; =&gt; &#39;((1 2 3))
+(-partition-in-steps 3 2 &#39;(1 2 3 4 5)) ;; =&gt; &#39;((1 2 3) (3 4 5))</code></pre></div>
+
+<h4 id="toc_97">-partition-all-in-steps <code>(n step list)</code></h4>
+
+<p>Return a new list with the items in <code>list</code> grouped into <code>n-</code>sized sublists at offsets <code>step</code> apart.
+The last groups may contain less than <code>n</code> items.</p>
+
+<div><pre><code class="language-el">(-partition-all-in-steps 2 1 &#39;(1 2 3 4)) ;; =&gt; &#39;((1 2) (2 3) (3 4) (4))
+(-partition-all-in-steps 3 2 &#39;(1 2 3 4)) ;; =&gt; &#39;((1 2 3) (3 4))
+(-partition-all-in-steps 3 2 &#39;(1 2 3 4 5)) ;; =&gt; &#39;((1 2 3) (3 4 5) (5))</code></pre></div>
+
+<h4 id="toc_98">-partition-by <code>(fn list)</code></h4>
+
+<p>Apply <code>fn</code> to each item in <code>list</code>, splitting it each time <code>fn</code> returns a new value.</p>
+
+<div><pre><code class="language-el">(-partition-by &#39;even? &#39;()) ;; =&gt; &#39;()
+(-partition-by &#39;even? &#39;(1 1 2 2 2 3 4 6 8)) ;; =&gt; &#39;((1 1) (2 2 2) (3) (4 6 8))
+(--partition-by (&lt; it 3) &#39;(1 2 3 4 3 2 1)) ;; =&gt; &#39;((1 2) (3 4 3) (2 1))</code></pre></div>
+
+<h4 id="toc_99">-partition-by-header <code>(fn list)</code></h4>
+
+<p>Apply <code>fn</code> to the first item in <code>list</code>. That is the header
+value. Apply <code>fn</code> to each item in <code>list</code>, splitting it each time <code>fn</code>
+returns the header value, but only after seeing at least one
+other value (the body).</p>
+
+<div><pre><code class="language-el">(--partition-by-header (= it 1) &#39;(1 2 3 1 2 1 2 3 4)) ;; =&gt; &#39;((1 2 3) (1 2) (1 2 3 4))
+(--partition-by-header (&gt; it 0) &#39;(1 2 0 1 0 1 2 3 0)) ;; =&gt; &#39;((1 2 0) (1 0) (1 2 3 0))
+(-partition-by-header &#39;even? &#39;(2 1 1 1 4 1 3 5 6 6 1)) ;; =&gt; &#39;((2 1 1 1) (4 1 3 5) (6 6 1))</code></pre></div>
+
+<h4 id="toc_100">-group-by <code>(fn list)</code></h4>
+
+<p>Separate <code>list</code> into an alist whose keys are <code>fn</code> applied to the
+elements of <code>list</code>.  Keys are compared by <code>equal</code>.</p>
+
+<div><pre><code class="language-el">(-group-by &#39;even? &#39;()) ;; =&gt; &#39;()
+(-group-by &#39;even? &#39;(1 1 2 2 2 3 4 6 8)) ;; =&gt; &#39;((nil 1 1 3) (t 2 2 2 4 6 8))
+(--group-by (car (split-string it &quot;/&quot;)) &#39;(&quot;a/b&quot; &quot;c/d&quot; &quot;a/e&quot;)) ;; =&gt; &#39;((&quot;a&quot; &quot;a/b&quot; &quot;a/e&quot;) (&quot;c&quot; &quot;c/d&quot;))</code></pre></div>
+
+<h2 id="toc_101">Indexing</h2>
+
+<p>Return indices of elements based on predicates, sort elements by indices etc.</p>
+
+<h4 id="toc_102">-elem-index <code>(elem list)</code></h4>
+
+<p>Return the index of the first element in the given <code>list</code> which
+is equal to the query element <code>elem</code>, or nil if there is no
+such element.</p>
+
+<div><pre><code class="language-el">(-elem-index 2 &#39;(6 7 8 2 3 4)) ;; =&gt; 3
+(-elem-index &quot;bar&quot; &#39;(&quot;foo&quot; &quot;bar&quot; &quot;baz&quot;)) ;; =&gt; 1
+(-elem-index &#39;(1 2) &#39;((3) (5 6) (1 2) nil)) ;; =&gt; 2</code></pre></div>
+
+<h4 id="toc_103">-elem-indices <code>(elem list)</code></h4>
+
+<p>Return the indices of all elements in <code>list</code> equal to the query
+element <code>elem</code>, in ascending order.</p>
+
+<div><pre><code class="language-el">(-elem-indices 2 &#39;(6 7 8 2 3 4 2 1)) ;; =&gt; &#39;(3 6)
+(-elem-indices &quot;bar&quot; &#39;(&quot;foo&quot; &quot;bar&quot; &quot;baz&quot;)) ;; =&gt; &#39;(1)
+(-elem-indices &#39;(1 2) &#39;((3) (1 2) (5 6) (1 2) nil)) ;; =&gt; &#39;(1 3)</code></pre></div>
+
+<h4 id="toc_104">-find-index <code>(pred list)</code></h4>
+
+<p>Take a predicate <code>pred</code> and a <code>list</code> and return the index of the
+first element in the list satisfying the predicate, or nil if
+there is no such element.</p>
+
+<p>See also <a href="#-first-pred-list"><code>-first</code></a>.</p>
+
+<div><pre><code class="language-el">(-find-index &#39;even? &#39;(2 4 1 6 3 3 5 8)) ;; =&gt; 0
+(--find-index (&lt; 5 it) &#39;(2 4 1 6 3 3 5 8)) ;; =&gt; 3
+(-find-index (-partial &#39;string-lessp &quot;baz&quot;) &#39;(&quot;bar&quot; &quot;foo&quot; &quot;baz&quot;)) ;; =&gt; 1</code></pre></div>
+
+<h4 id="toc_105">-find-last-index <code>(pred list)</code></h4>
+
+<p>Take a predicate <code>pred</code> and a <code>list</code> and return the index of the
+last element in the list satisfying the predicate, or nil if
+there is no such element.</p>
+
+<p>See also <a href="#-last-pred-list"><code>-last</code></a>.</p>
+
+<div><pre><code class="language-el">(-find-last-index &#39;even? &#39;(2 4 1 6 3 3 5 8)) ;; =&gt; 7
+(--find-last-index (&lt; 5 it) &#39;(2 7 1 6 3 8 5 2)) ;; =&gt; 5
+(-find-last-index (-partial &#39;string-lessp &quot;baz&quot;) &#39;(&quot;q&quot; &quot;foo&quot; &quot;baz&quot;)) ;; =&gt; 1</code></pre></div>
+
+<h4 id="toc_106">-find-indices <code>(pred list)</code></h4>
+
+<p>Return the indices of all elements in <code>list</code> satisfying the
+predicate <code>pred</code>, in ascending order.</p>
+
+<div><pre><code class="language-el">(-find-indices &#39;even? &#39;(2 4 1 6 3 3 5 8)) ;; =&gt; &#39;(0 1 3 7)
+(--find-indices (&lt; 5 it) &#39;(2 4 1 6 3 3 5 8)) ;; =&gt; &#39;(3 7)
+(-find-indices (-partial &#39;string-lessp &quot;baz&quot;) &#39;(&quot;bar&quot; &quot;foo&quot; &quot;baz&quot;)) ;; =&gt; &#39;(1)</code></pre></div>
+
+<h4 id="toc_107">-grade-up <code>(comparator list)</code></h4>
+
+<p>Grade elements of <code>list</code> using <code>comparator</code> relation, yielding a
+permutation vector such that applying this permutation to <code>list</code>
+sorts it in ascending order.</p>
+
+<div><pre><code class="language-el">(-grade-up &#39;&lt; &#39;(3 1 4 2 1 3 3)) ;; =&gt; &#39;(1 4 3 0 5 6 2)
+(let ((l &#39;(3 1 4 2 1 3 3))) (-select-by-indices (-grade-up &#39;&lt; l) l)) ;; =&gt; &#39;(1 1 2 3 3 3 4)</code></pre></div>
+
+<h4 id="toc_108">-grade-down <code>(comparator list)</code></h4>
+
+<p>Grade elements of <code>list</code> using <code>comparator</code> relation, yielding a
+permutation vector such that applying this permutation to <code>list</code>
+sorts it in descending order.</p>
+
+<div><pre><code class="language-el">(-grade-down &#39;&lt; &#39;(3 1 4 2 1 3 3)) ;; =&gt; &#39;(2 0 5 6 3 1 4)
+(let ((l &#39;(3 1 4 2 1 3 3))) (-select-by-indices (-grade-down &#39;&lt; l) l)) ;; =&gt; &#39;(4 3 3 3 2 1 1)</code></pre></div>
+
+<h2 id="toc_109">Set operations</h2>
+
+<p>Operations pretending lists are sets.</p>
+
+<h4 id="toc_110">-union <code>(list list2)</code></h4>
+
+<p>Return a new list containing the elements of <code>list1</code> and elements of <code>list2</code> that are not in <code>list1</code>.
+The test for equality is done with <code>equal</code>,
+or with <code>-compare-fn</code> if that&#39;s non-nil.</p>
+
+<div><pre><code class="language-el">(-union &#39;(1 2 3) &#39;(3 4 5)) ;; =&gt; &#39;(1 2 3 4 5)
+(-union &#39;(1 2 3 4) &#39;()) ;; =&gt; &#39;(1 2 3 4)
+(-union &#39;(1 1 2 2) &#39;(3 2 1)) ;; =&gt; &#39;(1 1 2 2 3)</code></pre></div>
+
+<h4 id="toc_111">-difference <code>(list list2)</code></h4>
+
+<p>Return a new list with only the members of <code>list</code> that are not in <code>list2</code>.
+The test for equality is done with <code>equal</code>,
+or with <code>-compare-fn</code> if that&#39;s non-nil.</p>
+
+<div><pre><code class="language-el">(-difference &#39;() &#39;()) ;; =&gt; &#39;()
+(-difference &#39;(1 2 3) &#39;(4 5 6)) ;; =&gt; &#39;(1 2 3)
+(-difference &#39;(1 2 3 4) &#39;(3 4 5 6)) ;; =&gt; &#39;(1 2)</code></pre></div>
+
+<h4 id="toc_112">-intersection <code>(list list2)</code></h4>
+
+<p>Return a new list containing only the elements that are members of both <code>list</code> and <code>list2</code>.
+The test for equality is done with <code>equal</code>,
+or with <code>-compare-fn</code> if that&#39;s non-nil.</p>
+
+<div><pre><code class="language-el">(-intersection &#39;() &#39;()) ;; =&gt; &#39;()
+(-intersection &#39;(1 2 3) &#39;(4 5 6)) ;; =&gt; &#39;()
+(-intersection &#39;(1 2 3 4) &#39;(3 4 5 6)) ;; =&gt; &#39;(3 4)</code></pre></div>
+
+<h4 id="toc_113">-distinct <code>(list)</code></h4>
+
+<p>Return a new list with all duplicates removed.
+The test for equality is done with <code>equal</code>,
+or with <code>-compare-fn</code> if that&#39;s non-nil.</p>
+
+<p>Alias: <code>-uniq</code></p>
+
+<div><pre><code class="language-el">(-distinct &#39;()) ;; =&gt; &#39;()
+(-distinct &#39;(1 2 2 4)) ;; =&gt; &#39;(1 2 4)</code></pre></div>
+
+<h2 id="toc_114">Other list operations</h2>
+
+<p>Other list functions not fit to be classified elsewhere.</p>
+
+<h4 id="toc_115">-rotate <code>(n list)</code></h4>
+
+<p>Rotate <code>list</code> <code>n</code> places to the right.  With <code>n</code> negative, rotate to the left.
+The time complexity is <code>o</code>(n).</p>
+
+<div><pre><code class="language-el">(-rotate 3 &#39;(1 2 3 4 5 6 7)) ;; =&gt; &#39;(5 6 7 1 2 3 4)
+(-rotate -3 &#39;(1 2 3 4 5 6 7)) ;; =&gt; &#39;(4 5 6 7 1 2 3)</code></pre></div>
+
+<h4 id="toc_116">-repeat <code>(n x)</code></h4>
+
+<p>Return a list with <code>x</code> repeated <code>n</code> times.
+Return nil if <code>n</code> is less than 1.</p>
+
+<div><pre><code class="language-el">(-repeat 3 :a) ;; =&gt; &#39;(:a :a :a)
+(-repeat 1 :a) ;; =&gt; &#39;(:a)
+(-repeat 0 :a) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_117">-cons* <code>(&amp;rest args)</code></h4>
+
+<p>Make a new list from the elements of <code>args</code>.</p>
+
+<p>The last 2 members of <code>args</code> are used as the final cons of the
+result so if the final member of <code>args</code> is not a list the result is
+a dotted list.</p>
+
+<div><pre><code class="language-el">(-cons* 1 2) ;; =&gt; &#39;(1 . 2)
+(-cons* 1 2 3) ;; =&gt; &#39;(1 2 . 3)
+(-cons* 1) ;; =&gt; 1</code></pre></div>
+
+<h4 id="toc_118">-snoc <code>(list elem &amp;rest elements)</code></h4>
+
+<p>Append <code>elem</code> to the end of the list.</p>
+
+<p>This is like <code>cons</code>, but operates on the end of list.</p>
+
+<p>If <code>elements</code> is non nil, append these to the list as well.</p>
+
+<div><pre><code class="language-el">(-snoc &#39;(1 2 3) 4) ;; =&gt; &#39;(1 2 3 4)
+(-snoc &#39;(1 2 3) 4 5 6) ;; =&gt; &#39;(1 2 3 4 5 6)
+(-snoc &#39;(1 2 3) &#39;(4 5 6)) ;; =&gt; &#39;(1 2 3 (4 5 6))</code></pre></div>
+
+<h4 id="toc_119">-interpose <code>(sep list)</code></h4>
+
+<p>Return a new list of all elements in <code>list</code> separated by <code>sep</code>.</p>
+
+<div><pre><code class="language-el">(-interpose &quot;-&quot; &#39;()) ;; =&gt; &#39;()
+(-interpose &quot;-&quot; &#39;(&quot;a&quot;)) ;; =&gt; &#39;(&quot;a&quot;)
+(-interpose &quot;-&quot; &#39;(&quot;a&quot; &quot;b&quot; &quot;c&quot;)) ;; =&gt; &#39;(&quot;a&quot; &quot;-&quot; &quot;b&quot; &quot;-&quot; &quot;c&quot;)</code></pre></div>
+
+<h4 id="toc_120">-interleave <code>(&amp;rest lists)</code></h4>
+
+<p>Return a new list of the first item in each list, then the second etc.</p>
+
+<div><pre><code class="language-el">(-interleave &#39;(1 2) &#39;(&quot;a&quot; &quot;b&quot;)) ;; =&gt; &#39;(1 &quot;a&quot; 2 &quot;b&quot;)
+(-interleave &#39;(1 2) &#39;(&quot;a&quot; &quot;b&quot;) &#39;(&quot;A&quot; &quot;B&quot;)) ;; =&gt; &#39;(1 &quot;a&quot; &quot;A&quot; 2 &quot;b&quot; &quot;B&quot;)
+(-interleave &#39;(1 2 3) &#39;(&quot;a&quot; &quot;b&quot;)) ;; =&gt; &#39;(1 &quot;a&quot; 2 &quot;b&quot;)</code></pre></div>
+
+<h4 id="toc_121">-zip-with <code>(fn list1 list2)</code></h4>
+
+<p>Zip the two lists <code>list1</code> and <code>list2</code> using a function <code>fn</code>.  This
+function is applied pairwise taking as first argument element of
+<code>list1</code> and as second argument element of <code>list2</code> at corresponding
+position.</p>
+
+<p>The anaphoric form <code>--zip-with</code> binds the elements from <code>list1</code> as <code>it</code>,
+and the elements from <code>list2</code> as <code>other</code>.</p>
+
+<div><pre><code class="language-el">(-zip-with &#39;+ &#39;(1 2 3) &#39;(4 5 6)) ;; =&gt; &#39;(5 7 9)
+(-zip-with &#39;cons &#39;(1 2 3) &#39;(4 5 6)) ;; =&gt; &#39;((1 . 4) (2 . 5) (3 . 6))
+(--zip-with (concat it &quot; and &quot; other) &#39;(&quot;Batman&quot; &quot;Jekyll&quot;) &#39;(&quot;Robin&quot; &quot;Hyde&quot;)) ;; =&gt; &#39;(&quot;Batman and Robin&quot; &quot;Jekyll and Hyde&quot;)</code></pre></div>
+
+<h4 id="toc_122">-zip <code>(&amp;rest lists)</code></h4>
+
+<p>Zip <code>lists</code> together.  Group the head of each list, followed by the
+second elements of each list, and so on. The lengths of the returned
+groupings are equal to the length of the shortest input list.</p>
+
+<p>If two lists are provided as arguments, return the groupings as a list
+of cons cells. Otherwise, return the groupings as a list of lists.</p>
+
+<p>Please note! This distinction is being removed in an upcoming 2.0
+release of Dash. If you rely on this behavior, use -zip-pair instead.</p>
+
+<div><pre><code class="language-el">(-zip &#39;(1 2 3) &#39;(4 5 6)) ;; =&gt; &#39;((1 . 4) (2 . 5) (3 . 6))
+(-zip &#39;(1 2 3) &#39;(4 5 6 7)) ;; =&gt; &#39;((1 . 4) (2 . 5) (3 . 6))
+(-zip &#39;(1 2 3 4) &#39;(4 5 6)) ;; =&gt; &#39;((1 . 4) (2 . 5) (3 . 6))</code></pre></div>
+
+<h4 id="toc_123">-zip-fill <code>(fill-value &amp;rest lists)</code></h4>
+
+<p>Zip <code>lists</code>, with <code>fill-value</code> padded onto the shorter lists. The
+lengths of the returned groupings are equal to the length of the
+longest input list.</p>
+
+<div><pre><code class="language-el">(-zip-fill 0 &#39;(1 2 3 4 5) &#39;(6 7 8 9)) ;; =&gt; &#39;((1 . 6) (2 . 7) (3 . 8) (4 . 9) (5 . 0))</code></pre></div>
+
+<h4 id="toc_124">-cycle <code>(list)</code></h4>
+
+<p>Return an infinite copy of <code>list</code> that will cycle through the
+elements and repeat from the beginning.</p>
+
+<div><pre><code class="language-el">(-take 5 (-cycle &#39;(1 2 3))) ;; =&gt; &#39;(1 2 3 1 2)
+(-take 7 (-cycle &#39;(1 &quot;and&quot; 3))) ;; =&gt; &#39;(1 &quot;and&quot; 3 1 &quot;and&quot; 3 1)
+(-zip (-cycle &#39;(1 2 3)) &#39;(1 2)) ;; =&gt; &#39;((1 . 1) (2 . 2))</code></pre></div>
+
+<h4 id="toc_125">-pad <code>(fill-value &amp;rest lists)</code></h4>
+
+<p>Appends <code>fill-value</code> to the end of each list in <code>lists</code> such that they
+will all have the same length.</p>
+
+<div><pre><code class="language-el">(-pad 0 &#39;()) ;; =&gt; &#39;(nil)
+(-pad 0 &#39;(1)) ;; =&gt; &#39;((1))
+(-pad 0 &#39;(1 2 3) &#39;(4 5)) ;; =&gt; &#39;((1 2 3) (4 5 0))</code></pre></div>
+
+<h4 id="toc_126">-table <code>(fn &amp;rest lists)</code></h4>
+
+<p>Compute outer product of <code>lists</code> using function <code>fn</code>.</p>
+
+<p>The function <code>fn</code> should have the same arity as the number of
+supplied lists.</p>
+
+<p>The outer product is computed by applying fn to all possible
+combinations created by taking one element from each list in
+order.  The dimension of the result is (length lists).</p>
+
+<p>See also: <a href="#-table-flat-fn-rest-lists"><code>-table-flat</code></a></p>
+
+<div><pre><code class="language-el">(-table &#39;* &#39;(1 2 3) &#39;(1 2 3)) ;; =&gt; &#39;((1 2 3) (2 4 6) (3 6 9))
+(-table (lambda (a b) (-sum (-zip-with &#39;* a b))) &#39;((1 2) (3 4)) &#39;((1 3) (2 4))) ;; =&gt; &#39;((7 15) (10 22))
+(apply &#39;-table &#39;list (-repeat 3 &#39;(1 2))) ;; =&gt; &#39;((((1 1 1) (2 1 1)) ((1 2 1) (2 2 1))) (((1 1 2) (2 1 2)) ((1 2 2) (2 2 2))))</code></pre></div>
+
+<h4 id="toc_127">-table-flat <code>(fn &amp;rest lists)</code></h4>
+
+<p>Compute flat outer product of <code>lists</code> using function <code>fn</code>.</p>
+
+<p>The function <code>fn</code> should have the same arity as the number of
+supplied lists.</p>
+
+<p>The outer product is computed by applying fn to all possible
+combinations created by taking one element from each list in
+order.  The results are flattened, ignoring the tensor structure
+of the result.  This is equivalent to calling:</p>
+
+<div><pre><code class="language-none">(-flatten-n (1- (length lists)) (-table fn lists))</code></pre></div>
+
+<p>but the implementation here is much more efficient.</p>
+
+<p>See also: <a href="#-flatten-n-num-list"><code>-flatten-n</code></a>, <a href="#-table-fn-rest-lists"><code>-table</code></a></p>
+
+<div><pre><code class="language-el">(-table-flat &#39;list &#39;(1 2 3) &#39;(a b c)) ;; =&gt; &#39;((1 a) (2 a) (3 a) (1 b) (2 b) (3 b) (1 c) (2 c) (3 c))
+(-table-flat &#39;* &#39;(1 2 3) &#39;(1 2 3)) ;; =&gt; &#39;(1 2 3 2 4 6 3 6 9)
+(apply &#39;-table-flat &#39;list (-repeat 3 &#39;(1 2))) ;; =&gt; &#39;((1 1 1) (2 1 1) (1 2 1) (2 2 1) (1 1 2) (2 1 2) (1 2 2) (2 2 2))</code></pre></div>
+
+<h4 id="toc_128">-first <code>(pred list)</code></h4>
+
+<p>Return the first x in <code>list</code> where (<code>pred</code> x) is non-nil, else nil.</p>
+
+<p>To get the first item in the list no questions asked, use <code>car</code>.</p>
+
+<p>Alias: <code>-find</code></p>
+
+<div><pre><code class="language-el">(-first &#39;even? &#39;(1 2 3)) ;; =&gt; 2
+(-first &#39;even? &#39;(1 3 5)) ;; =&gt; nil
+(--first (&gt; it 2) &#39;(1 2 3)) ;; =&gt; 3</code></pre></div>
+
+<h4 id="toc_129">-some <code>(pred list)</code></h4>
+
+<p>Return (<code>pred</code> x) for the first <code>list</code> item where (<code>pred</code> x) is non-nil, else nil.</p>
+
+<p>Alias: <code>-any</code></p>
+
+<div><pre><code class="language-el">(-some &#39;even? &#39;(1 2 3)) ;; =&gt; t
+(--some (member &#39;foo it) &#39;((foo bar) (baz))) ;; =&gt; &#39;(foo bar)
+(--some (plist-get it :bar) &#39;((:foo 1 :bar 2) (:baz 3))) ;; =&gt; 2</code></pre></div>
+
+<h4 id="toc_130">-last <code>(pred list)</code></h4>
+
+<p>Return the last x in <code>list</code> where (<code>pred</code> x) is non-nil, else nil.</p>
+
+<div><pre><code class="language-el">(-last &#39;even? &#39;(1 2 3 4 5 6 3 3 3)) ;; =&gt; 6
+(-last &#39;even? &#39;(1 3 7 5 9)) ;; =&gt; nil
+(--last (&gt; (length it) 3) &#39;(&quot;a&quot; &quot;looong&quot; &quot;word&quot; &quot;and&quot; &quot;short&quot; &quot;one&quot;)) ;; =&gt; &quot;short&quot;</code></pre></div>
+
+<h4 id="toc_131">-first-item <code>(list)</code></h4>
+
+<p>Return the first item of <code>list</code>, or nil on an empty list.</p>
+
+<div><pre><code class="language-el">(-first-item &#39;(1 2 3)) ;; =&gt; 1
+(-first-item nil) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_132">-last-item <code>(list)</code></h4>
+
+<p>Return the last item of <code>list</code>, or nil on an empty list.</p>
+
+<div><pre><code class="language-el">(-last-item &#39;(1 2 3)) ;; =&gt; 3
+(-last-item nil) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_133">-butlast <code>(list)</code></h4>
+
+<p>Return a list of all items in list except for the last.</p>
+
+<div><pre><code class="language-el">(-butlast &#39;(1 2 3)) ;; =&gt; &#39;(1 2)
+(-butlast &#39;(1 2)) ;; =&gt; &#39;(1)
+(-butlast &#39;(1)) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_134">-sort <code>(comparator list)</code></h4>
+
+<p>Sort <code>list</code>, stably, comparing elements using <code>comparator</code>.
+Return the sorted list.  <code>list</code> is <code>not</code> modified by side effects.
+<code>comparator</code> is called with two elements of <code>list</code>, and should return non-nil
+if the first element should sort before the second.</p>
+
+<div><pre><code class="language-el">(-sort &#39;&lt; &#39;(3 1 2)) ;; =&gt; &#39;(1 2 3)
+(-sort &#39;&gt; &#39;(3 1 2)) ;; =&gt; &#39;(3 2 1)
+(--sort (&lt; it other) &#39;(3 1 2)) ;; =&gt; &#39;(1 2 3)</code></pre></div>
+
+<h4 id="toc_135">-list <code>(&amp;rest args)</code></h4>
+
+<p>Return a list with <code>args</code>.</p>
+
+<p>If first item of <code>args</code> is already a list, simply return <code>args</code>.  If
+not, return a list with <code>args</code> as elements.</p>
+
+<div><pre><code class="language-el">(-list 1) ;; =&gt; &#39;(1)
+(-list 1 2 3) ;; =&gt; &#39;(1 2 3)
+(-list &#39;(1 2 3)) ;; =&gt; &#39;(1 2 3)</code></pre></div>
+
+<h4 id="toc_136">-fix <code>(fn list)</code></h4>
+
+<p>Compute the (least) fixpoint of <code>fn</code> with initial input <code>list</code>.</p>
+
+<p><code>fn</code> is called at least once, results are compared with <code>equal</code>.</p>
+
+<div><pre><code class="language-el">(-fix (lambda (l) (-non-nil (--mapcat (-split-at (/ (length it) 2) it) l))) &#39;((1 2 3 4 5 6))) ;; =&gt; &#39;((1) (2) (3) (4) (5) (6))
+(let ((data &#39;((&quot;starwars&quot; &quot;scifi&quot;) (&quot;jedi&quot; &quot;starwars&quot; &quot;warrior&quot;)))) (--fix (-uniq (--mapcat (cons it (cdr (assoc it data))) it)) &#39;(&quot;jedi&quot; &quot;book&quot;))) ;; =&gt; &#39;(&quot;jedi&quot; &quot;starwars&quot; &quot;warrior&quot; &quot;scifi&quot; &quot;book&quot;)</code></pre></div>
+
+<h2 id="toc_137">Tree operations</h2>
+
+<p>Functions pretending lists are trees.</p>
+
+<h4 id="toc_138">-tree-seq <code>(branch children tree)</code></h4>
+
+<p>Return a sequence of the nodes in <code>tree</code>, in depth-first search order.</p>
+
+<p><code>branch</code> is a predicate of one argument that returns non-nil if the
+passed argument is a branch, that is, a node that can have children.</p>
+
+<p><code>children</code> is a function of one argument that returns the children
+of the passed branch node.</p>
+
+<p>Non-branch nodes are simply copied.</p>
+
+<div><pre><code class="language-el">(-tree-seq &#39;listp &#39;identity &#39;(1 (2 3) 4 (5 (6 7)))) ;; =&gt; &#39;((1 (2 3) 4 (5 (6 7))) 1 (2 3) 2 3 4 (5 (6 7)) 5 (6 7) 6 7)
+(-tree-seq &#39;listp &#39;reverse &#39;(1 (2 3) 4 (5 (6 7)))) ;; =&gt; &#39;((1 (2 3) 4 (5 (6 7))) (5 (6 7)) (6 7) 7 6 5 4 (2 3) 3 2 1)
+(--tree-seq (vectorp it) (append it nil) [1 [2 3] 4 [5 [6 7]]]) ;; =&gt; &#39;([1 [2 3] 4 [5 [6 7]]] 1 [2 3] 2 3 4 [5 [6 7]] 5 [6 7] 6 7)</code></pre></div>
+
+<h4 id="toc_139">-tree-map <code>(fn tree)</code></h4>
+
+<p>Apply <code>fn</code> to each element of <code>tree</code> while preserving the tree structure.</p>
+
+<div><pre><code class="language-el">(-tree-map &#39;1+ &#39;(1 (2 3) (4 (5 6) 7))) ;; =&gt; &#39;(2 (3 4) (5 (6 7) 8))
+(-tree-map &#39;(lambda (x) (cons x (expt 2 x))) &#39;(1 (2 3) 4)) ;; =&gt; &#39;((1 . 2) ((2 . 4) (3 . 8)) (4 . 16))
+(--tree-map (length it) &#39;(&quot;&lt;body&gt;&quot; (&quot;&lt;p&gt;&quot; &quot;text&quot; &quot;&lt;/p&gt;&quot;) &quot;&lt;/body&gt;&quot;)) ;; =&gt; &#39;(6 (3 4 4) 7)</code></pre></div>
+
+<h4 id="toc_140">-tree-map-nodes <code>(pred fun tree)</code></h4>
+
+<p>Call <code>fun</code> on each node of <code>tree</code> that satisfies <code>pred</code>.</p>
+
+<p>If <code>pred</code> returns nil, continue descending down this node.  If <code>pred</code>
+returns non-nil, apply <code>fun</code> to this node and do not descend
+further.</p>
+
+<div><pre><code class="language-el">(-tree-map-nodes &#39;vectorp (lambda (x) (-sum (append x nil))) &#39;(1 [2 3] 4 (5 [6 7] 8))) ;; =&gt; &#39;(1 5 4 (5 13 8))
+(-tree-map-nodes &#39;keywordp (lambda (x) (symbol-name x)) &#39;(1 :foo 4 ((5 6 :bar) :baz 8))) ;; =&gt; &#39;(1 &quot;:foo&quot; 4 ((5 6 &quot;:bar&quot;) &quot;:baz&quot; 8))
+(--tree-map-nodes (eq (car-safe it) &#39;add-mode) (-concat it (list :mode &#39;emacs-lisp-mode)) &#39;(with-mode emacs-lisp-mode (foo bar) (add-mode a b) (baz (add-mode c d)))) ;; =&gt; &#39;(with-mode emacs-lisp-mode (foo bar) (add-mode a b :mode emacs-lisp-mode) (baz (add-mode c d :mode emacs-lisp-mode)))</code></pre></div>
+
+<h4 id="toc_141">-tree-reduce <code>(fn tree)</code></h4>
+
+<p>Use <code>fn</code> to reduce elements of list <code>tree</code>.
+If elements of <code>tree</code> are lists themselves, apply the reduction recursively.</p>
+
+<p><code>fn</code> is first applied to first element of the list and second
+element, then on this result and third element from the list etc.</p>
+
+<p>See <a href="#-reduce-r-fn-list"><code>-reduce-r</code></a> for how exactly are lists of zero or one element handled.</p>
+
+<div><pre><code class="language-el">(-tree-reduce &#39;+ &#39;(1 (2 3) (4 5))) ;; =&gt; 15
+(-tree-reduce &#39;concat &#39;(&quot;strings&quot; (&quot; on&quot; &quot; various&quot;) ((&quot; levels&quot;)))) ;; =&gt; &quot;strings on various levels&quot;
+(--tree-reduce (cond ((stringp it) (concat it &quot; &quot; acc)) (t (let ((sn (symbol-name it))) (concat &quot;&lt;&quot; sn &quot;&gt;&quot; acc &quot;&lt;/&quot; sn &quot;&gt;&quot;)))) &#39;(body (p &quot;some words&quot;) (div &quot;more&quot; (b &quot;bold&quot;) &quot;words&quot;))) ;; =&gt; &quot;&lt;body&gt;&lt;p&gt;some words&lt;/p&gt; &lt;div&gt;more &lt;b&gt;bold&lt;/b&gt; words&lt;/div&gt;&lt;/body&gt;&quot;</code></pre></div>
+
+<h4 id="toc_142">-tree-reduce-from <code>(fn init-value tree)</code></h4>
+
+<p>Use <code>fn</code> to reduce elements of list <code>tree</code>.
+If elements of <code>tree</code> are lists themselves, apply the reduction recursively.</p>
+
+<p><code>fn</code> is first applied to <code>init-value</code> and first element of the list,
+then on this result and second element from the list etc.</p>
+
+<p>The initial value is ignored on cons pairs as they always contain
+two elements.</p>
+
+<div><pre><code class="language-el">(-tree-reduce-from &#39;+ 1 &#39;(1 (1 1) ((1)))) ;; =&gt; 8
+(--tree-reduce-from (-concat acc (list it)) nil &#39;(1 (2 3 (4 5)) (6 7))) ;; =&gt; &#39;((7 6) ((5 4) 3 2) 1)</code></pre></div>
+
+<h4 id="toc_143">-tree-mapreduce <code>(fn folder tree)</code></h4>
+
+<p>Apply <code>fn</code> to each element of <code>tree</code>, and make a list of the results.
+If elements of <code>tree</code> are lists themselves, apply <code>fn</code> recursively to
+elements of these nested lists.</p>
+
+<p>Then reduce the resulting lists using <code>folder</code> and initial value
+<code>init-value</code>. See <a href="#-reduce-r-from-fn-initial-value-list"><code>-reduce-r-from</code></a>.</p>
+
+<p>This is the same as calling <a href="#-tree-reduce-fn-tree"><code>-tree-reduce</code></a> after <a href="#-tree-map-fn-tree"><code>-tree-map</code></a>
+but is twice as fast as it only traverse the structure once.</p>
+
+<div><pre><code class="language-el">(-tree-mapreduce &#39;list &#39;append &#39;(1 (2 (3 4) (5 6)) (7 (8 9)))) ;; =&gt; &#39;(1 2 3 4 5 6 7 8 9)
+(--tree-mapreduce 1 (+ it acc) &#39;(1 (2 (4 9) (2 1)) (7 (4 3)))) ;; =&gt; 9
+(--tree-mapreduce 0 (max acc (1+ it)) &#39;(1 (2 (4 9) (2 1)) (7 (4 3)))) ;; =&gt; 3</code></pre></div>
+
+<h4 id="toc_144">-tree-mapreduce-from <code>(fn folder init-value tree)</code></h4>
+
+<p>Apply <code>fn</code> to each element of <code>tree</code>, and make a list of the results.
+If elements of <code>tree</code> are lists themselves, apply <code>fn</code> recursively to
+elements of these nested lists.</p>
+
+<p>Then reduce the resulting lists using <code>folder</code> and initial value
+<code>init-value</code>. See <a href="#-reduce-r-from-fn-initial-value-list"><code>-reduce-r-from</code></a>.</p>
+
+<p>This is the same as calling <a href="#-tree-reduce-from-fn-init-value-tree"><code>-tree-reduce-from</code></a> after <a href="#-tree-map-fn-tree"><code>-tree-map</code></a>
+but is twice as fast as it only traverse the structure once.</p>
+
+<div><pre><code class="language-el">(-tree-mapreduce-from &#39;identity &#39;* 1 &#39;(1 (2 (3 4) (5 6)) (7 (8 9)))) ;; =&gt; 362880
+(--tree-mapreduce-from (+ it it) (cons it acc) nil &#39;(1 (2 (4 9) (2 1)) (7 (4 3)))) ;; =&gt; &#39;(2 (4 (8 18) (4 2)) (14 (8 6)))
+(concat &quot;{&quot; (--tree-mapreduce-from (cond ((-cons-pair? it) (concat (symbol-name (car it)) &quot; -&gt; &quot; (symbol-name (cdr it)))) (t (concat (symbol-name it) &quot; : {&quot;))) (concat it (unless (or (equal acc &quot;}&quot;) (equal (substring it (1- (length it))) &quot;{&quot;)) &quot;, &quot;) acc) &quot;}&quot; &#39;((elips-mode (foo (bar . booze)) (baz . qux)) (c-mode (foo . bla) (bum . bam))))) ;; =&gt; &quot;{elips-mode : {foo : {bar -&gt; booze}, baz -&gt; qux}, c-mode : {foo -&gt; bla, bum -&gt; bam}}&quot;</code></pre></div>
+
+<h4 id="toc_145">-clone <code>(list)</code></h4>
+
+<p>Create a deep copy of <code>list</code>.
+The new list has the same elements and structure but all cons are
+replaced with new ones.  This is useful when you need to clone a
+structure such as plist or alist.</p>
+
+<div><pre><code class="language-el">(let* ((a &#39;(1 2 3)) (b (-clone a))) (nreverse a) b) ;; =&gt; &#39;(1 2 3)</code></pre></div>
+
+<h2 id="toc_146">Threading macros</h2>
+
+<h4 id="toc_147">-&gt; <code>(x &amp;optional form &amp;rest more)</code></h4>
+
+<p>Thread the expr through the forms. Insert <code>x</code> as the second item
+in the first form, making a list of it if it is not a list
+already. If there are more forms, insert the first form as the
+second item in second form, etc.</p>
+
+<div><pre><code class="language-el">(-&gt; &#39;(2 3 5)) ;; =&gt; &#39;(2 3 5)
+(-&gt; &#39;(2 3 5) (append &#39;(8 13))) ;; =&gt; &#39;(2 3 5 8 13)
+(-&gt; &#39;(2 3 5) (append &#39;(8 13)) (-slice 1 -1)) ;; =&gt; &#39;(3 5 8)</code></pre></div>
+
+<h4 id="toc_148">-&gt;&gt; <code>(x &amp;optional form &amp;rest more)</code></h4>
+
+<p>Thread the expr through the forms. Insert <code>x</code> as the last item
+in the first form, making a list of it if it is not a list
+already. If there are more forms, insert the first form as the
+last item in second form, etc.</p>
+
+<div><pre><code class="language-el">(-&gt;&gt; &#39;(1 2 3) (-map &#39;square)) ;; =&gt; &#39;(1 4 9)
+(-&gt;&gt; &#39;(1 2 3) (-map &#39;square) (-remove &#39;even?)) ;; =&gt; &#39;(1 9)
+(-&gt;&gt; &#39;(1 2 3) (-map &#39;square) (-reduce &#39;+)) ;; =&gt; 14</code></pre></div>
+
+<h4 id="toc_149">--&gt; <code>(x form &amp;rest more)</code></h4>
+
+<p>Thread the expr through the forms. Insert <code>x</code> at the position
+signified by the token <code>it</code> in the first form. If there are more
+forms, insert the first form at the position signified by <code>it</code> in
+in second form, etc.</p>
+
+<div><pre><code class="language-el">(--&gt; &quot;def&quot; (concat &quot;abc&quot; it &quot;ghi&quot;)) ;; =&gt; &quot;abcdefghi&quot;
+(--&gt; &quot;def&quot; (concat &quot;abc&quot; it &quot;ghi&quot;) (upcase it)) ;; =&gt; &quot;ABCDEFGHI&quot;
+(--&gt; &quot;def&quot; (concat &quot;abc&quot; it &quot;ghi&quot;) upcase) ;; =&gt; &quot;ABCDEFGHI&quot;</code></pre></div>
+
+<h4 id="toc_150">-some-&gt; <code>(x &amp;optional form &amp;rest more)</code></h4>
+
+<p>When expr is non-nil, thread it through the first form (via <a href="#--x-optional-form-rest-more"><code>-&gt;</code></a>),
+and when that result is non-nil, through the next form, etc.</p>
+
+<div><pre><code class="language-el">(-some-&gt; &#39;(2 3 5)) ;; =&gt; &#39;(2 3 5)
+(-some-&gt; 5 square) ;; =&gt; 25
+(-some-&gt; 5 even? square) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_151">-some-&gt;&gt; <code>(x &amp;optional form &amp;rest more)</code></h4>
+
+<p>When expr is non-nil, thread it through the first form (via <a href="#--x-optional-form-rest-more"><code>-&gt;&gt;</code></a>),
+and when that result is non-nil, through the next form, etc.</p>
+
+<div><pre><code class="language-el">(-some-&gt;&gt; &#39;(1 2 3) (-map &#39;square)) ;; =&gt; &#39;(1 4 9)
+(-some-&gt;&gt; &#39;(1 3 5) (-last &#39;even?) (+ 100)) ;; =&gt; nil
+(-some-&gt;&gt; &#39;(2 4 6) (-last &#39;even?) (+ 100)) ;; =&gt; 106</code></pre></div>
+
+<h4 id="toc_152">-some--&gt; <code>(x &amp;optional form &amp;rest more)</code></h4>
+
+<p>When expr in non-nil, thread it through the first form (via <a href="#---x-form-rest-more"><code>--&gt;</code></a>),
+and when that result is non-nil, through the next form, etc.</p>
+
+<div><pre><code class="language-el">(-some--&gt; &quot;def&quot; (concat &quot;abc&quot; it &quot;ghi&quot;)) ;; =&gt; &quot;abcdefghi&quot;
+(-some--&gt; nil (concat &quot;abc&quot; it &quot;ghi&quot;)) ;; =&gt; nil
+(-some--&gt; &#39;(1 3 5) (-filter &#39;even? it) (append it it) (-map &#39;square it)) ;; =&gt; nil</code></pre></div>
+
+<h2 id="toc_153">Binding</h2>
+
+<p>Convenient versions of <code>let</code> and <code>let*</code> constructs combined with flow control.</p>
+
+<h4 id="toc_154">-when-let <code>(var-val &amp;rest body)</code></h4>
+
+<p>If <code>val</code> evaluates to non-nil, bind it to <code>var</code> and execute body.
+<code>var-val</code> should be a (<code>var</code> <code>val</code>) pair.</p>
+
+<p>Note: binding is done according to <a href="#-let-varlist-rest-body"><code>-let</code></a>.</p>
+
+<div><pre><code class="language-el">(-when-let (match-index (string-match &quot;d&quot; &quot;abcd&quot;)) (+ match-index 2)) ;; =&gt; 5
+(-when-let ((&amp;plist :foo foo) (list :foo &quot;foo&quot;)) foo) ;; =&gt; &quot;foo&quot;
+(-when-let ((&amp;plist :foo foo) (list :bar &quot;bar&quot;)) foo) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_155">-when-let* <code>(vars-vals &amp;rest body)</code></h4>
+
+<p>If all <code>vals</code> evaluate to true, bind them to their corresponding
+<code>vars</code> and execute body. <code>vars-vals</code> should be a list of (<code>var</code> <code>val</code>)
+pairs.</p>
+
+<p>Note: binding is done according to <a href="#-let-varlist-rest-body"><code>-let*</code></a>.  <code>vals</code> are evaluated
+sequentially, and evaluation stops after the first nil <code>val</code> is
+encountered.</p>
+
+<div><pre><code class="language-el">(-when-let* ((x 5) (y 3) (z (+ y 4))) (+ x y z)) ;; =&gt; 15
+(-when-let* ((x 5) (y nil) (z 7)) (+ x y z)) ;; =&gt; nil</code></pre></div>
+
+<h4 id="toc_156">-if-let <code>(var-val then &amp;rest else)</code></h4>
+
+<p>If <code>val</code> evaluates to non-nil, bind it to <code>var</code> and do <code>then</code>,
+otherwise do <code>else</code>. <code>var-val</code> should be a (<code>var</code> <code>val</code>) pair.</p>
+
+<p>Note: binding is done according to <a href="#-let-varlist-rest-body"><code>-let</code></a>.</p>
+
+<div><pre><code class="language-el">(-if-let (match-index (string-match &quot;d&quot; &quot;abc&quot;)) (+ match-index 3) 7) ;; =&gt; 7
+(--if-let (even? 4) it nil) ;; =&gt; t</code></pre></div>
+
+<h4 id="toc_157">-if-let* <code>(vars-vals then &amp;rest else)</code></h4>
+
+<p>If all <code>vals</code> evaluate to true, bind them to their corresponding
+<code>vars</code> and do <code>then</code>, otherwise do <code>else</code>. <code>vars-vals</code> should be a list
+of (<code>var</code> <code>val</code>) pairs.</p>
+
+<p>Note: binding is done according to <a href="#-let-varlist-rest-body"><code>-let*</code></a>.  <code>vals</code> are evaluated
+sequentially, and evaluation stops after the first nil <code>val</code> is
+encountered.</p>
+
+<div><pre><code class="language-el">(-if-let* ((x 5) (y 3) (z 7)) (+ x y z) &quot;foo&quot;) ;; =&gt; 15
+(-if-let* ((x 5) (y nil) (z 7)) (+ x y z) &quot;foo&quot;) ;; =&gt; &quot;foo&quot;
+(-if-let* (((_ _ x) &#39;(nil nil 7))) x) ;; =&gt; 7</code></pre></div>
+
+<h4 id="toc_158">-let <code>(varlist &amp;rest body)</code></h4>
+
+<p>Bind variables according to <code>varlist</code> then eval <code>body</code>.</p>
+
+<p><code>varlist</code> is a list of lists of the form (<code>pattern</code> <code>source</code>).  Each
+<code>pattern</code> is matched against the <code>source</code> &quot;structurally&quot;.  <code>source</code>
+is only evaluated once for each <code>pattern</code>.  Each <code>pattern</code> is matched
+recursively, and can therefore contain sub-patterns which are
+matched against corresponding sub-expressions of <code>source</code>.</p>
+
+<p>All the SOURCEs are evalled before any symbols are
+bound (i.e. &quot;in parallel&quot;).</p>
+
+<p>If <code>varlist</code> only contains one (<code>pattern</code> <code>source</code>) element, you can
+optionally specify it using a vector and discarding the
+outer-most parens.  Thus</p>
+
+<div><pre><code class="language-none">(-let ((`pattern` `source`)) ..)</code></pre></div>
+
+<p>becomes</p>
+
+<div><pre><code class="language-none">(-let [`pattern` `source`] ..).</code></pre></div>
+
+<p><a href="#-let-varlist-rest-body"><code>-let</code></a> uses a convention of not binding places (symbols) starting
+with _ whenever it&#39;s possible.  You can use this to skip over
+entries you don&#39;t care about.  However, this is not <em>always</em>
+possible (as a result of implementation) and these symbols might
+get bound to undefined values.</p>
+
+<p>Following is the overview of supported patterns.  Remember that
+patterns can be matched recursively, so every a, b, aK in the
+following can be a matching construct and not necessarily a
+symbol/variable.</p>
+
+<p>Symbol:</p>
+
+<div><pre><code class="language-none">a - bind the `source` to `a`.  This is just like regular `let`.</code></pre></div>
+
+<p>Conses and lists:</p>
+
+<div><pre><code class="language-none">(a) - bind `car` of cons/list to `a`
+
+(a . b) - bind car of cons to `a` and `cdr` to `b`
+
+(a b) - bind car of list to `a` and `cadr` to `b`
+
+(a1 a2 a3  ...) - bind 0th car of list to `a1`, 1st to `a2`, 2nd to `a3` ...
+
+(a1 a2 a3 ... aN . rest) - as above, but bind the Nth cdr to `rest`.</code></pre></div>
+
+<p>Vectors:</p>
+
+<div><pre><code class="language-none">[a] - bind 0th element of a non-list sequence to `a` (works with
+      vectors, strings, bit arrays...)
+
+[a1 a2 a3 ...] - bind 0th element of non-list sequence to `a0`, 1st to
+                 `a1`, 2nd to `a2`, ...
+                 If the `pattern` is shorter than `source`, the values at
+                 places not in `pattern` are ignored.
+                 If the `pattern` is longer than `source`, an `error` is
+                 thrown.
+
+[a1 a2 a3 ... &amp;rest rest] - as above, but bind the rest of
+                            the sequence to `rest`.  This is
+                            conceptually the same as improper list
+                            matching (a1 a2 ... aN . rest)</code></pre></div>
+
+<p>Key/value stores:</p>
+
+<div><pre><code class="language-none">(&amp;plist key0 a0 ... keyN aN) - bind value mapped by keyK in the
+                               `source` plist to aK.  If the
+                               value is not found, aK is nil.
+
+(&amp;alist key0 a0 ... keyN aN) - bind value mapped by keyK in the
+                               `source` alist to aK.  If the
+                               value is not found, aK is nil.
+
+(&amp;hash key0 a0 ... keyN aN) - bind value mapped by keyK in the
+                              `source` hash table to aK.  If the
+                              value is not found, aK is nil.</code></pre></div>
+
+<p>Further, special keyword &amp;keys supports &quot;inline&quot; matching of
+plist-like key-value pairs, similarly to &amp;keys keyword of
+<code>cl-defun</code>.</p>
+
+<div><pre><code class="language-none">(a1 a2 ... aN &amp;keys key1 b1 ... keyN bK)</code></pre></div>
+
+<p>This binds <code>n</code> values from the list to a1 ... aN, then interprets
+the cdr as a plist (see key/value matching above).</p>
+
+<p>You can name the source using the syntax <code>symbol</code> &amp;as <code>pattern</code>.
+This syntax works with lists (proper or improper), vectors and
+all types of maps.</p>
+
+<div><pre><code class="language-none">(list &amp;as a b c) (list 1 2 3)</code></pre></div>
+
+<p>binds <code>a</code> to 1, <code>b</code> to 2, <code>c</code> to 3 and <code>list</code> to (1 2 3).</p>
+
+<p>Similarly:</p>
+
+<div><pre><code class="language-none">(bounds &amp;as beg . end) (cons 1 2)</code></pre></div>
+
+<p>binds <code>beg</code> to 1, <code>end</code> to 2 and <code>bounds</code> to (1 . 2).</p>
+
+<div><pre><code class="language-none">(items &amp;as first . rest) (list 1 2 3)</code></pre></div>
+
+<p>binds <code>first</code> to 1, <code>rest</code> to (2 3) and <code>items</code> to (1 2 3)</p>
+
+<div><pre><code class="language-none">[vect &amp;as _ b c] [1 2 3]</code></pre></div>
+
+<p>binds <code>b</code> to 2, <code>c</code> to 3 and <code>vect</code> to <a href="_%20avoids%20binding%20as%20usual">1 2 3</a>.</p>
+
+<div><pre><code class="language-none">(plist &amp;as &amp;plist :b b) (list :a 1 :b 2 :c 3)</code></pre></div>
+
+<p>binds <code>b</code> to 2 and <code>plist</code> to (:a 1 :b 2 :c 3).  Same for &amp;alist and &amp;hash.</p>
+
+<p>This is especially useful when we want to capture the result of a
+computation and destructure at the same time.  Consider the
+form (function-returning-complex-structure) returning a list of
+two vectors with two items each.  We want to capture this entire
+result and pass it to another computation, but at the same time
+we want to get the second item from each vector.  We can achieve
+it with pattern</p>
+
+<div><pre><code class="language-none">(result &amp;as [_ a] [_ b]) (function-returning-complex-structure)</code></pre></div>
+
+<p>Note: Clojure programmers may know this feature as the &quot;:as
+binding&quot;.  The difference is that we put the &amp;as at the front
+because we need to support improper list binding.</p>
+
+<div><pre><code class="language-el">(-let (([a (b c) d] [1 (2 3) 4])) (list a b c d)) ;; =&gt; &#39;(1 2 3 4)
+(-let [(a b c . d) (list 1 2 3 4 5 6)] (list a b c d)) ;; =&gt; &#39;(1 2 3 (4 5 6))
+(-let [(&amp;plist :foo foo :bar bar) (list :baz 3 :foo 1 :qux 4 :bar 2)] (list foo bar)) ;; =&gt; &#39;(1 2)</code></pre></div>
+
+<h4 id="toc_159">-let* <code>(varlist &amp;rest body)</code></h4>
+
+<p>Bind variables according to <code>varlist</code> then eval <code>body</code>.</p>
+
+<p><code>varlist</code> is a list of lists of the form (<code>pattern</code> <code>source</code>).  Each
+<code>pattern</code> is matched against the <code>source</code> structurally.  <code>source</code> is
+only evaluated once for each <code>pattern</code>.</p>
+
+<p>Each <code>source</code> can refer to the symbols already bound by this
+<code>varlist</code>.  This is useful if you want to destructure <code>source</code>
+recursively but also want to name the intermediate structures.</p>
+
+<p>See <a href="#-let-varlist-rest-body"><code>-let</code></a> for the list of all possible patterns.</p>
+
+<div><pre><code class="language-el">(-let* (((a . b) (cons 1 2)) ((c . d) (cons 3 4))) (list a b c d)) ;; =&gt; &#39;(1 2 3 4)
+(-let* (((a . b) (cons 1 (cons 2 3))) ((c . d) b)) (list a b c d)) ;; =&gt; &#39;(1 (2 . 3) 2 3)
+(-let* (((&amp;alist &quot;foo&quot; foo &quot;bar&quot; bar) (list (cons &quot;foo&quot; 1) (cons &quot;bar&quot; (list &#39;a &#39;b &#39;c)))) ((a b c) bar)) (list foo a b c bar)) ;; =&gt; &#39;(1 a b c (a b c))</code></pre></div>
+
+<h4 id="toc_160">-lambda <code>(match-form &amp;rest body)</code></h4>
+
+<p>Return a lambda which destructures its input as <code>match-form</code> and executes <code>body</code>.</p>
+
+<p>Note that you have to enclose the <code>match-form</code> in a pair of parens,
+such that:</p>
+
+<div><pre><code class="language-none">(-lambda (x) body)
+(-lambda (x y ...) body)</code></pre></div>
+
+<p>has the usual semantics of <code>lambda</code>.  Furthermore, these get
+translated into normal lambda, so there is no performance
+penalty.</p>
+
+<p>See <a href="#-let-varlist-rest-body"><code>-let</code></a> for the description of destructuring mechanism.</p>
+
+<div><pre><code class="language-el">(-map (-lambda ((x y)) (+ x y)) &#39;((1 2) (3 4) (5 6))) ;; =&gt; &#39;(3 7 11)
+(-map (-lambda ([x y]) (+ x y)) &#39;([1 2] [3 4] [5 6])) ;; =&gt; &#39;(3 7 11)
+(funcall (-lambda ((_ . a) (_ . b)) (-concat a b)) &#39;(1 2 3) &#39;(4 5 6)) ;; =&gt; &#39;(2 3 5 6)</code></pre></div>
+
+<h2 id="toc_161">Side-effects</h2>
+
+<p>Functions iterating over lists for side-effect only.</p>
+
+<h4 id="toc_162">-each <code>(list fn)</code></h4>
+
+<p>Call <code>fn</code> with every item in <code>list</code>. Return nil, used for side-effects only.</p>
+
+<div><pre><code class="language-el">(let (s) (-each &#39;(1 2 3) (lambda (item) (setq s (cons item s))))) ;; =&gt; nil
+(let (s) (-each &#39;(1 2 3) (lambda (item) (setq s (cons item s)))) s) ;; =&gt; &#39;(3 2 1)
+(let (s) (--each &#39;(1 2 3) (setq s (cons it s))) s) ;; =&gt; &#39;(3 2 1)</code></pre></div>
+
+<h4 id="toc_163">-each-while <code>(list pred fn)</code></h4>
+
+<p>Call <code>fn</code> with every item in <code>list</code> while (<code>pred</code> item) is non-nil.
+Return nil, used for side-effects only.</p>
+
+<div><pre><code class="language-el">(let (s) (-each-while &#39;(2 4 5 6) &#39;even? (lambda (item) (!cons item s))) s) ;; =&gt; &#39;(4 2)
+(let (s) (--each-while &#39;(1 2 3 4) (&lt; it 3) (!cons it s)) s) ;; =&gt; &#39;(2 1)</code></pre></div>
+
+<h4 id="toc_164">-each-indexed <code>(list fn)</code></h4>
+
+<p>Call (<code>fn</code> index item) for each item in <code>list</code>.</p>
+
+<p>In the anaphoric form <code>--each-indexed</code>, the index is exposed as <code>it-index</code>.</p>
+
+<p>See also: <a href="#-map-indexed-fn-list"><code>-map-indexed</code></a>.</p>
+
+<div><pre><code class="language-el">(let (s) (-each-indexed &#39;(a b c) (lambda (index item) (setq s (cons (list item index) s)))) s) ;; =&gt; &#39;((c 2) (b 1) (a 0))
+(let (s) (--each-indexed &#39;(a b c) (setq s (cons (list it it-index) s))) s) ;; =&gt; &#39;((c 2) (b 1) (a 0))</code></pre></div>
+
+<h4 id="toc_165">-dotimes <code>(num fn)</code></h4>
+
+<p>Repeatedly calls <code>fn</code> (presumably for side-effects) passing in integers from 0 through <code>num-1</code>.</p>
+
+<div><pre><code class="language-el">(let (s) (-dotimes 3 (lambda (n) (!cons n s))) s) ;; =&gt; &#39;(2 1 0)
+(let (s) (--dotimes 5 (!cons it s)) s) ;; =&gt; &#39;(4 3 2 1 0)</code></pre></div>
+
+<h4 id="toc_166">-doto <code>(eval-initial-value &amp;rest forms)</code></h4>
+
+<p>Eval a form, then insert that form as the 2nd argument to other forms.
+The <code>eval-initial-value</code> form is evaluated once. Its result is
+passed to <code>forms</code>, which are then evaluated sequentially. Returns
+the target form.</p>
+
+<div><pre><code class="language-el">(-doto &#39;(1 2 3) (!cdr) (!cdr)) ;; =&gt; &#39;(3)
+(-doto &#39;(1 . 2) (setcar 3) (setcdr 4)) ;; =&gt; &#39;(3 . 4)</code></pre></div>
+
+<h2 id="toc_167">Destructive operations</h2>
+
+<h4 id="toc_168">!cons <code>(car cdr)</code></h4>
+
+<p>Destructive: Set <code>cdr</code> to the cons of <code>car</code> and <code>cdr</code>.</p>
+
+<div><pre><code class="language-el">(let (l) (!cons 5 l) l) ;; =&gt; &#39;(5)
+(let ((l &#39;(3))) (!cons 5 l) l) ;; =&gt; &#39;(5 3)</code></pre></div>
+
+<h4 id="toc_169">!cdr <code>(list)</code></h4>
+
+<p>Destructive: Set <code>list</code> to the cdr of <code>list</code>.</p>
+
+<div><pre><code class="language-el">(let ((l &#39;(3))) (!cdr l) l) ;; =&gt; &#39;()
+(let ((l &#39;(3 5))) (!cdr l) l) ;; =&gt; &#39;(5)</code></pre></div>
+
+<h2 id="toc_170">Function combinators</h2>
+
+<p>These combinators require Emacs 24 for its lexical scope. So they are offered in a separate package: <code>dash-functional</code>.</p>
+
+<h4 id="toc_171">-partial <code>(fn &amp;rest args)</code></h4>
+
+<p>Takes a function <code>fn</code> and fewer than the normal arguments to <code>fn</code>,
+and returns a fn that takes a variable number of additional <code>args</code>.
+When called, the returned function calls <code>fn</code> with <code>args</code> first and
+then additional args.</p>
+
+<div><pre><code class="language-el">(funcall (-partial &#39;- 5) 3) ;; =&gt; 2
+(funcall (-partial &#39;+ 5 2) 3) ;; =&gt; 10</code></pre></div>
+
+<h4 id="toc_172">-rpartial <code>(fn &amp;rest args)</code></h4>
+
+<p>Takes a function <code>fn</code> and fewer than the normal arguments to <code>fn</code>,
+and returns a fn that takes a variable number of additional <code>args</code>.
+When called, the returned function calls <code>fn</code> with the additional
+args first and then <code>args</code>.</p>
+
+<div><pre><code class="language-el">(funcall (-rpartial &#39;- 5) 8) ;; =&gt; 3
+(funcall (-rpartial &#39;- 5 2) 10) ;; =&gt; 3</code></pre></div>
+
+<h4 id="toc_173">-juxt <code>(&amp;rest fns)</code></h4>
+
+<p>Takes a list of functions and returns a fn that is the
+juxtaposition of those fns. The returned fn takes a variable
+number of args, and returns a list containing the result of
+applying each fn to the args (left-to-right).</p>
+
+<div><pre><code class="language-el">(funcall (-juxt &#39;+ &#39;-) 3 5) ;; =&gt; &#39;(8 -2)
+(-map (-juxt &#39;identity &#39;square) &#39;(1 2 3)) ;; =&gt; &#39;((1 1) (2 4) (3 9))</code></pre></div>
+
+<h4 id="toc_174">-compose <code>(&amp;rest fns)</code></h4>
+
+<p>Takes a list of functions and returns a fn that is the
+composition of those fns. The returned fn takes a variable
+number of arguments, and returns the result of applying
+each fn to the result of applying the previous fn to
+the arguments (right-to-left).</p>
+
+<div><pre><code class="language-el">(funcall (-compose &#39;square &#39;+) 2 3) ;; =&gt; (square (+ 2 3))
+(funcall (-compose &#39;identity &#39;square) 3) ;; =&gt; (square 3)
+(funcall (-compose &#39;square &#39;identity) 3) ;; =&gt; (square 3)</code></pre></div>
+
+<h4 id="toc_175">-applify <code>(fn)</code></h4>
+
+<p>Changes an n-arity function <code>fn</code> to a 1-arity function that
+expects a list with n items as arguments</p>
+
+<div><pre><code class="language-el">(-map (-applify &#39;+) &#39;((1 1 1) (1 2 3) (5 5 5))) ;; =&gt; &#39;(3 6 15)
+(-map (-applify (lambda (a b c) (\` ((\, a) ((\, b) ((\, c))))))) &#39;((1 1 1) (1 2 3) (5 5 5))) ;; =&gt; &#39;((1 (1 (1))) (1 (2 (3))) (5 (5 (5))))
+(funcall (-applify &#39;&lt;) &#39;(3 6)) ;; =&gt; t</code></pre></div>
+
+<h4 id="toc_176">-on <code>(operator transformer)</code></h4>
+
+<p>Return a function of two arguments that first applies
+<code>transformer</code> to each of them and then applies <code>operator</code> on the
+results (in the same order).</p>
+
+<p>In types: (b -&gt; b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; a -&gt; c</p>
+
+<div><pre><code class="language-el">(-sort (-on &#39;&lt; &#39;length) &#39;((1 2 3) (1) (1 2))) ;; =&gt; &#39;((1) (1 2) (1 2 3))
+(-min-by (-on &#39;&gt; &#39;length) &#39;((1 2 3) (4) (1 2))) ;; =&gt; &#39;(4)
+(-min-by (-on &#39;string-lessp &#39;int-to-string) &#39;(2 100 22)) ;; =&gt; 22</code></pre></div>
+
+<h4 id="toc_177">-flip <code>(func)</code></h4>
+
+<p>Swap the order of arguments for binary function <code>func</code>.</p>
+
+<p>In types: (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c</p>
+
+<div><pre><code class="language-el">(funcall (-flip &#39;&lt;) 2 1) ;; =&gt; t
+(funcall (-flip &#39;-) 3 8) ;; =&gt; 5
+(-sort (-flip &#39;&lt;) &#39;(4 3 6 1)) ;; =&gt; &#39;(6 4 3 1)</code></pre></div>
+
+<h4 id="toc_178">-const <code>(c)</code></h4>
+
+<p>Return a function that returns <code>c</code> ignoring any additional arguments.</p>
+
+<p>In types: a -&gt; b -&gt; a</p>
+
+<div><pre><code class="language-el">(funcall (-const 2) 1 3 &quot;foo&quot;) ;; =&gt; 2
+(-map (-const 1) &#39;(&quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;)) ;; =&gt; &#39;(1 1 1 1)
+(-sum (-map (-const 1) &#39;(&quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;))) ;; =&gt; 4</code></pre></div>
+
+<h4 id="toc_179">-cut <code>(&amp;rest params)</code></h4>
+
+<p>Take n-ary function and n arguments and specialize some of them.
+Arguments denoted by &lt;&gt; will be left unspecialized.</p>
+
+<p>See <code>srfi-26</code> for detailed description.</p>
+
+<div><pre><code class="language-el">(funcall (-cut list 1 &lt;&gt; 3 &lt;&gt; 5) 2 4) ;; =&gt; &#39;(1 2 3 4 5)
+(-map (-cut funcall &lt;&gt; 5) &#39;(1+ 1- (lambda (x) (/ 1.0 x)))) ;; =&gt; &#39;(6 4 0.2)
+(-filter (-cut &lt; &lt;&gt; 5) &#39;(1 3 5 7 9)) ;; =&gt; &#39;(1 3)</code></pre></div>
+
+<h4 id="toc_180">-not <code>(pred)</code></h4>
+
+<p>Take an unary predicates <code>pred</code> and return an unary predicate
+that returns t if <code>pred</code> returns nil and nil if <code>pred</code> returns
+non-nil.</p>
+
+<div><pre><code class="language-el">(funcall (-not &#39;even?) 5) ;; =&gt; t
+(-filter (-not (-partial &#39;&lt; 4)) &#39;(1 2 3 4 5 6 7 8)) ;; =&gt; &#39;(1 2 3 4)</code></pre></div>
+
+<h4 id="toc_181">-orfn <code>(&amp;rest preds)</code></h4>
+
+<p>Take list of unary predicates <code>preds</code> and return an unary
+predicate with argument x that returns non-nil if at least one of
+the <code>preds</code> returns non-nil on x.</p>
+
+<p>In types: [a -&gt; Bool] -&gt; a -&gt; Bool</p>
+
+<div><pre><code class="language-el">(-filter (-orfn &#39;even? (-partial (-flip &#39;&lt;) 5)) &#39;(1 2 3 4 5 6 7 8 9 10)) ;; =&gt; &#39;(1 2 3 4 6 8 10)
+(funcall (-orfn &#39;stringp &#39;even?) &quot;foo&quot;) ;; =&gt; t</code></pre></div>
+
+<h4 id="toc_182">-andfn <code>(&amp;rest preds)</code></h4>
+
+<p>Take list of unary predicates <code>preds</code> and return an unary
+predicate with argument x that returns non-nil if all of the
+<code>preds</code> returns non-nil on x.</p>
+
+<p>In types: [a -&gt; Bool] -&gt; a -&gt; Bool</p>
+
+<div><pre><code class="language-el">(funcall (-andfn (-cut &lt; &lt;&gt; 10) &#39;even?) 6) ;; =&gt; t
+(funcall (-andfn (-cut &lt; &lt;&gt; 10) &#39;even?) 12) ;; =&gt; nil
+(-filter (-andfn (-not &#39;even?) (-cut &gt;= 5 &lt;&gt;)) &#39;(1 2 3 4 5 6 7 8 9 10)) ;; =&gt; &#39;(1 3 5)</code></pre></div>
+
+<h4 id="toc_183">-iteratefn <code>(fn n)</code></h4>
+
+<p>Return a function <code>fn</code> composed <code>n</code> times with itself.</p>
+
+<p><code>fn</code> is a unary function.  If you need to use a function of higher
+arity, use <a href="#-applify-fn"><code>-applify</code></a> first to turn it into an unary function.</p>
+
+<p>With n = 0, this acts as identity function.</p>
+
+<p>In types: (a -&gt; a) -&gt; Int -&gt; a -&gt; a.</p>
+
+<p>This function satisfies the following law:</p>
+
+<div><pre><code class="language-none">(funcall (-iteratefn fn n) init) = (-last-item (-iterate fn init (1+ n))).</code></pre></div>
+
+<div><pre><code class="language-el">(funcall (-iteratefn (lambda (x) (* x x)) 3) 2) ;; =&gt; 256
+(funcall (-iteratefn &#39;1+ 3) 1) ;; =&gt; 4
+(funcall (-iteratefn &#39;cdr 3) &#39;(1 2 3 4 5)) ;; =&gt; &#39;(4 5)</code></pre></div>
+
+<h4 id="toc_184">-fixfn <code>(fn &amp;optional equal-test halt-test)</code></h4>
+
+<p>Return a function that computes the (least) fixpoint of <code>fn</code>.</p>
+
+<p><code>fn</code> must be a unary function. The returned lambda takes a single
+argument, <code>x</code>, the initial value for the fixpoint iteration. The
+iteration halts when either of the following conditions is satisified:</p>
+
+<ol>
+<li><p>Iteration converges to the fixpoint, with equality being
+  tested using <code>equal-test</code>. If <code>equal-test</code> is not specified,
+  <code>equal</code> is used. For functions over the floating point
+  numbers, it may be necessary to provide an appropriate
+  appoximate comparsion test.</p></li>
+<li><p><code>halt-test</code> returns a non-nil value. <code>halt-test</code> defaults to a
+  simple counter that returns t after <code>-fixfn-max-iterations</code>,
+  to guard against infinite iteration. Otherwise, <code>halt-test</code>
+  must be a function that accepts a single argument, the
+  current value of <code>x</code>, and returns non-nil as long as iteration
+  should continue. In this way, a more sophisticated
+  convergence test may be supplied by the caller.</p></li>
+</ol>
+
+<p>The return value of the lambda is either the fixpoint or, if
+iteration halted before converging, a cons with car <code>halted</code> and
+cdr the final output from <code>halt-test</code>.</p>
+
+<p>In types: (a -&gt; a) -&gt; a -&gt; a.</p>
+
+<div><pre><code class="language-el">(funcall (-fixfn &#39;cos &#39;approx-equal) 0.7) ;; ~&gt; 0.7390851332151607
+(funcall (-fixfn (lambda (x) (expt (+ x 10) 0.25))) 2.0) ;; =&gt; 1.8555845286409378
+(funcall (-fixfn &#39;sin &#39;approx-equal) 0.1) ;; =&gt; &#39;(halted . t)</code></pre></div>
+
+<h4 id="toc_185">-prodfn <code>(&amp;rest fns)</code></h4>
+
+<p>Take a list of n functions and return a function that takes a
+list of length n, applying i-th function to i-th element of the
+input list.  Returns a list of length n.</p>
+
+<p>In types (for n=2): ((a -&gt; b), (c -&gt; d)) -&gt; (a, c) -&gt; (b, d)</p>
+
+<p>This function satisfies the following laws:</p>
+
+<div><pre><code class="language-none">(-compose (-prodfn f g ...) (-prodfn f&#39; g&#39; ...)) = (-prodfn (-compose f f&#39;) (-compose g g&#39;) ...)
+(-prodfn f g ...) = (-juxt (-compose f (-partial &#39;nth 0)) (-compose g (-partial &#39;nth 1)) ...)
+(-compose (-prodfn f g ...) (-juxt f&#39; g&#39; ...)) = (-juxt (-compose f f&#39;) (-compose g g&#39;) ...)
+(-compose (-partial &#39;nth n) (-prod f1 f2 ...)) = (-compose fn (-partial &#39;nth n))</code></pre></div>
+
+<div><pre><code class="language-el">(funcall (-prodfn &#39;1+ &#39;1- &#39;int-to-string) &#39;(1 2 3)) ;; =&gt; &#39;(2 1 &quot;3&quot;)
+(-map (-prodfn &#39;1+ &#39;1-) &#39;((1 2) (3 4) (5 6) (7 8))) ;; =&gt; &#39;((2 1) (4 3) (6 5) (8 7))
+(apply &#39;+ (funcall (-prodfn &#39;length &#39;string-to-int) &#39;((1 2 3) &quot;15&quot;))) ;; =&gt; 18</code></pre></div>
+
+<h2 id="toc_186">Contribute</h2>
+
+<p>Yes, please do. Pure functions in the list manipulation realm only,
+please. There&#39;s a suite of tests in <code>dev/examples.el</code>, so remember to add
+tests for your function, or I might break it later.</p>
+
+<p>You&#39;ll find the repo at:</p>
+
+<div><pre><code class="language-none">https://github.com/magnars/dash.el</code></pre></div>
+
+<p>Run the tests with</p>
+
+<div><pre><code class="language-none">./run-tests.sh</code></pre></div>
+
+<p>Create the docs with</p>
+
+<div><pre><code class="language-none">./create-docs.sh</code></pre></div>
+
+<p>I highly recommend that you install these as a pre-commit hook, so that
+the tests are always running and the docs are always in sync:</p>
+
+<div><pre><code class="language-none">cp pre-commit.sh .git/hooks/pre-commit</code></pre></div>
+
+<p>Oh, and don&#39;t edit <code>README.md</code> directly, it is auto-generated.
+Change <code>readme-template.md</code> or <code>examples-to-docs.el</code> instead.</p>
+
+<h2 id="toc_187">Changelist</h2>
+
+<ul>
+<li>Added lexical binding pragma to dash.el</li>
+</ul>
+
+<h3 id="toc_188">From 2.11 to 2.12</h3>
+
+<ul>
+<li>Add GNU ELPA support. (Phillip Lord)</li>
+<li>Add <code>-some-&gt;</code>, <code>-some-&gt;&gt;</code>, and <code>-some--&gt;</code> macros. (Cam Saul)</li>
+<li><code>-is-suffix?</code> no longer destroys input list.</li>
+<li>Faster hashtable implementation for <code>-union</code>.</li>
+<li>Improvements to docstrings and examples</li>
+</ul>
+
+<h3 id="toc_189">From 2.10 to 2.11</h3>
+
+<ul>
+<li>Lots of clean up wrt byte compilation, debug macros and tests</li>
+</ul>
+
+<h3 id="toc_190">From 2.9 to 2.10</h3>
+
+<ul>
+<li>Add <code>-let</code> destructuring to <code>-if-let</code> and <code>-when-let</code> (Fredrik Bergroth)</li>
+</ul>
+
+<h3 id="toc_191">From 2.8 to 2.9</h3>
+
+<ul>
+<li>Add <code>-let</code>, <code>-let*</code> and <code>-lambda</code> with destructuring</li>
+<li>Add <code>-tree-seq</code> and <code>-tree-map-nodes</code></li>
+<li>Add <code>-non-nil</code></li>
+<li>Add <code>-fix</code></li>
+<li>Add <code>-fixfn</code> (dash-functional 1.2)</li>
+<li>Add <code>-copy</code> (Wilfred Hughes)</li>
+</ul>
+
+<h3 id="toc_192">From 2.7 to 2.8</h3>
+
+<ul>
+<li>Add <code>-butlast</code></li>
+</ul>
+
+<h3 id="toc_193">From 2.6 to 2.7</h3>
+
+<ul>
+<li><code>-zip</code> now supports more than two lists (Steve Lamb)</li>
+<li>Add  <code>-cycle</code> ,  <code>-pad</code> ,  <code>-annotate</code> ,  <code>-zip-fill</code> (Steve Lamb)</li>
+<li>Add <code>-table</code>, <code>-table-flat</code> (finite cartesian product)</li>
+<li>Add <code>-flatten-n</code></li>
+<li><code>-slice</code> now supports &quot;step&quot; argument</li>
+<li>Add functional combinators <code>-iteratefn</code>, <code>-prodfn</code></li>
+<li>Add <code>-replace</code>, <code>-splice</code>, <code>-splice-list</code> which generalize <code>-replace-at</code> and <code>-insert-at</code></li>
+<li>Add <code>-compose</code>, <code>-iteratefn</code> and <code>-prodfn</code> (dash-functional 1.1)</li>
+</ul>
+
+<h3 id="toc_194">From 2.5 to 2.6</h3>
+
+<ul>
+<li>Add <code>-is-prefix-p</code>, <code>-is-suffix-p</code>, <code>-is-infix-p</code> (Matus Goljer)</li>
+<li>Add <code>-iterate</code>, <code>-unfold</code> (Matus Goljer)</li>
+<li>Add <code>-split-on</code>, <code>-split-when</code> (Matus Goljer)</li>
+<li>Add <code>-find-last-index</code> (Matus Goljer)</li>
+<li>Add <code>-list</code> (Johan Andersson)</li>
+</ul>
+
+<h3 id="toc_195">From 2.4 to 2.5</h3>
+
+<ul>
+<li>Add <code>-same-items?</code> (Johan Andersson)</li>
+<li>A few bugfixes</li>
+</ul>
+
+<h3 id="toc_196">From 2.3 to 2.4</h3>
+
+<ul>
+<li>Add <code>-snoc</code> (Matus Goljer)</li>
+<li>Add <code>-replace-at</code>, <code>-update-at</code>, <code>-remove-at</code>, and <code>-remove-at-indices</code> (Matus Goljer)</li>
+</ul>
+
+<h3 id="toc_197">From 2.2 to 2.3</h3>
+
+<ul>
+<li>Add tree operations (Matus Goljer)</li>
+<li>Make font-lock optional</li>
+</ul>
+
+<h3 id="toc_198">From 2.1 to 2.2</h3>
+
+<ul>
+<li>Add <code>-compose</code> (Christina Whyte)</li>
+</ul>
+
+<h3 id="toc_199">From 2.0 to 2.1</h3>
+
+<ul>
+<li>Add indexing operations (Matus Goljer)</li>
+</ul>
+
+<h3 id="toc_200">From 1.8 to 2.0</h3>
+
+<ul>
+<li>Split out <code>dash-functional.el</code> (Matus Goljer)</li>
+<li>Add <code>-andfn</code>, <code>-orfn</code>, <code>-not</code>, <code>-cut</code>, <code>-const</code>, <code>-flip</code> and <code>-on</code>. (Matus Goljer)</li>
+<li>Fix <code>-min</code>, <code>-max</code>, <code>-min-by</code> and <code>-max-by</code> (Matus Goljer)</li>
+</ul>
+
+<h3 id="toc_201">From 1.7 to 1.8</h3>
+
+<ul>
+<li>Add <code>-first-item</code> and <code>-last-item</code> (Wilfred Hughes)</li>
+</ul>
+
+<h3 id="toc_202">From 1.6 to 1.7</h3>
+
+<ul>
+<li>Add <code>-rotate</code> (Matus Goljer)</li>
+</ul>
+
+<h3 id="toc_203">From 1.5 to 1.6</h3>
+
+<ul>
+<li>Add <code>-min</code>, <code>-max</code>, <code>-min-by</code> and <code>-max-by</code> (Johan Andersson)</li>
+</ul>
+
+<h3 id="toc_204">From 1.4 to 1.5</h3>
+
+<ul>
+<li>Add <code>-sum</code> and <code>-product</code> (Johan Andersson)</li>
+</ul>
+
+<h3 id="toc_205">From 1.3 to 1.4</h3>
+
+<ul>
+<li>Add <code>-sort</code></li>
+<li>Add <code>-reduce-r</code> (Matus Goljer)</li>
+<li>Add <code>-reduce-r-from</code> (Matus Goljer)</li>
+</ul>
+
+<h3 id="toc_206">From 1.2 to 1.3</h3>
+
+<ul>
+<li>Add <code>-partition-in-steps</code></li>
+<li>Add <code>-partition-all-in-steps</code></li>
+</ul>
+
+<h3 id="toc_207">From 1.1 to 1.2</h3>
+
+<ul>
+<li>Add <code>-last</code> (Matus Goljer)</li>
+<li>Add <code>-insert-at</code> (Emanuel Evans)</li>
+<li>Add <code>-when-let</code> and <code>-if-let</code> (Emanuel Evans)</li>
+<li>Add <code>-when-let*</code> and <code>-if-let*</code> (Emanuel Evans)</li>
+<li>Some bugfixes</li>
+</ul>
+
+<h2 id="toc_208">Contributors</h2>
+
+<ul>
+<li><a href="https://github.com/Fuco1">Matus Goljer</a> contributed lots of features and functions.</li>
+<li><a href="https://github.com/tkf">Takafumi Arakaki</a> contributed <code>-group-by</code>.</li>
+<li><a href="https://github.com/tali713">tali713</a> is the author of <code>-applify</code>.</li>
+<li><a href="https://github.com/vemv">Víctor M. Valenzuela</a> contributed <code>-repeat</code>.</li>
+<li><a href="https://github.com/nicferrier">Nic Ferrier</a> contributed <code>-cons*</code>.</li>
+<li><a href="https://github.com/Wilfred">Wilfred Hughes</a> contributed <code>-slice</code>, <code>-first-item</code> and <code>-last-item</code>.</li>
+<li><a href="https://github.com/shosti">Emanuel Evans</a> contributed <code>-if-let</code>, <code>-when-let</code> and <code>-insert-at</code>.</li>
+<li><a href="https://github.com/rejeep">Johan Andersson</a> contributed <code>-sum</code>, <code>-product</code> and <code>-same-items?</code></li>
+<li><a href="https://github.com/kurisuwhyte">Christina Whyte</a> contributed <code>-compose</code></li>
+<li><a href="https://github.com/steventlamb">Steve Lamb</a> contributed <code>-cycle</code>, <code>-pad</code>, <code>-annotate</code>, <code>-zip-fill</code> and an n-ary version of <code>-zip</code>.</li>
+<li><a href="https://github.com/fbergroth">Fredrik Bergroth</a> made the <code>-if-let</code> family use <code>-let</code> destructuring and improved script for generating documentation.</li>
+<li><a href="https://github.com/holomorph">Mark Oteiza</a> contributed the script to create an info manual.</li>
+<li><a href="https://github.com/wasamasa">Vasilij Schneidermann</a> contributed <code>-some</code>.</li>
+<li><a href="https://github.com/occidens">William West</a> made <code>-fixfn</code> more robust at handling floats.</li>
+<li><a href="https://github.com/camsaul">Cam Saül</a> contributed <code>-some-&gt;</code>, <code>-some-&gt;&gt;</code>, and <code>-some--&gt;</code>.</li>
+</ul>
+
+<p>Thanks!</p>
+
+<h2 id="toc_209">License</h2>
+
+<p>Copyright (C) 2012-2014 Magnar Sveen</p>
+
+<p>Authors: Magnar Sveen <a href="mailto:magnars@gmail.com">magnars@gmail.com</a>
+Keywords: lists</p>
+
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+
+
+
+</body>
+
+</html>

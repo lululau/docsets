@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<title>ht</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<p><strong>Table of Contents</strong> <em>generated with <a href="https://github.com/Wilfred/autotoc">autotoc</a></em></p>
+
+<ul>
+<li><a href="#htel">ht.el</a>
+
+<ul>
+<li><a href="#functions">Functions</a></li>
+<li><a href="#return-a-hash-table">Return a hash table</a></li>
+<li><a href="#accessing-the-hash-table">Accessing the hash table</a></li>
+<li><a href="#mutating-the-hash-table">Mutating the hash table</a></li>
+<li><a href="#iterating-over-the-hash-table">Iterating over the hash table</a></li>
+<li><a href="#predicates">Predicates</a></li>
+<li><a href="#converting-from-a-hash-table">Converting from a hash table</a></li>
+<li><a href="#converting-to-a-hash-table">Converting to a hash table</a></li>
+<li><a href="#macros">Macros</a></li>
+<li><a href="#returning-a-hash-table">Returning a hash table</a></li>
+<li><a href="#iterating-over-the-hash-table-anaphoric">Iterating over the hash table (anaphoric)</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#why">Why?</a></li>
+<li><a href="#similar-libraries">Similar libraries</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#changelog">Changelog</a></li>
+<li><a href="#running-tests">Running tests</a></li>
+<li><a href="#whats-an-alistplist">What&#39;s an alist/plist?</a></li>
+</ul></li>
+</ul>
+
+<h1 id="toc_0">ht.el</h1>
+
+<p>The missing hash table library for Emacs.</p>
+
+<p><a href="http://melpa.org/#/ht"><img src="http://melpa.org/packages/ht-badge.svg" alt="MELPA"></a>
+<a href="https://travis-ci.org/Wilfred/ht.el"><img src="https://travis-ci.org/Wilfred/ht.el.png?branch=master" alt="Build Status"></a></p>
+
+<h2 id="toc_1">Functions</h2>
+
+<h3 id="toc_2">Return a hash table</h3>
+
+<ul>
+<li id="ht-354"><code>ht-create</code> <code>(test?)</code></li>
+<li id="ht-355"><code>ht-merge</code> <code>(&amp;rest tables)</code></li>
+<li id="ht-356"><code>ht-copy</code> <code>(table)</code></li>
+<li id="ht-357"><code>ht-select</code> <code>(function table)</code></li>
+<li id="ht-358"><code>ht-reject</code> <code>(function table)</code></li>
+</ul>
+
+<h3 id="toc_3">Accessing the hash table</h3>
+
+<ul>
+<li id="ht-364"><code>ht-get</code> <code>(table key default?)</code></li>
+<li id="ht-365"><code>ht-keys</code> <code>(table)</code></li>
+<li id="ht-366"><code>ht-values</code> <code>(table)</code></li>
+<li id="ht-367"><code>ht-items</code> <code>(table)</code></li>
+<li id="ht-368"><code>ht-find</code> <code>(function table)</code></li>
+<li id="ht-369"><code>ht-size</code> <code>(table)</code></li>
+</ul>
+
+<h3 id="toc_4">Mutating the hash table</h3>
+
+<ul>
+<li id="ht-375"><code>ht-set!</code> <code>(table key value)</code></li>
+<li id="ht-376"><code>ht-update!</code> <code>(table table)</code></li>
+<li id="ht-377"><code>ht-remove!</code> <code>(table key)</code></li>
+<li id="ht-378"><code>ht-clear!</code> <code>(table)</code></li>
+<li id="ht-379"><code>ht-reject!</code> <code>(function table)</code></li>
+</ul>
+
+<h3 id="toc_5">Iterating over the hash table</h3>
+
+<ul>
+<li id="ht-385"><code>ht-map</code> <code>(function table)</code></li>
+<li id="ht-386"><code>ht-each</code> <code>(function table)</code></li>
+</ul>
+
+<h3 id="toc_6">Predicates</h3>
+
+<ul>
+<li id="ht-392"><code>ht?</code> <code>(table-or-object)</code></li>
+<li id="ht-393"><code>ht-contains?</code> <code>(table key)</code></li>
+<li id="ht-394"><code>ht-empty?</code> <code>(table)</code></li>
+</ul>
+
+<h3 id="toc_7">Converting from a hash table</h3>
+
+<ul>
+<li id="ht-400"><code>ht-&gt;alist</code> <code>(table)</code></li>
+<li id="ht-401"><code>ht-&gt;plist</code> <code>(table)</code></li>
+</ul>
+
+<h3 id="toc_8">Converting to a hash table</h3>
+
+<ul>
+<li id="ht-407"><code>ht&lt;-alist</code> <code>(alist test?)</code></li>
+<li id="ht-408"><code>ht&lt;-plist</code> <code>(plist test?)</code></li>
+</ul>
+
+<h2 id="toc_9">Macros</h2>
+
+<h3 id="toc_10">Returning a hash table</h3>
+
+<ul>
+<li id="ht-416"><code>ht</code> <code>(&amp;rest pairs)</code></li>
+</ul>
+
+<h3 id="toc_11">Iterating over the hash table (anaphoric)</h3>
+
+<ul>
+<li id="ht-422"><code>ht-amap</code> <code>(form table)</code></li>
+<li id="ht-423"><code>ht-aeach</code> <code>(form table)</code></li>
+</ul>
+
+<h2 id="toc_12">Examples</h2>
+
+<p>Creating a hash table and accessing it:</p>
+
+<div><pre><code class="language-none">(require &#39;ht)
+
+(defun say-hello (name)
+  (let ((greetings (ht (&quot;Bob&quot; &quot;Hey bob!&quot;)
+                       (&quot;Chris&quot; &quot;Hi Chris!&quot;))))
+    (ht-get greetings name &quot;Hello stranger!&quot;)))</code></pre></div>
+
+<p>This could be alternatively written as:</p>
+
+<div><pre><code class="language-none">(require &#39;ht)
+
+(defun say-hello (name)
+  (let ((greetings (ht-create)))
+    (ht-set! greetings &quot;Bob&quot; &quot;Hey Bob!&quot;)
+    (ht-set! greetings &quot;Chris&quot; &quot;Hi Chris!&quot;)
+    (ht-get greetings name &quot;Hello stranger!&quot;)))</code></pre></div>
+
+<h2 id="toc_13">Why?</h2>
+
+<p>Libraries like <a href="https://github.com/magnars/s.el">s.el</a> (strings) and
+<a href="https://github.com/magnars/dash.el">dash.el</a> (lists) have shown how
+much nicer Emacs lisp programming can be with good libraries. ht.el
+aims to similarly simplify working with hash tables.</p>
+
+<p>Common operations with hash tables (e.g. enumerate the keys) are too
+difficult in Emacs lisp.</p>
+
+<p>ht.el offers:</p>
+
+<ul>
+<li>A consistent naming scheme (contrast <code>make-hash-table</code> with <code>puthash</code>)</li>
+<li>A more natural argument ordering</li>
+<li>Mutation functions always return <code>nil</code></li>
+<li>A more comprehensive range of hash table operations, including a
+conventional map (<code>ht-map</code> returns a list, elisp&#39;s <code>maphash</code> returns
+nil).</li>
+</ul>
+
+<h3 id="toc_14">Similar libraries</h3>
+
+<ul>
+<li><a href="https://github.com/nicferrier/emacs-kv">kv.el</a> (focuses more on
+alists)</li>
+<li><a href="http://www.emacswiki.org/emacs/mon-hash-utils.el">mon-hash-utils</a></li>
+</ul>
+
+<h2 id="toc_15">Installation</h2>
+
+<p>ht.el is available on <a href="https://melpa.org/">MELPA</a> and
+<a href="http://marmalade-repo.org/">Marmalade</a>.</p>
+
+<p>Add a package archive to your .emacs.d/init.el:</p>
+
+<div><pre><code class="language-none">(require &#39;package)
+(add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)</code></pre></div>
+
+<p>then run <code>M-x package-install &lt;RET&gt; ht &lt;RET&gt;</code></p>
+
+<h2 id="toc_16">Changelog</h2>
+
+<p>ht.el uses semantic versioning, so an incompatible API change will
+result in the major version increasing. See
+<a href="CHANGELOG.md">CHANGELOG.md</a> for a history of all changes.</p>
+
+<h2 id="toc_17">Running tests</h2>
+
+<p><code>M-x ht-run-tests</code></p>
+
+<h2 id="toc_18">What&#39;s an alist/plist?</h2>
+
+<p>An alist is an association list, which is a list of pairs. It looks like this:</p>
+
+<div><pre><code class="language-none">((key1 . value1)
+ (key2 . value2)
+ (key3 . value3))</code></pre></div>
+
+<p>An alist can also look like this:</p>
+
+<div><pre><code class="language-none">((key1 . value1)
+ (key2 . value2)
+ (key1 . oldvalue))</code></pre></div>
+
+<p>A plist is a property list, which is a flat list with an even number
+of items. It looks like this:</p>
+
+<div><pre><code class="language-none">(key1 value1
+ key2 value2
+ key3 value3)</code></pre></div>
+
+<p>Both of these are slow. ht.el provides <code>ht&lt;-alist</code> and
+<code>ht&lt;-plist</code> to help you convert to hash tables. If you need to
+work with an alist or plist, use the functions <code>ht-&gt;alist</code> and
+<code>ht-&gt;plist</code> to convert an hash table to those formats.</p>
+
+
+
+
+</body>
+
+</html>

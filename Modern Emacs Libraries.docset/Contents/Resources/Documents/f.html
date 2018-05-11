@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<title>f</title>
+
+
+<style type="text/css">
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px; }
+
+body > *:first-child {
+  margin-top: 0 !important; }
+body > *:last-child {
+  margin-bottom: 0 !important; }
+
+a {
+  color: #4183C4; }
+a.absent {
+  color: #cc0000; }
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative; }
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
+  text-decoration: none; }
+
+h1 tt, h1 code {
+  font-size: inherit; }
+
+h2 tt, h2 code {
+  font-size: inherit; }
+
+h3 tt, h3 code {
+  font-size: inherit; }
+
+h4 tt, h4 code {
+  font-size: inherit; }
+
+h5 tt, h5 code {
+  font-size: inherit; }
+
+h6 tt, h6 code {
+  font-size: inherit; }
+
+h1 {
+  font-size: 28px;
+  color: black; }
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black; }
+
+h3 {
+  font-size: 18px; }
+
+h4 {
+  font-size: 16px; }
+
+h5 {
+  font-size: 14px; }
+
+h6 {
+  color: #777777;
+  font-size: 14px; }
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0; }
+
+hr {
+  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+  body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0; }
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0; }
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0; }
+
+li p.first {
+  display: inline-block; }
+li {
+  margin: 0; }
+ul, ol {
+  padding-left: 30px; }
+
+ul :first-child, ol :first-child {
+  margin-top: 0; }
+
+dl {
+  padding: 0; }
+  dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+    margin: 15px 0 5px; }
+    dl dt:first-child {
+      padding: 0; }
+    dl dt > :first-child {
+      margin-top: 0; }
+    dl dt > :last-child {
+      margin-bottom: 0; }
+  dl dd {
+    margin: 0 0 15px;
+    padding: 0 15px; }
+    dl dd > :first-child {
+      margin-top: 0; }
+    dl dd > :last-child {
+      margin-bottom: 0; }
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777; }
+  blockquote > :first-child {
+    margin-top: 0; }
+  blockquote > :last-child {
+    margin-bottom: 0; }
+
+table {
+  padding: 0;border-collapse: collapse; }
+  table tr {
+    border-top: 1px solid #cccccc;
+    background-color: white;
+    margin: 0;
+    padding: 0; }
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8; }
+    table tr th {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr td {
+      border: 1px solid #cccccc;
+      margin: 0;
+      padding: 6px 13px; }
+    table tr th :first-child, table tr td :first-child {
+      margin-top: 0; }
+    table tr th :last-child, table tr td :last-child {
+      margin-bottom: 0; }
+
+img {
+  max-width: 100%; }
+
+span.frame {
+  display: block;
+  overflow: hidden; }
+  span.frame > span {
+    border: 1px solid #dddddd;
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin: 13px 0 0;
+    padding: 7px;
+    width: auto; }
+  span.frame span img {
+    display: block;
+    float: left; }
+  span.frame span span {
+    clear: both;
+    color: #333333;
+    display: block;
+    padding: 5px 0 0; }
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-center > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: center; }
+  span.align-center span img {
+    margin: 0 auto;
+    text-align: center; }
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both; }
+  span.align-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px 0 0;
+    text-align: right; }
+  span.align-right span img {
+    margin: 0;
+    text-align: right; }
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left; }
+  span.float-left span {
+    margin: 13px 0 0; }
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right; }
+  span.float-right > span {
+    display: block;
+    overflow: hidden;
+    margin: 13px auto 0;
+    text-align: right; }
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px; }
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent; }
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px; }
+  pre code, pre tt {
+    background-color: transparent;
+    border: none; }
+
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:0 auto;
+    }
+}
+@media print {
+	table, pre {
+		page-break-inside: avoid;
+	}
+	pre {
+		word-wrap: break-word;
+	}
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="toc_0">f.el <a href="http://travis-ci.org/rejeep/f.el"><img src="https://api.travis-ci.org/rejeep/f.el.png?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/r/rejeep/f.el"><img src="https://img.shields.io/coveralls/rejeep/f.el.svg" alt="Coverage Status"></a></h1>
+
+<p>Much inspired by <a href="https://github.com/magnars">@magnars</a>&#39;s excellent
+<a href="https://github.com/magnars/s.el">s.el</a> and
+<a href="https://github.com/magnars/dash.el">dash.el</a>,
+<a href="https://github.com/rejeep/f.el">f.el</a> is a modern API for working
+with files and directories in Emacs.</p>
+
+<h2 id="toc_1">Installation</h2>
+
+<p>It&#39;s available on <a href="https://melpa.org/">Melpa</a>:</p>
+
+<div><pre><code class="language-none">M-x package-install f</code></pre></div>
+
+<p>Or you can just dump <code>f.el</code> in your load path somewhere.</p>
+
+<h2 id="toc_2">API</h2>
+
+<h3 id="toc_3">Paths</h3>
+
+<ul>
+<li><a href="#f-join-rest-args">f-join</a> <code>(&amp;rest args)</code></li>
+<li><a href="#f-split-path">f-split</a> <code>(path)</code></li>
+<li><a href="#f-expand-path-optional-dir">f-expand</a> <code>(path &amp;optional dir)</code></li>
+<li><a href="#f-filename-path">f-filename</a> <code>(path)</code></li>
+<li><a href="#f-dirname-path">f-dirname</a> <code>(path)</code></li>
+<li><a href="#f-common-parent-paths">f-common-parent</a> <code>(paths)</code></li>
+<li><a href="#f-ext-path">f-ext</a> <code>(path)</code></li>
+<li><a href="#f-no-ext-path">f-no-ext</a> <code>(path)</code></li>
+<li><a href="#f-swap-ext">f-swap-ext</a> <code>(path ext)</code></li>
+<li><a href="#f-base-path">f-base</a> <code>(path)</code></li>
+<li><a href="#f-relative-path-optional-dir">f-relative</a> <code>(path &amp;optional dir)</code></li>
+<li><a href="#f-short-path">f-short</a> <code>(path)</code></li>
+<li><a href="#f-long-path">f-long</a> <code>(path)</code></li>
+<li><a href="#f-canonical-path">f-canonical</a> <code>(path)</code></li>
+<li><a href="#f-slash-path">f-slash</a> <code>(path)</code></li>
+<li><a href="#f-full-path">f-full</a> <code>(path)</code></li>
+<li><a href="#f-uniquify-paths">f-uniquify</a> <code>(paths)</code></li>
+<li><a href="#f-uniquify-alist-paths">f-uniquify-alist</a> <code>(paths)</code></li>
+</ul>
+
+<h3 id="toc_4">I/O</h3>
+
+<ul>
+<li><a href="#f-read-bytes-path">f-read-bytes</a> <code>(path)</code></li>
+<li><a href="#f-write-bytes-data-path">f-write-bytes</a> <code>(data path)</code></li>
+<li><a href="#f-read-text-path-optional-coding">f-read-text</a> <code>(path &amp;optional coding)</code></li>
+<li><a href="#f-write-text-text-coding-path">f-write-text</a><code>(text coding path)</code></li>
+</ul>
+
+<h3 id="toc_5">Destructive</h3>
+
+<ul>
+<li><a href="#f-mkdir-rest-dirs">f-mkdir</a> <code>(&amp;rest dirs)</code></li>
+<li><a href="#f-delete-path-optional-force">f-delete</a> <code>(path &amp;optional force)</code></li>
+<li><a href="#f-symlink-source-path">f-symlink</a> <code>(source path)</code></li>
+<li><a href="#f-move-from-to">f-move</a> <code>(from to)</code></li>
+<li><a href="#f-copy-from-to">f-copy</a> <code>(from to)</code></li>
+<li><a href="#f-touch-path">f-touch</a> <code>(path)</code></li>
+</ul>
+
+<h3 id="toc_6">Predicates</h3>
+
+<ul>
+<li><a href="#f-exists-path">f-exists?</a> <code>(path)</code></li>
+<li><a href="#f-directory-path">f-directory?</a> <code>(path)</code></li>
+<li><a href="#f-file-path">f-file?</a> <code>(path)</code></li>
+<li><a href="#f-symlink-path">f-symlink?</a> <code>(path)</code></li>
+<li><a href="#f-readable-path">f-readable?</a> <code>(path)</code></li>
+<li><a href="#f-writable-path">f-writable?</a> <code>(path)</code></li>
+<li><a href="#f-executable-path">f-executable?</a> <code>(path)</code></li>
+<li><a href="#f-absolute-path">f-absolute?</a> <code>(path)</code></li>
+<li><a href="#f-relative-path">f-relative?</a> <code>(path)</code></li>
+<li><a href="#f-root-path">f-root?</a> <code>(path)</code></li>
+<li><a href="#f-ext-path-ext">f-ext?</a> <code>(path ext)</code></li>
+<li><a href="#f-same-path-a-path-b">f-same?</a> <code>(path-a path-b)</code></li>
+<li><a href="#f-parent-of-path-a-path-b">f-parent-of?</a> <code>(path-a path-b)</code></li>
+<li><a href="#f-child-of-path-a-path-b">f-child-of?</a> <code>(path-a path-b)</code></li>
+<li><a href="#f-ancestor-of-path-a-path-b">f-ancestor-of?</a> <code>(path-a path-b)</code></li>
+<li><a href="#f-descendant-of-path-a-path-b">f-descendant-of?</a> <code>(path-a path-b)</code></li>
+</ul>
+
+<h3 id="toc_7">Stats</h3>
+
+<ul>
+<li><a href="#f-size-path">f-size</a> <code>(path)</code></li>
+<li><a href="#f-depth-path">f-depth</a> <code>(path)</code></li>
+</ul>
+
+<h3 id="toc_8">Misc</h3>
+
+<ul>
+<li><a href="#f-this-file-">f-this-file</a> <code>()</code></li>
+<li><a href="#f-path-separator-">f-path-separator</a> <code>()</code></li>
+<li><a href="#f-glob-pattern-optional-path">f-glob</a> <code>(pattern &amp;optional path)</code></li>
+<li><a href="#f-entries-path-optional-fn-recursive">f-entries</a> <code>(path &amp;optional fn recursive)</code></li>
+<li><a href="#f-directories-path-optional-fn-recursive">f-directories</a> <code>(path &amp;optional fn recursive)</code></li>
+<li><a href="#f-files-path-optional-fn-recursive">f-files</a> <code>(path &amp;optional fn recursive)</code></li>
+<li><a href="#f-root-">f-root</a> <code>()</code></li>
+<li><a href="#f-up-fn-optional-dir">f-up</a> <code>(fn &amp;optional dir)</code></li>
+<li><a href="#f-traverse-upwards-fn-optional-path">f-traverse-upwards</a> <code>(fn &amp;optional path)</code></li>
+<li><a href="#f-with-sandbox-path-or-paths-rest-body">f-with-sandbox</a> <code>(path-or-paths &amp;rest body)</code></li>
+</ul>
+
+<h2 id="toc_9">Documentation and examples</h2>
+
+<h3 id="toc_10">f-join <code>(&amp;rest args)</code></h3>
+
+<p>Join ARGS to a single path.</p>
+
+<div><pre><code class="language-lisp">(f-join &quot;path&quot;) ;; =&gt; &quot;path&quot;
+(f-join &quot;path&quot; &quot;to&quot;) ;; =&gt; &quot;path/to&quot;
+(f-join &quot;/&quot; &quot;path&quot; &quot;to&quot; &quot;heaven&quot;) ;; =&gt; &quot;/path/to/heaven&quot;</code></pre></div>
+
+<h3 id="toc_11">f-split <code>(path)</code></h3>
+
+<p>Split PATH and return list containing parts.</p>
+
+<div><pre><code class="language-lisp">(f-split &quot;path&quot;) ;; =&gt; &#39;(&quot;path&quot;)
+(f-split &quot;path/to&quot;) ;; =&gt; &#39;(&quot;path&quot; &quot;to&quot;)
+(f-split &quot;/path/to/heaven&quot;) ;; =&gt; &#39;(&quot;/&quot; &quot;path&quot; &quot;to&quot; &quot;heaven&quot;)</code></pre></div>
+
+<h3 id="toc_12">f-expand <code>(path &amp;optional dir)</code></h3>
+
+<p>Expand PATH relative to DIR (or `default-directory&#39;).</p>
+
+<div><pre><code class="language-lisp">(f-expand &quot;name&quot;) ;; =&gt; &quot;/default/directory/name&quot;
+(f-expand &quot;name&quot; &quot;other/directory&quot;) ;; =&gt; &quot;other/directory/name&quot;</code></pre></div>
+
+<h3 id="toc_13">f-filename <code>(path)</code></h3>
+
+<p>Return the name of PATH.</p>
+
+<div><pre><code class="language-lisp">(f-filename &quot;path/to/file.ext&quot;) ;; =&gt; &quot;file.ext&quot;
+(f-filename &quot;path/to/directory&quot;) ;; =&gt; &quot;directory&quot;</code></pre></div>
+
+<h3 id="toc_14">f-dirname <code>(path)</code></h3>
+
+<p>Return the parent directory to PATH.</p>
+
+<p>Alias: <code>f-parent</code></p>
+
+<div><pre><code class="language-lisp">(f-dirname &quot;path/to/file.ext&quot;) ;; =&gt; &quot;path/to&quot;
+(f-dirname &quot;path/to/directory&quot;) ;; =&gt; &quot;path/to&quot;
+(f-dirname &quot;/&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_15">f-common-parent <code>(paths)</code></h3>
+
+<p>Return the deepest common parent directory of PATHS.</p>
+
+<div><pre><code class="language-lisp">(f-common-parent &#39;(&quot;foo/bar/baz&quot; &quot;foo/bar/qux&quot; &quot;foo/bar/mux&quot;)) ;; =&gt; &quot;foo/bar/&quot;
+(f-common-parent &#39;(&quot;/foo/bar/baz&quot; &quot;/foo/bar/qux&quot; &quot;/foo/bax/mux&quot;)) ;; =&gt; &quot;/foo/&quot;
+(f-common-parent &#39;(&quot;foo/bar/baz&quot; &quot;quack/bar/qux&quot; &quot;lack/bar/mux&quot;)) ;; =&gt; &quot;&quot;</code></pre></div>
+
+<h3 id="toc_16">f-ext <code>(path)</code></h3>
+
+<p>Return the file extension of PATH.</p>
+
+<p>The extension, in a file name, is the part that follows the last
+&#39;.&#39;, excluding version numbers and backup suffixes.</p>
+
+<div><pre><code class="language-lisp">(f-ext &quot;path/to/file.ext&quot;) ;; =&gt; &quot;ext&quot;
+(f-ext &quot;path/to/directory&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_17">f-no-ext <code>(path)</code></h3>
+
+<p>Return everything but the file extension of PATH.</p>
+
+<div><pre><code class="language-lisp">(f-no-ext &quot;path/to/file.ext&quot;) ;; =&gt; &quot;path/to/file&quot;
+(f-no-ext &quot;path/to/directory&quot;) ;; =&gt; &quot;path/to/directory&quot;</code></pre></div>
+
+<h3 id="toc_18">f-swap-ext <code>(path ext)</code></h3>
+
+<p>Return PATH but with EXT as the new extension.
+EXT must not be nil or empty.</p>
+
+<div><pre><code class="language-lisp">(f-swap-ext &quot;path/to/file.ext&quot; &quot;org&quot;) ;; =&gt; &quot;path/to/file.org&quot;
+(f-swap-ext &quot;path/to/file.ext&quot; &quot;&quot;) ;; =&gt; error</code></pre></div>
+
+<h3 id="toc_19">f-base <code>(path)</code></h3>
+
+<p>Return the name of PATH, excluding the extension of file.</p>
+
+<div><pre><code class="language-lisp">(f-base &quot;path/to/file.ext&quot;) ;; =&gt; &quot;file&quot;
+(f-base &quot;path/to/directory&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_20">f-relative <code>(path &amp;optional dir)</code></h3>
+
+<p>Return PATH relative to DIR.</p>
+
+<div><pre><code class="language-lisp">(f-relative &quot;/some/path/relative/to/my/file.txt&quot; &quot;/some/path/&quot;) ;; =&gt; relative/to/my/file.txt
+(f-relative &quot;/default/directory/my/file.txt&quot;) ;; =&gt; my/file.txt</code></pre></div>
+
+<h3 id="toc_21">f-short <code>(path)</code></h3>
+
+<p>Return abbrev of PATH. See `abbreviate-file-name&#39;.</p>
+
+<p>Alias: <code>f-abbrev</code></p>
+
+<div><pre><code class="language-lisp">(f-short &quot;/Users/foo/Code/bar&quot;) ;; =&gt; ~/Code/bar
+(f-short &quot;/path/to/Code/bar&quot;) ;; =&gt; /path/to/Code/bar</code></pre></div>
+
+<h3 id="toc_22">f-long <code>(path)</code></h3>
+
+<p>Return long version of PATH.</p>
+
+<div><pre><code class="language-lisp">(f-long &quot;~/Code/bar&quot;) ;; =&gt; /Users/foo/Code/bar
+(f-long &quot;/path/to/Code/bar&quot;) ;; =&gt; /path/to/Code/bar</code></pre></div>
+
+<h3 id="toc_23">f-canonical <code>(path)</code></h3>
+
+<p>Return the canonical name of PATH.</p>
+
+<div><pre><code class="language-lisp">(f-canonical &quot;/path/to/real/file&quot;) ;; =&gt; /path/to/real/file
+(f-canonical &quot;/link/to/file&quot;) ;; =&gt; /path/to/real/file</code></pre></div>
+
+<h3 id="toc_24">f-slash <code>(path)</code></h3>
+
+<p>Append slash to PATH unless one already.</p>
+
+<p>Some functions, such as `call-process&#39; requires there to be an
+ending slash.</p>
+
+<div><pre><code class="language-lisp">(f-slash &quot;/path/to/file&quot;) ;; =&gt; /path/to/file
+(f-slash &quot;/path/to/dir&quot;) ;; =&gt; /path/to/dir/
+(f-slash &quot;/path/to/dir/&quot;) ;; =&gt; /path/to/dir/</code></pre></div>
+
+<h3 id="toc_25">f-full <code>(path)</code></h3>
+
+<p>Return absolute path to PATH, with ending slash.</p>
+
+<div><pre><code class="language-lisp">(f-full &quot;~/path/to/file&quot;) ;; =&gt; /home/path/to/file
+(f-full &quot;~/path/to/dir&quot;) ;; =&gt; /home/path/to/dir/
+(f-full &quot;~/path/to/dir/&quot;) ;; =&gt; /home/path/to/dir/</code></pre></div>
+
+<h3 id="toc_26">f-uniquify <code>(paths)</code></h3>
+
+<p>Return unique suffixes of PATHS.</p>
+
+<p>This function expects no duplicate paths.</p>
+
+<div><pre><code class="language-lisp">(f-uniquify &#39;(&quot;/foo/bar&quot; &quot;/foo/baz&quot; &quot;/foo/quux&quot;)) ;; =&gt; &#39;(&quot;bar&quot; &quot;baz&quot; &quot;quux&quot;)
+(f-uniquify &#39;(&quot;/foo/bar&quot; &quot;/www/bar&quot; &quot;/foo/quux&quot;)) ;; =&gt; &#39;(&quot;foo/bar&quot; &quot;www/bar&quot; &quot;quux&quot;)
+(f-uniquify &#39;(&quot;/foo/bar&quot; &quot;/www/bar&quot; &quot;/www/bar/quux&quot;)) ;; =&gt; &#39;(&quot;foo/bar&quot; &quot;www/bar&quot; &quot;quux&quot;)
+(f-uniquify &#39;(&quot;/foo/bar&quot; &quot;/foo/baz&quot; &quot;/home/www/bar&quot; &quot;/home/www/baz&quot; &quot;/var/foo&quot; &quot;/opt/foo/www/baz&quot;)) ;; =&gt; &#39;(&quot;foo/bar&quot; &quot;www/bar&quot; &quot;foo/baz&quot; &quot;home/www/baz&quot; &quot;foo/www/baz&quot; &quot;foo&quot;)</code></pre></div>
+
+<h3 id="toc_27">f-uniquify-alist <code>(paths)</code></h3>
+
+<p>Return alist mapping PATHS to unique suffixes of PATHS.</p>
+
+<p>This function expects no duplicate paths.</p>
+
+<div><pre><code class="language-lisp">(f-uniquify-alist &#39;(&quot;/foo/bar&quot; &quot;/foo/baz&quot; &quot;/foo/quux&quot;)) ;; =&gt; &#39;((&quot;/foo/bar&quot; . &quot;bar&quot;) (&quot;/foo/baz&quot; . &quot;baz&quot;) (&quot;/foo/quux&quot; . &quot;quux&quot;))
+(f-uniquify-alist &#39;(&quot;/foo/bar&quot; &quot;/www/bar&quot; &quot;/foo/quux&quot;)) ;; =&gt; &#39;((&quot;/foo/bar&quot; . &quot;foo/bar&quot;) (&quot;/www/bar&quot; . &quot;www/bar&quot;) (&quot;/foo/quux&quot; . &quot;quux&quot;))
+(f-uniquify-alist &#39;(&quot;/foo/bar&quot; &quot;/www/bar&quot; &quot;/www/bar/quux&quot;)) ;; =&gt; &#39;((&quot;/foo/bar&quot; . &quot;foo/bar&quot;) (&quot;/www/bar&quot; . &quot;www/bar&quot;) (&quot;/www/bar/quux&quot; . &quot;quux&quot;))
+(f-uniquify-alist &#39;(&quot;/foo/bar&quot; &quot;/foo/baz&quot; &quot;/home/www/bar&quot; &quot;/home/www/baz&quot; &quot;/var/foo&quot; &quot;/opt/foo/www/baz&quot;)) ;; =&gt; &#39;((&quot;/foo/bar&quot; . &quot;foo/bar&quot;) (&quot;/home/www/bar&quot; . &quot;www/bar&quot;) (&quot;/foo/baz&quot; . &quot;foo/baz&quot;) (&quot;/home/www/baz&quot; . &quot;home/www/baz&quot;) (&quot;/opt/foo/www/baz&quot; . &quot;foo/www/baz&quot;) (&quot;/var/foo&quot; . &quot;foo&quot;))</code></pre></div>
+
+<h3 id="toc_28">f-read-bytes <code>(path)</code></h3>
+
+<p>Read binary data from PATH.</p>
+
+<p>Return the binary data as unibyte string.</p>
+
+<div><pre><code class="language-lisp">(f-read-bytes &quot;path/to/binary/data&quot;)</code></pre></div>
+
+<h3 id="toc_29">f-write-bytes <code>(data path)</code></h3>
+
+<p>Write binary DATA to PATH.</p>
+
+<p>DATA is a unibyte string.  PATH is a file name to write to.</p>
+
+<div><pre><code class="language-lisp">(f-write-bytes (unibyte-string 72 101 108 108 111 32 119 111 114 108 100) &quot;path/to/binary/data&quot;)</code></pre></div>
+
+<h3 id="toc_30">f-read-text <code>(path &amp;optional coding)</code></h3>
+
+<p>Read text with PATH, using CODING.</p>
+
+<p>CODING defaults to `utf-8&#39;.</p>
+
+<p>Return the decoded text as multibyte string.</p>
+
+<p>Alias: <code>f-read</code></p>
+
+<div><pre><code class="language-lisp">(f-read-text &quot;path/to/file.txt&quot; &#39;utf-8)
+(f-read &quot;path/to/file.txt&quot; &#39;utf-8)</code></pre></div>
+
+<h3 id="toc_31">f-write-text <code>(text coding path)</code></h3>
+
+<p>Write TEXT with CODING to PATH.</p>
+
+<p>TEXT is a multibyte string.  CODING is a coding system to encode
+TEXT with.  PATH is a file name to write to.</p>
+
+<p>Alias: <code>f-write</code></p>
+
+<div><pre><code class="language-lisp">(f-write-text &quot;Hello world&quot; &#39;utf-8 &quot;path/to/file.txt&quot;)
+(f-write &quot;Hello world&quot; &#39;utf-8 &quot;path/to/file.txt&quot;)</code></pre></div>
+
+<h3 id="toc_32">f-mkdir <code>(&amp;rest dirs)</code></h3>
+
+<p>Create directories DIRS.</p>
+
+<div><pre><code class="language-lisp">(f-mkdir &quot;dir&quot;) ;; =&gt; /default/directory/dir
+(f-mkdir &quot;other&quot; &quot;dir&quot;) ;; =&gt; /default/directory/other/dir</code></pre></div>
+
+<h3 id="toc_33">f-delete <code>(path &amp;optional force)</code></h3>
+
+<p>Delete PATH, which can be file or directory.</p>
+
+<p>If FORCE is t, a directory will be deleted recursively.</p>
+
+<div><pre><code class="language-lisp">(f-delete &quot;dir&quot;)
+(f-delete &quot;other/dir&quot; t)
+(f-delete &quot;path/to/file.txt&quot;)</code></pre></div>
+
+<h3 id="toc_34">f-symlink <code>(source path)</code></h3>
+
+<p>Create a symlink to <code>source</code> from <code>path</code>.</p>
+
+<div><pre><code class="language-lisp">(f-symlink &quot;path/to/source&quot; &quot;path/to/link&quot;)</code></pre></div>
+
+<h3 id="toc_35">f-move <code>(from to)</code></h3>
+
+<p>Move or rename FROM to TO.</p>
+
+<div><pre><code class="language-lisp">(f-move &quot;path/to/file.txt&quot; &quot;new-file.txt&quot;)
+(f-move &quot;path/to/file.txt&quot; &quot;other/path&quot;)</code></pre></div>
+
+<h3 id="toc_36">f-copy <code>(from to)</code></h3>
+
+<p>Copy file or directory FROM to TO.</p>
+
+<div><pre><code class="language-lisp">(f-copy &quot;path/to/file.txt&quot; &quot;new-file.txt&quot;)
+(f-copy &quot;path/to/dir&quot; &quot;other/dir&quot;)</code></pre></div>
+
+<h3 id="toc_37">f-touch <code>(path)</code></h3>
+
+<p>Update PATH last modification date or create if it does not exist.</p>
+
+<div><pre><code class="language-lisp">(f-touch &quot;path/to/existing/file.txt&quot;)
+(f-touch &quot;path/to/non/existing/file.txt&quot;)</code></pre></div>
+
+<h3 id="toc_38">f-exists? <code>(path)</code></h3>
+
+<p>Return t if PATH exists, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-exists? &quot;path/to/file.txt&quot;)
+(f-exists? &quot;path/to/dir&quot;)</code></pre></div>
+
+<h3 id="toc_39">f-directory? <code>(path)</code></h3>
+
+<p>Return t if PATH is directory, false otherwise.</p>
+
+<p>Alias: <code>f-dir?</code></p>
+
+<div><pre><code class="language-lisp">(f-directory? &quot;path/to/file.txt&quot;) ;; =&gt; nil
+(f-directory? &quot;path/to/dir&quot;) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_40">f-file? <code>(path)</code></h3>
+
+<p>Return t if PATH is file, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-file? &quot;path/to/file.txt&quot;) ;; =&gt; t
+(f-file? &quot;path/to/dir&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_41">f-symlink? <code>(path)</code></h3>
+
+<p>Return t if PATH is symlink, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-symlink? &quot;path/to/file.txt&quot;) ;; =&gt; nil
+(f-symlink? &quot;path/to/dir&quot;) ;; =&gt; nil
+(f-symlink? &quot;path/to/link&quot;) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_42">f-readable? <code>(path)</code></h3>
+
+<p>Return t if PATH is readable, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-readable? &quot;path/to/file.txt&quot;)
+(f-readable? &quot;path/to/dir&quot;)</code></pre></div>
+
+<h3 id="toc_43">f-writable? <code>(path)</code></h3>
+
+<p>Return t if PATH is writable, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-writable? &quot;path/to/file.txt&quot;)
+(f-writable? &quot;path/to/dir&quot;)</code></pre></div>
+
+<h3 id="toc_44">f-executable? <code>(path)</code></h3>
+
+<p>Return t if PATH is executable, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-executable? &quot;path/to/file.txt&quot;)
+(f-executable? &quot;path/to/dir&quot;)</code></pre></div>
+
+<h3 id="toc_45">f-absolute? <code>(path)</code></h3>
+
+<p>Return t if PATH is absolute, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-absolute? &quot;path/to/dir&quot;) ;; =&gt; nil
+(f-absolute? &quot;/full/path/to/dir&quot;) ;; =&gt; t</code></pre></div>
+
+<h3 id="toc_46">f-relative? <code>(path)</code></h3>
+
+<p>Return t if PATH is relative, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-relative? &quot;path/to/dir&quot;) ;; =&gt; t
+(f-relative? &quot;/full/path/to/dir&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_47">f-root? <code>(path)</code></h3>
+
+<p>Return t if PATH is root directory, false otherwise.</p>
+
+<div><pre><code class="language-lisp">(f-root? &quot;/&quot;) ;; =&gt; t
+(f-root? &quot;/not/root&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_48">f-ext? <code>(path ext)</code></h3>
+
+<p>Return t if extension of PATH is EXT, false otherwise.</p>
+
+<p>If EXT is nil or omitted, return t if PATH has any extension,
+false otherwise.</p>
+
+<p>The extension, in a file name, is the part that follows the last
+&#39;.&#39;, excluding version numbers and backup suffixes.</p>
+
+<div><pre><code class="language-lisp">(f-ext? &quot;path/to/file.el&quot; &quot;el&quot;) ;; =&gt; t
+(f-ext? &quot;path/to/file.el&quot; &quot;txt&quot;) ;; =&gt; nil
+(f-ext? &quot;path/to/file.el&quot;) ;; =&gt; t
+(f-ext? &quot;path/to/file&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_49">f-same? <code>(path-a path-b)</code></h3>
+
+<p>Return t if PATH-A and PATH-b are references to same file.</p>
+
+<p>Alias: <code>f-equal?</code></p>
+
+<div><pre><code class="language-lisp">(f-same? &quot;foo.txt&quot; &quot;foo.txt&quot;) ;; =&gt; t
+(f-same? &quot;/path/to/foo.txt&quot; &quot;/path/to/bar.txt&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_50">f-parent-of? <code>(path-a path-b)</code></h3>
+
+<p>Return t if PATH-A is parent of PATH-B.</p>
+
+<div><pre><code class="language-lisp">(f-parent-of? &quot;/path/to&quot; &quot;/path/to/dir&quot;) ;; =&gt; t
+(f-parent-of? &quot;/path/to/dir&quot; &quot;/path/to&quot;) ;; =&gt; nil
+(f-parent-of? &quot;/path/to&quot; &quot;/path/to&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_51">f-child-of? <code>(path-a path-b)</code></h3>
+
+<p>Return t if PATH-A is child of PATH-B.</p>
+
+<div><pre><code class="language-lisp">(f-child-of? &quot;/path/to&quot; &quot;/path/to/dir&quot;) ;; =&gt; nil
+(f-child-of? &quot;/path/to/dir&quot; &quot;/path/to&quot;) ;; =&gt; t
+(f-child-of? &quot;/path/to&quot; &quot;/path/to&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_52">f-ancestor-of? <code>(path-a path-b)</code></h3>
+
+<p>Return t if PATH-A is ancestor of PATH-B.</p>
+
+<div><pre><code class="language-lisp">(f-ancestor-of? &quot;/path/to&quot; &quot;/path/to/dir&quot;) ;; =&gt; t
+(f-ancestor-of? &quot;/path&quot; &quot;/path/to/dir&quot;) ;; =&gt; t
+(f-ancestor-of? &quot;/path/to/dir&quot; &quot;/path/to&quot;) ;; =&gt; nil
+(f-ancestor-of? &quot;/path/to&quot; &quot;/path/to&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_53">f-descendant-of? <code>(path-a path-b)</code></h3>
+
+<p>Return t if PATH-A is desendant of PATH-B.</p>
+
+<div><pre><code class="language-lisp">(f-descendant-of? &quot;/path/to/dir&quot; &quot;/path/to&quot;) ;; =&gt; t
+(f-descendant-of? &quot;/path/to/dir&quot; &quot;/path&quot;) ;; =&gt; t
+(f-descendant-of? &quot;/path/to&quot; &quot;/path/to/dir&quot;) ;; =&gt; nil
+(f-descendant-of? &quot;/path/to&quot; &quot;/path/to&quot;) ;; =&gt; nil</code></pre></div>
+
+<h3 id="toc_54">f-size <code>(path)</code></h3>
+
+<p>Return size of PATH.</p>
+
+<p>If PATH is a file, return size of that file. If PATH is
+directory, return sum of all files in PATH.</p>
+
+<div><pre><code class="language-lisp">(f-size &quot;path/to/file.txt&quot;)
+(f-size &quot;path/to/dir&quot;)</code></pre></div>
+
+<h3 id="toc_55">f-depth <code>(path)</code></h3>
+
+<p>Return the depth of PATH.</p>
+
+<p>At first, PATH is expanded with `f-expand&#39;. Then the full path is used to
+detect the depth.
+&#39;/&#39; will be zero depth, &#39;/usr&#39; will be one depth. And so on.</p>
+
+<div><pre><code class="language-lisp">(f-depth &quot;/&quot;) ;; 0
+(f-depth &quot;/var/&quot;) ;; 1
+(f-depth &quot;/usr/local/bin&quot;) ;; 3</code></pre></div>
+
+<h3 id="toc_56">f-this-file <code>()</code></h3>
+
+<p>Return path to this file.</p>
+
+<div><pre><code class="language-lisp">(f-this-file) ;; =&gt; /path/to/this/file</code></pre></div>
+
+<h3 id="toc_57">f-path-separator <code>()</code></h3>
+
+<p>Return path separator.</p>
+
+<div><pre><code class="language-lisp">(f-path-separator) ;; =&gt; /</code></pre></div>
+
+<h3 id="toc_58">f-glob <code>(pattern &amp;optional path)</code></h3>
+
+<p>Find PATTERN in PATH.</p>
+
+<p>See: <code>file-expand-wildcards</code></p>
+
+<div><pre><code class="language-lisp">(f-glob &quot;path/to/*.el&quot;)
+(f-glob &quot;*.el&quot; &quot;path/to&quot;)</code></pre></div>
+
+<h3 id="toc_59">f-entries <code>(path &amp;optional fn recursive)</code></h3>
+
+<p>Find all files and directories in PATH.</p>
+
+<p>FN - called for each found file and directory. If FN returns a thruthy
+value, file or directory will be included.
+RECURSIVE - Search for files and directories recursive.</p>
+
+<div><pre><code class="language-lisp">(f-entries &quot;path/to/dir&quot;)
+(f-entries &quot;path/to/dir&quot; (lambda (file) (s-matches? &quot;test&quot; file)))
+(f-entries &quot;path/to/dir&quot; nil t)
+(f--entries &quot;path/to/dir&quot; (s-matches? &quot;test&quot; it))</code></pre></div>
+
+<h3 id="toc_60">f-directories <code>(path &amp;optional fn recursive)</code></h3>
+
+<p>Find all directories in PATH. See <code>f-entries</code>.</p>
+
+<div><pre><code class="language-lisp">(f-directories &quot;path/to/dir&quot;)
+(f-directories &quot;path/to/dir&quot; (lambda (dir) (equal (f-filename dir) &quot;test&quot;)))
+(f-directories &quot;path/to/dir&quot; nil t)
+(f--directories &quot;path/to/dir&quot; (equal (f-filename it) &quot;test&quot;))</code></pre></div>
+
+<h3 id="toc_61">f-files <code>(path &amp;optional fn recursive)</code></h3>
+
+<p>Find all files in PATH. See <code>f-entries</code>.</p>
+
+<div><pre><code class="language-lisp">(f-files &quot;path/to/dir&quot;)
+(f-files &quot;path/to/dir&quot; (lambda (file) (equal (f-ext file) &quot;el&quot;)))
+(f-files &quot;path/to/dir&quot; nil t)
+(f--files &quot;path/to/dir&quot; (equal (f-ext it) &quot;el&quot;))</code></pre></div>
+
+<h3 id="toc_62">f-root <code>()</code></h3>
+
+<p>Return absolute root.</p>
+
+<div><pre><code class="language-lisp">(f-root) ;; =&gt; &quot;/&quot;</code></pre></div>
+
+<h3 id="toc_63">f-up <code>(fn &amp;optional dir)</code></h3>
+
+<p>Traverse up as long as FN returns nil, starting at DIR.</p>
+
+<p>Deprecated in favor of: <a href="#f-traverse-upwards-fn-optional-path">f-traverse-upwards</a></p>
+
+<div><pre><code class="language-lisp">(f-up
+ (lambda (path)
+   (f-exists? (f-expand &quot;.git&quot; path)))
+ start-path)
+
+(f--up (f-exists? (f-expand &quot;.git&quot; it)) start-path) ;; same as above</code></pre></div>
+
+<h3 id="toc_64">f-traverse-upwards <code>(fn &amp;optional path)</code></h3>
+
+<p>Traverse up as long as FN returns nil, starting at PATH.</p>
+
+<p>If FN returns a non-nil value, the path sent as argument to FN is
+returned. If no function callback return a non-nil value, nil is
+returned.</p>
+
+<div><pre><code class="language-lisp">(f-traverse-upwards
+ (lambda (path)
+   (f-exists? (f-expand &quot;.git&quot; path)))
+ start-path)
+
+(f--traverse-upwards (f-exists? (f-expand &quot;.git&quot; it)) start-path) ;; same as above</code></pre></div>
+
+<h3 id="toc_65">f-with-sandbox <code>(path-or-paths &amp;rest body)</code></h3>
+
+<p>Only allow PATH-OR-PATHS and decendants to be modified in BODY.</p>
+
+<div><pre><code class="language-lisp">(f-with-sandbox foo-path
+  (f-touch (f-expand &quot;foo&quot; foo-path)))
+(f-with-sandbox (list foo-path bar-path)
+  (f-touch (f-expand &quot;foo&quot; foo-path))
+  (f-touch (f-expand &quot;bar&quot; bar-path)))
+(f-with-sandbox foo-path
+  (f-touch (f-expand &quot;bar&quot; bar-path))) ;; &quot;Destructive operation outside sandbox&quot;</code></pre></div>
+
+<h2 id="toc_66">Changelog</h2>
+
+<h3 id="toc_67">v0.18.0</h3>
+
+<ul>
+<li>Add <code>f-swap-ext</code> (by @phillord)</li>
+<li>Add <code>f-depth</code> (by @cheunghy)</li>
+</ul>
+
+<h3 id="toc_68">v0.17.0</h3>
+
+<ul>
+<li>Add <code>f-common-parent</code> (by @Fuco1)</li>
+</ul>
+
+<h3 id="toc_69">v0.16.0</h3>
+
+<ul>
+<li>Add <code>f-with-sandbox</code></li>
+</ul>
+
+<h3 id="toc_70">v0.15.0</h3>
+
+<ul>
+<li>Add <code>f-split</code></li>
+</ul>
+
+<h3 id="toc_71">v0.14.0</h3>
+
+<ul>
+<li>Add <code>f-traverse-upwards</code> and its anaphoric version <code>f--traverse-upwards</code></li>
+<li>Deprecate <code>f-up</code> and its anaphoric version <code>f--up</code></li>
+</ul>
+
+<h3 id="toc_72">v0.13.0</h3>
+
+<ul>
+<li>Add <code>f-uniquify</code> and <code>f-uniquify-alist</code> (by @Fuco1)</li>
+</ul>
+
+<h3 id="toc_73">v0.12.0</h3>
+
+<ul>
+<li><code>f-parent</code> returns nil if argument is root</li>
+</ul>
+
+<h3 id="toc_74">v0.11.0</h3>
+
+<ul>
+<li>Add <code>f-descendant-of?</code></li>
+<li>Add <code>f-ancestor-of?</code></li>
+<li>Add <code>f-parent-of?</code></li>
+<li>Add <code>f-child-of?</code></li>
+<li>Remove deprecation for <code>f-read</code> and <code>f-write</code> and make them aliases
+to <code>f-read-text</code> and <code>f-write-text</code> respectively</li>
+<li>Add anaphoric function <code>f--entries</code> for <code>f-entries</code></li>
+<li>Add anaphoric function <code>f--files</code> for <code>f-files</code></li>
+<li>Add anaphoric function <code>f--directories</code> of <code>f-directories</code></li>
+<li>Add <code>f-up</code> and anaphoric version <code>f--up</code></li>
+</ul>
+
+<h3 id="toc_75">v0.10.0</h3>
+
+<ul>
+<li>Add <code>f-root</code></li>
+<li>Fix <code>f-root?</code> bug for weird syntax</li>
+</ul>
+
+<h3 id="toc_76">v0.9.0</h3>
+
+<ul>
+<li>Make <code>s-long</code></li>
+<li>Make <code>s-short</code> default and <code>f-abbrev</code> the alias</li>
+<li>Add <code>f-full</code></li>
+<li>Do not append path separator if file in <code>f-slash</code></li>
+<li>Fixed bug in <code>f-path-separator</code></li>
+</ul>
+
+<h3 id="toc_77">v0.8.0</h3>
+
+<ul>
+<li>Moved <code>f-this-file</code> to misc section</li>
+<li>Add <code>f-slash</code></li>
+<li>Add <code>f-path-separator</code></li>
+</ul>
+
+<h3 id="toc_78">v0.7.1</h3>
+
+<ul>
+<li>Fix coding bug in <code>f-read-text</code></li>
+</ul>
+
+<h3 id="toc_79">v0.7.0</h3>
+
+<ul>
+<li>Add <code>f-touch</code></li>
+</ul>
+
+<h3 id="toc_80">v0.6.1</h3>
+
+<ul>
+<li>Fix <code>f-write-text</code> for unibyte strings</li>
+</ul>
+
+<h3 id="toc_81">v0.6.0</h3>
+
+<ul>
+<li>Add <code>f-write-text</code> and <code>f-write-bytes</code> and deprecate <code>f-write</code></li>
+<li>Add <code>f-read-text</code> and <code>f-read-bytes</code> and deprecate <code>f-read</code></li>
+<li>Add <code>f-this-file</code></li>
+<li>Add <code>f-canonical</code></li>
+<li>Fix <code>f-same?</code> for symlinks</li>
+</ul>
+
+<h3 id="toc_82">v0.5.0</h3>
+
+<ul>
+<li>Add <code>f-same?</code> (alias <code>f-equal?</code>)</li>
+</ul>
+
+<h3 id="toc_83">v0.4.1</h3>
+
+<ul>
+<li>Bump <code>s</code> and <code>dash</code> versions</li>
+</ul>
+
+<h3 id="toc_84">v0.4.0</h3>
+
+<ul>
+<li>Add <code>f-copy</code></li>
+</ul>
+
+<h3 id="toc_85">v0.3.0</h3>
+
+<ul>
+<li>Add <code>f-ext?</code></li>
+</ul>
+
+<h3 id="toc_86">v0.2.1</h3>
+
+<ul>
+<li>Fix <code>f-filename</code> when ending with slash</li>
+</ul>
+
+<h3 id="toc_87">v0.2.0</h3>
+
+<ul>
+<li>Add <code>f-root?</code></li>
+<li>Fix <code>f-dirname</code> when ending with slash</li>
+</ul>
+
+<h3 id="toc_88">v0.1.0</h3>
+
+<ul>
+<li>Add <code>f-abbrev</code> (alias <code>f-short</code>)</li>
+</ul>
+
+<h3 id="toc_89">v0.0.2</h3>
+
+<ul>
+<li><code>f-join</code> platform independent</li>
+</ul>
+
+<h3 id="toc_90">v0.0.1</h3>
+
+<h2 id="toc_91">Example</h2>
+
+<p>Here&#39;s an example of a function that finds the Git project root.</p>
+
+<h3 id="toc_92">Using standard Emacs builtin functions</h3>
+
+<div><pre><code class="language-lisp">(defun find-git-root (&amp;optional dir)
+  (unless dir (setq dir (expand-file-name (file-name-directory (buffer-file-name)))))
+  (let ((parent (expand-file-name &quot;..&quot; dir)))
+    (unless (equal parent dir)
+      (if (file-exists-p (expand-file-name &quot;.git&quot; dir))
+          dir
+        (find-git-root parent)))))</code></pre></div>
+
+<h3 id="toc_93">Using <code>f.el</code></h3>
+
+<div><pre><code class="language-lisp">(defun find-git-root (&amp;optional dir)
+  (interactive)
+  (unless dir (setq dir (f-dirname (buffer-file-name))))
+  (let ((parent (f-parent dir)))
+    (unless (f-root? parent)
+      (if (f-exists? (f-expand &quot;.git&quot; dir))
+          dir
+        (find-git-root parent)))))</code></pre></div>
+
+<p>Now, try writing it even simpler yourself. Hint, check out <code>f-traverse-upwards</code>.</p>
+
+<h2 id="toc_94">Contribution</h2>
+
+<p>Be sure to!</p>
+
+<p>Install <a href="https://github.com/rejeep/cask.el">Cask</a> if you haven&#39;t
+already.</p>
+
+<p>Run the unit tests with:</p>
+
+<div><pre><code class="language-none">$ make test</code></pre></div>
+
+<p>Do not change <code>README.md</code> directly. If you want to change the README
+or if you change any function comments, update the README with:</p>
+
+<div><pre><code class="language-none">$ make docs</code></pre></div>
+
+
+
+
+</body>
+
+</html>
