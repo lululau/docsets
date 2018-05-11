@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>4 Pattern matching - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="4-pattern-matching">4 Pattern matching</h1>
+
+<div class="toc"></div>
+
+<p>In this chapter, we will show how the <code>=</code> operator in Elixir is actually a match operator and how to use it to pattern match inside data structures. Finally, we will learn about the pin operator <code>^</code> used to access previously bound values.</p>
+
+<h2 id="4.1-the-match-operator">4.1 The match operator</h2>
+
+<p>We have used the <code>=</code> operator a couple times to assign variables in Elixir:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">x</span> <span class="p">=</span> <span class="mi">1</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="n">x</span>
+<span class="go">1</span>
+</code></pre></div>
+<p>In Elixir, the <code>=</code> operator is actually called <em>the match operator</em>. Let&#39;s see why:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="mi">1</span> <span class="p">=</span> <span class="n">x</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="mi">2</span> <span class="p">=</span> <span class="n">x</span>
+<span class="gr">** (MatchError) no match of right hand side value: 1</span>
+</code></pre></div>
+<p>Notice that <code>1 = x</code> is a valid expression, and it matched because both the left and right side are equal to 1. When the sides do not match, a <code>MatchError</code> is raised.</p>
+
+<p>A variable can only be assigned on the left side of <code>=</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="mi">1</span> <span class="p">=</span> <span class="n">unknown</span>
+<span class="gr">** (RuntimeError) undefined function: unknown/0</span>
+</code></pre></div>
+<p>Since there is no variable <code>unknown</code> previously defined, Elixir imagined you were trying to call a function named <code>unknown/0</code>, but such a function does not exist.</p>
+
+<h2 id="4.2-pattern-matching">4.2 Pattern matching</h2>
+
+<p>The match operator is not only used to match against simple values, but it is also useful for destructuring more complex data types. For example, we can pattern match on tuples:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">}</span> <span class="p">=</span> <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">}</span>
+<span class="go">{:hello, &quot;world&quot;, 42}</span>
+<span class="gp">iex&gt; </span><span class="n">a</span>
+<span class="go">:hello</span>
+<span class="gp">iex&gt; </span><span class="n">b</span>
+<span class="go">&quot;world&quot;</span>
+</code></pre></div>
+<p>A pattern match will error in the case that the sides can&#39;t match. This is, for example, the case when the tuples have different sizes:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">}</span> <span class="p">=</span> <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+<span class="gr">** (MatchError) no match of right hand side value: {:hello, &quot;world&quot;}</span>
+</code></pre></div>
+<p>And also when comparing different types:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">}</span> <span class="p">=</span> <span class="p">[</span><span class="ss">:hello</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="s2">&quot;!&quot;</span><span class="p">]</span>
+<span class="gr">** (MatchError) no match of right hand side value: [:hello, &quot;world&quot;, &quot;!&quot;]</span>
+</code></pre></div>
+<p>More interestingly, we can match on specific values. The example below asserts that the left side will only match the right side when the right side is a tuple that starts with the atom <code>:ok</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">result</span><span class="p">}</span> <span class="p">=</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="mi">13</span><span class="p">}</span>
+<span class="go">{:ok, 13}</span>
+<span class="gp">iex&gt; </span><span class="n">result</span>
+<span class="go">13</span>
+
+<span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">result</span><span class="p">}</span> <span class="p">=</span> <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:oops</span><span class="p">}</span>
+<span class="gr">** (MatchError) no match of right hand side value: {:error, :oops}</span>
+</code></pre></div>
+<p>We can pattern match on lists:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="go">[1, 2, 3]</span>
+<span class="gp">iex&gt; </span><span class="n">a</span>
+<span class="go">1</span>
+</code></pre></div>
+<p>A list also supports matching on its own head and tail:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">[</span><span class="n">head</span> <span class="p">|</span> <span class="n">tail</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="go">[1, 2, 3]</span>
+<span class="gp">iex&gt; </span><span class="n">head</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="n">tail</span>
+<span class="go">[2, 3]</span>
+</code></pre></div>
+<p>Similar to the <code>hd/1</code> and <code>tl/1</code> functions, we can&#39;t match an empty list with a head and tail pattern:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">[</span><span class="n">h</span><span class="p">|</span><span class="n">t</span><span class="p">]</span> <span class="p">=</span> <span class="p">[]</span>
+<span class="gr">** (MatchError) no match of right hand side value: []</span>
+</code></pre></div>
+<p>The <code>[head | tail]</code> format is not only used on pattern matching but also for prepending items to a list:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">list</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="go">[1, 2, 3]</span>
+<span class="gp">iex&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">|</span><span class="n">list</span><span class="p">]</span>
+<span class="go">[0, 1, 2, 3]</span>
+</code></pre></div>
+<p>Pattern matching allows developers to easily destructure data types such as tuples and lists. As we will see in following chapters, it is one of the foundations of recursion in Elixir and applies to other types as well, like maps and binaries.</p>
+
+<h2 id="4.3-the-pin-operator">4.3 The pin operator</h2>
+
+<p>Variables in Elixir can be rebound:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">x</span> <span class="p">=</span> <span class="mi">1</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="n">x</span> <span class="p">=</span> <span class="mi">2</span>
+<span class="go">2</span>
+</code></pre></div>
+<p>The pin operator <code>^</code> can be used when there is no interest in rebinding a variable but rather in matching against its value prior to the match:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">x</span> <span class="p">=</span> <span class="mi">1</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="o">^</span><span class="n">x</span> <span class="p">=</span> <span class="mi">2</span>
+<span class="gr">** (MatchError) no match of right hand side value: 2</span>
+<span class="gp">iex&gt; </span><span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="o">^</span><span class="n">x</span><span class="p">}</span> <span class="p">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
+<span class="go">{2, 1}</span>
+<span class="gp">iex&gt; </span><span class="n">x</span>
+<span class="go">2</span>
+</code></pre></div>
+<p>Notice that if a variable is mentioned more than once in a pattern, all references should bind to the same pattern:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">}</span> <span class="p">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">}</span> <span class="p">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
+<span class="gr">** (MatchError) no match of right hand side value: {1, 2}</span>
+</code></pre></div>
+<p>In some cases, you don&#39;t care about a particular value in a pattern. It is a common practice to bind those values to the underscore, <code>_</code>. For example, if only the head of the list matters to us, we can assign the tail to underscore:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">[</span><span class="n">h</span> <span class="p">|</span> <span class="bp">_</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="go">[1, 2, 3]</span>
+<span class="gp">iex&gt; </span><span class="n">h</span>
+<span class="go">1</span>
+</code></pre></div>
+<p>The variable <code>_</code> is special in that it can never be read from. Trying to read from it gives an unbound variable error:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="bp">_</span>
+<span class="gr">** (CompileError) iex:1: unbound variable _</span>
+</code></pre></div>
+<p>Although pattern matching allows us to build powerful constructs, its usage is limited. For instance, you cannot make function calls on the left side of a match. The following example is invalid:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">length</span><span class="p">([</span><span class="mi">1</span><span class="p">,[</span><span class="mi">2</span><span class="p">],</span><span class="mi">3</span><span class="p">])</span> <span class="p">=</span> <span class="mi">3</span>
+<span class="gr">** (CompileError) iex:1: illegal pattern</span>
+</code></pre></div>
+<p>This finishes our introduction to pattern matching. As we will see in the next chapter, pattern matching is very common in many language constructs.</p>
+
+  </article><!-- .hfeed -->
+
+  
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

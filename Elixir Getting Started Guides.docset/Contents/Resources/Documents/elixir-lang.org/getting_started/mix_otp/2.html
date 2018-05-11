@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>2 Agent - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="2-agent">2 Agent</h1>
+
+<div class="toc"></div>
+
+<p>In this chapter, we will create a module named <code>KV.Bucket</code>. This module will be responsible for storing our key-value entries in a way that allows reading and modification by different processes.</p>
+
+<p>If you have skipped the Getting Started guide or if you have read it long ago, be sure to re-read the chapter about <a href="http://elixir-lang.org/getting_started/11.html">Processes</a>. We will use it as starting point.</p>
+
+<h2 id="2.1-the-trouble-with-state">2.1 The trouble with state</h2>
+
+<p>Elixir is an immutable language where nothing is shared by default. If we want to create buckets, store and access them from multiple places, we have two main options in Elixir:</p>
+
+<ul>
+<li>Processes</li>
+<li><a href="http://www.erlang.org/doc/man/ets.html">ETS (Erlang Term Storage)</a></li>
+</ul>
+
+<p>We have talked about processes, while ETS is something new that we will explore later in this guide. When it comes to processes though, we rarely hand-roll our own process, instead we use the abstractions available in Elixir and OTP:</p>
+
+<ul>
+<li><a href="http://elixir-lang.org/docs/stable/elixir/Agent.html">Agent</a> - Simple wrappers around state</li>
+<li><a href="http://elixir-lang.org/docs/stable/elixir/GenServer.html">GenServer</a> - &quot;Generic servers&quot; (processes) that encapsulate state, provide sync and async calls, support code reloading, and more</li>
+<li><a href="http://elixir-lang.org/docs/stable/elixir/GenEvent.html">GenEvent</a> - &quot;Generic event&quot; managers that allow publishing events to multiple handlers</li>
+<li><a href="http://elixir-lang.org/docs/stable/elixir/Task.html">Task</a> - Asynchronous units of computation that allow spawning a process and easily retrieving its result at a later time</li>
+</ul>
+
+<p>We will explore all of these abstractions in this guide. Keep in mind that they are all implemented on top of processes using the basic features provided by the VM, like <code>send</code>, <code>receive</code>, <code>spawn</code> and <code>link</code>.</p>
+
+<h2 id="2.2-agents">2.2 Agents</h2>
+
+<p><a href="http://elixir-lang.org/docs/stable/elixir/Agent.html">Agents</a> are simple wrappers around state. If all you want from a process is to keep state, agents are a great fit. Let&#39;s start an <code>iex</code> session inside the project with:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ iex -S mix
+</code></pre></div>
+<p>And play a bit with agents:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">agent</span><span class="p">}</span> <span class="p">=</span> <span class="nc">Agent</span><span class="p">.</span><span class="n">start_link</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="p">[]</span> <span class="k">end</span>
+<span class="go">{:ok, #PID&lt;0.57.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="nc">Agent</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="k">fn</span> <span class="n">list</span> <span class="p">-&gt;</span> <span class="p">[</span><span class="s2">&quot;eggs&quot;</span><span class="p">|</span><span class="n">list</span><span class="p">]</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">Agent</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="k">fn</span> <span class="n">list</span> <span class="p">-&gt;</span> <span class="n">list</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">[&quot;eggs&quot;]</span>
+<span class="gp">iex&gt; </span><span class="nc">Agent</span><span class="p">.</span><span class="n">stop</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+<span class="go">:ok</span>
+</code></pre></div>
+<p>We started an agent with an initial state of an empty list. Next, we issue a command to update the state, adding our new item to the head of the list. Finally, we retrieved the whole list. Once we are done with the agent, we can call <code>Agent.stop/1</code> to terminate the agent process.</p>
+
+<p>Let&#39;s implement our <code>KV.Bucket</code> using agents. But before starting the implementation, let&#39;s first write some tests. Create a file at <code>test/kv/bucket_test.exs</code> (remember the <code>.exs</code> extension) with the following:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV.BucketTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">ExUnit.Case</span><span class="p">,</span> <span class="ss">async</span><span class="p">:</span> <span class="no">true</span>
+
+  <span class="n">test</span> <span class="s2">&quot;stores values by key&quot;</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">start_link</span>
+    <span class="n">assert</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="no">nil</span>
+
+    <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">assert</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Our first test is straightforward. We start a new <code>KV.Bucket</code> and perform some <code>get/2</code> and <code>put/3</code> operations on it, asserting the result. We don&#39;t need to explicitly stop the agent because it is linked to the test process and the agent is shut down automatically once the test finishes.</p>
+
+<p>Also note that we passed the <code>async: true</code> option to <code>ExUnit.Case</code>. This option makes this test case run in parallel with other test cases that set up the <code>:async</code> option. This is extremely useful to speed up our test suite by using multiple cores in our machine. Note though the <code>:async</code> option must only be set if the test case does not rely or change any global value. For example, if the test requires writing to the filesystem, registering processes, accessing a database, you must not make it async to avoid race conditions in between tests.</p>
+
+<p>Regardless of being async or not, our new test should obviously fail, as none of the functionality is implemented.</p>
+
+<p>In order to fix the failing test, let&#39;s create a file at <code>lib/kv/bucket.ex</code> with the contents below. Feel free to give a try at implementing the <code>KV.Bucket</code> module yourself using agents before peeking the implementation below.</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV.Bucket</span> <span class="k">do</span>
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Starts a new bucket.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">start_link</span> <span class="k">do</span>
+    <span class="nc">Agent</span><span class="p">.</span><span class="n">start_link</span><span class="p">(</span><span class="k">fn</span> <span class="p">-&gt;</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">new</span> <span class="k">end</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Gets a value from the `bucket` by `key`.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">do</span>
+    <span class="nc">Agent</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="o">&amp;</span><span class="nc">HashDict</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="ni">&amp;1</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+  <span class="k">end</span>
+
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Puts the `value` for the given `key` in the `bucket`.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">put</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">do</span>
+    <span class="nc">Agent</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="o">&amp;</span><span class="nc">HashDict</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="ni">&amp;1</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>With the <code>KV.Bucket</code> module defined, our test should pass! Note that we are using a HashDict to store our state instead of a <code>Map</code>, because in the current version of Elixir maps are less efficient when holding a large number of keys.</p>
+
+<h2 id="2.3-exunit-callbacks">2.3 ExUnit callbacks</h2>
+
+<p>Before moving on and adding more features to <code>KV.Bucket</code>, let&#39;s talk about ExUnit callbacks. As you may expect, all <code>KV.Bucket</code> tests will require a bucket to be started during setup and stopped after the test. Luckily, ExUnit supports callbacks that allow us to skip such repetitive tasks.</p>
+
+<p>Let&#39;s rewrite the test case to use callbacks:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV.BucketTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">ExUnit.Case</span><span class="p">,</span> <span class="ss">async</span><span class="p">:</span> <span class="no">true</span>
+
+  <span class="n">setup</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">start_link</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="ss">bucket</span><span class="p">:</span> <span class="n">bucket</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">test</span> <span class="s2">&quot;stores values by key&quot;</span><span class="p">,</span> <span class="p">%{</span><span class="ss">bucket</span><span class="p">:</span> <span class="n">bucket</span><span class="p">}</span> <span class="k">do</span>
+    <span class="n">assert</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="no">nil</span>
+
+    <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">assert</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>We have first defined a setup callback with the help of the <code>setup/1</code> macro. The <code>setup/1</code> callback runs before every test, in the same process as the test itself.</p>
+
+<p>Note that we need a mechanism to pass the <code>bucket</code> pid from the callback to the test. We do so by using the <em>test context</em>. When we return <code>{:ok, bucket: bucket}</code> from the callback, ExUnit will merge the second element of the tuple (a dictionary) into the test context. The test context is a map which we can then match in the test definition, providing access to these values inside the block:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">test</span> <span class="s2">&quot;stores values by key&quot;</span><span class="p">,</span> <span class="p">%{</span><span class="ss">bucket</span><span class="p">:</span> <span class="n">bucket</span><span class="p">}</span> <span class="k">do</span>
+  <span class="c1"># `bucket` is now the bucket from the setup block</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>You can read more about ExUnit cases in the <a href="http://elixir-lang.org/docs/stable/ex_unit/ExUnit.Case.html"><code>ExUnit.Case</code> module documentation</a> and more about callbacks in <a href="http://elixir-lang.org/docs/stable/ex_unit/ExUnit.Callbacks.html"><code>ExUnit.Callbacks</code> docs</a>.</p>
+
+<h2 id="2.4-other-agent-actions">2.4 Other Agent actions</h2>
+
+<p>Besides getting a value and updating the agent state, agents allow us to get a value and update the agent state in one function call via <code>Agent.get_and_update/2</code>. Let&#39;s implement a <code>KV.Bucket.delete/2</code> function that deletes a key from the bucket, returning its current value:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">Deletes `key` from `bucket`.</span>
+
+<span class="sh">Returns the current value of `key`, if `key` exists.</span>
+<span class="sh">&quot;&quot;&quot;</span>
+<span class="kd">def</span> <span class="n">delete</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">do</span>
+  <span class="nc">Agent</span><span class="p">.</span><span class="n">get_and_update</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="o">&amp;</span><span class="nc">HashDict</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="ni">&amp;1</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now it is your turn to write a test for the functionality above! Also, be sure to explore the documentation for Agents to learn more about them.</p>
+
+<h2 id="2.5-client/server-in-agents">2.5 Client/Server in Agents</h2>
+
+<p>Before we move on to the next chapter, let&#39;s discuss the client/server dichotomy in agents. Let&#39;s expand the <code>delete/2</code> function we have just implemented:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">def</span> <span class="n">delete</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">do</span>
+  <span class="nc">Agent</span><span class="p">.</span><span class="n">get_and_update</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">dict</span><span class="p">-&gt;</span>
+    <span class="nc">HashDict</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+  <span class="k">end</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Everything that is inside the function we passed to the agent happens in the agent process. In this case, since the agent process is the one receiving and responding to our messages, we say the agent process is the server. Everything outside the function is happening in the client.</p>
+
+<p>This distinction is important. If there are expensive actions to be done, you must consider if it will be better to perform these actions on the client or on the server. For example:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">def</span> <span class="n">delete</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="k">do</span>
+  <span class="ss">:timer</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="c1"># sleeps the client</span>
+  <span class="nc">Agent</span><span class="p">.</span><span class="n">get_and_update</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">dict</span> <span class="p">-&gt;</span>
+    <span class="ss">:timer</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="c1"># sleeps the server</span>
+    <span class="nc">HashDict</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">dict</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+  <span class="k">end</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>When a long action is performed on the server, all other requests to that particular server will wait until the action is done, which may cause some clients to timeout.</p>
+
+<p>In the next chapter we will explore GenServers, where the segregation between clients and servers is made even more apparent.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

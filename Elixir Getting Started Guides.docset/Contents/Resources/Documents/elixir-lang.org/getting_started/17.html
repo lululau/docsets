@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>17 Comprehensions - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="17-comprehensions">17 Comprehensions</h1>
+
+<div class="toc"></div>
+
+<p>In Elixir, it is common to loop over an Enumerable, often filtering out some results and mapping values into another list. Comprehensions are syntactic sugar for such constructs: they group those common tasks into the <code>for</code> special form.</p>
+
+<p>For example, we can map a list of integers into their squared values:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="p">&lt;-</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="ss">do</span><span class="p">:</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+<span class="go">[1, 4, 9, 16]</span>
+</code></pre></div>
+<p>A comprehension is made of three parts: generators, filters and collectables.</p>
+
+<h2 id="17.1-generators-and-filters">17.1 Generators and filters</h2>
+
+<p>In the expression above, <code>n &lt;- [1, 2, 3, 4]</code> is the <strong>generator</strong>. It is literally generating values to be used in the comprehension. Any enumerable can be passed in the right-hand side of the generator expression:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="p">&lt;-</span> <span class="mi">1</span><span class="p">..</span><span class="mi">4</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+<span class="go">[1, 4, 9, 16]</span>
+</code></pre></div>
+<p>Generator expressions also support pattern matching on their left-hand side; all non-matching patterns are <em>ignored</em>. Imagine that, instead of a range, we have a keyword list where the key is the atom <code>:good</code> or <code>:bad</code> and we only want to compute the square of the <code>:good</code> values:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">values</span> <span class="p">=</span> <span class="p">[</span><span class="ss">good</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">good</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="ss">bad</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="ss">good</span><span class="p">:</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">iex&gt; </span><span class="k">for</span> <span class="p">{</span><span class="ss">:good</span><span class="p">,</span> <span class="n">n</span><span class="p">}</span> <span class="p">&lt;-</span> <span class="n">values</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+<span class="go">[1, 4, 16]</span>
+</code></pre></div>
+<p>Alternatively to pattern matching, filters can be used to filter some particular elements out. For example, we can get filter out all the multiples of 3 and get the square of the remaining values only:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">multiple_of_3?</span> <span class="p">=</span> <span class="k">fn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">rem</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">end</span>
+<span class="gp">iex&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="p">&lt;-</span> <span class="mi">0</span><span class="p">..</span><span class="mi">5</span><span class="p">,</span> <span class="n">multiple_of_3?</span><span class="p">.(</span><span class="n">n</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+<span class="go">[0, 9]</span>
+</code></pre></div>
+<p>Comprehensions filter out all elements for which the filter expression returns <code>false</code> or <code>nil</code>; all other values are kept.</p>
+
+<p>Comprehensions generally provide a much more concise representation than using the equivalent functions from the <code>Enum</code> and <code>Stream</code> modules. Furthermore, comprehensions also allow multiple generators and filters to be given. Here is an example that receives a list of directories and deletes all files in those directories:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">for</span> <span class="n">dir</span>  <span class="p">&lt;-</span> <span class="n">dirs</span><span class="p">,</span>
+    <span class="n">file</span> <span class="p">&lt;-</span> <span class="nc">File</span><span class="p">.</span><span class="n">ls!</span><span class="p">(</span><span class="n">dir</span><span class="p">),</span>
+    <span class="n">path</span> <span class="p">=</span> <span class="nc">Path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">),</span>
+    <span class="nc">File</span><span class="p">.</span><span class="n">regular?</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">do</span>
+  <span class="nc">File</span><span class="p">.</span><span class="n">rm!</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Keep in mind that variable assignments inside the comprehension, be it in generators, filters or inside the block, are not reflected outside of the comprehension.</p>
+
+<h2 id="17.2-bitstring-generators">17.2 Bitstring generators</h2>
+
+<p>Bitstring generators are also supported and are very useful when you need to comprehend over bitstring streams. The example below receives a list of pixels from a binary with their respective red, green and blue values and converts them into tuples of three elements each:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">pixels</span> <span class="p">=</span> <span class="p">&lt;&lt;</span><span class="mi">213</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">132</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">234</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">15</span><span class="p">&gt;&gt;</span>
+<span class="gp">iex&gt; </span><span class="k">for</span> <span class="p">&lt;&lt;</span><span class="n">r</span><span class="p">::</span><span class="mi">8</span><span class="p">,</span> <span class="n">g</span><span class="p">::</span><span class="mi">8</span><span class="p">,</span> <span class="n">b</span><span class="p">::</span><span class="mi">8</span> <span class="p">&lt;-</span> <span class="n">pixels</span><span class="p">&gt;&gt;,</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">}</span>
+<span class="go">[{213, 45, 132}, {64, 76, 32}, {76, 0, 0}, {234, 32, 15}]</span>
+</code></pre></div>
+<p>A bitstring generator can be mixed with the &quot;regular&quot; enumerable generators and provides filters as well.</p>
+
+<h2 id="17.3-results-other-than-lists">17.3 Results other than lists</h2>
+
+<p>In the examples above, all the comprehensions returned lists as their result. However, the result of a comprehension can be inserted into different data structures by passing the <code>:into</code> option to the comprehension.</p>
+
+<p>For example, a bitstring generator can be used with the <code>:into</code> option in order to easily remove all spaces in a string:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">for</span> <span class="p">&lt;&lt;</span><span class="n">c</span> <span class="p">&lt;-</span> <span class="s2">&quot; hello world &quot;</span><span class="p">&gt;&gt;,</span> <span class="n">c</span> <span class="o">!=</span> <span class="sc">?</span><span class="se">\s</span><span class="p">,</span> <span class="ss">into</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="p">&lt;&lt;</span><span class="n">c</span><span class="p">&gt;&gt;</span>
+<span class="go">&quot;helloworld&quot;</span>
+</code></pre></div>
+<p>Sets, maps and other dictionaries can also be given to the <code>:into</code> option. In general, <code>:into</code> accepts any structure that implements the <code>Collectable</code> protocol.</p>
+
+<p>A common use case of <code>:into</code> can be transforming values in a map, without touching the keys:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">for</span> <span class="p">{</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">}</span> <span class="p">&lt;-</span> <span class="p">%{</span><span class="s2">&quot;a&quot;</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span> <span class="p">=&gt;</span> <span class="mi">2</span><span class="p">},</span> <span class="ss">into</span><span class="p">:</span> <span class="p">%{},</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">*</span> <span class="n">val</span><span class="p">}</span>
+<span class="go">%{&quot;a&quot; =&gt; 1, &quot;b&quot; =&gt; 4}</span>
+</code></pre></div>
+<p>Let&#39;s make another example using streams. Since the <code>IO</code> module provides streams (that are both <code>Enumerable</code>s and <code>Collectable</code>s), an echo terminal that echoes back the upcased version of whatever is typed can be implemented using comprehensions:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">stream</span> <span class="p">=</span> <span class="nc">IO</span><span class="p">.</span><span class="n">stream</span><span class="p">(</span><span class="ss">:stdio</span><span class="p">,</span> <span class="ss">:line</span><span class="p">)</span>
+<span class="gp">iex&gt; </span><span class="k">for</span> <span class="n">line</span> <span class="p">&lt;-</span> <span class="n">stream</span><span class="p">,</span> <span class="ss">into</span><span class="p">:</span> <span class="n">stream</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="nc">String</span><span class="p">.</span><span class="n">upcase</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&lt;&gt;</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+</code></pre></div>
+<p>Now type any string into the terminal and you will see that the same value will be printed in upper-case. Unfortunately, this example also got your IEx shell stuck in the comprehension, so you will need to hit <code>Ctrl+C</code> twice to get out of it. :)</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

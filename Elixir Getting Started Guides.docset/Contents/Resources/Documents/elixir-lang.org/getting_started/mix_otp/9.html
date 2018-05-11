@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>9 Docs, tests and pipelines - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="9-docs,-tests-and-pipelines">9 Docs, tests and pipelines</h1>
+
+<div class="toc"></div>
+
+<p>In this chapter, we will implement the code that parses the commands we described in the first chapter:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CREATE shopping
+OK
+
+PUT shopping milk 1
+OK
+
+PUT shopping eggs 3
+OK
+
+GET shopping milk
+1
+OK
+
+DELETE shopping eggs
+OK
+</code></pre></div>
+<p>After the parsing is done, we will update our server to dispatch the parsed commands to the <code>:kv</code> application we built previously.</p>
+
+<h2 id="9.1-doctests">9.1 Doctests</h2>
+
+<p>On the language homepage, we mention that Elixir makes documentation a first-class citizen in the language. We have explored this concept many times throughout this guide, be it via <code>mix help</code> or by typing <code>h Enum</code> or another module in an IEx console.</p>
+
+<p>In this section, we will implement the parse functionality using doctests, which allows us to write tests directly from our documentation. This helps us provide documentation with accurate code samples.</p>
+
+<p>Let&#39;s create our command parser at <code>lib/kv_server/command.ex</code> and start with the doctest:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KVServer.Command</span> <span class="k">do</span>
+  <span class="na">@doc</span> <span class="sx">~S</span><span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Parses the given `line` into a command.</span>
+
+<span class="sh">  ## Examples</span>
+
+<span class="sh">      iex&gt; KVServer.Command.parse &quot;CREATE shopping\r\n&quot;</span>
+<span class="sh">      {:ok, {:create, &quot;shopping&quot;}}</span>
+
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">do</span>
+    <span class="ss">:not_implemented</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Doctests are specified in by an indentation of four spaces followed by the <code>iex&gt;</code> prompt in a documentation string. If a command spans multiple lines, you can use <code>...&gt;</code>, as in IEx. The expected result should start at the next line after <code>iex&gt;</code> or <code>...&gt;</code> line(s) and is terminated either by a newline or a new <code>iex&gt;</code> prefix.</p>
+
+<p>Also note that we started the documentation string using <code>@doc ~S&quot;&quot;&quot;</code>. The <code>~S</code> prevents the <code>\r\n</code> characters from being converted to a carriage return and line feed until they are evaluated in the test.</p>
+
+<p>To run our doctests, we&#39;ll create a file at <code>test/kv_server/command_test.exs</code> and call <code>doctest KVServer.Command</code> in the test case:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KVServer.CommandTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">ExUnit.Case</span><span class="p">,</span> <span class="ss">async</span><span class="p">:</span> <span class="no">true</span>
+  <span class="n">doctest</span> <span class="nc">KVServer.Command</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Run the test suite and the doctest should fail:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">1) test doc at KVServer.Command.parse/1 (1) (KVServer.CommandTest)
+   test/kv_server/command_test.exs:3
+   Doctest failed
+   code: KVServer.Command.parse &quot;CREATE shopping\r\n&quot; === {:ok, {:create, &quot;shopping&quot;}}
+   lhs:  :not_implemented
+   stacktrace:
+     lib/kv_server/command.ex:11: KVServer.Command (module)
+</code></pre></div>
+<p>Excellent!</p>
+
+<p>Now it is just a matter of making the doctest pass. Let&#39;s implement the <code>parse/1</code> function:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">case</span> <span class="nc">String</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">[</span><span class="s2">&quot;CREATE&quot;</span><span class="p">,</span> <span class="n">bucket</span><span class="p">]</span> <span class="p">-&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="p">{</span><span class="ss">:create</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Our implementation simply splits the line on whitespace and then matches the command against a list. Using <code>String.split/1</code> means our commands will be whitespace-insensitive. Leading and trailing whitespace won&#39;t matter, nor will consecutive spaces between words. Let&#39;s add some new doctests to test this behaviour along with the other commands:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="na">@doc</span> <span class="sx">~S</span><span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">Parses the given `line` into a command.</span>
+
+<span class="sh">## Examples</span>
+
+<span class="sh">    iex&gt; KVServer.Command.parse &quot;CREATE shopping\r\n&quot;</span>
+<span class="sh">    {:ok, {:create, &quot;shopping&quot;}}</span>
+
+<span class="sh">    iex&gt; KVServer.Command.parse &quot;CREATE  shopping  \r\n&quot;</span>
+<span class="sh">    {:ok, {:create, &quot;shopping&quot;}}</span>
+
+<span class="sh">    iex&gt; KVServer.Command.parse &quot;PUT shopping milk 1\r\n&quot;</span>
+<span class="sh">    {:ok, {:put, &quot;shopping&quot;, &quot;milk&quot;, &quot;1&quot;}}</span>
+
+<span class="sh">    iex&gt; KVServer.Command.parse &quot;GET shopping milk\r\n&quot;</span>
+<span class="sh">    {:ok, {:get, &quot;shopping&quot;, &quot;milk&quot;}}</span>
+
+<span class="sh">    iex&gt; KVServer.Command.parse &quot;DELETE shopping eggs\r\n&quot;</span>
+<span class="sh">    {:ok, {:delete, &quot;shopping&quot;, &quot;eggs&quot;}}</span>
+
+<span class="sh">Unknown commands or commands with the wrong number of</span>
+<span class="sh">arguments return an error:</span>
+
+<span class="sh">    iex&gt; KVServer.Command.parse &quot;UNKNOWN shopping eggs\r\n&quot;</span>
+<span class="sh">    {:error, :unknown_command}</span>
+
+<span class="sh">    iex&gt; KVServer.Command.parse &quot;GET shopping\r\n&quot;</span>
+<span class="sh">    {:error, :unknown_command}</span>
+
+<span class="sh">&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>With doctests at hand, it is your turn to make tests pass! Once you&#39;re ready, you can compare your work with our solution below:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">case</span> <span class="nc">String</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">[</span><span class="s2">&quot;CREATE&quot;</span><span class="p">,</span> <span class="n">bucket</span><span class="p">]</span> <span class="p">-&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="p">{</span><span class="ss">:create</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}}</span>
+    <span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">]</span> <span class="p">-&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="p">{</span><span class="ss">:get</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">}}</span>
+    <span class="p">[</span><span class="s2">&quot;PUT&quot;</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">]</span> <span class="p">-&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="p">{</span><span class="ss">:put</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">}}</span>
+    <span class="p">[</span><span class="s2">&quot;DELETE&quot;</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">]</span> <span class="p">-&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="p">{</span><span class="ss">:delete</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">}}</span>
+    <span class="bp">_</span> <span class="p">-&gt;</span> <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:unknown_command</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Notice how we were able to elegantly parse the commands without adding a bunch of <code>if/else</code> clauses that check the command name and number of arguments!</p>
+
+<p>Finally, you may have observed that each doctest was considered to be a different test in our test case, as our test suite now reports a total of 7 tests. That is because ExUnit considers the following to define two different tests:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">parse</span> <span class="s2">&quot;UNKNOWN shopping eggs</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+<span class="go">{:error, :unknown_command}</span>
+
+<span class="gp">iex&gt; </span><span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">parse</span> <span class="s2">&quot;GET shopping</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+<span class="go">{:error, :unknown_command}</span>
+</code></pre></div>
+<p>Without new lines, as seen below, ExUnit compiles it into a single test:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">parse</span> <span class="s2">&quot;UNKNOWN shopping eggs</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+<span class="go">{:error, :unknown_command}</span>
+<span class="gp">iex&gt; </span><span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">parse</span> <span class="s2">&quot;GET shopping</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+<span class="go">{:error, :unknown_command}</span>
+</code></pre></div>
+<p>You can read more about doctests in <a href="http://elixir-lang.org/docs/stable/ex_unit/ExUnit.DocTest.html">the <code>ExUnit.DocTest</code> docs</a>.</p>
+
+<h2 id="9.2-pipelines">9.2 Pipelines</h2>
+
+<p>With our command parser in hand, we can finally start implementing the logic that runs the commands. Let&#39;s add a stub definition for this function for now:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KVServer.Command</span> <span class="k">do</span>
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Runs the given command.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Before we implement this function, let&#39;s change our server to start using our new <code>parse/1</code> and <code>run/1</code> functions. Remember, our <code>read_line/1</code> function was also crashing when the client closed the socket, so let&#39;s take the opportunity to fix it, too. Open up <code>lib/kv_server.ex</code> and replace the existing server definition:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defp</span> <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">socket</span>
+  <span class="o">|&gt;</span> <span class="n">read_line</span><span class="p">()</span>
+  <span class="o">|&gt;</span> <span class="n">write_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+
+  <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="kd">defp</span> <span class="n">read_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">data</span><span class="p">}</span> <span class="p">=</span> <span class="ss">:gen_tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="n">data</span>
+<span class="k">end</span>
+
+<span class="kd">defp</span> <span class="n">write_line</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+  <span class="ss">:gen_tcp</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>with the following:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defp</span> <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">msg</span> <span class="p">=</span>
+    <span class="k">case</span> <span class="n">read_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">data</span><span class="p">}</span> <span class="p">-&gt;</span>
+        <span class="k">case</span> <span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">do</span>
+          <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">command</span><span class="p">}</span> <span class="p">-&gt;</span>
+            <span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+          <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="bp">_</span><span class="p">}</span> <span class="p">=</span> <span class="n">err</span> <span class="p">-&gt;</span>
+            <span class="n">err</span>
+        <span class="k">end</span>
+      <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="bp">_</span><span class="p">}</span> <span class="p">=</span> <span class="n">err</span> <span class="p">-&gt;</span>
+        <span class="n">err</span>
+    <span class="k">end</span>
+
+  <span class="n">write_line</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+  <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="kd">defp</span> <span class="n">read_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+  <span class="ss">:gen_tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="kd">defp</span> <span class="n">write_line</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span> <span class="k">do</span>
+  <span class="ss">:gen_tcp</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">format_msg</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+<span class="k">end</span>
+
+<span class="kd">defp</span> <span class="n">format_msg</span><span class="p">({</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">text</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">text</span>
+<span class="kd">defp</span> <span class="n">format_msg</span><span class="p">({</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:unknown_command</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&quot;UNKNOWN COMMAND</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+<span class="kd">defp</span> <span class="n">format_msg</span><span class="p">({</span><span class="ss">:error</span><span class="p">,</span> <span class="bp">_</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&quot;ERROR</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>If we start our server, we can now send commands to it. For now we will get two different responses: &quot;OK&quot; when the command is known and &quot;UNKNOWN COMMAND&quot; otherwise:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ telnet 127.0.0.1 4040
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is &#39;^]&#39;.
+CREATE shopping
+OK
+HELLO
+UNKNOWN COMMAND
+</code></pre></div>
+<p>This means our implementation is going in the correct direction, but it doesn&#39;t look very elegant, does it?</p>
+
+<p>The previous implementation used pipes which made the logic straight-forward to understand:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">read_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">parse</span> <span class="o">|&gt;</span> <span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
+<p>Since we may have failures along the way, we need our pipeline logic to match error outputs and abort if they occur. Wouldn&#39;t it be great if instead we could say: &quot;pipe these functions while the response is <code>:ok</code>&quot; or &quot;pipe these functions while the response matches the <code>{:ok, _}</code> tuple&quot;?</p>
+
+<p>Thankfully, there is a project called <a href="https://github.com/batate/elixir-pipes">elixir-pipes</a> that provides exactly this functionality! Let&#39;s give it a try.</p>
+
+<p>Open up your <code>apps/kv_server/mix.exs</code> file and change both <code>application/0</code> and <code>deps/0</code> functions to the following:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">def</span> <span class="n">application</span> <span class="k">do</span>
+  <span class="p">[</span><span class="ss">applications</span><span class="p">:</span> <span class="p">[</span><span class="ss">:logger</span><span class="p">,</span> <span class="ss">:pipe</span><span class="p">,</span> <span class="ss">:kv</span><span class="p">],</span>
+   <span class="ss">mod</span><span class="p">:</span> <span class="p">{</span><span class="nc">KVServer</span><span class="p">,</span> <span class="p">[]}]</span>
+<span class="k">end</span>
+
+<span class="kd">defp</span> <span class="n">deps</span> <span class="k">do</span>
+  <span class="p">[{</span><span class="ss">:kv</span><span class="p">,</span> <span class="ss">in_umbrella</span><span class="p">:</span> <span class="no">true</span><span class="p">},</span>
+   <span class="p">{</span><span class="ss">:pipe</span><span class="p">,</span> <span class="ss">github</span><span class="p">:</span> <span class="s2">&quot;batate/elixir-pipes&quot;</span><span class="p">}]</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Run <code>mix deps.get</code> to get the dependency, and rewrite the <code>serve/1</code> function to use the <code>pipe_matching/3</code> functionality now available to us:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defp</span> <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span> <span class="k">do</span>
+  <span class="kn">import</span> <span class="nc">Pipe</span>
+
+  <span class="n">msg</span> <span class="p">=</span>
+    <span class="n">pipe_matching</span> <span class="n">x</span><span class="p">,</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">x</span><span class="p">},</span>
+      <span class="n">read_line</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+      <span class="o">|&gt;</span> <span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">parse</span><span class="p">()</span>
+      <span class="o">|&gt;</span> <span class="nc">KVServer.Command</span><span class="p">.</span><span class="n">run</span><span class="p">()</span>
+
+  <span class="n">write_line</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+  <span class="n">serve</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>With <code>pipe_matching/3</code> we can ask Elixir to pipe the value <code>x</code> from each step if it matches <code>{:ok, x}</code>. We do so by basically converting each expression given to <code>case/2</code> as a step in the pipeline. As soon as any of the steps return something that does not match <code>{:ok, x}</code>, the pipeline aborts, and returns the non-matching value.</p>
+
+<p>Excellent! Feel free to read the <a href="https://github.com/batate/elixir-pipes">elixir-pipes</a> project documentation to learn about other options for expressing pipelines. Let&#39;s continue moving forward with our server implementation.</p>
+
+<h2 id="9.3-running-commands">9.3 Running commands</h2>
+
+<p>The last step is to implement <code>KVServer.Command.run/1</code>, to run the parsed commands against the <code>:kv</code> application. Its implementation is shown below:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">Runs the given command.</span>
+<span class="sh">&quot;&quot;&quot;</span>
+<span class="kd">def</span> <span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+<span class="kd">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:create</span><span class="p">,</span> <span class="n">bucket</span><span class="p">})</span> <span class="k">do</span>
+  <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="nc">KV.Registry</span><span class="p">,</span> <span class="n">bucket</span><span class="p">)</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">}</span>
+<span class="k">end</span>
+
+<span class="kd">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:get</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">})</span> <span class="k">do</span>
+  <span class="n">lookup</span> <span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="p">-&gt;</span>
+    <span class="n">value</span> <span class="p">=</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">value</span><span class="si">}</span><span class="se">\r\n</span><span class="s2">OK</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="kd">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:put</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">})</span> <span class="k">do</span>
+  <span class="n">lookup</span> <span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="p">-&gt;</span>
+    <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="kd">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:delete</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">})</span> <span class="k">do</span>
+  <span class="n">lookup</span> <span class="n">bucket</span><span class="p">,</span> <span class="k">fn</span> <span class="n">pid</span> <span class="p">-&gt;</span>
+    <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="kd">defp</span> <span class="n">lookup</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">case</span> <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">lookup</span><span class="p">(</span><span class="nc">KV.Registry</span><span class="p">,</span> <span class="n">bucket</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">-&gt;</span> <span class="n">callback</span><span class="p">.(</span><span class="n">pid</span><span class="p">)</span>
+    <span class="ss">:error</span> <span class="p">-&gt;</span> <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:not_found</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The implementation is straightforward: we just dispatch to the <code>KV.Registry</code> server that we registered during the <code>:kv</code> application startup.</p>
+
+<p>Note that we have also defined a private function named <code>lookup/2</code> to help with the common functionality of looking up a bucket and returning its <code>pid</code> if it exists, <code>{:error, :not_found}</code> otherwise.</p>
+
+<p>By the way, since we are now returning <code>{:error, :not_found}</code>, we should amend the <code>format_msg/1</code> function in <code>KV.Server</code> to nicely show not found messages too:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defp</span> <span class="n">format_msg</span><span class="p">({</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">text</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">text</span>
+<span class="kd">defp</span> <span class="n">format_msg</span><span class="p">({</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:unknown_command</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&quot;UNKNOWN COMMAND</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+<span class="kd">defp</span> <span class="n">format_msg</span><span class="p">({</span><span class="ss">:error</span><span class="p">,</span> <span class="ss">:not_found</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&quot;NOT FOUND</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+<span class="kd">defp</span> <span class="n">format_msg</span><span class="p">({</span><span class="ss">:error</span><span class="p">,</span> <span class="bp">_</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&quot;ERROR</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>And our server functionality is almost complete! We just need to add tests. This time, we have left tests for last because there are some important considerations to be made.</p>
+
+<p><code>KVServer.Command.run/1</code>&#39;s implementation is sending commands directly to the server named <code>KV.Registry</code>, which is registered by the <code>:kv</code> application. This means this server is global and if we have two tests sending messages to it at the same time, our tests will conflict with each other (and likely fail). We need to decide between having unit tests that are isolated and can run asynchronously, or writing integration tests that work on top of the global state, but exercise our application&#39;s full stack as it is meant to be exercised in production.</p>
+
+<p>So far we have been chosing the unit test approach. For example, in order to make <code>KVServer.Command.run/1</code> testable as a unit we would need to change its implementation to not send commands directly to the <code>KV.Registry</code> process but instead pass a server as argument. This means we would need to change <code>run</code>&#39;s signature to <code>def run(command, pid)</code> and the implementation for the <code>:create</code> command would look like:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">def</span> <span class="n">run</span><span class="p">({</span><span class="ss">:create</span><span class="p">,</span> <span class="n">bucket</span><span class="p">},</span> <span class="n">pid</span><span class="p">)</span> <span class="k">do</span>
+  <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">bucket</span><span class="p">)</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Then in <code>KVServer.Command</code>&#39;s test case, we would need to start an instance of the <code>KV.Registry</code>, similar to what we&#39;ve done in <code>apps/kv/test/kv/registry_test.exs</code>, and pass it as an argument to <code>run/2</code>.</p>
+
+<p>This has been the approach we have taken so far in our tests, and it has some benefits:</p>
+
+<ol>
+<li>Our implementation is not coupled to any particular server name</li>
+<li>We can keep our tests running asynchronously, because there is no shared state</li>
+</ol>
+
+<p>However, it comes with the downside that our APIs become increasingly large in order to accommodate all external parameters.</p>
+
+<p>The alternative is to continue relying on the global server names and run tests against the global data, ensuring we clean up the data in between the tests. In this case, since the test would exercise the whole stack, from the TCP server, to the command parsing and running, to the registry and finally reaching the bucket, it becomes an integration test.</p>
+
+<p>The downside of integration tests is that they can be much slower than unit tests, and as such they must be used more sparingly. For example, we should not use integration tests to test an edge case in our command parsing implementation.</p>
+
+<p>Since we have used unit tests so far, this time we will take the other road and write an integration test. The integration test will have a TCP client that sends commands to our server and we will assert that we are getting the desired responses.</p>
+
+<p>Let&#39;s implement our integration test in <code>test/kv_server_test.exs</code> as shown below:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KVServerTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">ExUnit.Case</span>
+
+  <span class="n">setup</span> <span class="k">do</span>
+    <span class="ss">:application</span><span class="p">.</span><span class="n">stop</span><span class="p">(</span><span class="ss">:kv</span><span class="p">)</span>
+    <span class="ss">:ok</span> <span class="p">=</span> <span class="ss">:application</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="ss">:kv</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="n">setup</span> <span class="k">do</span>
+    <span class="n">opts</span> <span class="p">=</span> <span class="p">[</span><span class="ss">:binary</span><span class="p">,</span> <span class="ss">packet</span><span class="p">:</span> <span class="ss">:line</span><span class="p">,</span> <span class="ss">active</span><span class="p">:</span> <span class="no">false</span><span class="p">]</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">socket</span><span class="p">}</span> <span class="p">=</span> <span class="ss">:gen_tcp</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">4040</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="ss">socket</span><span class="p">:</span> <span class="n">socket</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">test</span> <span class="s2">&quot;server interaction&quot;</span><span class="p">,</span> <span class="p">%{</span><span class="ss">socket</span><span class="p">:</span> <span class="n">socket</span><span class="p">}</span> <span class="k">do</span>
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;UNKNOWN shopping</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span>
+           <span class="s2">&quot;UNKNOWN COMMAND</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;GET shopping eggs</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span>
+           <span class="s2">&quot;NOT FOUND</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;CREATE shopping</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span>
+           <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;PUT shopping eggs 3</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span>
+           <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+
+    <span class="c1"># GET returns two lines</span>
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;GET shopping eggs</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;3</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;DELETE shopping eggs</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span>
+           <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+
+    <span class="c1"># GET returns two lines</span>
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;GET shopping eggs</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+    <span class="n">assert</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;OK</span><span class="se">\r\n</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+
+  <span class="kd">defp</span> <span class="n">send_and_recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span> <span class="k">do</span>
+    <span class="ss">:ok</span> <span class="p">=</span> <span class="ss">:gen_tcp</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">data</span><span class="p">}</span> <span class="p">=</span> <span class="ss">:gen_tcp</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">socket</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">data</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Our integration test checks all server interaction, including unknown commands and not found errors. It is worth noting that, as with ETS tables and linked processes, there is no need to close the socket. Once the test process exits, the socket is automatically closed.</p>
+
+<p>This time, since our test relies on global data, we have not given <code>async: true</code> to <code>use ExUnit.Case</code>. Furthermore, in order to guarantee our test is always in a clean state, we stop and start the <code>:kv</code> application before each test. In fact, stopping the <code>:kv</code> application even prints a warning on the terminal:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">18:12:10.698 [info] Application kv exited with reason :stopped
+</code></pre></div>
+<p>If desired, we can avoid printing this warning by turning the error_logger off and on in the test setup:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">setup</span> <span class="k">do</span>
+  <span class="nc">Logger</span><span class="p">.</span><span class="n">remove_backend</span><span class="p">(</span><span class="ss">:console</span><span class="p">)</span>
+  <span class="nc">Application</span><span class="p">.</span><span class="n">stop</span><span class="p">(</span><span class="ss">:kv</span><span class="p">)</span>
+  <span class="ss">:ok</span> <span class="p">=</span> <span class="nc">Application</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="ss">:kv</span><span class="p">)</span>
+  <span class="nc">Logger</span><span class="p">.</span><span class="n">add_backend</span><span class="p">(</span><span class="ss">:console</span><span class="p">,</span> <span class="ss">flush</span><span class="p">:</span> <span class="no">true</span><span class="p">)</span>
+  <span class="ss">:ok</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>With this simple integration test, we start to see why integration tests may be slow. Not only can this particular test not be run asynchronously, it also requires the expensive setup of stopping and starting the <code>:kv</code> application.</p>
+
+<p>At the end of the day, it is up to you and your team to figure out the best testing strategy for your applications. You need to balance code quality, confidence, and test suite runtime. For example, we may start with testing the server only with integration tests, but if the server continues to grow in future releases, or it becomes a part of the application with frequent bugs, it is important to consider breaking it apart and writing more intensive unit tests that don&#39;t have the weight of an integration test.</p>
+
+<p>I personally err on the side of unit tests, and have integration tests only as smoke tests to guarantee the basic skeleton of the system works.</p>
+
+<p>In the next chapter we will finally make our system distributed by adding a bucket routing mechanism. We&#39;ll also learn about application configuration.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

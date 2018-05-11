@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>12 IO and the file system - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="12-io-and-the-file-system">12 IO and the file system</h1>
+
+<div class="toc"></div>
+
+<p>This chapter is a quick introduction to input/output mechanisms and file-system-related tasks, as well as to related modules like <a href="http://elixir-lang.org/docs/stable/elixir/IO.html"><code>IO</code></a>, <a href="http://elixir-lang.org/docs/stable/elixir/File.html"><code>File</code></a> and <a href="http://elixir-lang.org/docs/stable/elixir/Path.html"><code>Path</code></a>.</p>
+
+<p>We had originally sketched this chapter to come much earlier in the getting started guide. However, we noticed the IO system provides a great opportunity to shed some light on some philosophies and curiosities of Elixir and the VM.</p>
+
+<h2 id="12.1-the-io-module">12.1 The <code>IO</code> module</h2>
+
+<p>The <code>IO</code> module is the main mechanism in Elixir for reading and writing to standard input/output (<code>:stdio</code>), standard error (<code>:stderr</code>), files and other IO devices. Usage of the module is pretty straightforward:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="s2">&quot;hello world&quot;</span>
+<span class="go">hello world</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">gets</span> <span class="s2">&quot;yes or no? &quot;</span>
+<span class="go">yes or no? yes</span>
+<span class="go">&quot;yes\n&quot;</span>
+</code></pre></div>
+<p>By default, functions in the IO module read from the standard input and write to the standard output. We can change that by passing, for example, <code>:stderr</code> as an argument (in order to write to the standard error device):</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="ss">:stderr</span><span class="p">,</span> <span class="s2">&quot;hello world&quot;</span>
+<span class="go">hello world</span>
+<span class="go">:ok</span>
+</code></pre></div>
+<h2 id="12.2-the-file-module">12.2 The <code>File</code> module</h2>
+
+<p>The <a href="http://elixir-lang.org/docs/stable/elixir/File.html"><code>File</code></a> module contains functions that allow us to open files as IO devices. By default, files are opened in binary mode, which requires developers to use the specific <code>IO.binread/2</code> and <code>IO.binwrite/2</code> functions from the <code>IO</code> module:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">file</span><span class="p">}</span> <span class="p">=</span> <span class="nc">File</span><span class="p">.</span><span class="n">open</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="p">[</span><span class="ss">:write</span><span class="p">]</span>
+<span class="go">{:ok, #PID&lt;0.47.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">binwrite</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">close</span> <span class="n">file</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">read</span> <span class="s2">&quot;hello&quot;</span>
+<span class="go">{:ok, &quot;world&quot;}</span>
+</code></pre></div>
+<p>A file can also be opened with <code>:utf8</code> encoding, which tells the <code>File</code> module to interpret the bytes read from the file as UTF-8-encoded bytes.</p>
+
+<p>Besides functions for opening, reading and writing files, the <code>File</code> module has many functions to work with the file system. Those functions are named after their UNIX equivalents. For example, <code>File.rm/1</code> can be used to remove files, <code>File.mkdir/1</code> to create directories, <code>File.mkdir_p/1</code> to create directories and all their parent chain. There are even <code>File.cp_r/2</code> and <code>File.rm_rf/2</code> to respectively copy and remove files and directories recursively (i.e., copying and removing the contents of the directories too).</p>
+
+<p>You will also notice that functions in the <code>File</code> module have two variants: one &quot;regular&quot; variant and another variant which has the same name as the regular version but with a trailing bang (<code>!</code>). For example, when we read the <code>&quot;hello&quot;</code> file in the example above, we use <code>File.read/1</code>. Alternatively, we can use <code>File.read!/1</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">read</span> <span class="s2">&quot;hello&quot;</span>
+<span class="go">{:ok, &quot;world&quot;}</span>
+<span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">read!</span> <span class="s2">&quot;hello&quot;</span>
+<span class="go">&quot;world&quot;</span>
+<span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">read</span> <span class="s2">&quot;unknown&quot;</span>
+<span class="go">{:error, :enoent}</span>
+<span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">read!</span> <span class="s2">&quot;unknown&quot;</span>
+<span class="gr">** (File.Error) could not read file unknown: no such file or directory</span>
+</code></pre></div>
+<p>Notice that when the file does not exist, the version with <code>!</code> raises an error. The version without <code>!</code> is preferred when you want to handle different outcomes using pattern matching:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="k">case</span> <span class="nc">File</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">body</span><span class="p">}</span>      <span class="p">-&gt;</span> <span class="c1"># do something with the `body`</span>
+  <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="n">reason</span><span class="p">}</span> <span class="p">-&gt;</span> <span class="c1"># handle the error caused by `reason`</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>However, if you expect the file to be there, the bang variation is more useful as it raises a meaningful error message. Avoid writing:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">body</span><span class="p">}</span> <span class="p">=</span> <span class="nc">File</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</code></pre></div>
+<p>as, in case of an error, <code>File.read/1</code> will return <code>{:error, reason}</code> and the pattern matching will fail. You will still get the desired result (a raised error), but the message will be about the pattern which doesn&#39;t match (thus being cryptic in respect to what the error actually is about).</p>
+
+<p>If you don&#39;t want to handle a possible error (i.e., you want it to bubble up), prefer using <code>File.read!/1</code>.</p>
+
+<h2 id="12.3-the-path-module">12.3 The Path module</h2>
+
+<p>The majority of the functions in the <code>File</code> module expect paths as arguments. Most commonly, those paths will be regular binaries. The <a href="http://elixir-lang.org/docs/stable/elixir/Path.html"><code>Path</code></a> module provides facilities for working with such paths:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<span class="go">&quot;foo/bar&quot;</span>
+<span class="gp">iex&gt; </span><span class="nc">Path</span><span class="p">.</span><span class="n">expand</span><span class="p">(</span><span class="s2">&quot;~/hello&quot;</span><span class="p">)</span>
+<span class="go">&quot;/Users/jose/hello&quot;</span>
+</code></pre></div>
+<p>Using functions from the <code>Path</code> module as opposed to just manipulating binaries is preferred since the <code>Path</code> module takes care of different operating systems transparently. For example, <code>Path.join/2</code> joins a path with slashes (<code>/</code>) on Unix-like systems and with backslashes (<code>\\</code>) on Windows.</p>
+
+<p>With this we have covered the main modules that Elixir provides for dealing with IO and interacting with the file system. In the next sections, we will discuss some advanced topics regarding IO. Those sections are not necessary in order to write Elixir code, so feel free to skip them, but they do provide a nice overview of how the IO system is implemented in the VM and other curiosities.</p>
+
+<h2 id="12.4-processes-and-group-leaders">12.4 Processes and group leaders</h2>
+
+<p>You may have noticed that <code>File.open/2</code> returns a tuple like <code>{:ok, pid}</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">file</span><span class="p">}</span> <span class="p">=</span> <span class="nc">File</span><span class="p">.</span><span class="n">open</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="p">[</span><span class="ss">:write</span><span class="p">]</span>
+<span class="go">{:ok, #PID&lt;0.47.0&gt;}</span>
+</code></pre></div>
+<p>That happens because the <code>IO</code> module actually works with processes (see <a href="http://elixir-lang.org/getting_started/11.html">chapter 11</a>). When you write <code>IO.write(pid, binary)</code>, the <code>IO</code> module will send a message to the process identified by <code>pid</code> with the desired operation. Let&#39;s see what happens if we use our own process:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">pid</span> <span class="p">=</span> <span class="n">spawn</span> <span class="k">fn</span> <span class="p">-&gt;</span>
+<span class="gp">...&gt; </span> <span class="k">receive</span> <span class="ss">do</span><span class="p">:</span> <span class="p">(</span><span class="n">msg</span> <span class="p">-&gt;</span> <span class="nc">IO</span><span class="p">.</span><span class="n">inspect</span> <span class="n">msg</span><span class="p">)</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="go">#PID&lt;0.57.0&gt;</span>
+<span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="go">{:io_request, #PID&lt;0.41.0&gt;, #PID&lt;0.57.0&gt;, {:put_chars, :unicode, &quot;hello&quot;}}</span>
+<span class="gr">** (ErlangError) erlang error: :terminated</span>
+</code></pre></div>
+<p>After <code>IO.write/2</code>, we can see the request sent by the <code>IO</code> module (a four-elements tuple) printed out. Soon after that, we see that it fails since the <code>IO</code> module expected some kind of result that we did not supply.</p>
+
+<p>The <a href="http://elixir-lang.org/docs/stable/elixir/StringIO.html"><code>StringIO</code></a> module provides an implementation of the <code>IO</code> device messages on top of strings:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">=</span> <span class="nc">StringIO</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="go">{:ok, #PID&lt;0.43.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">&quot;he&quot;</span>
+</code></pre></div>
+<p>By modelling IO devices with processes, the Erlang VM allows different nodes in the same network to exchange file processes in order to read/write files in between nodes. Of all IO devices, there is one that is special to each process: the <strong>group leader</strong>.</p>
+
+<p>When you write to <code>:stdio</code>, you are actually sending a message to the group leader, which writes to the standard-input file descriptor:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="ss">:stdio</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span>
+<span class="go">hello</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="nc">Process</span><span class="p">.</span><span class="n">group_leader</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span>
+<span class="go">hello</span>
+<span class="go">:ok</span>
+</code></pre></div>
+<p>The group leader can be configured per process and is used in different situations. For example, when executing code in a remote terminal, it guarantees messages in a remote node are redirected and printed in the terminal that triggered the request.</p>
+
+<h2 id="12.5-iodata-and-chardata">12.5 <code>iodata</code> and <code>chardata</code></h2>
+
+<p>In all of the examples above, we used binaries when writing to files. In the chapter <a href="http://elixir-lang.org/getting_started/6.html">&quot;Binaries, strings and char lists&quot;</a>, we mentioned how strings are simply bytes while char lists are lists with code points.</p>
+
+<p>The functions in <code>IO</code> and <code>File</code> also allow lists to be given as arguments. Not only that, they also allow a mixed list of lists, integers and binaries to be given:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="s1">&#39;hello world&#39;</span>
+<span class="go">hello world</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="p">[</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="sc">?</span><span class="se">\s</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">]</span>
+<span class="go">hello world</span>
+<span class="go">:ok</span>
+</code></pre></div>
+<p>However, this requires some attention. A list may represent either a bunch of bytes or a bunch of characters and which one to use depends on the encoding of the IO device. If the file is opened without encoding, the file is expected to be in raw mode, and the functions in the <code>IO</code> module starting with <code>bin*</code> must be used. Those functions expect an <code>iodata</code> as argument; i.e., they expect a list of integers representing bytes and binaries to be given.</p>
+
+<p>On the other hand, <code>:stdio</code> and files opened with <code>:utf8</code> encoding work with the remaining functions in the <code>IO</code> module. Those functions expect a <code>char_data</code> as argument, that is, a list of characters or strings.</p>
+
+<p>Although this is a subtle difference, you only need to worry about those details if you intend to pass lists to those functions. Binaries are already represented by the underlying bytes and as such their representation is always raw.</p>
+
+<p>This finishes our tour of IO devices and IO related functionality. We have learned about four Elixir modules - <a href="http://elixir-lang.org/docs/stable/elixir/IO.html"><code>IO</code></a>, <a href="http://elixir-lang.org/docs/stable/elixir/File.html"><code>File</code></a>, <a href="http://elixir-lang.org/docs/stable/elixir/Path.html"><code>Path</code></a> and <a href="http://elixir-lang.org/docs/stable/elixir/StringIO.html"><code>StringIO</code></a> - as well as how the VM uses processes for the underlying IO mechanisms and how to use <code>chardata</code> and <code>iodata</code> for IO operations.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

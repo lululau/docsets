@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>10 Enumerables and Streams - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="10-enumerables-and-streams">10 Enumerables and Streams</h1>
+
+<div class="toc"></div>
+
+<h2 id="10.1-enumerables">10.1 Enumerables</h2>
+
+<p>Elixir provides the concept of enumerables and <a href="http://elixir-lang.org/docs/stable/elixir/Enum.html">the <code>Enum</code> module</a> to work with them. We have already learned two enumerables: lists and maps.</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">map</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="k">fn</span> <span class="n">x</span> <span class="p">-&gt;</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">[2, 4, 6]</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">map</span><span class="p">(%{</span><span class="mi">1</span> <span class="p">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">=&gt;</span> <span class="mi">4</span><span class="p">},</span> <span class="k">fn</span> <span class="p">{</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">}</span> <span class="p">-&gt;</span> <span class="n">k</span> <span class="o">*</span> <span class="n">v</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">[2, 12]</span>
+</code></pre></div>
+<p>The <code>Enum</code> module provides a huge range of functions to transform, sort, group, filter and retrieve items from enumerables. It is one of the modules developers use frequently in their Elixir code.</p>
+
+<p>Elixir also provides ranges:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="mi">1</span><span class="p">..</span><span class="mi">3</span><span class="p">,</span> <span class="k">fn</span> <span class="n">x</span> <span class="p">-&gt;</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">[2, 4, 6]</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">reduce</span><span class="p">(</span><span class="mi">1</span><span class="p">..</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;+/</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">6</span>
+</code></pre></div>
+<p>Since the Enum module was designed to work across different data types, its API is limited to functions that are useful across many data types. For specific operations, you may need to reach to modules specific to the data types. For example, if you want to insert an element at a given position in a list, you should use the <code>List.insert_at/3</code> function from <a href="http://elixir-lang.org/docs/stable/elixir/List.html">the <code>List</code> module</a>, as it would make little sense to insert a value into, for example, a range.</p>
+
+<p>We say the functions in the <code>Enum</code> module are polymorphic because they can work with diverse data types. In particular, the functions in the <code>Enum</code> module can work with any data type that implements <a href="http://elixir-lang.org/docs/stable/elixir/Enumerable.html">the <code>Enumerable</code> protocol</a>. We are going to discuss Protocols in a later chapter, for now we are going to move on to a specific kind of enumerable called streams.</p>
+
+<h2 id="10.2-eager-vs-lazy">10.2 Eager vs Lazy</h2>
+
+<p>All the functions in the <code>Enum</code> module are eager. Many functions expect an enumerable and return a list back:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">odd?</span> <span class="p">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">rem</span><span class="p">(</span><span class="ni">&amp;1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">#Function&lt;6.80484245/1 in :erl_eval.expr/5&gt;</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="mi">1</span><span class="p">..</span><span class="mi">3</span><span class="p">,</span> <span class="n">odd?</span><span class="p">)</span>
+<span class="go">[1, 3]</span>
+</code></pre></div>
+<p>This means that when performing multiple operations with <code>Enum</code>, each operation is going to generate an intermediate list until we reach the result:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="mi">1</span><span class="p">..</span><span class="mi">100_000</span> <span class="o">|&gt;</span> <span class="nc">Enum</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="nc">Enum</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="n">odd?</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nc">Enum</span><span class="p">.</span><span class="n">sum</span>
+<span class="go">7500000000</span>
+</code></pre></div>
+<p>The example above has a pipeline of operations. We start with a range and then multiply each element in the range by 3. This first operation will now create and return a list with <code>100_000</code> items. Then we keep all odd elements from the list, generating a new list, now with <code>50_000</code> items, and then we sum all entries.</p>
+
+<h3 id="10.2.1-the-pipe-operator">10.2.1 The pipe operator</h3>
+
+<p>The <code>|&gt;</code> symbol used in the snippet above is the <strong>pipe operator</strong>: it simply takes the output from the expression on its left side and passes it as the input to the function call on its right side. It&#39;s similar to the Unix <code>|</code> operator.  Its purpose is to highlight the flow of data being transformed by a series of functions. To see how it can make the code cleaner, have a look at the example above rewritten without using the <code>|&gt;</code> operator:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">sum</span><span class="p">(</span><span class="nc">Enum</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="nc">Enum</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="mi">1</span><span class="p">..</span><span class="mi">100_000</span><span class="p">,</span> <span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)),</span> <span class="n">odd?</span><span class="p">))</span>
+<span class="go">7500000000</span>
+</code></pre></div>
+<p>Find more about the pipe operator <a href="http://elixir-lang.org/docs/stable/elixir/Kernel.html#%7C%3E/2">by reading its documentation</a>.</p>
+
+<h2 id="10.3-streams">10.3 Streams</h2>
+
+<p>As an alternative to <code>Enum</code>, Elixir provides <a href="http://elixir-lang.org/docs/stable/elixir/Stream.html">the <code>Stream</code> module</a> which supports lazy operations:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="mi">1</span><span class="p">..</span><span class="mi">100_000</span> <span class="o">|&gt;</span> <span class="nc">Stream</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="nc">Stream</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="n">odd?</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nc">Enum</span><span class="p">.</span><span class="n">sum</span>
+<span class="go">7500000000</span>
+</code></pre></div>
+<p>Streams are lazy, composable enumerables.
+Instead of generating intermediate lists, streams create a series of computations that are invoked only when we pass it to the <code>Enum</code> module. Streams are useful when working with large, <em>possibly infinite</em>, collections.</p>
+
+<p>They are lazy because, as shown in the example above, <code>1..100_000 |&gt; Stream.map(&amp;(&amp;1 * 3))</code> returns a data type, an actual stream, that represents the <code>map</code> computation over the range <code>1..100_000</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="mi">1</span><span class="p">..</span><span class="mi">100_000</span> <span class="o">|&gt;</span> <span class="nc">Stream</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">#Stream&lt;[enum: 1..100000, funs: [#Function&lt;34.16982430/1 in Stream.map/2&gt;]]&gt;</span>
+</code></pre></div>
+<p>Furthermore, they are composable because we can pipe many stream operations:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="mi">1</span><span class="p">..</span><span class="mi">100_000</span> <span class="o">|&gt;</span> <span class="nc">Stream</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="nc">Stream</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="n">odd?</span><span class="p">)</span>
+<span class="go">#Stream&lt;[enum: 1..100000, funs: [...]]&gt;</span>
+</code></pre></div>
+<p>Many functions in the <code>Stream</code> module accept any enumerable as argument and return a stream as result. It also provides functions for creating streams, possibly infinite. For example, <code>Stream.cycle/1</code> can be used to create a stream that cycles a given enumerable infinitely. Be careful to not call a function like <code>Enum.map/2</code> on such streams, as they would cycle forever:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">stream</span> <span class="p">=</span> <span class="nc">Stream</span><span class="p">.</span><span class="n">cycle</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">#Function&lt;15.16982430/2 in Stream.cycle/1&gt;</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 1, 2, 3, 1, 2, 3, 1]</span>
+</code></pre></div>
+<p>On the other hand, <code>Stream.unfold/2</code> can be used to generate values from a given initial value:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">stream</span> <span class="p">=</span> <span class="nc">Stream</span><span class="p">.</span><span class="n">unfold</span><span class="p">(</span><span class="s2">&quot;hełło&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nc">String</span><span class="p">.</span><span class="n">next_codepoint</span><span class="o">/</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">#Function&lt;39.75994740/2 in Stream.unfold/2&gt;</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">[&quot;h&quot;, &quot;e&quot;, &quot;ł&quot;]</span>
+</code></pre></div>
+<p>Another interesting function is <code>Stream.resource/3</code> which can be used to wrap around resources, guaranteeing they are opened right before enumeration and closed afterwards, even in case of failures. For example, we can use it to stream a file:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">stream</span> <span class="p">=</span> <span class="nc">File</span><span class="p">.</span><span class="n">stream!</span><span class="p">(</span><span class="s2">&quot;path/to/file&quot;</span><span class="p">)</span>
+<span class="go">#Function&lt;18.16982430/2 in Stream.resource/3&gt;</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>The example above will fetch the first 10 lines of the file you have selected. This means streams can be very useful for handling large files or even slow resources like network resources.</p>
+
+<p>The amount of functions and functionality in <a href="http://elixir-lang.org/docs/stable/elixir/Enum.html"><code>Enum</code></a> and <a href="http://elixir-lang.org/docs/stable/elixir/Stream.html"><code>Stream</code></a> modules can be daunting at first but you will get familiar with them case by case. In particular, focus on the <code>Enum</code> module first and only move to <code>Stream</code> for the particular scenarios where laziness is required to either deal with slow resources or large, possibly infinite, collections.</p>
+
+<p>Next we&#39;ll look at a feature central to Elixir, Processes, which allows us to write concurrent, parallel and distributed programs in an easy and understandable way.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

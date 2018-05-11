@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>20 Typespecs and behaviours - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="20-typespecs-and-behaviours">20 Typespecs and behaviours</h1>
+
+<div class="toc"></div>
+
+<h2 id="20.1-types-and-specs">20.1 Types and specs</h2>
+
+<p>Elixir is a dynamically typed language, so all types in Elixir are inferred by the runtime. Nonetheless, Elixir comes with <strong>typespecs</strong>, which are a notation used for:</p>
+
+<ol>
+<li>declaring custom data types;</li>
+<li>declaring typed function signatures (specifications).</li>
+</ol>
+
+<h3 id="20.1.1-function-specifications">20.1.1 Function specifications</h3>
+
+<p>By default, Elixir provides some basic types, such as <code>integer</code> or <code>pid</code>, as well as more complex types: for example, the <code>round/1</code> function, which rounds a float to its nearest integer, takes a <code>number</code> as an argument (an <code>integer</code> or a <code>float</code>) and returns a <code>float</code>. As you can see <a href="http://elixir-lang.org/docs/stable/elixir/Kernel.html#round/1">in its documentation</a>, <code>round/1</code>&#39;s typed signature is written as:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">round(number) :: integer
+</code></pre></div>
+<p><code>::</code> means that the function on the left side <em>returns</em> a value whose type is what&#39;s on the right side. Function specs are written with the <code>@spec</code> directive, placed right before the function definition. The <code>round/1</code> function could be written as:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="na">@spec</span> <span class="n">round</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">integer</span>
+<span class="kd">def</span> <span class="n">round</span><span class="p">(</span><span class="n">number</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="c1"># implementation...</span>
+</code></pre></div>
+<p>Elixir supports compound types as well. For example, a list of integers has type <code>[integer]</code>. You can see all the types provided by Elixir <a href="http://elixir-lang.org/docs/stable/elixir/Kernel.Typespec.html">in the typespecs docs</a>.</p>
+
+<h3 id="20.1.2-defining-custom-types">20.1.2 Defining custom types</h3>
+
+<p>While Elixir provides a lot of useful built-in types, it&#39;s convenient to define custom types when appropriate. This can be done when defining modules modules through the <code>@type</code> directive.</p>
+
+<p>Say we have a <code>RudeCalculator</code> module, which performs the usual arithmetic operations (sum, product and so on) but, instead of returning numbers, it returns tuples with the result of an operation as the first element and a random offense as the second element.</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">LousyCalculator</span> <span class="k">do</span>
+  <span class="na">@spec</span> <span class="n">add</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="p">{</span><span class="n">number</span><span class="p">,</span> <span class="nc">String</span><span class="p">.</span><span class="n">t</span><span class="p">}</span>
+  <span class="kd">def</span> <span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;You need a calculator to do that?!&quot;</span><span class="p">}</span>
+
+  <span class="na">@spec</span> <span class="n">multiply</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="p">{</span><span class="n">number</span><span class="p">,</span> <span class="nc">String</span><span class="p">.</span><span class="n">t</span><span class="p">}</span>
+  <span class="kd">def</span> <span class="n">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;Jeez, come on!&quot;</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>As you can see in the example, tuples are a compound type and each tuple is identified by the types inside it. To understand why <code>String.t</code> is not written as <code>string</code>, have another look at the <a href="http://elixir-lang.org/docs/stable/elixir/Kernel.Typespec.html">typespecs docs</a>.</p>
+
+<p>Defining function specs this way works, but it quickly becomes annoying since we&#39;re repeating the type <code>{number, String.t}</code> over and over. We can use the <code>@type</code> directory in order to declare our own custom type.</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">LousyCalculator</span> <span class="k">do</span>
+  <span class="na">@typedoc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Just a number followed by a string.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="na">@type</span> <span class="n">number_with_offense</span> <span class="p">::</span> <span class="p">{</span><span class="n">number</span><span class="p">,</span> <span class="nc">String</span><span class="p">.</span><span class="n">t</span><span class="p">}</span>
+
+  <span class="na">@spec</span> <span class="n">add</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">number_with_offense</span>
+  <span class="kd">def</span> <span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;You need a calculator to do that?!&quot;</span><span class="p">}</span>
+
+  <span class="na">@spec</span> <span class="n">multiply</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">number_with_offense</span>
+  <span class="kd">def</span> <span class="n">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="p">{</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;Jeez, come on!&quot;</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The <code>@typedoc</code> directive, similarly to the <code>@doc</code> and <code>@moduledoc</code> directives, is used to document custom types.</p>
+
+<p>Custom types defined through <code>@type</code> are exported and available outside the module they&#39;re defined in:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">PoliteCalculator</span> <span class="k">do</span>
+  <span class="na">@spec</span> <span class="n">add</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span> <span class="p">::</span> <span class="n">number</span>
+  <span class="kd">def</span> <span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">make_polite</span><span class="p">(</span><span class="nc">LousyCalculator</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+  <span class="na">@spec</span> <span class="n">make_polite</span><span class="p">(</span><span class="nc">LousyCalculator</span><span class="p">.</span><span class="n">number_with_offense</span><span class="p">)</span> <span class="p">::</span> <span class="n">number</span>
+  <span class="kd">defp</span> <span class="n">make_polite</span><span class="p">({</span><span class="n">num</span><span class="p">,</span> <span class="n">_offense</span><span class="p">}),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">num</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>If you want to keep a custom type private, you can use the <code>@typep</code> directive instead of <code>@type</code>.</p>
+
+<h3 id="20.1.3-static-code-analysis">20.1.3 Static code analysis</h3>
+
+<p>Typespecs are not only useful to developers and as additional documentation. The Erlang tool <a href="http://www.erlang.org/doc/man/dialyzer.html">Dialyzer</a>, for example, uses typespecs in order to perform static analysis of code. That&#39;s why, in the <code>PoliteCalculator</code> example, we wrote a spec for the <code>make_polite/1</code> function even if it was defined as a private function.</p>
+
+<h2 id="20.2-behaviours">20.2 Behaviours</h2>
+
+<p>Many modules share the same public API. Take a look at <a href="https://github.com/elixir-lang/plug">Plug</a>, which, as it description states, is a <strong>specification</strong> for composable modules in web applications. Each <em>plug</em> is a module which <strong>has to</strong> implement at least two public functions: <code>init/1</code> and <code>call/2</code>.</p>
+
+<p>Behaviors provide a way to:</p>
+
+<ul>
+<li>define a set of functions that have to be implemented by a module;</li>
+<li>ensure that a module implements all the functions in that set.</li>
+</ul>
+
+<p>If you have to, you can think of behaviours like interfaces in object oriented languages like Java: a set of function signatures that a module has to implement.</p>
+
+<h3 id="20.2.1-defining-behaviours">20.2.1 Defining behaviours</h3>
+
+<p>Say we have want to implement a bunch of parsers, each parsing structured data: for example, a JSON parser and a YAML parser. Each of these two parsers will <em>behave</em> the same way: both will provide a <code>parse/1</code> function and a <code>extensions/0</code> function. The <code>parse/1</code> function will return an Elixir representation of the structured data, while the <code>extensions/0</code> function will return a list of file extensions that can be used for each type of data (e.g., <code>.json</code> for JSON files).</p>
+
+<p>We can create a <code>Parser</code> behaviour:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Parser</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">Behaviour</span>
+
+  <span class="kd">defcallback</span> <span class="n">parse</span><span class="p">(</span><span class="nc">String</span><span class="p">.</span><span class="n">t</span><span class="p">)</span> <span class="p">::</span> <span class="n">any</span>
+  <span class="kd">defcallback</span> <span class="n">extensions</span><span class="p">()</span> <span class="p">::</span> <span class="p">[</span><span class="nc">String</span><span class="p">.</span><span class="n">t</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Modules adopting the <code>Parser</code> behaviour will have to implement all the functions defined with <code>defcallback</code>. As you can see, <code>defcallback</code> expects a function name but also a function specification like the ones used with the <code>@spec</code> directive we saw above.</p>
+
+<h3 id="20.2.2-adopting-behaviours">20.2.2 Adopting behaviours</h3>
+
+<p>Adopting a behaviour is straightforward:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">JSONParser</span> <span class="k">do</span>
+  <span class="na">@behaviour</span> <span class="nc">Parser</span>
+
+  <span class="kd">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="c1"># ... parse JSON</span>
+  <span class="kd">def</span> <span class="n">extensions</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;json&quot;</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre></div><div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">YAMLParser</span> <span class="k">do</span>
+  <span class="na">@behaviour</span> <span class="nc">Parser</span>
+
+  <span class="kd">def</span> <span class="n">parse</span><span class="p">(</span><span class="n">str</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="c1"># ... parse YAML</span>
+  <span class="kd">def</span> <span class="n">extensions</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;yml&quot;</span><span class="p">]</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>If a module adopting a given behaviour doesn&#39;t implement one of the callbacks required by that behaviour, a compile-time warning will be generated.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

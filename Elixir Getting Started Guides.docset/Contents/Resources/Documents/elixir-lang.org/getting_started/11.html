@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>11 Processes - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="11-processes">11 Processes</h1>
+
+<div class="toc"></div>
+
+<p>In Elixir, all code runs inside processes. Processes are isolated from each other, run concurrent to one another and communicate via message passing. Processes are not only the basis for concurrency in Elixir, but they also provide the means for building distributed and fault-tolerant programs.</p>
+
+<p>Elixir&#39;s processes should not be confused with operating system processes. Processes in Elixir are extremely lightweight in terms of memory and CPU (unlike threads in many other programming languages). Because of this, it is not uncommon to have dozens of thousands of processes running simultaneously.</p>
+
+<p>In this chapter, we will learn about the basic constructs for spawning new processes, as well as sending and receiving messages between different processes.</p>
+
+<h2 id="11.1-spawn">11.1 spawn</h2>
+
+<p>The basic mechanism for spawning new processes is with the auto-imported <code>spawn/1</code> function:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">spawn</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">end</span>
+<span class="go">#PID&lt;0.43.0&gt;</span>
+</code></pre></div>
+<p><code>spawn/1</code> takes a function which it will execute in another process.</p>
+
+<p>Notice <code>spawn/1</code> returns a PID (process identifier). At this point, the process you spawned is very likely dead. The spawned process will execute the given function and exit after the function is done:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">pid</span> <span class="p">=</span> <span class="n">spawn</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">end</span>
+<span class="go">#PID&lt;0.44.0&gt;</span>
+<span class="gp">iex&gt; </span><span class="nc">Process</span><span class="p">.</span><span class="n">alive?</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+<span class="go">false</span>
+</code></pre></div>
+<blockquote>
+<p>Note: you will likely get different process identifiers than the ones we are getting in this guide.</p>
+</blockquote>
+
+<p>We can retrieve the PID of the current process by calling <code>self/0</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">self</span><span class="p">()</span>
+<span class="go">#PID&lt;0.41.0&gt;</span>
+<span class="gp">iex&gt; </span><span class="nc">Process</span><span class="p">.</span><span class="n">alive?</span><span class="p">(</span><span class="n">self</span><span class="p">())</span>
+<span class="go">true</span>
+</code></pre></div>
+<p>Processes get much more interesting when we are able to send and receive messages.</p>
+
+<h2 id="11.2-send-and-receive">11.2 send and receive</h2>
+
+<p>We can send messages to a process with <code>send/2</code> and receive them with <code>receive/1</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">send</span> <span class="n">self</span><span class="p">(),</span> <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span><span class="p">}</span>
+<span class="go">{:hello, &quot;world&quot;}</span>
+<span class="gp">iex&gt; </span><span class="k">receive</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="n">msg</span><span class="p">}</span> <span class="p">-&gt;</span> <span class="n">msg</span>
+<span class="gp">...&gt; </span>  <span class="p">{</span><span class="ss">:world</span><span class="p">,</span> <span class="n">msg</span><span class="p">}</span> <span class="p">-&gt;</span> <span class="s2">&quot;won&#39;t match&quot;</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="go">&quot;world&quot;</span>
+</code></pre></div>
+<p>When a message is sent to a process, the message is stored in the process mailbox. The <code>receive/1</code> block goes through the current process mailbox searching for a message that matches any of the given patterns. <code>receive/1</code> supports many clauses, like <code>case/2</code>, as well as guards in the clauses.</p>
+
+<p>If there is no message in the mailbox matching any of the patterns, the current process will wait until a matching message arrives. A timeout can also be specified:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">receive</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="n">msg</span><span class="p">}</span>  <span class="p">-&gt;</span> <span class="n">msg</span>
+<span class="gp">...&gt; </span><span class="k">after</span>
+<span class="gp">...&gt; </span>  <span class="mi">1_000</span> <span class="p">-&gt;</span> <span class="s2">&quot;nothing after 1s&quot;</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="go">&quot;nothing after 1s&quot;</span>
+</code></pre></div>
+<p>A timeout of 0 can be given when you already expect the message to be in the mailbox.</p>
+
+<p>Let&#39;s put all together and send messages between processes:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">parent</span> <span class="p">=</span> <span class="n">self</span><span class="p">()</span>
+<span class="go">#PID&lt;0.41.0&gt;</span>
+<span class="gp">iex&gt; </span><span class="n">spawn</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="n">send</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="n">self</span><span class="p">()})</span> <span class="k">end</span>
+<span class="go">#PID&lt;0.48.0&gt;</span>
+<span class="gp">iex&gt; </span><span class="k">receive</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">-&gt;</span> <span class="s2">&quot;Got hello from </span><span class="si">#{</span><span class="n">inspect</span> <span class="n">pid</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="go">&quot;Got hello from #PID&lt;0.48.0&gt;&quot;</span>
+</code></pre></div>
+<p>While in the shell, you may find the helper <code>flush/0</code> quite useful. It flushes and prints all the messages in the mailbox.</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">send</span> <span class="n">self</span><span class="p">(),</span> <span class="ss">:hello</span>
+<span class="go">:hello</span>
+<span class="gp">iex&gt; </span><span class="n">flush</span><span class="p">()</span>
+<span class="go">:hello</span>
+<span class="go">:ok</span>
+</code></pre></div>
+<h2 id="11.3-links">11.3 Links</h2>
+
+<p>The most common form of spawning in Elixir is actually via <code>spawn_link/1</code>. Before we show an example with <code>spawn_link/1</code>, let&#39;s try to see what happens when a process fails:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">spawn</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="k">raise</span> <span class="s2">&quot;oops&quot;</span> <span class="k">end</span>
+<span class="go">#PID&lt;0.58.0&gt;</span>
+
+<span class="go">[error] Error in process &lt;0.58.0&gt; with exit value: ...</span>
+</code></pre></div>
+<p>It merely logged an error but the spawning process is still running. That&#39;s because processes are isolated. If we want the failure in one process to propagate to another one, we should link them. This can be done with <code>spawn_link/1</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">spawn_link</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="k">raise</span> <span class="s2">&quot;oops&quot;</span> <span class="k">end</span>
+<span class="go">#PID&lt;0.41.0&gt;</span>
+
+<span class="gr">** (EXIT from #PID&lt;0.41.0&gt;) an exception was raised:</span>
+<span class="gr">    ** (RuntimeError) oops</span>
+<span class="gr">        :erlang.apply/2</span>
+</code></pre></div>
+<p>When a failure happens in the shell, the shell automatically traps the failure and shows it nicely formatted. In order to understand what would really happen in our code, let&#39;s use <code>spawn_link/1</code> inside a file and run it:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="go"># spawn.exs</span>
+<span class="go">spawn_link fn -&gt; raise &quot;oops&quot; end</span>
+
+<span class="go">receive do</span>
+<span class="go">  :hello -&gt; &quot;let&#39;s wait until the process fails&quot;</span>
+<span class="go">end</span>
+</code></pre></div>
+<p>This time the process failed and brought the parent process down as they are linked. Linking can also be done manually by calling <code>Process.link/1</code>. We recommend you to take a look at <a href="http://elixir-lang.org/docs/stable/elixir/Process.html">the <code>Process</code> module</a> for other functionality provided by processes.</p>
+
+<p>Process and links play an important role when building fault-tolerant systems. In Elixir applications, we often link our processes to supervisors which will detect when a process dies and start a new process in its place. This is only possible because processes are isolated and don&#39;t share anything by default. And if processes are isolated, there is no way a failure in a process will crash or corrupt the state of another.</p>
+
+<p>While other languages would require us to catch/handle exceptions, in Elixir we are actually fine with letting processes fail because we expect supervisors to properly restart our systems. &quot;Failing fast&quot; is a common philosophy when writing Elixir software!</p>
+
+<p>Before moving to the next chapter, let&#39;s see one of the most common use cases for creating processes in Elixir.</p>
+
+<h2 id="11.4-tasks">11.4 Tasks</h2>
+
+<p>When making our processes crash in the previous section, you may have noticed the error messages were rather poor:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">spawn</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="k">raise</span> <span class="s2">&quot;oops&quot;</span> <span class="k">end</span>
+<span class="go">#PID&lt;0.58.0&gt;</span>
+
+<span class="go">[error] Error in process &lt;0.58.0&gt; with exit value: ...</span>
+</code></pre></div>
+<p>With <code>spawn/1</code> and <code>spawn_link/1</code> functions, the error messages are generated directly by the Virtual Machine and therefore compact and lacking in details. In practice, developers would rather use the functions in the Task module, more explicitly, <code>Task.start/1</code> and <code>Task.start_link/1</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex(1)&gt; </span><span class="nc">Task</span><span class="p">.</span><span class="n">start</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="k">raise</span> <span class="s2">&quot;oops&quot;</span> <span class="k">end</span>
+<span class="go">{:ok, #PID&lt;0.55.0&gt;}</span>
+
+<span class="go">15:22:33.046 [error] Task #PID&lt;0.55.0&gt; started from #PID&lt;0.53.0&gt; terminating</span>
+<span class="go">Function: #Function&lt;20.90072148/0 in :erl_eval.expr/5&gt;</span>
+<span class="go">    Args: []</span>
+<span class="gr">** (exit) an exception was raised:</span>
+<span class="gr">    ** (RuntimeError) oops</span>
+<span class="gr">        (elixir) lib/task/supervised.ex:74: Task.Supervised.do_apply/2</span>
+<span class="gr">        (stdlib) proc_lib.erl:239: :proc_lib.init_p_do_apply/3</span>
+</code></pre></div>
+<p>Besides providing better error logging, there are a couple other differences: <code>start/1</code> and <code>start_link/1</code> return <code>{:ok, pid}</code> rather than just the PID. This is what enables Tasks to be used in supervision tree. Furthermore, tasks provides convenience functions, like <code>Task.async/1</code> and <code>Task.await/1</code>, and functionality to ease distribution.</p>
+
+<p>We will explore those functionalities in the Mix and OTP guide, for now it is enough to remember to use Tasks to get better logging.</p>
+
+<h2 id="11.5-state">11.5 State</h2>
+
+<p>We haven&#39;t talked about state so far in this guide. If you are building an application that requires state, for example, to keep your application configuration, or you need to parse a file and keep it in memory, where would you store it?</p>
+
+<p>Processes are the most common answer to this question. We can write processes that loop infinitely, maintain state, and send and receive messages. As an example, let&#39;s write a module that starts new processes that work as a key-value store in a file named <code>kv.exs</code>:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">start_link</span> <span class="k">do</span>
+    <span class="nc">Task</span><span class="p">.</span><span class="n">start_link</span><span class="p">(</span><span class="k">fn</span> <span class="p">-&gt;</span> <span class="n">loop</span><span class="p">(%{})</span> <span class="k">end</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="kd">defp</span> <span class="n">loop</span><span class="p">(</span><span class="n">map</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">receive</span> <span class="k">do</span>
+      <span class="p">{</span><span class="ss">:get</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">caller</span><span class="p">}</span> <span class="p">-&gt;</span>
+        <span class="n">send</span> <span class="n">caller</span><span class="p">,</span> <span class="nc">Map</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="n">loop</span><span class="p">(</span><span class="n">map</span><span class="p">)</span>
+      <span class="p">{</span><span class="ss">:put</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">}</span> <span class="p">-&gt;</span>
+        <span class="n">loop</span><span class="p">(</span><span class="nc">Map</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Note that the <code>start_link</code> function basically spawns a new process that runs the <code>loop/1</code> function, starting with an empty map. The <code>loop/1</code> function then waits for messages and performs the appropriate action for each message. In case of a <code>:get</code> message, it sends a message back to the caller and calls <code>loop/1</code> again, to wait for a new message. While the <code>:put</code> message actually invokes <code>loop/1</code> with a new version of the map, with the given <code>key</code> and <code>value</code> stored.</p>
+
+<p>Let&#39;s give it a try by running <code>iex kv.exs</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV</span><span class="p">.</span><span class="n">start_link</span>
+<span class="go">#PID&lt;0.62.0&gt;</span>
+<span class="gp">iex&gt; </span><span class="n">send</span> <span class="n">pid</span><span class="p">,</span> <span class="p">{</span><span class="ss">:get</span><span class="p">,</span> <span class="ss">:hello</span><span class="p">,</span> <span class="n">self</span><span class="p">()}</span>
+<span class="go">{:get, :hello, #PID&lt;0.41.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="n">flush</span>
+<span class="go">nil</span>
+</code></pre></div>
+<p>At first, the process map has no keys, so sending a <code>:get</code> message and then flushing the current process inbox returns <code>nil</code>. Let&#39;s send a <code>:put</code> message and try it again:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">send</span> <span class="n">pid</span><span class="p">,</span> <span class="p">{</span><span class="ss">:put</span><span class="p">,</span> <span class="ss">:hello</span><span class="p">,</span> <span class="ss">:world</span><span class="p">}</span>
+<span class="go">#PID&lt;0.62.0&gt;</span>
+<span class="gp">iex&gt; </span><span class="n">send</span> <span class="n">pid</span><span class="p">,</span> <span class="p">{</span><span class="ss">:get</span><span class="p">,</span> <span class="ss">:hello</span><span class="p">,</span> <span class="n">self</span><span class="p">()}</span>
+<span class="go">{:get, :hello, #PID&lt;0.41.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="n">flush</span>
+<span class="go">:world</span>
+</code></pre></div>
+<p>Notice how the process is keeping a state and we can get and update this state by sending the process messages. In fact, any process that knows the <code>pid</code> above will be able to send it messages and manipulate the state.</p>
+
+<p>It is also possible to register the <code>pid</code>, giving it a name, and allowing everyone that knows the name to send it messages:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Process</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="ss">:kv</span><span class="p">)</span>
+<span class="go">true</span>
+<span class="gp">iex&gt; </span><span class="n">send</span> <span class="ss">:kv</span><span class="p">,</span> <span class="p">{</span><span class="ss">:get</span><span class="p">,</span> <span class="ss">:hello</span><span class="p">,</span> <span class="n">self</span><span class="p">()}</span>
+<span class="go">{:get, :hello, #PID&lt;0.41.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="n">flush</span>
+<span class="go">:world</span>
+</code></pre></div>
+<p>Using processes around state and name registering are very common patterns in Elixir applications. However, most of the time, we won&#39;t implement those patterns manually as above, but by using one of the many of the abstractions that ships with Elixir. For example, Elixir provides <a href="http://elixir-lang.org/docs/stable/elixir/Agent.html">agents</a> which are simple abstractions around state:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">=</span> <span class="nc">Agent</span><span class="p">.</span><span class="n">start_link</span><span class="p">(</span><span class="k">fn</span> <span class="p">-&gt;</span> <span class="p">%{}</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">{:ok, #PID&lt;0.72.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="nc">Agent</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="k">fn</span> <span class="n">map</span> <span class="p">-&gt;</span> <span class="nc">Map</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="ss">:hello</span><span class="p">,</span> <span class="ss">:world</span><span class="p">)</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">Agent</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="k">fn</span> <span class="n">map</span> <span class="p">-&gt;</span> <span class="nc">Map</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="ss">:hello</span><span class="p">)</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">:world</span>
+</code></pre></div>
+<p>A <code>:name</code> option could also be given to <code>Agent.start_link/2</code> and it would be automatically registered. Besides agents, Elixir provides an API for building generic servers (called GenServer), generic event managers and event handlers (called GenEvent), tasks and more, all powered by processes underneath. Those, along with supervision trees, will be explored with more detail in the Mix and OTP guide which will build a complete Elixir application from start to finish.</p>
+
+<p>For now, let&#39;s move on and explore the world of I/O in Elixir.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

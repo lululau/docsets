@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>2 Macros - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="2-macros">2 Macros</h1>
+
+<div class="toc"></div>
+
+<p>Macros can be defined in Elixir using <code>defmacro/2</code>.</p>
+
+<blockquote>
+<p>For this chapter, we will be using files instead of running code samples in IEx. That&#39;s because the code samples will span multiple lines of code and typing them all in IEx can be counter-productive. You should be able to run the code samples by saving them into a <code>macros.exs</code> file and running it with <code>elixir macros.exs</code> or <code>iex macros.exs</code>.</p>
+</blockquote>
+
+<h2 id="2.1-our-first-macro">2.1 Our first macro</h2>
+
+<p>In order to better understand how macros work, let&#39;s create a new module where we are going to implement <code>unless</code>, which does the opposite of <code>if</code>, as a macro and as a function:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Unless</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">fun_unless</span><span class="p">(</span><span class="n">clause</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">clause</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">expression</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="kd">defmacro</span> <span class="n">macro_unless</span><span class="p">(</span><span class="n">clause</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">quote</span> <span class="k">do</span>
+      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">unquote</span><span class="p">(</span><span class="n">clause</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="k">unquote</span><span class="p">(</span><span class="n">expression</span><span class="p">))</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The function receives the arguments and passes them to <code>if</code>. However, as we learned in the previous chapter, the macro will receive quoted expressions, inject them into the quote, and finally return another quoted expression.</p>
+
+<p>Let&#39;s start <code>iex</code> with the module above:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ iex macros.exs
+</code></pre></div>
+<p>And play with those definitions:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="kn">require</span> <span class="nc">Unless</span>
+<span class="gp">iex&gt; </span><span class="nc">Unless</span><span class="p">.</span><span class="n">macro_unless</span> <span class="no">true</span><span class="p">,</span> <span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="s2">&quot;this should never be printed&quot;</span>
+<span class="go">nil</span>
+<span class="gp">iex&gt; </span><span class="nc">Unless</span><span class="p">.</span><span class="n">fun_unless</span> <span class="no">true</span><span class="p">,</span> <span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="s2">&quot;this should never be printed&quot;</span>
+<span class="go">&quot;this should never be printed&quot;</span>
+<span class="go">nil</span>
+</code></pre></div>
+<p>Note that in our macro implementation, the sentence was not printed, although it was printed in our function implementation. That&#39;s because the arguments to a function call are evaluated before calling the function. However, macros do not evaluate their arguments. Instead, they receive the arguments as quoted expressions which are then transformed into other quoted expressions. In this case, we have rewritten our <code>unless</code> macro to become an <code>if</code> behind the scenes.</p>
+
+<p>In other words, when invoked as:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="nc">Unless</span><span class="p">.</span><span class="n">macro_unless</span> <span class="no">true</span><span class="p">,</span> <span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="s2">&quot;this should never be printed&quot;</span>
+</code></pre></div>
+<p>Our <code>macro_unless</code> macro received the following:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">macro_unless</span><span class="p">(</span><span class="no">true</span><span class="p">,</span> <span class="p">{{</span><span class="err">:</span><span class="p">.,</span> <span class="p">[],</span> <span class="p">[</span><span class="nc">IO</span><span class="p">,</span> <span class="ss">:puts</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;this should never be printed&quot;</span><span class="p">]}})</span>
+</code></pre></div>
+<p>And it then returned a quoted expression as follows:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="ss">:if</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span>
+  <span class="p">{</span><span class="ss">:!</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="no">true</span><span class="p">]},</span>
+  <span class="p">{{</span><span class="err">:</span><span class="p">.,</span> <span class="p">[],</span> <span class="p">[</span><span class="nc">IO</span><span class="p">,</span> <span class="ss">:puts</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[</span><span class="s2">&quot;this should never be printed&quot;</span><span class="p">]}}]}</span>
+</code></pre></div>
+<p>We can actually verify that this is the case by using <code>Macro.expand_once/2</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">expr</span> <span class="p">=</span> <span class="k">quote</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">Unless</span><span class="p">.</span><span class="n">macro_unless</span><span class="p">(</span><span class="no">true</span><span class="p">,</span> <span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="s2">&quot;this should never be printed&quot;</span><span class="p">)</span>
+<span class="gp">iex&gt; </span><span class="n">res</span>  <span class="p">=</span> <span class="nc">Macro</span><span class="p">.</span><span class="n">expand_once</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="bp">__ENV__</span><span class="p">)</span>
+<span class="gp">iex&gt; </span><span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="nc">Macro</span><span class="p">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="go">if(!true) do</span>
+<span class="go">  IO.puts(&quot;this should never be printed&quot;)</span>
+<span class="go">end</span>
+<span class="go">:ok</span>
+</code></pre></div>
+<p><code>Macro.expand_once/2</code> receives a quoted expression and expands it according to the current environment. In this case, it expanded/invoked the <code>Unless.macro_unless/2</code> macro and returned its result. We then proceeded to convert the returned quoted expression to a string and print it (we will talk about <code>__ENV__</code> later in this chapter).</p>
+
+<p>That&#39;s what macros are all about. They are about receiving quoted expressions and transforming them into something else. In fact, <code>unless/2</code> in Elixir is implemented as a macro:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmacro</span> <span class="k">unless</span><span class="p">(</span><span class="n">clause</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span> <span class="k">do</span>
+  <span class="k">quote</span> <span class="k">do</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">unquote</span><span class="p">(</span><span class="n">clause</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="k">unquote</span><span class="p">(</span><span class="n">options</span><span class="p">))</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Constructs such as <code>unless/2</code>, <code>defmacro/2</code>, <code>def/2</code>, <code>defprotocol/2</code>, and many others used throughout this getting started guide are implemented in pure Elixir, often as a macros. This means that the constructs being used to build the language can be used by developers to extend the language to the domains they are working on.</p>
+
+<p>We can define any function and macro we want, including ones that override the built-in definitions provided by Elixir. The only exceptions are Elixir special forms which are not implemented in Elixir and therefore cannot be overridden, <a href="http://elixir-lang.org/docs/stable/elixir/Kernel.SpecialForms.html">the full list of special forms is available in <code>Kernel.SpecialForms</code></a>.</p>
+
+<h2 id="2.2-macros-hygiene">2.2 Macros hygiene</h2>
+
+<p>Elixir macros have late resolution. This guarantees that a variable defined inside a quote won&#39;t conflict with a variable defined in the context where that macro is expanded. For example:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Hygiene</span> <span class="k">do</span>
+  <span class="kd">defmacro</span> <span class="n">no_interference</span> <span class="k">do</span>
+    <span class="k">quote</span> <span class="ss">do</span><span class="p">:</span> <span class="n">a</span> <span class="p">=</span> <span class="mi">1</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="kd">defmodule</span> <span class="nc">HygieneTest</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">go</span> <span class="k">do</span>
+    <span class="kn">require</span> <span class="nc">Hygiene</span>
+    <span class="n">a</span> <span class="p">=</span> <span class="mi">13</span>
+    <span class="nc">Hygiene</span><span class="p">.</span><span class="n">no_interference</span>
+    <span class="n">a</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nc">HygieneTest</span><span class="p">.</span><span class="n">go</span>
+<span class="c1"># =&gt; 13</span>
+</code></pre></div>
+<p>In the example above, even though the macro injects <code>a = 1</code>, it does not affect the variable <code>a</code> defined by the <code>go</code> function. If a macro wants to explicitly affect the context, it can use <code>var!</code>:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Hygiene</span> <span class="k">do</span>
+  <span class="kd">defmacro</span> <span class="n">interference</span> <span class="k">do</span>
+    <span class="k">quote</span> <span class="ss">do</span><span class="p">:</span> <span class="n">var!</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">=</span> <span class="mi">1</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="kd">defmodule</span> <span class="nc">HygieneTest</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">go</span> <span class="k">do</span>
+    <span class="kn">require</span> <span class="nc">Hygiene</span>
+    <span class="n">a</span> <span class="p">=</span> <span class="mi">13</span>
+    <span class="nc">Hygiene</span><span class="p">.</span><span class="n">interference</span>
+    <span class="n">a</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nc">HygieneTest</span><span class="p">.</span><span class="n">go</span>
+<span class="c1"># =&gt; 1</span>
+</code></pre></div>
+<p>Variable hygiene only works because Elixir annotates variables with their context. For example, a variable <code>x</code> defined on line 3 of a module would be represented as:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">{:x, [line: 3], nil}
+</code></pre></div>
+<p>However, a quoted variable is represented as:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Sample</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">quoted</span> <span class="k">do</span>
+    <span class="k">quote</span> <span class="ss">do</span><span class="p">:</span> <span class="n">x</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nc">Sample</span><span class="p">.</span><span class="n">quoted</span> <span class="c1">#=&gt; {:x, [line: 3], Sample}</span>
+</code></pre></div>
+<p>Notice that the third element in the quoted variable is the atom <code>Sample</code>, instead of <code>nil</code>, which marks the variable as coming from the <code>Sample</code> module. Therefore, Elixir considers these two variables as coming from different contexts and handles them accordingly.</p>
+
+<p>Elixir provides similar mechanisms for imports and aliases too. This guarantees that a macro will behave as specified by its source module rather than conflicting with the target module where the macro is expanded. Hygiene can be bypassed under specific situations by using macros like <code>var!/2</code> and <code>alias!/2</code>, although one must be careful when using those as they directly change the user environment.</p>
+
+<p>Sometimes variable names might be dynamically created. In such cases, <code>Macro.var/2</code> can be used to define new variables:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Sample</span> <span class="k">do</span>
+  <span class="kd">defmacro</span> <span class="n">initialize_to_char_count</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span> <span class="k">do</span>
+    <span class="nc">Enum</span><span class="p">.</span><span class="n">map</span> <span class="n">variables</span><span class="p">,</span> <span class="k">fn</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">-&gt;</span>
+      <span class="n">var</span> <span class="p">=</span> <span class="nc">Macro</span><span class="p">.</span><span class="n">var</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="no">nil</span><span class="p">)</span>
+      <span class="n">length</span> <span class="p">=</span> <span class="nc">Atom</span><span class="p">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">|&gt;</span> <span class="nc">String</span><span class="p">.</span><span class="n">length</span>
+      <span class="k">quote</span> <span class="k">do</span>
+        <span class="k">unquote</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="p">=</span> <span class="k">unquote</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">run</span> <span class="k">do</span>
+    <span class="n">initialize_to_char_count</span> <span class="p">[</span><span class="ss">:red</span><span class="p">,</span> <span class="ss">:green</span><span class="p">,</span> <span class="ss">:yellow</span><span class="p">]</span>
+    <span class="p">[</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">yellow</span><span class="p">]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="o">&gt;</span> <span class="nc">Sample</span><span class="p">.</span><span class="n">run</span> <span class="c1">#=&gt; [3, 5, 6]</span>
+</code></pre></div>
+<p>Take note of the second argument to <code>Macro.var/2</code>. This is the context being used and will determine hygiene as described in this section.</p>
+
+<h2 id="2.3-the-environment">2.3 The environment</h2>
+
+<p>When calling <code>Macro.expand_once/2</code> earlier in this chapter, we used the special form <code>__ENV__</code>.</p>
+
+<p><code>__ENV__</code> returns an instance of <code>Macro.Env</code> which contains useful information about the compilation environment, including the current module, file and line, all variables defined in the current scope, as well as imports, requires and so on:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="bp">__ENV__</span><span class="p">.</span><span class="n">module</span>
+<span class="go">nil</span>
+<span class="gp">iex&gt; </span><span class="bp">__ENV__</span><span class="p">.</span><span class="n">file</span>
+<span class="go">&quot;iex&quot;</span>
+<span class="gp">iex&gt; </span><span class="bp">__ENV__</span><span class="p">.</span><span class="n">requires</span>
+<span class="go">[IEx.Helpers, Kernel, Kernel.Typespec]</span>
+<span class="gp">iex&gt; </span><span class="kn">require</span> <span class="nc">Integer</span>
+<span class="go">nil</span>
+<span class="gp">iex&gt; </span><span class="bp">__ENV__</span><span class="p">.</span><span class="n">requires</span>
+<span class="go">[IEx.Helpers, Integer, Kernel, Kernel.Typespec]</span>
+</code></pre></div>
+<p>Many of the functions in the <code>Macro</code> module expect an environment. You can read more about them in <a href="http://elixir-lang.org/docs/stable/elixir/Macro.html">the docs for the <code>Macro</code> module</a> and learn more about the compilation environment with <a href="http://elixir-lang.org/docs/stable/elixir/Macro.Env.html"><code>Macro.Env</code></a>.</p>
+
+<h2 id="2.4-private-macros">2.4 Private macros</h2>
+
+<p>Elixir also supports private macros via <code>defmacrop</code>. As private functions, these macros are only available inside the module that defines them, and only at compilation time.</p>
+
+<p>It is important that a macro is defined before its usage. Failing to define a macro before its invocation will raise an error at runtime, since the macro won&#39;t be expanded and will be translated to a function call:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="kd">defmodule</span> <span class="nc">Sample</span> <span class="k">do</span>
+<span class="p">...</span><span class="o">&gt;</span>  <span class="kd">def</span> <span class="n">four</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="n">two</span> <span class="o">+</span> <span class="n">two</span>
+<span class="p">...</span><span class="o">&gt;</span>  <span class="kd">defmacrop</span> <span class="n">two</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">...</span><span class="o">&gt;</span> <span class="k">end</span>
+<span class="o">**</span> <span class="p">(</span><span class="nc">CompileError</span><span class="p">)</span> <span class="n">iex</span><span class="err">:</span><span class="mi">2</span><span class="err">:</span> <span class="n">function</span> <span class="n">two</span><span class="o">/</span><span class="mi">0</span> <span class="n">undefined</span>
+</code></pre></div>
+<h2 id="2.5-write-macros-responsibly">2.5 Write macros responsibly</h2>
+
+<p>Macros are a powerful construct and Elixir provides many mechanisms to ensure they are used responsibly:</p>
+
+<ul>
+<li><p>Macros are hygienic: by default, variables defined inside the macro are not going to affect the user code. Furthermore, function calls and aliases available in the macro context are not going to leak into the user context;</p></li>
+<li><p>Macros are lexical: it is impossible to inject code or macros globally. Before using a macro, you need to explicitly <code>require</code> or <code>import</code> the module that defines the macro;</p></li>
+<li><p>Macros are explicit: it is impossible to run a macro without explicitly invoking it. For example, some languages allow developers to completely rewrite functions behind the scenes, often via parse transforms or via some reflection mechanisms. In Elixir, a macro must be explicitly invoked in the caller;</p></li>
+<li><p>Macros&#39; language is clear: many languages provide syntax shortcuts for <code>quote</code> and <code>unquote</code>. In Elixir, we preferred to have them explicitly spelled out, in order to clearly delimit the boundaries of a macro definition and its quoted expressions;</p></li>
+</ul>
+
+<p>Even if Elixir attempts its best to provide a safe environment, the major responsibility still falls on the developers. That&#39;s why the first rule of the macro club is <strong>write macros responsibly</strong>. Macros are harder to write than ordinary Elixir functions and it&#39;s considered to be bad style to use them when they&#39;re not necessary. Elixir already provides elegant mechanisms to write your every day code and macros should be saved as a last resort.</p>
+
+<p>And, if you ever need to resort to macros, remember that macros are not your API. Keep your macro definitions short, including its quoted contents. For example, instead of writing a macro like this:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">MyModule</span> <span class="k">do</span>
+  <span class="kd">defmacro</span> <span class="n">my_macro</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">quote</span> <span class="k">do</span>
+      <span class="n">do_this</span><span class="p">(</span><span class="k">unquote</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+      <span class="p">...</span>
+      <span class="n">do_that</span><span class="p">(</span><span class="k">unquote</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+      <span class="p">...</span>
+      <span class="n">and_that</span><span class="p">(</span><span class="k">unquote</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>write:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">MyModule</span> <span class="k">do</span>
+  <span class="kd">defmacro</span> <span class="n">my_macro</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">quote</span> <span class="k">do</span>
+      <span class="c1"># Keep what you need to do here to a minimum</span>
+      <span class="c1"># and move everything else to a function</span>
+      <span class="n">do_this_that_and_that</span><span class="p">(</span><span class="k">unquote</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="k">unquote</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="k">unquote</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">do_this_that_and_that</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">do_this</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="p">...</span>
+    <span class="n">do_that</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="p">...</span>
+    <span class="n">and_that</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This makes your code clearer and easier to test and maintain, as you can invoke <code>do_this_that_and_that/3</code> directly. It also helps you design an actual API for developers that does not rely on macros.</p>
+
+<p>With those lessons, we finish our introduction to macros. The next chapter is a brief discussion on DSLs, showing how we can mix macros and module attributes to annotate and extend modules and functions.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

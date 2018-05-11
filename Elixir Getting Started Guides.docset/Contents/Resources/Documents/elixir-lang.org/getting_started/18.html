@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>18 Sigils - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="18-sigils">18 Sigils</h1>
+
+<div class="toc"></div>
+
+<p>We have already learned that Elixir provides double-quoted strings and single-quoted char lists. However, this only covers the surface of structures that have textual representation in the language. Atoms are, for example, are mostly created via the <code>:atom</code> representation.</p>
+
+<p>One of Elixir&#39;s goals is extensibility: developers should be able to extend the language to fit any particular domain. Computer science has become such a wide field that it is impossible for a language to tackle many fields as part of its core. Our best bet is to rather make the language extensible, so developers, companies and communities can extend the language to their relevant domains.</p>
+
+<p>In this chapter, we are going to explore sigils, which are one of the mechanisms provided by the language for working with textual representations. Sigils start with the tilde (<code>~</code>) character which is followed by a letter (which identifies the sigil) and then a delimiter; optionally, modifiers can be added after the final delimiter.</p>
+
+<h2 id="18.1-regular-expressions">18.1 Regular expressions</h2>
+
+<p>The most common sigil in Elixir is <code>~r</code>, which is used to create <a href="https://en.wikipedia.org/wiki/Regular_Expressions">regular expressions</a>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="go"># A regular expression that matches strings which contain &quot;foo&quot; or &quot;bar&quot;:</span>
+<span class="gp">iex&gt; </span><span class="n">regex</span> <span class="p">=</span> <span class="sx">~r/foo|bar/</span>
+<span class="go">~r/foo|bar/</span>
+<span class="gp">iex&gt; </span><span class="s2">&quot;foo&quot;</span> <span class="o">=~</span> <span class="n">regex</span>
+<span class="go">true</span>
+<span class="gp">iex&gt; </span><span class="s2">&quot;bat&quot;</span> <span class="o">=~</span> <span class="n">regex</span>
+<span class="go">false</span>
+</code></pre></div>
+<p>Elixir provides Perl-compatible regular expressions (regexes), as implemented by the <a href="http://www.pcre.org/">PCRE</a> library. Regexes also support modifiers. For example, the <code>i</code> modifier makes a regular expression case insensitive:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="s2">&quot;HELLO&quot;</span> <span class="o">=~</span> <span class="sx">~r/hello/</span>
+<span class="go">false</span>
+<span class="gp">iex&gt; </span><span class="s2">&quot;HELLO&quot;</span> <span class="o">=~</span> <span class="sx">~r/hello/i</span>
+<span class="go">true</span>
+</code></pre></div>
+<p>Check out the <a href="http://elixir-lang.org/docs/stable/elixir/Regex.html"><code>Regex</code> module</a> for more information on other modifiers and the supported operations with regular expressions.</p>
+
+<p>So far, all examples have used <code>/</code> to delimit a regular expression. However sigils support 8 different delimiters:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">~r/hello/
+~r|hello|
+~r&quot;hello&quot;
+~r&#39;hello&#39;
+~r(hello)
+~r[hello]
+~r{hello}
+~r&lt;hello&gt;
+</code></pre></div>
+<p>The reason behind supporting different delimiters is that different delimiters can be more suited for different sigils. For example, using parentheses for regular expressions may be a confusing choice as they can get mixed with the parentheses inside the regex. However, parentheses can be handy for other sigils, as we will see in the next section.</p>
+
+<h2 id="18.2-strings,-char-lists-and-words-sigils">18.2 Strings, char lists and words sigils</h2>
+
+<p>Besides regular expressions, Elixir ships with three other sigils.</p>
+
+<h3 id="18.2.1-strings">18.2.1 Strings</h3>
+
+<p>The <code>~s</code> sigil is used to generate strings, like double quotes are. The <code>~s</code> sigil is useful, for example, when a string contains both double and single quotes:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="sx">~s(this is a string with &quot;double&quot; quotes, not &#39;single&#39; ones)</span>
+<span class="go">&quot;this is a string with \&quot;double\&quot; quotes, not &#39;single&#39; ones&quot;</span>
+</code></pre></div>
+<h3 id="18.2.2-char-lists">18.2.2 Char lists</h3>
+
+<p>The <code>~c</code> sigil is used to generate char lists:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="sx">~c(this is a char list containing &#39;single quotes&#39;)</span>
+<span class="go">&#39;this is a char list containing \&#39;single quotes\&#39;&#39;</span>
+</code></pre></div>
+<h3 id="18.2.3-word-lists">18.2.3 Word lists</h3>
+
+<p>The <code>~w</code> sigil is used to generate lists of words (<em>words</em> are just regular strings). Inside the <code>~w</code> sigil, words are separated by whitespace.</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="sx">~w(foo bar bat)</span>
+<span class="go">[&quot;foo&quot;, &quot;bar&quot;, &quot;bat&quot;]</span>
+</code></pre></div>
+<p>The <code>~w</code> sigil also accepts the <code>c</code>, <code>s</code> and <code>a</code> modifiers (for char lists, strings and atoms, respectively) which specify the data type of the elements of the resulting list:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="sx">~w(foo bar bat)a</span>
+<span class="go">[:foo, :bar, :bat]</span>
+</code></pre></div>
+<h2 id="18.3-interpolation-and-escaping-in-sigils">18.3 Interpolation and escaping in sigils</h2>
+
+<p>Besides lowercase sigils, Elixir supports uppercase sigils to deal with escaping characters and interpolation. While both <code>~s</code> and <code>~S</code> will return strings, the former allows escape codes and interpolation while the latter does not:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="sx">~s(String with escape codes \x26 </span><span class="si">#{</span><span class="s2">&quot;inter&quot;</span> <span class="o">&lt;&gt;</span> <span class="s2">&quot;polation&quot;</span><span class="si">}</span><span class="sx">)</span>
+<span class="s2">&quot;String with escape codes &amp; interpolation&quot;</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="sx">~S(String without escape codes and without #{interpolation})</span>
+<span class="s2">&quot;String without escape codes and without \#{interpolation}&quot;</span>
+</code></pre></div>
+<p>The following escape codes can be used in strings and char lists:</p>
+
+<ul>
+<li><code>\&quot;</code> – double quote</li>
+<li><code>\&#39;</code> – single quote</li>
+<li><code>\\</code> – single backslash</li>
+<li><code>\a</code> – bell/alert</li>
+<li><code>\b</code> – backspace</li>
+<li><code>\d</code> - delete</li>
+<li><code>\e</code> - escape</li>
+<li><code>\f</code> - form feed</li>
+<li><code>\n</code> – newline</li>
+<li><code>\r</code> – carriage return</li>
+<li><code>\s</code> – space</li>
+<li><code>\t</code> – tab</li>
+<li><code>\v</code> – vertical tab</li>
+<li><code>\0</code> - null byte</li>
+<li><code>\xDD</code> - character with hexadecimal representation DD (e.g., <code>\x13</code>)</li>
+<li><code>\x{D...}</code> - character with hexadecimal representation with one or more hexadecimal digits (e.g., <code>\x{abc13}</code>)</li>
+</ul>
+
+<p>Sigils also support heredocs, that is, triple double- or single-quotes as separators:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="sx">~s</span><span class="sh">&quot;&quot;&quot;</span>
+<span class="gp">...&gt; </span><span class="sh">this is</span>
+<span class="gp">...&gt; </span><span class="sh">a heredoc string</span>
+<span class="gp">...&gt; </span><span class="sh">&quot;&quot;&quot;</span>
+</code></pre></div>
+<p>The most common use case for heredoc sigils is when writing documentation. For example, writing escape characters in documentation would soon become error prone because of the need to double-escape some characters:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">Converts double-quotes to single-quotes.</span>
+
+<span class="err">##</span><span class="sh"> Examples</span>
+
+<span class="sh">    iex&gt; convert(&quot;\\\&quot;foo\\\&quot;&quot;)</span>
+<span class="sh">    &quot;&#39;foo&#39;&quot;</span>
+
+<span class="sh">&quot;&quot;&quot;</span>
+<span class="kd">def</span> <span class="n">convert</span><span class="p">(...)</span>
+</code></pre></div>
+<p>By using using <code>~S</code>, this problem can be avoided altogether:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="na">@doc</span> <span class="sx">~S</span><span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">Converts double-quotes to single-quotes.</span>
+
+<span class="sh">## Examples</span>
+
+<span class="sh">    iex&gt; convert(&quot;\&quot;foo\&quot;&quot;)</span>
+<span class="sh">    &quot;&#39;foo&#39;&quot;</span>
+
+<span class="sh">&quot;&quot;&quot;</span>
+<span class="kd">def</span> <span class="n">convert</span><span class="p">(...)</span>
+</code></pre></div>
+<h2 id="18.4-custom-sigils">18.4 Custom sigils</h2>
+
+<p>As hinted at the beginning of this chapter, sigils in Elixir are extensible. In fact, using the sigil <code>~r/foo/i</code> is equivalent to calling the <code>sigil_r</code> function with a binary and a char list as argument:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">sigil_r</span><span class="p">(&lt;&lt;</span><span class="s2">&quot;foo&quot;</span><span class="p">&gt;&gt;,</span> <span class="s1">&#39;i&#39;</span><span class="p">)</span>
+<span class="go">~r&quot;foo&quot;i</span>
+</code></pre></div>
+<p>We can access the documentation for the <code>~r</code> sigil via the <code>sigil_r</code> function:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">h</span> <span class="n">sigil_r</span>
+<span class="go">...</span>
+</code></pre></div>
+<p>We can also provide our own sigils by simply implementing functions that follow the <code>sigil_{identifier}</code> pattern. For example, let&#39;s implement the <code>~i</code> sigil that returns an integer (with the optional <code>n</code> modifier to make it negative):</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="kd">defmodule</span> <span class="nc">MySigils</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="kd">def</span> <span class="n">sigil_i</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="p">[]),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">String</span><span class="p">.</span><span class="n">to_integer</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="gp">...&gt; </span>  <span class="kd">def</span> <span class="n">sigil_i</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="p">[</span><span class="sc">?n</span><span class="p">]),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">String</span><span class="p">.</span><span class="n">to_integer</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="gp">iex&gt; </span><span class="kn">import</span> <span class="nc">MySigils</span>
+<span class="gp">iex&gt; </span><span class="sx">~i(13)</span>
+<span class="go">13</span>
+<span class="gp">iex&gt; </span><span class="sx">~i(42)n</span>
+<span class="go">-42</span>
+</code></pre></div>
+<p>Sigils can also be used to do compile-time work with the help of macros. For example, regular expressions in Elixir are compiled into an efficient representation during compilation of the source code, therefore skipping this step at runtime. If you&#39;re interested in the subject, we recommend you to learn more about macros and check out how sigils are implemented in the <code>Kernel</code> module (where the <code>sigil_*</code> functions are defined).</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

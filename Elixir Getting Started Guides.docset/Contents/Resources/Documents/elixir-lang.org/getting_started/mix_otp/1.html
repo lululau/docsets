@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>1 Introduction to Mix - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="1-introduction-to-mix">1 Introduction to Mix</h1>
+
+<div class="toc"></div>
+
+<p>In this guide, we will learn how to build a complete Elixir application, with its own supervision tree, configuration, tests and more.</p>
+
+<p>The application works as a distributed key-value store. We are going to organize key-value pairs into buckets and distribute those buckets across multiple nodes. We will also build a simple client that allows us to connect to any of those nodes and send requests such as:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CREATE shopping
+OK
+
+PUT shopping milk 1
+OK
+
+PUT shopping eggs 3
+OK
+
+GET shopping milk
+1
+OK
+
+DELETE shopping eggs
+OK
+</code></pre></div>
+<p>In order to build our key-value application, we are going to use three main tools:</p>
+
+<ul>
+<li><p>OTP is a set of libraries that ships with Erlang. Erlang developers use OTP to build robust, fault-tolerant applications. In this chapter we will explore how many aspects from OTP integrate with Elixir, including supervision trees, event managers and more;</p></li>
+<li><p>Mix is a build tool that ships with Elixir that provides tasks for creating, compiling, testing your application, managing its dependencies and much more;</p></li>
+<li><p>ExUnit is a test-unit based framework that ships with Elixir;</p></li>
+</ul>
+
+<p>In this chapter, we will create our first project using Mix and explore different features in OTP, Mix and ExUnit as we go.</p>
+
+<blockquote>
+<p>Note: this guide requires Elixir v0.15.0 or later. You can check your Elixir version with <code>elixir -v</code> and install a more recent version if required by following the steps described in <a href="http://elixir-lang.org/getting_started/1.html">the first chapter of the Getting Started guide</a>.</p>
+
+<p>If you have any questions or improvements to the guide, please let us know in <a href="https://groups.google.com/d/forum/elixir-lang-talk">our mailing list</a> or <a href="http://github.com/elixir-lang/elixir-lang.github.com/issues">issues tracker</a> respectively. Your input is really important to help us guarantee the guides are accessible and up to date!</p>
+</blockquote>
+
+<h2 id="1.1-our-first-project">1.1 Our first project</h2>
+
+<p>When you install Elixir, besides getting the <code>elixir</code>, <code>elixirc</code> and <code>iex</code> executables, you also get an executable Elixir script named <code>mix</code>.</p>
+
+<p>Let&#39;s create our first project by invoking <code>mix new</code> from the command line. We&#39;ll pass the project name as argument (<code>kv</code>, in this case), and tell mix that our main module should be the all-uppercase <code>KV</code>, instead of the default, which would have been <code>Kv</code>:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mix new kv --module KV
+</code></pre></div>
+<p>Mix will create a directory named <code>kv</code> with a few files in it:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">* creating README.md
+* creating .gitignore
+* creating mix.exs
+* creating config
+* creating config/config.exs
+* creating lib
+* creating lib/kv.ex
+* creating test
+* creating test/test_helper.exs
+* creating test/kv_test.exs
+</code></pre></div>
+<p>Let&#39;s take a brief look at those generated files.</p>
+
+<blockquote>
+<p>Note: Mix is an Elixir executable. This means that in order to run <code>mix</code>, you need to have elixir&#39;s executable in your PATH. If not, you can run it by passing the script as argument to elixir:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ bin/elixir bin/mix new kv --module KV
+</code></pre></div>
+<p>Note that you can also execute any script in your PATH from Elixir via the -S option:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ bin/elixir -S mix new kv --module KV
+</code></pre></div>
+<p>When using -S, elixir finds the script wherever it is in your PATH and executes it.</p>
+</blockquote>
+
+<h2 id="1.2-project-compilation">1.2 Project compilation</h2>
+
+<p>A file named <code>mix.exs</code> was generated inside our new project and its main responsibility is to configure our project. Let&#39;s take a look at it (comments removed):</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV.Mixfile</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">Mix.Project</span>
+
+  <span class="kd">def</span> <span class="n">project</span> <span class="k">do</span>
+    <span class="p">[</span><span class="ss">app</span><span class="p">:</span> <span class="ss">:kv</span><span class="p">,</span>
+     <span class="ss">version</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+     <span class="ss">deps</span><span class="p">:</span> <span class="n">deps</span><span class="p">]</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">application</span> <span class="k">do</span>
+    <span class="p">[</span><span class="ss">applications</span><span class="p">:</span> <span class="p">[</span><span class="ss">:logger</span><span class="p">]]</span>
+  <span class="k">end</span>
+
+  <span class="kd">defp</span> <span class="n">deps</span> <span class="k">do</span>
+    <span class="p">[]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Our <code>mix.exs</code> defines two public functions: <code>project</code>, which returns project configuration like the project name and version, and <code>application</code>, which is used to generate an application file.</p>
+
+<p>There is also a private function named <code>deps</code>, which is invoked from the <code>project</code> function, that defines our project dependencies. Defining <code>deps</code> as a separate function is not required, but it helps keep the project configuration tidy.</p>
+
+<p>Mix also generates a file at <code>lib/kv.ex</code> with a simple module definition:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV</span> <span class="k">do</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>This structure is enough to compile our project:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mix compile
+</code></pre></div>
+<p>Will generate:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Compiled lib/kv.ex
+Generated kv.app
+</code></pre></div>
+<p>Notice the <code>lib/kv.ex</code> file was compiled and <code>kv.app</code> file was generated. This <code>.app</code> file is generated with the information from the <code>application/0</code> function in the <code>mix.exs</code> file. We will further explore <code>mix.exs</code> configuration features in future chapters.</p>
+
+<p>Once the project is compiled, you can start an <code>iex</code> session inside the project by running:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ iex -S mix
+</code></pre></div>
+<h2 id="1.3-running-tests">1.3 Running tests</h2>
+
+<p>Mix also generated the appropriate structure for running our project tests. Mix projects usually follow the convention of having a <code>&lt;filename&gt;_test.exs</code> file in the <code>test</code> directory for each file in the <code>lib</code> directory. For this reason, we can already find a <code>test/kv_test.exs</code> corresponding to our <code>lib/kv.ex</code> file. It doesn&#39;t do much at this point:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KVTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">ExUnit.Case</span>
+
+  <span class="n">test</span> <span class="s2">&quot;the truth&quot;</span> <span class="k">do</span>
+    <span class="n">assert</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>It is important to note a couple things:</p>
+
+<ol>
+<li><p>the test file is an Elixir script file (<code>.exs</code>). This is convenient because we don&#39;t need to compile test files before running them;</p></li>
+<li><p>we define a test module named <code>KVTest</code>, use <a href="http://elixir-lang.org/docs/stable/ex_unit/ExUnit.Case.html"><code>ExUnit.Case</code></a> to inject the testing API and define a simple test using the <code>test/2</code> macro;</p></li>
+</ol>
+
+<p>Mix also generated a file named <code>test/test_helper.exs</code> which is responsible for setting up the test framework:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="nc">ExUnit</span><span class="p">.</span><span class="n">start</span>
+</code></pre></div>
+<p>This file will be automatically required by Mix every time before we run our tests. We can run tests with <code>mix test</code>:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Compiled lib/kv.ex
+Generated kv.app
+.
+
+Finished in 0.04 seconds (0.04s on load, 0.00s on tests)
+1 tests, 0 failures
+
+Randomized with seed 540224
+</code></pre></div>
+<p>Notice that by running <code>mix test</code>, Mix has compiled the source files and generated the application file once again. This happens because Mix supports multiple environments, which we will explore in the next section.</p>
+
+<p>Furthermore, you can see that ExUnit prints a dot for each successful test and automatically randomizes tests too. Let&#39;s make the test fail on purpose and see what happens.</p>
+
+<p>Change the assertion in <code>test/kv_test.exs</code> to the following:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">assert</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">3</span>
+</code></pre></div>
+<p>Now run <code>mix test</code> again (notice this time there was no compilation):</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">1) test the truth (KVTest)
+   test/kv_test.exs:4
+   Assertion with == failed
+   code: 1 + 1 == 3
+   lhs:  2
+   rhs:  3
+   stacktrace:
+     test/kv_test.exs:5
+
+Finished in 0.05 seconds (0.05s on load, 0.00s on tests)
+1 tests, 1 failures
+</code></pre></div>
+<p>For each failure, ExUnit prints a detailed report, containing the test name with the test case, the code that failed and the values for the left-hand side (lhs) and right-hand side (rhs) of the <code>==</code> operator.</p>
+
+<p>In the second line of the failure, right below the test name, there is the location the test was defined. If you copy the test location in the second line, containing the file and line, and paste it in-front of <code>mix test</code>, Mix will load and run just that particular test:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mix test test/kv_test.exs:4
+</code></pre></div>
+<p>This shortcut will be extremely useful as we build our project, allowing us to quickly iterate by running just a specific test.</p>
+
+<p>Finally, the stacktrace relates to the failure itself, giving information about the test and often the place the failure was generated from within the source files.</p>
+
+<h2 id="1.4-environments">1.4 Environments</h2>
+
+<p>Mix supports the concept of &quot;environments&quot;. They allow a developer to customize compilation and other options for specific scenarios. By default, Mix understands three environments:</p>
+
+<ul>
+<li><code>:dev</code> - the one in which mix tasks (like <code>compile</code>) run by default</li>
+<li><code>:test</code> - used by <code>mix test</code></li>
+<li><code>:prod</code> - the one you will use to put your project in production</li>
+</ul>
+
+<blockquote>
+<p>Note: If you add dependencies to your project, they will not inherit your project&#39;s environment, but instead run with their <code>:prod</code> environment settings!</p>
+</blockquote>
+
+<p>By default, these environments behave the same and all configuration we have seen so far will affect all three environments. Customization per environment can be done by accessing <a href="http://elixir-lang.org/docs/stable/mix/Mix.html#env/1">the <code>Mix.env</code> function</a> in your <code>mix.exs</code> file, which returns the current environment as an atom:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">def</span> <span class="n">project</span> <span class="k">do</span>
+  <span class="p">[</span><span class="ss">deps_path</span><span class="p">:</span> <span class="n">deps_path</span><span class="p">(</span><span class="nc">Mix</span><span class="p">.</span><span class="n">env</span><span class="p">)]</span>
+<span class="k">end</span>
+
+<span class="kd">defp</span> <span class="n">deps_path</span><span class="p">(</span><span class="ss">:prod</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&quot;prod_deps&quot;</span>
+<span class="kd">defp</span> <span class="n">deps_path</span><span class="p">(</span><span class="bp">_</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="s2">&quot;deps&quot;</span>
+</code></pre></div>
+<p>Mix will default to the <code>:dev</code> environment, except for the <code>test</code> task that will default to the <code>:test</code> environment. The environment can be changed via the <code>MIX_ENV</code> environment variable:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ MIX_ENV=prod mix compile
+</code></pre></div>
+<h2 id="1.5-exploring">1.5 Exploring</h2>
+
+<p>There is much more to Mix, and we will continue to explore it as we build our project. A <a href="http://elixir-lang.org/docs/stable/mix">general overview is available on the Mix documentation</a>.</p>
+
+<p>Keep in mind that you can always invoke the help task to list all available tasks:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ mix help
+</code></pre></div>
+<p>You can get further information about a particular task by invoking <code>mix help TASK</code>.</p>
+
+<p>Let&#39;s write some code!</p>
+
+  </article><!-- .hfeed -->
+
+  
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>13 alias, require and import - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="13-alias,-require-and-import">13 alias, require and import</h1>
+
+<div class="toc"></div>
+
+<p>In order to facilitate software reuse, Elixir provides three directives. As we are going to see below, they are called directives because they have <strong>lexical scope</strong>.</p>
+
+<h2 id="13.1-alias">13.1 alias</h2>
+
+<p><code>alias</code> allows you to set up aliases for any given module name. Imagine our <code>Math</code> module uses a special list implementation for doing math specific operations:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Math</span> <span class="k">do</span>
+  <span class="kn">alias</span> <span class="nc">Math.List</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="nc">List</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>From now on, any reference to <code>List</code> will automatically expand to <code>Math.List</code>. In case one wants to access the original <code>List</code>, it can be done by prefixing the module name with <code>Elixir.</code>:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="nc">List</span><span class="p">.</span><span class="n">flatten</span>             <span class="c1">#=&gt; uses Math.List.flatten</span>
+<span class="nc">Elixir.List</span><span class="p">.</span><span class="n">flatten</span>      <span class="c1">#=&gt; uses List.flatten</span>
+<span class="nc">Elixir.Math.List</span><span class="p">.</span><span class="n">flatten</span> <span class="c1">#=&gt; uses Math.List.flatten</span>
+</code></pre></div>
+<blockquote>
+<p>Note: All modules defined in Elixir are defined inside a main Elixir namespace. However, for convenience, you can omit &quot;Elixir.&quot; when referencing them.</p>
+</blockquote>
+
+<p>Aliases are frequently used to define shortcuts. In fact, calling <code>alias</code> without an <code>:as</code> option sets the alias automatically to the last part of the module name, for example:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kn">alias</span> <span class="nc">Math.List</span>
+</code></pre></div>
+<p>Is the same as:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kn">alias</span> <span class="nc">Math.List</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="nc">List</span>
+</code></pre></div>
+<p>Note that <code>alias</code> is <strong>lexically scoped</strong>, which allows you to set aliases inside specific functions:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Math</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">plus</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">do</span>
+    <span class="kn">alias</span> <span class="nc">Math.List</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">minus</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">do</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>In the example above, since we are invoking <code>alias</code> inside the function <code>plus/2</code>, the alias will just be valid inside the function <code>plus/2</code>. <code>minus/2</code> won&#39;t be affected at all.</p>
+
+<h2 id="13.2-require">13.2 require</h2>
+
+<p>Elixir provides macros as a mechanism for meta-programming (writing code that generates code).</p>
+
+<p>Macros are chunks of code that are executed and expanded at compilation time. This means, in order to use a macro, we need to guarantee its module and implementation are available during compilation. This is done with the <code>require</code> directive:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Integer</span><span class="p">.</span><span class="n">is_odd</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gr">** (CompileError) iex:1: you must require Integer before invoking the macro Integer.is_odd/1</span>
+<span class="gp">iex&gt; </span><span class="kn">require</span> <span class="nc">Integer</span>
+<span class="go">nil</span>
+<span class="gp">iex&gt; </span><span class="nc">Integer</span><span class="p">.</span><span class="n">is_odd</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">true</span>
+</code></pre></div>
+<p>In Elixir, <code>Integer.is_odd/1</code> is defined as a macro so that it can be used as a guard. This means that, in order to invoke <code>Integer.is_odd/1</code>, we need to first require the <code>Integer</code> module.</p>
+
+<p>In general a module does not need to be required before usage, except if we want to use the macros available in that module. An attempt to call a macro that was not loaded will raise an error. Note that like the <code>alias</code> directive, <code>require</code> is also lexically scoped. We will talk more about macros in a later chapter.</p>
+
+<h2 id="13.3-import">13.3 import</h2>
+
+<p>We use <code>import</code> whenever we want to easily access functions or macros from other modules without using the fully-qualified name. For instance, if we want to use the <code>duplicate/2</code> function from the <code>List</code> module several times, we can simply import it:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="kn">import</span> <span class="nc">List</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="p">[</span><span class="ss">duplicate</span><span class="p">:</span> <span class="mi">2</span><span class="p">]</span>
+<span class="go">nil</span>
+<span class="gp">iex&gt; </span><span class="n">duplicate</span> <span class="ss">:ok</span><span class="p">,</span> <span class="mi">3</span>
+<span class="go">[:ok, :ok, :ok]</span>
+</code></pre></div>
+<p>In this case, we are importing only the function <code>duplicate</code> (with arity 2) from <code>List</code>. Although <code>:only</code> is optional, its usage is recommended in order to avoid importing all the functions of a given module inside the namespace. <code>:except</code> could also be given as an option in order to import everything in a module <em>except</em> a list of functions.</p>
+
+<p><code>import</code> also supports <code>:macros</code> and <code>:functions</code> to be given to <code>:only</code>. For example, to import all macros, one could write:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kn">import</span> <span class="nc">Integer</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="ss">:macros</span>
+</code></pre></div>
+<p>Or to import all functions, you could write:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kn">import</span> <span class="nc">Integer</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="ss">:functions</span>
+</code></pre></div>
+<p>Note that <code>import</code> is <strong>lexically scoped</strong> too. This means that we can import specific macros or functions inside function definitions:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Math</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">some_function</span> <span class="k">do</span>
+    <span class="kn">import</span> <span class="nc">List</span><span class="p">,</span> <span class="ss">only</span><span class="p">:</span> <span class="p">[</span><span class="ss">duplicate</span><span class="p">:</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">duplicate</span><span class="p">(</span><span class="ss">:ok</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>In the example above, the imported <code>List.duplicate/2</code> is only visible within that specific function. <code>duplicate/2</code> won&#39;t be available in any other function in that module (or any other module for that matter).</p>
+
+<p>Note that <code>import</code>ing a module automatically <code>require</code>s it.</p>
+
+<h2 id="13.4-aliases">13.4 Aliases</h2>
+
+<p>At this point you may be wondering: what exactly an Elixir alias is and how is it represented?</p>
+
+<p>An alias in Elixir is a capitalized identifier (like <code>String</code>, <code>Keyword</code>, etc) which is converted to an atom during compilation. For instance, the <code>String</code> alias translates by default to the atom <code>:&quot;Elixir.String&quot;</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">is_atom</span><span class="p">(</span><span class="nc">String</span><span class="p">)</span>
+<span class="go">true</span>
+<span class="gp">iex&gt; </span><span class="n">to_string</span><span class="p">(</span><span class="nc">String</span><span class="p">)</span>
+<span class="go">&quot;Elixir.String&quot;</span>
+<span class="gp">iex&gt; </span><span class="ss">:&quot;Elixir.String&quot;</span> <span class="o">==</span> <span class="nc">String</span>
+<span class="go">true</span>
+</code></pre></div>
+<p>By using the <code>alias/2</code> directive, we are simply changing what an alias translates to.</p>
+
+<p>Aliases work as described because in the Erlang VM (and consequently Elixir) modules are represented by atoms. For example, that&#39;s the mechanism we use to call Erlang modules:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="ss">:lists</span><span class="p">.</span><span class="n">flatten</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">[1, 2, 3]</span>
+</code></pre></div>
+<p>This is also the mechanism that allows us to dynamically call a given function in a module:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">mod</span> <span class="p">=</span> <span class="ss">:lists</span>
+<span class="go">:lists</span>
+<span class="gp">iex&gt; </span><span class="n">mod</span><span class="p">.</span><span class="n">flatten</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">[1, 2, 3]</span>
+</code></pre></div>
+<p>We are simply calling the function <code>flatten</code> on the atom <code>:lists</code>.</p>
+
+<h2 id="13.5-nesting">13.5 Nesting</h2>
+
+<p>Now that we have talked about aliases, we can talk about nesting and how it works in Elixir. Consider the following example:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Foo</span> <span class="k">do</span>
+  <span class="kd">defmodule</span> <span class="nc">Bar</span> <span class="k">do</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The example above will define two modules: <code>Foo</code> and <code>Foo.Bar</code>. The second can be accessed as <code>Bar</code> inside <code>Foo</code> as long as they are in the same lexical scope.</p>
+
+<p>If later the <code>Bar</code> module is moved outside the <code>Foo</code> module definition, it will need to be referenced by its full name (<code>Foo.Bar</code>) or an alias will need to be set using the <code>alias</code> directive discussed above. The <code>Bar</code> module definition will change too. This code is equivalent to the example above:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Foo.Bar</span> <span class="k">do</span>
+<span class="k">end</span>
+
+<span class="kd">defmodule</span> <span class="nc">Foo</span> <span class="k">do</span>
+  <span class="kn">alias</span> <span class="nc">Foo.Bar</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="nc">Bar</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The code above is exactly the same as:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Elixir.Foo</span> <span class="k">do</span>
+  <span class="kd">defmodule</span> <span class="nc">Elixir.Foo.Bar</span> <span class="k">do</span>
+  <span class="k">end</span>
+  <span class="kn">alias</span> <span class="nc">Elixir.Foo.Bar</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="nc">Bar</span>
+<span class="k">end</span>
+</code></pre></div>
+<p><strong>Note</strong>: in Elixir, you don&#39;t have to define the <code>Foo</code> module before being able to define the <code>Foo.Bar</code> module, as the language translates all module names to atoms anyway. You can define arbitrarily-nested modules without defining any module in the chain (e.g., <code>Foo.Bar.Baz</code> without defining <code>Foo</code> or <code>Foo.Bar</code> first).</p>
+
+<p>As we will see in later chapters, aliases also play a crucial role in macros, to guarantee they are hygienic.</p>
+
+<p>With this we are almost finishing our tour about Elixir modules. The last topic to cover is module attributes.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>3 GenServer - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="3-genserver">3 GenServer</h1>
+
+<div class="toc"></div>
+
+<p>In the previous chapter we used agents to represent our buckets. In the first chapter, we specified we would like to name each bucket so we can do the following:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="nc">CREATE</span> <span class="n">shopping</span>
+<span class="nc">OK</span>
+
+<span class="nc">PUT</span> <span class="n">shopping</span> <span class="n">milk</span> <span class="mi">1</span>
+<span class="nc">OK</span>
+
+<span class="nc">GET</span> <span class="n">shopping</span> <span class="n">milk</span>
+<span class="mi">1</span>
+<span class="nc">OK</span>
+</code></pre></div>
+<p>Since agents are processes, each bucket has a process identifier (pid) but it doesn&#39;t have a name. We have learned about the name registry <a href="http://elixir-lang.org/getting_started/11.html">in the Process chapter</a> and you could be inclined to solve this problem by using such registry. For example, we could create a bucket as:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Agent</span><span class="p">.</span><span class="n">start_link</span><span class="p">(</span><span class="k">fn</span> <span class="p">-&gt;</span> <span class="p">[]</span> <span class="k">end</span><span class="p">,</span> <span class="ss">name</span><span class="p">:</span> <span class="ss">:shopping</span><span class="p">)</span>
+<span class="go">{:ok, #PID&lt;0.43.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="ss">:shopping</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="ss">:shopping</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">)</span>
+<span class="go">1</span>
+</code></pre></div>
+<p>However, this a terrible idea! Local names in Elixir must be atoms, which means we would need to convert the bucket name (often received from an external client) to atoms, and <strong>we should never convert user input to atoms</strong>. This is because atoms are not garbage collected. Once an atom is created, it is never reclaimed. Generating atoms from user input would mean the user can inject enough different names to exhaust our system memory! In practice it is more likely you will reach the Erlang VM limit for the maximum number of atoms before you run out of memory, which will bring your system down regardless.</p>
+
+<p>Instead of abusing the name registry facility, we will instead create our own <em>registry process</em> that holds a dictionary that associates the bucket name to the bucket process.</p>
+
+<p>The registry needs to guarantee the dictionary is always up to date. For example, if one of the bucket processes crashes due to a bug, the registry must clean up the dictionary in order to avoid serving stale entries. In Elixir, we describe this by saying that the registry needs to <em>monitor</em> each bucket.</p>
+
+<p>We will use a <a href="http://elixir-lang.org/docs/stable/elixir/GenServer.html">GenServer</a> to create a registry process that can monitor the bucket process. GenServers are the go-to abstraction for building generic servers in both Elixir and OTP.</p>
+
+<h2 id="3.1-our-first-genserver">3.1 Our first GenServer</h2>
+
+<p>A GenServer is implemented in two parts: the client API and the server callbacks, all in a single module. Create a new file at <code>lib/kv/registry.ex</code> with the following contents:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV.Registry</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">GenServer</span>
+
+  <span class="c1">## Client API</span>
+
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Starts the registry.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">opts</span> <span class="p">\\</span> <span class="p">[])</span> <span class="k">do</span>
+    <span class="nc">GenServer</span><span class="p">.</span><span class="n">start_link</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="ss">:ok</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Looks up the bucket pid for `name` stored in `server`.</span>
+
+<span class="sh">  Returns `{:ok, pid}` if the bucket exists, `:error` otherwise.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">lookup</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+    <span class="nc">GenServer</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="p">{</span><span class="ss">:lookup</span><span class="p">,</span> <span class="n">name</span><span class="p">})</span>
+  <span class="k">end</span>
+
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Ensures there is a bucket associated to the given `name` in `server`.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">create</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+    <span class="nc">GenServer</span><span class="p">.</span><span class="n">cast</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="p">{</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">})</span>
+  <span class="k">end</span>
+
+  <span class="c1">## Server Callbacks</span>
+
+  <span class="kd">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">new</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">handle_call</span><span class="p">({</span><span class="ss">:lookup</span><span class="p">,</span> <span class="n">name</span><span class="p">},</span> <span class="n">_from</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:reply</span><span class="p">,</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">names</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">handle_cast</span><span class="p">({</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">},</span> <span class="n">names</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">if</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+      <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="n">names</span><span class="p">}</span>
+    <span class="k">else</span>
+      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">start_link</span><span class="p">()</span>
+      <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bucket</span><span class="p">)}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The first function is <code>start_link/1</code>, which starts a new GenServer passing three arguments:</p>
+
+<ol>
+<li><p>The module where the server callbacks are implemented, in this case <code>__MODULE__</code>, meaning the current module</p></li>
+<li><p>The initialization arguments, in this case the atom <code>:ok</code></p></li>
+<li><p>A list of options which can, for example, hold the name of the server</p></li>
+</ol>
+
+<p>There are two types of requests you can send to a GenServer: calls and casts. Calls are synchronous and the server <strong>must</strong> send a response back to such requests. Casts are asynchronous and the server won&#39;t send a response back.</p>
+
+<p>The next two functions, <code>lookup/2</code> and <code>create/2</code> are responsible for sending these requests to the server. The requests are represented by the first argument to <code>handle_call/3</code> or <code>handle_cast/2</code>. In this case, we have used <code>{:lookup, name}</code> and <code>{:create, name}</code> respectively. Requests are often specified as tuples, like this, in order to provide more than one &quot;argument&quot; in that first argument slot. It&#39;s common to specify the action being requested as the first element of a tuple, and arguments for that action in the remaining elements.</p>
+
+<p>On the server side, we can implement a variety of callbacks to guarantee the server initialization, termination and handling of requests. Those callbacks are optional and for now we have only implemented the ones we care about.</p>
+
+<p>The first is the <code>init/1</code> callback, that receives the argument given <code>GenServer.start_link/3</code> and returns <code>{:ok, state}</code>, where state is a new <code>HashDict</code>. We can already notice how the <code>GenServer</code> API makes the client/server segregation more apparent. <code>start_link/3</code> happens in the client, while <code>init/1</code> is the respective callback that runs on the server.</p>
+
+<p>For <code>call</code> requests, we must implement a <code>handle_call/3</code> callback that receives the <code>request</code>, the process from which we received the request (<code>_from</code>), and the current server state (<code>names</code>). The <code>handle_call/3</code> callback returns a tuple in the format <code>{:reply, reply, new_state}</code>, where <code>reply</code> is what will be sent to the client and the <code>new_state</code> is the new server state.</p>
+
+<p>For <code>cast</code> requests, we must implement a <code>handle_cast/2</code> callback that receives the <code>request</code> and the current server state (<code>names</code>). The <code>handle_cast/2</code> callback returns a tuple in the format <code>{:noreply, new_state}</code>.</p>
+
+<p>There are other tuple formats both <code>handle_call/3</code> and <code>handle_cast/2</code> callbacks may return. There are also other callbacks like <code>terminate/2</code> and <code>code_change/3</code> that we could implement. You are welcome to explore the <a href="http://elixir-lang.org/docs/stable/elixir/GenServer.html">full GenServer documentation</a> to learn more about those.</p>
+
+<p>For now, let&#39;s write some tests to guarantee our GenServer works as expected.</p>
+
+<h2 id="3.2-testing-a-genserver">3.2 Testing a GenServer</h2>
+
+<p>Testing a GenServer is not much different from testing an agent. We will spawn the server on a setup callback and use it throughout our tests. Create a file at <code>test/kv/registry_test.exs</code> with the following:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV.RegistryTest</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">ExUnit.Case</span><span class="p">,</span> <span class="ss">async</span><span class="p">:</span> <span class="no">true</span>
+
+  <span class="n">setup</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">registry</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">start_link</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="ss">registry</span><span class="p">:</span> <span class="n">registry</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">test</span> <span class="s2">&quot;spawns buckets&quot;</span><span class="p">,</span> <span class="p">%{</span><span class="ss">registry</span><span class="p">:</span> <span class="n">registry</span><span class="p">}</span> <span class="k">do</span>
+    <span class="n">assert</span> <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="ss">:error</span>
+
+    <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">)</span>
+    <span class="n">assert</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">)</span>
+
+    <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">assert</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="s2">&quot;milk&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Our test should pass right out of the box!</p>
+
+<p>To shutdown the registry, we are simply sending a <code>:shutdown</code> signal to its process when our test finishes. While this solution is ok for tests, if there is a need to stop a <code>GenServer</code> as part of the application logic, it is best to define a <code>stop/1</code> function that sends a <code>call</code> message causing the server to stop:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="c1">## Client API</span>
+
+<span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">Stops the registry.</span>
+<span class="sh">&quot;&quot;&quot;</span>
+<span class="kd">def</span> <span class="n">stop</span><span class="p">(</span><span class="n">server</span><span class="p">)</span> <span class="k">do</span>
+  <span class="nc">GenServer</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="ss">:stop</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="c1">## Server Callbacks</span>
+
+<span class="kd">def</span> <span class="n">handle_call</span><span class="p">(</span><span class="ss">:stop</span><span class="p">,</span> <span class="n">_from</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:stop</span><span class="p">,</span> <span class="ss">:normal</span><span class="p">,</span> <span class="ss">:ok</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>In the example above, the new <code>handle_call/3</code> clause is returning the atom <code>:stop</code>, along side the reason the server is being stopped (<code>:normal</code>), the reply <code>:ok</code> and the server state.</p>
+
+<h2 id="3.3-the-need-for-monitoring">3.3 The need for monitoring</h2>
+
+<p>Our registry is almost complete. The only remaining issue is that the registry may become stale if a bucket stops or crashes. Let&#39;s add a test to <code>KV.RegistryTest</code> that exposes this bug:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">test</span> <span class="s2">&quot;removes buckets on exit&quot;</span><span class="p">,</span> <span class="p">%{</span><span class="ss">registry</span><span class="p">:</span> <span class="n">registry</span><span class="p">}</span> <span class="k">do</span>
+  <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">)</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">)</span>
+  <span class="nc">Agent</span><span class="p">.</span><span class="n">stop</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
+  <span class="n">assert</span> <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="ss">:error</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The test above will fail on the last assertion as the bucket name remains in the registry even after we stop the bucket process.</p>
+
+<p>In order to fix this bug, we need the registry to monitor every bucket it spawns. Once we set up a monitor, the registry will receive a notification every time a bucket exits, allowing us to clean the dictionary up.</p>
+
+<p>Let&#39;s first play with monitors by starting a new console with <code>iex -S mix</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">start_link</span>
+<span class="go">{:ok, #PID&lt;0.66.0&gt;}</span>
+<span class="gp">iex&gt; </span><span class="nc">Process</span><span class="p">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+<span class="go">#Reference&lt;0.0.0.551&gt;</span>
+<span class="gp">iex&gt; </span><span class="nc">Agent</span><span class="p">.</span><span class="n">stop</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="n">flush</span><span class="p">()</span>
+<span class="go">{:DOWN, #Reference&lt;0.0.0.551&gt;, :process, #PID&lt;0.66.0&gt;, :normal}</span>
+</code></pre></div>
+<p>Note <code>Process.monitor(pid)</code> returns a unique reference that allows us to match upcoming messages to that monitoring reference. After we stop the agent, we can <code>flush()</code> all messages and notice a <code>:DOWN</code> message arrived, with the exact reference returned by monitor, notifying that the bucket process exited with reason <code>:normal</code>.</p>
+
+<p>Let&#39;s reimplement the server callbacks to fix the bug and make the test pass. First, we will modify the GenServer state to two dictionaries: one that contains <code>name -&gt; pid</code> and another that holds <code>ref -&gt; name</code>. Then we need to monitor the buckets on <code>handle_cast/2</code> as well as implement a <code>handle_info/2</code> callback to handle the monitoring messages. The full server callbacks implementation is shown below:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="c1">## Server callbacks</span>
+
+<span class="kd">def</span> <span class="n">init</span><span class="p">(</span><span class="ss">:ok</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">names</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">new</span>
+  <span class="n">refs</span>  <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">new</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
+<span class="k">end</span>
+
+<span class="kd">def</span> <span class="n">handle_call</span><span class="p">({</span><span class="ss">:lookup</span><span class="p">,</span> <span class="n">name</span><span class="p">},</span> <span class="n">_from</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="bp">_</span><span class="p">}</span> <span class="p">=</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:reply</span><span class="p">,</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">state</span><span class="p">}</span>
+<span class="k">end</span>
+
+<span class="kd">def</span> <span class="n">handle_call</span><span class="p">(</span><span class="ss">:stop</span><span class="p">,</span> <span class="n">_from</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:stop</span><span class="p">,</span> <span class="ss">:normal</span><span class="p">,</span> <span class="ss">:ok</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+<span class="k">end</span>
+
+<span class="kd">def</span> <span class="n">handle_cast</span><span class="p">({</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">},</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">})</span> <span class="k">do</span>
+  <span class="k">if</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
+  <span class="k">else</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">start_link</span><span class="p">()</span>
+    <span class="n">ref</span> <span class="p">=</span> <span class="nc">Process</span><span class="p">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+    <span class="n">refs</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">names</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+    <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="kd">def</span> <span class="n">handle_info</span><span class="p">({</span><span class="ss">:DOWN</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="ss">:process</span><span class="p">,</span> <span class="n">_pid</span><span class="p">,</span> <span class="n">_reason</span><span class="p">},</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">})</span> <span class="k">do</span>
+  <span class="p">{</span><span class="n">name</span><span class="p">,</span> <span class="n">refs</span><span class="p">}</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">refs</span><span class="p">,</span> <span class="n">ref</span><span class="p">)</span>
+  <span class="n">names</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+  <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">{</span><span class="n">names</span><span class="p">,</span> <span class="n">refs</span><span class="p">}}</span>
+<span class="k">end</span>
+
+<span class="kd">def</span> <span class="n">handle_info</span><span class="p">(</span><span class="n">_msg</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Observe that we were able to considerably change the server implementation without changing any of the client API. That&#39;s one of the benefits of explicitly segregating the server and the client.</p>
+
+<p>Finally, different from the other callbacks, we have defined a &quot;catch-all&quot; clause for <code>handle_info/2</code> that discards any unknown message. To understand why, let&#39;s move on to the next section.</p>
+
+<h2 id="3.4-call,-cast-or-info?">3.4 call, cast or info?</h2>
+
+<p>So far we have used three callbacks: <code>handle_call/3</code>, <code>handle_cast/2</code> and <code>handle_info/2</code>. Deciding when to use each is straightforward:</p>
+
+<ol>
+<li><p><code>handle_call/3</code> must be used for synchronous requests. This should be the default choice as waiting for the server reply is a useful backpressure mechanism.</p></li>
+<li><p><code>handle_cast/2</code> must be used for asynchronous requests, when you don&#39;t care about a reply. A cast does not even guarantee the server has received the message and, for this reason, must be used sparingly. For example, the <code>create/2</code> function we have defined in this chapter should have used <code>call/2</code>. We have used <code>cast/2</code> for didactic purposes.</p></li>
+<li><p><code>handle_info/2</code> must be used for all other messages a server may receive that are not sent via <code>GenServer.call/2</code> or <code>GenServer.cast/2</code>, including regular messages sent with <code>send/2</code>. The monitoring <code>:DOWN</code> messages are a perfect example of this.</p></li>
+</ol>
+
+<p>Since any message, including the ones sent via <code>send/2</code>, go to <code>handle_info/2</code>, there is a chance unexpected messages will arrive to the server. Therefore, if we don&#39;t define the <code>catch-all</code> clause, those messages could lead our supervisor to crash, because no clause would match.</p>
+
+<p>We don&#39;t need to worry about this for <code>handle_call/3</code> and <code>handle_cast/2</code> because these requests are only done via the <code>GenServer</code> API, so an unknown message is quite likely to be due to a developer mistake.</p>
+
+<h2 id="3.5-monitors-or-links?">3.5 Monitors or links?</h2>
+
+<p>We have previously learned about links in the <a href="http://elixir-lang.org/getting_started/11.html">Process chapter</a>. Now, with the registry complete, you may be wondering: when should we use monitors and when should we use links?</p>
+
+<p>Links are bi-directional. If you link two process and one of them crashes, the other side will crash too (unless it is trapping exits). A monitor is uni-directional: only the monitoring process will receive notifications about the the monitored one. Simply put, use links when you want linked crashes, and monitors when you just want to be informed of crashes, exits, and so on.</p>
+
+<p>Returning to our <code>handle_cast/2</code> implementation, you can see the registry is both linking and monitoring the buckets:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">start_link</span><span class="p">()</span>
+<span class="n">ref</span> <span class="p">=</span> <span class="nc">Process</span><span class="p">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+</code></pre></div>
+<p>This is a bad idea, as we don&#39;t want the registry to crash when a bucket crashes! We will explore solutions to this problem when we talk about supervisors. In a nutshell, we typically avoid creating new processes directly. Instead, we delegate this responsibility to supervisors. As we&#39;ll see, supervisors work with links, and that explains why link-based APIs (<code>spawn_link</code>, <code>start_link</code>, etc) are so prevalent in Elixir and OTP.</p>
+
+<p>Before jumping into supervisors, let&#39;s first explore event managers and event handlers with GenEvent.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

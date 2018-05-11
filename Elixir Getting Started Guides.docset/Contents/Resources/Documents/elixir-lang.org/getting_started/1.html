@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>1 Introduction - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="http://elixir-lang.org/fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="1-introduction">1 Introduction</h1>
+
+<div class="toc"></div>
+
+<p>Welcome!</p>
+
+<p>In this tutorial we are going to teach you the Elixir foundation, the language syntax, how to define modules, how to manipulate the characteristics of common data structures and more. This chapter will focus on ensuring Elixir is installed and that you can successfully run Elixir&#39;s Interactive Shell, called IEx.</p>
+
+<p>Our requirements are:</p>
+
+<ul>
+<li>Erlang - Version 17.0 onwards</li>
+<li>Elixir - Version 1.0.0 onwards</li>
+</ul>
+
+<p>Let&#39;s get started!</p>
+
+<blockquote>
+<p>If you find any errors in the tutorial or on the website, <a href="https://github.com/elixir-lang/elixir-lang.github.com">please report a bug or send a pull request to our issue tracker</a>. If you suspect it is a language bug, <a href="https://github.com/elixir-lang/elixir/issues">please let us know in the language issue tracker</a>.</p>
+</blockquote>
+
+<h2 id="1.1-installation">1.1 Installation</h2>
+
+<p>If you still haven&#39;t installed Elixir, run to our <a href="http://elixir-lang.org/install.html">installation page</a>. Once you are done, you can run <code>elixir -v</code> to get the current Elixir version.</p>
+
+<h2 id="1.2-interactive-mode">1.2 Interactive mode</h2>
+
+<p>When you install Elixir, you will have three new executables: <code>iex</code>, <code>elixir</code> and <code>elixirc</code>. If you compiled Elixir from source or are using a packaged version, you can find these inside the <code>bin</code> directory.</p>
+
+<p>For now, let&#39;s start by running <code>iex</code> (or <code>iex.bat</code> if you are on Windows) which stands for Interactive Elixir. In interactive mode, we can type any Elixir expression and get its result. Let&#39;s warm up with some basic expressions:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Interactive Elixir - press Ctrl+C to exit (type h() ENTER for help)
+
+iex&gt; 40 + 2
+42
+iex&gt; &quot;hello&quot; &lt;&gt; &quot; world&quot;
+&quot;hello world&quot;
+</code></pre></div>
+<p>It seems we are ready to go! We will use the interactive shell quite a lot in the next chapters to get a bit more familiar with the language constructs and basic types, starting in the next chapter.</p>
+
+<h2 id="1.3-running-scripts">1.3 Running scripts</h2>
+
+<p>After getting familiar with the basics of the language you may want to try writing simple programs. This can be accomplished by putting Elixir code into a file and executing it with <code>elixir</code>:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ cat simple.exs
+IO.puts &quot;Hello world
+from Elixir&quot;
+
+$ elixir simple.exs
+Hello world
+from Elixir
+</code></pre></div>
+<p>Later on we will learn how to compile Elixir code (in <a href="http://elixir-lang.org/getting_started/8.html">Chapter 8</a>) and how to use the Mix build tool (in the <a href="http://elixir-lang.org/getting_started/mix_otp/1.html">Mix &amp; OTP guide</a>). For now, let&#39;s move on to <a href="http://elixir-lang.org/getting_started/2.html">Chapter 2</a>.</p>
+
+  </article><!-- .hfeed -->
+
+  
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="http://elixir-lang.org/ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

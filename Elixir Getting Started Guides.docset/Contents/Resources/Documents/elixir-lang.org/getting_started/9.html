@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>9 Recursion - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="9-recursion">9 Recursion</h1>
+
+<div class="toc"></div>
+
+<h2 id="9.1-loops-through-recursion">9.1 Loops through recursion</h2>
+
+<p>Due to immutability, loops in Elixir (and in any functional programming language) are written differently from imperative languages. For example, in an imperative language (like C in the following example), one would write:</p>
+<div class="highlight"><pre><code class="language-c" data-lang="c"><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In the example above, we are mutating both the array and the variable <code>i</code>. Mutating is not possible in Elixir. Instead, functional languages rely on recursion: a function is called recursively until a condition is reached that stops the recursive action from continuing. No data is mutated in this process. Consider the example below that prints a string an arbitrary amount of times:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Recursion</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">print_multiple_times</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="ow">when</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="n">msg</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">print_multiple_times</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">do</span>
+    <span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="n">msg</span>
+    <span class="n">print_multiple_times</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nc">Recursion</span><span class="p">.</span><span class="n">print_multiple_times</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="c1"># Hello!</span>
+<span class="c1"># Hello!</span>
+<span class="c1"># Hello!</span>
+</code></pre></div>
+<p>Similar to <code>case</code>, a function may have many clauses. A particular clause is executed when the arguments passed to the function match the clause&#39;s argument patterns and its guard evaluates to <code>true</code>.</p>
+
+<p>When <code>print_multiple_times/2</code> is initially called in the example above, the argument <code>n</code> is equal to <code>3</code>.</p>
+
+<p>The first clause has a guard which says &quot;use this definition if and only if <code>n</code> is less than or equal to <code>1</code>&quot;. Since this is not the case, Elixir proceeds to the next clause&#39;s definition.</p>
+
+<p>The second definition matches the pattern and has no guard so it will be executed. It first prints our <code>msg</code> and then calls itself passing <code>n - 1</code> (<code>2</code>) as the second argument.</p>
+
+<p>Our <code>msg</code> is printed and <code>print_multiple_times/2</code> is called again this time with the second argument set to <code>1</code>.
+Because <code>n</code> is now set to <code>1</code>, the guard in our first definition of <code>print_multiple_times/2</code> evaluates to true, and we execute this particular definition. The <code>msg</code> is printed, and there is nothing left to execute.</p>
+
+<p>We defined <code>print_multiple_times/2</code> so that no matter what number is passed as the second argument it either triggers our first definition (known as a &quot;base case&quot;) or it triggers our second definition which will ensure that we get exactly one step closer to our base case.</p>
+
+<h2 id="9.2-&quot;reduce&quot;-and-&quot;map&quot;-algorithms">9.2 &quot;Reduce&quot; and &quot;map&quot; algorithms</h2>
+
+<p>Let&#39;s now see how we can use the power of recursion to sum a list of numbers:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Math</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">sum_list</span><span class="p">([</span><span class="n">head</span><span class="p">|</span><span class="n">tail</span><span class="p">],</span> <span class="n">accumulator</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">sum_list</span><span class="p">(</span><span class="n">tail</span><span class="p">,</span> <span class="n">head</span> <span class="o">+</span> <span class="n">accumulator</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">sum_list</span><span class="p">([],</span> <span class="n">accumulator</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">accumulator</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nc">Math</span><span class="p">.</span><span class="n">sum_list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">#=&gt; 6</span>
+</code></pre></div>
+<p>We invoke <code>sum_list</code> with the list <code>[1, 2, 3]</code> and the initial value <code>0</code> as arguments. We will try each clause until we find one that matches according to the pattern matching rules. In this case, the list <code>[1, 2, 3]</code> matches against <code>[head|tail]</code> which bounds <code>head</code> to <code>1</code> and <code>tail</code> to <code>[2, 3]</code>; <code>accumulator</code> is set to <code>0</code>.</p>
+
+<p>Then, we add the head of the list to the accumulator <code>head + accumulator</code> and call <code>sum_list</code> again, recursively, passing the tail of the list as its first argument. The tail will once again match <code>[head|tail]</code> until the list is empty, as seen below:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">sum_list</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">0</span>
+<span class="n">sum_list</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">1</span>
+<span class="n">sum_list</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">3</span>
+<span class="n">sum_list</span> <span class="p">[],</span> <span class="mi">6</span>
+</code></pre></div>
+<p>When the list is empty, it will match the final clause which returns the final result of <code>6</code>.</p>
+
+<p>The process of taking a list and &quot;reducing&quot; it down to one value is known as a &quot;reduce&quot; algorithm and is central to functional programming.</p>
+
+<p>What if we instead want to double all of the values in our list?</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Math</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">double_each</span><span class="p">([</span><span class="n">head</span><span class="p">|</span><span class="n">tail</span><span class="p">])</span> <span class="k">do</span>
+    <span class="p">[</span><span class="n">head</span> <span class="o">*</span> <span class="mi">2</span><span class="p">|</span><span class="n">double_each</span><span class="p">(</span><span class="n">tail</span><span class="p">)]</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">double_each</span><span class="p">([])</span> <span class="k">do</span>
+    <span class="p">[]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="nc">Math</span><span class="p">.</span><span class="n">double_each</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c1">#=&gt; [2, 4, 6]</span>
+</code></pre></div>
+<p>Here we have used recursion to traverse a list doubling each element and returning a new list. The process of taking a list and &quot;mapping&quot; over it is known as a &quot;map&quot; algorithm.</p>
+
+<p>Recursion and <a href="http://en.wikipedia.org/wiki/Tail_call">tail call</a> optimization are an important part of Elixir and are commonly used to create loops. However, when programming in Elixir you will rarely use recursion as above to manipulate lists.</p>
+
+<p>The <a href="http://elixir-lang.org/docs/stable/elixir/Enum.html"><code>Enum</code> module</a>, which we&#39;re going to see in the next chapter, already provides many conveniences for working with lists. For instance, the examples above could be written as:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">reduce</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="k">fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">acc</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">6</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">map</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="k">fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">end</span><span class="p">)</span>
+<span class="go">[2, 4, 6]</span>
+</code></pre></div>
+<p>Or, using the capture syntax:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">reduce</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;+/</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">6</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">map</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">[2, 4, 6]</span>
+</code></pre></div>
+<p>Let&#39;s take a deeper look at <code>Enumerable</code>s and, while we&#39;re at it, their lazy counterpart, <code>Stream</code>s.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

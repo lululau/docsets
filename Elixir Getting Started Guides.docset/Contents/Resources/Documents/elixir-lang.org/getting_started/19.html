@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>19 try, catch and rescue - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="19-try,-catch-and-rescue">19 try, catch and rescue</h1>
+
+<div class="toc"></div>
+
+<p>Elixir has three error mechanisms: errors, throws and exits. In this chapter we will explore each of them and include remarks about when each should be used.</p>
+
+<h2 id="19.1-errors">19.1 Errors</h2>
+
+<p>Errors (or <em>exceptions</em>) are used when exceptional things happen in the code. A sample error can be retrieved by trying to add a number into an atom:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="ss">:foo</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gr">** (ArithmeticError) bad argument in arithmetic expression</span>
+<span class="gr">     :erlang.+(:foo, 1)</span>
+</code></pre></div>
+<p>A runtime error can be raised any time by using <code>raise/1</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">raise</span> <span class="s2">&quot;oops&quot;</span>
+<span class="gr">** (RuntimeError) oops</span>
+</code></pre></div>
+<p>Other errors can be raised with <code>raise/2</code> passing the error name and a list of keyword arguments:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">raise</span> <span class="nc">ArgumentError</span><span class="p">,</span> <span class="ss">message</span><span class="p">:</span> <span class="s2">&quot;invalid argument foo&quot;</span>
+<span class="gr">** (ArgumentError) invalid argument foo</span>
+</code></pre></div>
+<p>You can also define your own errors by creating a module and using the <code>defexception</code> construct inside it; this way, you&#39;ll create an error with the same name as the module it&#39;s defined in. The most common case is to define a custom exception with a message field:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="kd">defmodule</span> <span class="nc">MyError</span> <span class="k">do</span>
+<span class="gp">iex&gt; </span>  <span class="kd">defexception</span> <span class="ss">message</span><span class="p">:</span> <span class="s2">&quot;default message&quot;</span>
+<span class="gp">iex&gt; </span><span class="k">end</span>
+<span class="gp">iex&gt; </span><span class="k">raise</span> <span class="nc">MyError</span>
+<span class="gr">** (MyError) default message</span>
+<span class="gp">iex&gt; </span><span class="k">raise</span> <span class="nc">MyError</span><span class="p">,</span> <span class="ss">message</span><span class="p">:</span> <span class="s2">&quot;custom message&quot;</span>
+<span class="gr">** (MyError) custom message</span>
+</code></pre></div>
+<p>Errors can be <strong>rescued</strong> using the <code>try/rescue</code> construct:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">try</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="k">raise</span> <span class="s2">&quot;oops&quot;</span>
+<span class="gp">...&gt; </span><span class="k">rescue</span>
+<span class="gp">...&gt; </span>  <span class="n">e</span> <span class="ow">in</span> <span class="nc">RuntimeError</span> <span class="p">-&gt;</span> <span class="n">e</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="go">%RuntimeError{message: &quot;oops&quot;}</span>
+</code></pre></div>
+<p>The example above rescues the runtime error and returns the error itself which is then printed in the <code>iex</code> session. In practice, however, Elixir developers rarely use the <code>try/rescue</code> construct. For example, many languages would force you to rescue an error when a file cannot be opened successfully. Elixir instead provides a <code>File.read/1</code> function which returns a tuple containing informations about whether the file was successfully opened:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">read</span> <span class="s2">&quot;hello&quot;</span>
+<span class="go">{:error, :enoent}</span>
+<span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">write</span> <span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="s2">&quot;world&quot;</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">read</span> <span class="s2">&quot;hello&quot;</span>
+<span class="go">{:ok, &quot;world&quot;}</span>
+</code></pre></div>
+<p>There is no <code>try/rescue</code> here. In case you want to handle multiple outcomes of opening a file, you can simply use pattern matching with the <code>case</code> construct:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">case</span> <span class="nc">File</span><span class="p">.</span><span class="n">read</span> <span class="s2">&quot;hello&quot;</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">body</span><span class="p">}</span>      <span class="p">-&gt;</span> <span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="s2">&quot;Success: </span><span class="si">#{</span><span class="n">body</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gp">...&gt; </span>  <span class="p">{</span><span class="ss">:error</span><span class="p">,</span> <span class="n">reason</span><span class="p">}</span> <span class="p">-&gt;</span> <span class="nc">IO</span><span class="p">.</span><span class="n">puts</span> <span class="s2">&quot;Error: </span><span class="si">#{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+</code></pre></div>
+<p>At the end of the day, it&#39;s up to your application to decide if an error while opening a file is exceptional or not. That&#39;s why Elixir doesn&#39;t impose exceptions on <code>File.read/1</code> and many other functions. Instead, it leaves it up to the developer to choose the best way to proceed.</p>
+
+<p>For the cases where you do expect a file to exist (and the lack of that file is truly an <em>error</em>) you can simply use <code>File.read!/1</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">File</span><span class="p">.</span><span class="n">read!</span> <span class="s2">&quot;unknown&quot;</span>
+<span class="gr">** (File.Error) could not read file unknown: no such file or directory</span>
+<span class="gr">    (elixir) lib/file.ex:305: File.read!/1</span>
+</code></pre></div>
+<p>Many functions in the standard library follow the pattern of having a counterpart that raises an exception instead of returning tuples to match against. The convention is to create a function (<code>foo</code>) which returns <code>{:ok, result}</code> or <code>{:error, reason}</code> tuples and another function (<code>foo!</code>, same name but with a trailing <code>!</code>) that takes the same arguments as <code>foo</code> but which raises an exception if there&#39;s an error. <code>foo!</code> should return the result (not wrapped in a tuple) if everything goes fine. The <a href="http://elixir-lang.org/docs/stable/elixir/File.html"><code>File</code> module</a> is a good example of this convention.</p>
+
+<p>In Elixir, we avoid using <code>try/rescue</code> because <strong>we don&#39;t use errors for control flow</strong>. We take errors literally: they are reserved to unexpected and/or exceptional situations. In case you actually need flow control constructs, <em>throws</em> should be used. That&#39;s what we are going to see next.</p>
+
+<h2 id="19.2-throws">19.2 Throws</h2>
+
+<p>In Elixir, a value can be thrown and later be caught. <code>throw</code> and <code>catch</code> are reserved for situations where it is not possible to retrieve a value unless by using <code>throw</code> and <code>catch</code>.</p>
+
+<p>Those situations are quite uncommon in practice except when interfacing with libraries that does not provide a proper API. For example, let&#39;s imagine the <code>Enum</code> module did not provide any API for finding a value and that we needed to find the first multiple of 13 in a list of numbers:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">try</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="nc">Enum</span><span class="p">.</span><span class="n">each</span> <span class="o">-</span><span class="mi">50</span><span class="p">..</span><span class="mi">50</span><span class="p">,</span> <span class="k">fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">-&gt;</span>
+<span class="gp">...&gt; </span>    <span class="k">if</span> <span class="n">rem</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="k">throw</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">...&gt; </span>  <span class="k">end</span>
+<span class="gp">...&gt; </span>  <span class="s2">&quot;Got nothing&quot;</span>
+<span class="gp">...&gt; </span><span class="k">catch</span>
+<span class="gp">...&gt; </span>  <span class="n">x</span> <span class="p">-&gt;</span> <span class="s2">&quot;Got </span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="go">&quot;Got -39&quot;</span>
+</code></pre></div>
+<p>Since <code>Enum</code> <em>does</em> provide a proper API, in practice <code>Enum.find/2</code> is the way to go:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">find</span> <span class="o">-</span><span class="mi">50</span><span class="p">..</span><span class="mi">50</span><span class="p">,</span> <span class="o">&amp;</span><span class="p">(</span><span class="n">rem</span><span class="p">(</span><span class="ni">&amp;1</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">-39</span>
+</code></pre></div>
+<h2 id="19.3-exits">19.3 Exits</h2>
+
+<p>All Elixir code runs inside processes that communicate with each other. When a process dies of &quot;natural causes&quot; (e.g., unhandled exceptions), it sends an <code>exit</code> signal. A process can also die by explicitly sending an exit signal:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">spawn_link</span> <span class="k">fn</span> <span class="p">-&gt;</span> <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">end</span>
+<span class="go">#PID&lt;0.56.0&gt;</span>
+<span class="gr">** (EXIT from #PID&lt;0.56.0&gt;) 1</span>
+</code></pre></div>
+<p>In the example above, the linked process died by sending an <code>exit</code> signal with value of 1. The Elixir shell automatically handles those messages and prints them to the terminal.</p>
+
+<p><code>exit</code> can also be &quot;caught&quot; using <code>try/catch</code>:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">try</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="n">exit</span> <span class="s2">&quot;I am exiting&quot;</span>
+<span class="gp">...&gt; </span><span class="k">catch</span>
+<span class="gp">...&gt; </span>  <span class="ss">:exit</span><span class="p">,</span> <span class="bp">_</span> <span class="p">-&gt;</span> <span class="s2">&quot;not really&quot;</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="go">&quot;not really&quot;</span>
+</code></pre></div>
+<p>Using <code>try/catch</code> is already uncommon and using it to catch exits is even more rare.</p>
+
+<p><code>exit</code> signals are an important part of the fault tolerant system provided by the Erlang VM. Processes usually run under supervision trees which are themselves processes that just wait for <code>exit</code> signals from the supervised processes. Once an exit signal is received, the supervision strategy kicks in and the supervised process is restarted.</p>
+
+<p>It is exactly this supervision system that makes constructs like <code>try/catch</code> and <code>try/rescue</code> so uncommon in Elixir. Instead of rescuing an error, we&#39;d rather &quot;fail fast&quot; since the supervision tree will guarantee our application will go back to a known initial state after the error.</p>
+
+<h2 id="19.4-after">19.4 After</h2>
+
+<p>Sometimes it&#39;s necessary to ensure that a resource is cleaned up after some action that could potentially raise an error. The <code>try/after</code> construct allows you to do that. For example, we can open a file and guarantee it will be closed (even if something goes wrong) with a <code>try/after</code> block:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">file</span><span class="p">}</span> <span class="p">=</span> <span class="nc">File</span><span class="p">.</span><span class="n">open</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="p">[</span><span class="ss">:utf8</span><span class="p">,</span> <span class="ss">:write</span><span class="p">]</span>
+<span class="gp">iex&gt; </span><span class="k">try</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="nc">IO</span><span class="p">.</span><span class="n">write</span> <span class="n">file</span><span class="p">,</span> <span class="s2">&quot;olá&quot;</span>
+<span class="gp">...&gt; </span>  <span class="k">raise</span> <span class="s2">&quot;oops, something went wrong&quot;</span>
+<span class="gp">...&gt; </span><span class="k">after</span>
+<span class="gp">...&gt; </span>  <span class="nc">File</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="gr">** (RuntimeError) oops, something went wrong</span>
+</code></pre></div>
+<h2 id="19.5-variables-scope">19.5 Variables scope</h2>
+
+<p>It is important to bear in mind that variables defined inside <code>try/catch/rescue/after</code> blocks do not leak to the outer context. This is because the <code>try</code> block may fail and as such the variables may never be bound in the first place. In other words, this code is invalid:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">try</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="n">from_try</span> <span class="p">=</span> <span class="no">true</span>
+<span class="gp">...&gt; </span><span class="k">after</span>
+<span class="gp">...&gt; </span>  <span class="n">from_after</span> <span class="p">=</span> <span class="no">true</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="gp">iex&gt; </span><span class="n">from_try</span>
+<span class="gr">** (RuntimeError) undefined function: from_try/0</span>
+<span class="gp">iex&gt; </span><span class="n">from_after</span>
+<span class="gr">** (RuntimeError) undefined function: from_after/0</span>
+</code></pre></div>
+<p>This finishes our introduction to <code>try</code>, <code>catch</code> and <code>rescue</code>. You will find they are used less frequently in Elixir than in other languages although they may be handy in some situations where a library or some particular code is not playing &quot;by the rules&quot;.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

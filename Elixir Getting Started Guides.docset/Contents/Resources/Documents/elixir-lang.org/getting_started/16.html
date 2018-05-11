@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>16 Protocols - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="16-protocols">16 Protocols</h1>
+
+<div class="toc"></div>
+
+<p>Protocols are a mechanism to achieve polymorphism in Elixir. Dispatching on a protocol is available to any data type as long as it implements the protocol. Let&#39;s see an example.</p>
+
+<p>In Elixir, only <code>false</code> and <code>nil</code> are treated as false. Everything else evaluates to true. Depending on the application, it may be important to specify a <code>blank?</code> protocol that returns a boolean for other data types that should be considered blank. For instance, an empty list or an empty binary could be considered blanks.</p>
+
+<p>We could define this protocol as follows:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defprotocol</span> <span class="nc">Blank</span> <span class="k">do</span>
+  <span class="na">@doc</span> <span class="s2">&quot;Returns true if data is considered blank/empty&quot;</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The protocol expects a function called <code>blank?</code> that receives one argument to be implemented. We can implement this protocol for different Elixir data types as follows:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="c1"># Integers are never blank</span>
+<span class="kd">defimpl</span> <span class="nc">Blank</span><span class="p">,</span> <span class="ss">for</span><span class="p">:</span> <span class="nc">Integer</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="bp">_</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="no">false</span>
+<span class="k">end</span>
+
+<span class="c1"># Just empty list is blank</span>
+<span class="kd">defimpl</span> <span class="nc">Blank</span><span class="p">,</span> <span class="ss">for</span><span class="p">:</span> <span class="nc">List</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">([]),</span> <span class="ss">do</span><span class="p">:</span> <span class="no">true</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="bp">_</span><span class="p">),</span>  <span class="ss">do</span><span class="p">:</span> <span class="no">false</span>
+<span class="k">end</span>
+
+<span class="c1"># Just empty map is blank</span>
+<span class="kd">defimpl</span> <span class="nc">Blank</span><span class="p">,</span> <span class="ss">for</span><span class="p">:</span> <span class="nc">Map</span> <span class="k">do</span>
+  <span class="c1"># Keep in mind we could not pattern match on %{} because</span>
+  <span class="c1"># it matches on all maps. We can however check if the size</span>
+  <span class="c1"># is zero (and size is a fast operation).</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="n">map</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="n">map_size</span><span class="p">(</span><span class="n">map</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="k">end</span>
+
+<span class="c1"># Just the atoms false and nil are blank</span>
+<span class="kd">defimpl</span> <span class="nc">Blank</span><span class="p">,</span> <span class="ss">for</span><span class="p">:</span> <span class="nc">Atom</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="no">false</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="no">true</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="no">nil</span><span class="p">),</span>   <span class="ss">do</span><span class="p">:</span> <span class="no">true</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="bp">_</span><span class="p">),</span>     <span class="ss">do</span><span class="p">:</span> <span class="no">false</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>And we would do so for all native data types. The types available are:</p>
+
+<ul>
+<li><code>Atom</code></li>
+<li><code>BitString</code></li>
+<li><code>Float</code></li>
+<li><code>Function</code></li>
+<li><code>Integer</code></li>
+<li><code>List</code></li>
+<li><code>Map</code></li>
+<li><code>PID</code></li>
+<li><code>Port</code></li>
+<li><code>Reference</code></li>
+<li><code>Tuple</code></li>
+</ul>
+
+<p>Now with the protocol defined and implementations in hand, we can invoke it:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Blank</span><span class="p">.</span><span class="n">blank?</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">false</span>
+<span class="gp">iex&gt; </span><span class="nc">Blank</span><span class="p">.</span><span class="n">blank?</span><span class="p">([])</span>
+<span class="go">true</span>
+<span class="gp">iex&gt; </span><span class="nc">Blank</span><span class="p">.</span><span class="n">blank?</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">false</span>
+</code></pre></div>
+<p>Passing a data type that does not implement the protocol raises an error:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Blank</span><span class="p">.</span><span class="n">blank?</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<span class="gr">** (Protocol.UndefinedError) protocol Blank not implemented for &quot;hello&quot;</span>
+</code></pre></div>
+<h2 id="16.1-protocols-and-structs">16.1 Protocols and structs</h2>
+
+<p>The power of Elixir&#39;s extensibility comes when protocols and structs are used together.</p>
+
+<p>In the previous chapter, we have learned that although structs are maps, they do not share protocol implementations with maps. Let&#39;s define a <code>User</code> struct as in the previous chapter:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="kd">defmodule</span> <span class="nc">User</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="kd">defstruct</span> <span class="ss">name</span><span class="p">:</span> <span class="s2">&quot;john&quot;</span><span class="p">,</span> <span class="ss">age</span><span class="p">:</span> <span class="mi">27</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="go">{:module, User,</span>
+<span class="go"> &lt;&lt;70, 79, 82, ...&gt;&gt;, {:__struct__, 0}}</span>
+</code></pre></div>
+<p>And then check:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Blank</span><span class="p">.</span><span class="n">blank?</span><span class="p">(%{})</span>
+<span class="go">true</span>
+<span class="gp">iex&gt; </span><span class="nc">Blank</span><span class="p">.</span><span class="n">blank?</span><span class="p">(%</span><span class="nc">User</span><span class="p">{})</span>
+<span class="gr">** (Protocol.UndefinedError) protocol Blank not implemented for %User{age: 27, name: &quot;john&quot;}</span>
+</code></pre></div>
+<p>Instead of sharing protocol implementation with maps, structs require their own protocol implementation:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defimpl</span> <span class="nc">Blank</span><span class="p">,</span> <span class="ss">for</span><span class="p">:</span> <span class="nc">User</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="bp">_</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="no">false</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>If desired, you could come up with your own semantics for a user being blank. Not only that, you could use structs to build more robust data types, like queues, and implement all relevant protocols, such as <code>Enumerable</code> and possibly <code>Blank</code>, for this data type.</p>
+
+<p>In many cases though, developers may want to provide a default implementation for structs, as explicitly implementing the protocol for all structs can be tedious. That&#39;s when falling back to Any comes in handy.</p>
+
+<h2 id="16.2-falling-back-to-any">16.2 Falling back to Any</h2>
+
+<p>It may be convenient to provide a default implementation for all types. This can be achieved by setting <code>@fallback_to_any</code> to <code>true</code> in the protocol definition:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defprotocol</span> <span class="nc">Blank</span> <span class="k">do</span>
+  <span class="na">@fallback_to_any</span> <span class="no">true</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Which can now be implemented as:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defimpl</span> <span class="nc">Blank</span><span class="p">,</span> <span class="ss">for</span><span class="p">:</span> <span class="nc">Any</span> <span class="k">do</span>
+  <span class="kd">def</span> <span class="n">blank?</span><span class="p">(</span><span class="bp">_</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="no">false</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Now all data types (including structs) that we have not implemented the <code>Blank</code> protocol for will be considered non-blank.</p>
+
+<h2 id="16.3-built-in-protocols">16.3 Built-in protocols</h2>
+
+<p>Elixir ships with some built-in protocols. In previous chapters, we have discussed the <code>Enum</code> module which provides many functions that work with any data structure that implements the <code>Enumerable</code> protocol:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">map</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="k">fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">end</span>
+<span class="go">[2,4,6]</span>
+<span class="gp">iex&gt; </span><span class="nc">Enum</span><span class="p">.</span><span class="n">reduce</span> <span class="mi">1</span><span class="p">..</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">acc</span> <span class="k">end</span>
+<span class="go">6</span>
+</code></pre></div>
+<p>Another useful example is the <code>String.Chars</code> protocol, which specifies how to convert a data structure with characters to a string. It&#39;s exposed via the <code>to_string</code> function:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">to_string</span> <span class="ss">:hello</span>
+<span class="go">&quot;hello&quot;</span>
+</code></pre></div>
+<p>Notice that string interpolation in Elixir calls the <code>to_string</code> function:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="s2">&quot;age: </span><span class="si">#{</span><span class="mi">25</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&quot;age: 25&quot;</span>
+</code></pre></div>
+<p>The snippet above only works because numbers implement the <code>String.Chars</code> protocol. Passing a tuple, for example, will lead to an error:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">tuple</span> <span class="p">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+<span class="go">{1, 2, 3}</span>
+<span class="gp">iex&gt; </span><span class="s2">&quot;tuple: </span><span class="si">#{</span><span class="n">tuple</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gr">** (Protocol.UndefinedError) protocol String.Chars not implemented for {1, 2, 3}</span>
+</code></pre></div>
+<p>When there is a need to &quot;print&quot; a more complex data structure, one can simply use the <code>inspect</code> function, based on the <code>Inspect</code> protocol:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="s2">&quot;tuple: </span><span class="si">#{</span><span class="n">inspect</span> <span class="n">tuple</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&quot;tuple: {1, 2, 3}&quot;</span>
+</code></pre></div>
+<p>The <code>Inspect</code> protocol is the protocol used to transform any data structure into a readable textual representation. This is what tools like IEx use to print results:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+<span class="go">{1,2,3}</span>
+<span class="gp">iex&gt; </span><span class="p">%</span><span class="nc">User</span><span class="p">{}</span>
+<span class="go">%User{name: &quot;john&quot;, age: 27}</span>
+</code></pre></div>
+<p>Keep in mind that, by convention, whenever the inspected value starts with <code>#</code>, it is representing a data structure in non-valid Elixir syntax. This means the inspect protocol is not reversible as information may be lost along the way:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">inspect</span> <span class="o">&amp;</span><span class="p">(</span><span class="ni">&amp;1</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">&quot;#Function&lt;6.71889879/1 in :erl_eval.expr/5&gt;&quot;</span>
+</code></pre></div>
+<p>There are other protocols in Elixir but this covers the most common ones.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

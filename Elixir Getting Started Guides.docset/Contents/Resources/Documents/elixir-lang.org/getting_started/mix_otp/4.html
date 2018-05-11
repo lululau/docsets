@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>4 GenEvent - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+<div id="content">
+  <article>
+    <h1 id="4-genevent">4 GenEvent</h1>
+
+<div class="toc"></div>
+
+<p>In this chapter, we will explore GenEvent, another behaviour provided by Elixir and OTP that allows us to spawn an event manager that is able to publish events to many handlers.</p>
+
+<p>There are two events we are going to emit: one for every time a bucket is added to the registry and another when it is removed from it.</p>
+
+<h2 id="4.1-event-managers">4.1 Event managers</h2>
+
+<p>Let&#39;s start a new <code>iex -S mix</code> session and explore the GenEvent API a bit:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">manager</span><span class="p">}</span> <span class="p">=</span> <span class="nc">GenEvent</span><span class="p">.</span><span class="n">start_link</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="c1">#PID&lt;0.83.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="nc">GenEvent</span><span class="p">.</span><span class="n">sync_notify</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="ss">:hello</span><span class="p">)</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="nc">GenEvent</span><span class="p">.</span><span class="n">notify</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="ss">:world</span><span class="p">)</span>
+<span class="ss">:ok</span>
+</code></pre></div>
+<p><code>GenEvent.start_link/0</code> starts a new event manager. That is literally all that is required to start a manager. After the manager is created, we can call <code>GenEvent.notify/2</code> and <code>GenEvent.sync_notify/2</code> to send notifications.</p>
+
+<p>However, since there are no event handlers tied to the manager, not much happens on every notification.</p>
+
+<p>Let&#39;s create our first handler, still on IEx, that sends all events to a given process:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="kd">defmodule</span> <span class="nc">Forwarder</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>  <span class="kn">use</span> <span class="nc">GenEvent</span>
+<span class="gp">...&gt; </span>  <span class="kd">def</span> <span class="n">handle_event</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span> <span class="k">do</span>
+<span class="gp">...&gt; </span>    <span class="n">send</span> <span class="n">parent</span><span class="p">,</span> <span class="n">event</span>
+<span class="gp">...&gt; </span>    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">parent</span><span class="p">}</span>
+<span class="gp">...&gt; </span>  <span class="k">end</span>
+<span class="gp">...&gt; </span><span class="k">end</span>
+<span class="gp">iex&gt; </span><span class="nc">GenEvent</span><span class="p">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="nc">Forwarder</span><span class="p">,</span> <span class="n">self</span><span class="p">())</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="nc">GenEvent</span><span class="p">.</span><span class="n">sync_notify</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="ss">:world</span><span class="p">})</span>
+<span class="go">:ok</span>
+<span class="gp">iex&gt; </span><span class="n">flush</span>
+<span class="go">{:hello, :world}</span>
+<span class="go">:ok</span>
+</code></pre></div>
+<p>We created our handler and added it to the manager by calling <code>GenEvent.add_handler/3</code> passing:</p>
+
+<ol>
+<li>The manager we previously started and linked</li>
+<li>The event handler module (named <code>Forwarder</code>) we just defined</li>
+<li>The event handler state: in this case, the current process pid</li>
+</ol>
+
+<p>After adding the handler, we can see that by calling <code>sync_notify/2</code>, the <code>Forwarder</code> handler successfully forwards events to our inbox.</p>
+
+<p>There are a couple things that are important to highlight at this point:</p>
+
+<ol>
+<li>The event handler runs in the same process as the event manager</li>
+<li><code>sync_notify/2</code> runs event handlers synchronously to the request</li>
+<li><code>notify/2</code> runs event handlers asynchronously</li>
+</ol>
+
+<p>Therefore, <code>sync_notify/2</code> and <code>notify/2</code> are similar to <code>call/2</code> and <code>cast/2</code> in GenServer and using <code>sync_notify/2</code> is generally recommended. It works as a backpressure mechanism in the calling process, to reduce the likelihood of messages being sent more quickly than they can be dispatched to handlers.</p>
+
+<p>Be sure to check other functionality provided by GenEvent in its <a href="http://elixir-lang.org/docs/stable/elixir/GenEvent.html">module documentation</a>. For now we have enough knowledge to add an event manager to our application.</p>
+
+<h2 id="4.2-registry-events">4.2 Registry events</h2>
+
+<p>In order to emit events, we need to change the registry to work with an event manager. While we could automatically start the event manager when the registry is started, for example in the <code>init/1</code> callback, it is preferrable to pass the event manager pid/name to <code>start_link</code>, decoupling the start of the event manager from the registry.</p>
+
+<p>Let&#39;s first change our tests to showcase the behaviour we want the registry to exhibit. Open up <code>test/kv/registry_test.exs</code> and change the existing <code>setup</code> callback to the one below, then add the new test:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">Forwarder</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">GenEvent</span>
+
+  <span class="kd">def</span> <span class="n">handle_event</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span> <span class="k">do</span>
+    <span class="n">send</span> <span class="n">parent</span><span class="p">,</span> <span class="n">event</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">parent</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">setup</span> <span class="k">do</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">manager</span><span class="p">}</span> <span class="p">=</span> <span class="nc">GenEvent</span><span class="p">.</span><span class="n">start_link</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">registry</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">start_link</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
+
+  <span class="nc">GenEvent</span><span class="p">.</span><span class="n">add_mon_handler</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="nc">Forwarder</span><span class="p">,</span> <span class="n">self</span><span class="p">())</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="ss">registry</span><span class="p">:</span> <span class="n">registry</span><span class="p">}</span>
+<span class="k">end</span>
+
+<span class="n">test</span> <span class="s2">&quot;sends events on create and crash&quot;</span><span class="p">,</span> <span class="p">%{</span><span class="ss">registry</span><span class="p">:</span> <span class="n">registry</span><span class="p">}</span> <span class="k">do</span>
+  <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">)</span>
+  <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">bucket</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Registry</span><span class="p">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">)</span>
+  <span class="n">assert_receive</span> <span class="p">{</span><span class="ss">:create</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">,</span> <span class="o">^</span><span class="n">bucket</span><span class="p">}</span>
+
+  <span class="nc">Agent</span><span class="p">.</span><span class="n">stop</span><span class="p">(</span><span class="n">bucket</span><span class="p">)</span>
+  <span class="n">assert_receive</span> <span class="p">{</span><span class="ss">:exit</span><span class="p">,</span> <span class="s2">&quot;shopping&quot;</span><span class="p">,</span> <span class="o">^</span><span class="n">bucket</span><span class="p">}</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>In order to test the functionality we want to add, we first define a <code>Forwarder</code> event handler similar to the one we typed in IEx previously. On <code>setup</code>, we start the event manager, pass it as an argument to the registry and add our <code>Forwarder</code> handler to the manager so events can be sent to the test process.</p>
+
+<p>In the test, we create and stop a bucket process and use <code>assert_receive</code> to assert we will receive both <code>:create</code> and <code>:exit</code> messages. <code>assert_receive</code> has a default timeout of 500ms which should be more than enough for our tests. Also note that <code>assert_receive</code> expects a pattern, rather than a value, that&#39;s why we have used <code>^bucket</code> to match on the bucket pid.</p>
+
+<p>Finally, notice we called <code>GenEvent.add_mon_handler/3</code> instead of <code>GenEvent.add_handler/3</code>. This function adds a handler, as we know, and also tells the event manager to monitor the current process. If the current process dies, the event handler is automatically removed. This makes sense because, in the <code>Forwarder</code> case, we should stop forwarding messages if the recipient of those messages (<code>self()</code>/the test process) is no longer alive.</p>
+
+<p>Let&#39;s now change the registry to make the tests pass. Open up <code>lib/kv/registry.ex</code> and paste the new registry implementation below (comments inlined):</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="kd">defmodule</span> <span class="nc">KV.Registry</span> <span class="k">do</span>
+  <span class="kn">use</span> <span class="nc">GenServer</span>
+
+  <span class="c1">## Client API</span>
+
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Starts the registry.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">start_link</span><span class="p">(</span><span class="n">event_manager</span><span class="p">,</span> <span class="n">opts</span> <span class="p">\\</span> <span class="p">[])</span> <span class="k">do</span>
+    <span class="c1"># 1. start_link now expects the event manager as argument</span>
+    <span class="nc">GenServer</span><span class="p">.</span><span class="n">start_link</span><span class="p">(</span><span class="bp">__MODULE__</span><span class="p">,</span> <span class="n">event_manager</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Looks up the bucket pid for `name` stored in `server`.</span>
+
+<span class="sh">  Returns `{:ok, pid}` in case a bucket exists, `:error` otherwise.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">lookup</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+    <span class="nc">GenServer</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="p">{</span><span class="ss">:lookup</span><span class="p">,</span> <span class="n">name</span><span class="p">})</span>
+  <span class="k">end</span>
+
+  <span class="na">@doc</span> <span class="sh">&quot;&quot;&quot;</span>
+<span class="sh">  Ensures there is a bucket associated with the given `name` in `server`.</span>
+<span class="sh">  &quot;&quot;&quot;</span>
+  <span class="kd">def</span> <span class="n">create</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+    <span class="nc">GenServer</span><span class="p">.</span><span class="n">cast</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="p">{</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">})</span>
+  <span class="k">end</span>
+
+  <span class="c1">## Server callbacks</span>
+
+  <span class="kd">def</span> <span class="n">init</span><span class="p">(</span><span class="n">events</span><span class="p">)</span> <span class="k">do</span>
+    <span class="c1"># 2. The init callback now receives the event manager.</span>
+    <span class="c1">#    We have also changed the manager state from a tuple</span>
+    <span class="c1">#    to a map, allowing us to add new fields in the future</span>
+    <span class="c1">#    without needing to rewrite all callbacks.</span>
+    <span class="n">names</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">new</span>
+    <span class="n">refs</span>  <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">new</span>
+    <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="p">%{</span><span class="ss">names</span><span class="p">:</span> <span class="n">names</span><span class="p">,</span> <span class="ss">refs</span><span class="p">:</span> <span class="n">refs</span><span class="p">,</span> <span class="ss">events</span><span class="p">:</span> <span class="n">events</span><span class="p">}}</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">handle_call</span><span class="p">({</span><span class="ss">:lookup</span><span class="p">,</span> <span class="n">name</span><span class="p">},</span> <span class="n">_from</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:reply</span><span class="p">,</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">state</span><span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">handle_cast</span><span class="p">({</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">},</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="k">if</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="k">do</span>
+      <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+    <span class="k">else</span>
+      <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">pid</span><span class="p">}</span> <span class="p">=</span> <span class="nc">KV.Bucket</span><span class="p">.</span><span class="n">start_link</span><span class="p">()</span>
+      <span class="n">ref</span> <span class="p">=</span> <span class="nc">Process</span><span class="p">.</span><span class="n">monitor</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+      <span class="n">refs</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">refs</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+      <span class="n">names</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+      <span class="c1"># 3. Push a notification to the event manager on create</span>
+      <span class="nc">GenEvent</span><span class="p">.</span><span class="n">sync_notify</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">events</span><span class="p">,</span> <span class="p">{</span><span class="ss">:create</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">})</span>
+      <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">%{</span><span class="n">state</span> <span class="p">|</span> <span class="ss">names</span><span class="p">:</span> <span class="n">names</span><span class="p">,</span> <span class="ss">refs</span><span class="p">:</span> <span class="n">refs</span><span class="p">}}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">handle_info</span><span class="p">({</span><span class="ss">:DOWN</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="ss">:process</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="n">_reason</span><span class="p">},</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="n">name</span><span class="p">,</span> <span class="n">refs</span><span class="p">}</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">refs</span><span class="p">,</span> <span class="n">ref</span><span class="p">)</span>
+    <span class="n">names</span> <span class="p">=</span> <span class="nc">HashDict</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="c1"># 4. Push a notification to the event manager on exit</span>
+    <span class="nc">GenEvent</span><span class="p">.</span><span class="n">sync_notify</span><span class="p">(</span><span class="n">state</span><span class="p">.</span><span class="n">events</span><span class="p">,</span> <span class="p">{</span><span class="ss">:exit</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">pid</span><span class="p">})</span>
+    <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="p">%{</span><span class="n">state</span> <span class="p">|</span> <span class="ss">names</span><span class="p">:</span> <span class="n">names</span><span class="p">,</span> <span class="ss">refs</span><span class="p">:</span> <span class="n">refs</span><span class="p">}}</span>
+  <span class="k">end</span>
+
+  <span class="kd">def</span> <span class="n">handle_info</span><span class="p">(</span><span class="n">_msg</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="k">do</span>
+    <span class="p">{</span><span class="ss">:noreply</span><span class="p">,</span> <span class="n">state</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>The changes are straightforward. We now pass the event manager we received as an argument to <code>start_link</code> on to <code>GenServer</code> initialization. We also change both cast and info callbacks to call <code>GenEvent.sync_notify/2</code>. Lastly, we have taken the opportunity to change the server state to a map, making it easier to improve the registry in the future.</p>
+
+<p>Run the test suite, and all tests should be green again.</p>
+
+<h2 id="4.3-event-streams">4.3 Event streams</h2>
+
+<p>One last functionality worth exploring from <code>GenEvent</code> is the ability to consume its events as a stream:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">iex</span><span class="o">&gt;</span> <span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="n">manager</span><span class="p">}</span> <span class="p">=</span> <span class="nc">GenEvent</span><span class="p">.</span><span class="n">start_link</span>
+<span class="p">{</span><span class="ss">:ok</span><span class="p">,</span> <span class="c1">#PID&lt;0.83.0&gt;}</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="n">spawn_link</span> <span class="k">fn</span> <span class="p">-&gt;</span>
+<span class="p">...</span><span class="o">&gt;</span>   <span class="k">for</span> <span class="n">x</span> <span class="p">&lt;-</span> <span class="nc">GenEvent</span><span class="p">.</span><span class="n">stream</span><span class="p">(</span><span class="n">manager</span><span class="p">),</span> <span class="ss">do</span><span class="p">:</span> <span class="nc">IO</span><span class="p">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">...</span><span class="o">&gt;</span> <span class="k">end</span>
+<span class="ss">:ok</span>
+<span class="n">iex</span><span class="o">&gt;</span> <span class="nc">GenEvent</span><span class="p">.</span><span class="n">notify</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="ss">:world</span><span class="p">})</span>
+<span class="p">{</span><span class="ss">:hello</span><span class="p">,</span> <span class="ss">:world</span><span class="p">}</span>
+<span class="ss">:ok</span>
+</code></pre></div>
+<p>In the example above, we have created a <code>GenEvent.stream(manager)</code> that returns a stream (an enumerable) of events that are consumed as they come. Since consuming those events is a blocking action, we spawn a new process that will consume the events and print them to the terminal, and that is exactly the behaviour we see. Every time we call <code>sync_notify/2</code> or <code>notify/2</code>, the event is printed to the terminal followed by <code>:ok</code> (which is just IEx printing the result returned by notify functions).</p>
+
+<p>Often event streams provide enough functionality for consuming events that we don&#39;t need to register our own handlers. However, when custom functionality is required, or during testing, defining our own event handler callbacks is the best way to go.</p>
+
+<p>At this point, we have an event manager, a registry and potentially many buckets running at the same time. It is about time to start worrying what would happen if any of those processes crash.</p>
+
+  </article><!-- .hfeed -->
+
+  
+</div><!-- #content -->
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+

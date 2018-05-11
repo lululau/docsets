@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>7 Keywords, maps and dicts - Elixir</title>
+  <link href="http://feeds.feedburner.com/ElixirLang" rel="alternate" title="Elixir's Blog" type="application/atom+xml" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" id="font-bitter-css" href="../../fonts.googleapis.com/css%3Ffamily=Bitter&amp;ver=1.css" type="text/css" media="screen" />
+</head>
+
+<body class="getting_started">
+  <div id="container">
+    <div class="wrap">
+    <div id="header">
+      <div id="branding">
+        <h1 id="site-title">
+          <a href="http://elixir-lang.org/" title="Elixir" rel="Home">
+            <img class="logo" src="../images/logo/logo.png" alt="Elixir Logo" />
+          </a>
+        </h1>
+      </div>
+
+      <div id="menu-primary" class="menu-container">
+        <div class="menu">
+          <ul id="menu-primary-items">
+            <li class="menu-item home"><a class="spec" href="http://elixir-lang.org/">Home</a></li>
+            <li class="menu-item install"><a class="spec" href="http://elixir-lang.org/install.html">Install</a></li>
+            <li class="menu-item getting_started"><a class="spec" href="http://elixir-lang.org/getting_started/1.html">Getting Started</a></li>
+            <li class="menu-item docs"><a class="spec" href="http://elixir-lang.org/docs.html">Docs</a></li>
+            <li class="menu-item blog"><a class="spec" href="http://elixir-lang.org/blog">Blog</a></li>
+            <li class="menu-item source"><a class="spec" href="https://github.com/elixir-lang/elixir">Source</a></li>
+            <li class="menu-item packages"><a class="spec" href="http://hex.pm/">Packages</a></li>
+
+          </ul>
+        </div>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div id="main">
+
+
+<div id="sidebar-primary" class="sidebar">
+  <div class="widget news">
+  <h3>
+    News: <a href="http://elixir-lang.org/blog/2014/09/18/elixir-v1-0-0-released/">Elixir v1.0.0 released</a>
+  </h3>
+</div>
+
+<div class="widget search">
+  <form method="get" class="search-form" action="http://www.google.com/search">
+		<div>
+			<input class="search-text" type="text" name="q" placeholder="Search..." id="searchfield">
+			<input type="hidden" name="sitesearch" value="elixir-lang.org">
+			<input class="search-submit button" name="submit" type="submit" value="Search">
+		</div>
+	</form>
+</div>
+
+  <div class="widget">
+    <h3 class="widget-title">Getting Started</h3>
+    <ol>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/1.html">Introduction</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/2.html">Basic types</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/3.html">Basic operators</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/4.html">Pattern matching</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/5.html">case, cond and if</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/6.html">Binaries, strings and char lists</a></li>
+      <li><a class="spec" href="7.html">Keywords, maps and dicts</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/8.html">Modules</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/9.html">Recursion</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/10.html">Enumerables and streams</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/11.html">Processes</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/12.html">IO and the file system</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/13.html">alias, require and import</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/14.html">Module attributes</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/15.html">Structs</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/16.html">Protocols</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/17.html">Comprehensions</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/18.html">Sigils</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/19.html">try, catch and rescue</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/20.html">Typespecs and behaviours</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/21.html">Where to go next</a></li>
+    </ol>
+  </div>
+  <div class="widget">
+    <h3 class="widget-title">Mix and OTP</h3>
+    <ol>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/1.html">Introduction to Mix</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/2.html">Agent</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/3.html">GenServer</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/4.html">GenEvent</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/5.html">Supervisor and Application</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/6.html">ETS</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/7.html">Dependencies and umbrella apps</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/8.html">Task and gen_tcp</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/9.html">Docs, tests and pipelines</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/mix_otp/10.html">Distributed tasks and configuration</a></li>
+    </ol>
+  </div>
+  <div class="widget">
+    <h3 class="widget-title">Meta-programming in Elixir</h3>
+    <ol>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/meta/1.html">Quote and unquote</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/meta/2.html">Macros</a></li>
+      <li><a class="spec" href="http://elixir-lang.org/getting_started/meta/3.html">Domain Specific Languages</a></li>
+    </ol>
+  </div>
+
+  <div class="widget">
+  <h3 class="widget-title">Learning resources</h3>
+  <ul>
+    <li class="image"><a href="http://pragprog.com/titles/elixir" title="Programming Elixir"><img src="../../imagery.pragprog.com/products/361/elixir_xlargecover.jpg%3F1368724397.html" alt="Programming Elixir cover" width="190" height="228" class="border" /></a></li>
+    <li class="image"><a href="http://elixirsips.com" title="ElixirSips"><img src="../../elixirsips.com/images/ElixirLangAd2_190x160.png" alt="ElixirSips cover" width="190" height="160" /></a></li>
+    <li class="image"><a href="http://shop.oreilly.com/product/0636920030584.do" title="Introducing Elixir"><img src="../../akamaicovers.oreilly.com/images/0636920030584/cat.gif" alt="Introducing Elixir cover" width="190" height="249" /></a></li>
+    <li class="image"><a href="http://manning.com/juric/" title="Elixir in Action"><img src="../../manning.com/juric/juric_cover150.jpg" alt="Elixir in Action cover" width="190" height="238" /></a></li>
+    <li class="image"><a href="http://www.exotpbook.com/" title="The Little Elixir and OTP Guidebook"><img src="../../i.imgur.com/G6icQmt.png" alt="The Little Elixir and OTP Guidebook cover" width="190" height="274" /></a></li>
+  </ul>
+</div>
+
+  <div class="widget">
+  <h3 class="widget-title">Code editor support</h3>
+  <ul>
+    <li><a class="spec" href="https://github.com/elixir-lang/emacs-elixir">Emacs Mode</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/elixir-tmbundle">Textmate Bundle</a></li>
+    <li><a class="spec" href="https://github.com/elixir-lang/vim-elixir">Vim Elixir</a></li>
+    <li><a class="spec" href="https://github.com/SteffenBauer/elixir-gtksourceview">GtkSourceView (gedit)</a></li>
+    <li><a class="spec" href="https://github.com/lucasmazza/language-elixir">Atom Package</a></li>
+  </ul>
+</div>
+
+  <div id="sponsors" class="widget">
+  <h3 class="widget-title">Sponsors</h3>
+  <ul>
+    <li class="image"><a href="http://plataformatec.com.br" title="Plataformatec"><img src="../images/logo/plataformatec.png" alt="Plataformatec Logo" width="190" height="74" /></a></li>
+  </ul>
+</div>
+</div>
+
+<div id="content">
+  <article>
+    <h1 id="7-keywords,-maps-and-dicts">7 Keywords, maps and dicts</h1>
+
+<div class="toc"></div>
+
+<p>So far we haven&#39;t discussed any associative data structures, i.e. data structures that are able to associate a certain value (or multiple values) to a key. Different languages call these different names like dictionaries, hashes, associative arrays, maps, etc.</p>
+
+<p>In Elixir, we have two main associative data structures: keyword lists and maps. It&#39;s time to learn more about them!</p>
+
+<h2 id="7.1-keyword-lists">7.1 Keyword lists</h2>
+
+<p>In many functional programming languages, it is common to use a list of 2-item tuples as the representation of an associative data structure. In Elixir, when we have a list of tuples and the first item of the tuple (i.e. the key) is an atom, we call it a keyword list:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">list</span> <span class="p">=</span> <span class="p">[{</span><span class="ss">:a</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="ss">:b</span><span class="p">,</span> <span class="mi">2</span><span class="p">}]</span>
+<span class="go">[a: 1, b: 2]</span>
+<span class="gp">iex&gt; </span><span class="n">list</span> <span class="o">==</span> <span class="p">[</span><span class="ss">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">b</span><span class="p">:</span> <span class="mi">2</span><span class="p">]</span>
+<span class="go">true</span>
+<span class="gp">iex&gt; </span><span class="n">list</span><span class="p">[</span><span class="ss">:a</span><span class="p">]</span>
+<span class="go">1</span>
+</code></pre></div>
+<p>As you can see above, Elixir supports a special syntax for defining such lists, and underneath they just map to a list of tuples. Since they are simply lists, all operations available to lists, including their performance characteristics, also apply to keyword lists.</p>
+
+<p>For example, we can use <code>++</code> to add new values to a keyword list:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">list</span> <span class="o">++</span> <span class="p">[</span><span class="ss">c</span><span class="p">:</span> <span class="mi">3</span><span class="p">]</span>
+<span class="go">[a: 1, b: 2, c: 3]</span>
+<span class="gp">iex&gt; </span><span class="p">[</span><span class="ss">a</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span> <span class="o">++</span> <span class="n">list</span>
+<span class="go">[a: 0, a: 1, b: 2]</span>
+</code></pre></div>
+<p>Note that values added to the front are the ones fetched on lookup:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">new_list</span> <span class="p">=</span> <span class="p">[</span><span class="ss">a</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span> <span class="o">++</span> <span class="n">list</span>
+<span class="go">[a: 0, a: 1, b: 2]</span>
+<span class="gp">iex&gt; </span><span class="n">new_list</span><span class="p">[</span><span class="ss">:a</span><span class="p">]</span>
+<span class="go">0</span>
+</code></pre></div>
+<p>Keyword lists are important because they have three special characteristics:</p>
+
+<ul>
+<li>Keys must be atoms.</li>
+<li>Keys are ordered, as specified by the developer.</li>
+<li>Keys can be given more than once.</li>
+</ul>
+
+<p>For example, <a href="https://github.com/elixir-lang/ecto">the Ecto library</a> makes use of both features to provide an elegant DSL for writing database queries:</p>
+<div class="highlight"><pre><code class="language-elixir" data-lang="elixir"><span class="n">query</span> <span class="p">=</span> <span class="n">from</span> <span class="n">w</span> <span class="ow">in</span> <span class="nc">Weather</span><span class="p">,</span>
+      <span class="ss">where</span><span class="p">:</span> <span class="n">w</span><span class="p">.</span><span class="n">prcp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="ss">where</span><span class="p">:</span> <span class="n">w</span><span class="p">.</span><span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">,</span>
+     <span class="ss">select</span><span class="p">:</span> <span class="n">w</span>
+</code></pre></div>
+<p>Those features are what prompted keyword lists to be the default mechanism for passing options to functions in Elixir. In chapter 5, when we discussed the <code>if/2</code> macro, we mentioned the following syntax is supported:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">if</span> <span class="no">false</span><span class="p">,</span> <span class="ss">do</span><span class="p">:</span> <span class="ss">:this</span><span class="p">,</span> <span class="ss">else</span><span class="p">:</span> <span class="ss">:that</span>
+<span class="go">:that</span>
+</code></pre></div>
+<p>The <code>do:</code> and <code>else:</code> pairs are keyword lists! In fact, the call above is equivalent to:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="k">if</span><span class="p">(</span><span class="no">false</span><span class="p">,</span> <span class="p">[</span><span class="ss">do</span><span class="p">:</span> <span class="ss">:this</span><span class="p">,</span> <span class="ss">else</span><span class="p">:</span> <span class="ss">:that</span><span class="p">])</span>
+<span class="go">:that</span>
+</code></pre></div>
+<p>In general, when the keyword list is the last argument of a function, the square brackets are optional.</p>
+
+<p>In order to manipulate keyword lists, Elixir provides <a href="http://elixir-lang.org/docs/stable/elixir/Keyword.html">the <code>Keyword</code> module</a>. Remember though keyword lists are simply lists, and as such they provide the same linear performance characteristics as lists. The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly as options. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.</p>
+
+<p>Although we can pattern match on keyword lists, it is rarely done in practice since pattern matching on lists require the number of items and their order to match:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">[</span><span class="ss">a</span><span class="p">:</span> <span class="n">a</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="ss">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+<span class="go">[a: 1]</span>
+<span class="gp">iex&gt; </span><span class="n">a</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="p">[</span><span class="ss">a</span><span class="p">:</span> <span class="n">a</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="ss">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">b</span><span class="p">:</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gr">** (MatchError) no match of right hand side value: [a: 1, b: 2]</span>
+<span class="gp">iex&gt; </span><span class="p">[</span><span class="ss">b</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span> <span class="ss">a</span><span class="p">:</span> <span class="n">a</span><span class="p">]</span> <span class="p">=</span> <span class="p">[</span><span class="ss">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">b</span><span class="p">:</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gr">** (MatchError) no match of right hand side value: [a: 1, b: 2]</span>
+</code></pre></div>
+<h2 id="7.2-maps">7.2 Maps</h2>
+
+<p>Whenever you need a key-value store, maps are the &quot;go to&quot; data structure in Elixir. A map is created using the <code>%{}</code> syntax:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">map</span> <span class="p">=</span> <span class="p">%{</span><span class="ss">:a</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">=&gt;</span> <span class="ss">:b</span><span class="p">}</span>
+<span class="go">%{2 =&gt; :b, :a =&gt; 1}</span>
+<span class="gp">iex&gt; </span><span class="n">map</span><span class="p">[</span><span class="ss">:a</span><span class="p">]</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="n">map</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">:b</span>
+<span class="gp">iex&gt; </span><span class="n">map</span><span class="p">[</span><span class="ss">:c</span><span class="p">]</span>
+<span class="go">nil</span>
+</code></pre></div>
+<p>Compared to keyword lists, we can already see two differences:</p>
+
+<ul>
+<li>Maps allow any value as a key.</li>
+<li>Maps&#39; keys do not follow any ordering.</li>
+</ul>
+
+<p>If you pass duplicate keys when creating a map, the last one wins:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">%{</span><span class="mi">1</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">=&gt;</span> <span class="mi">2</span><span class="p">}</span>
+<span class="go">%{1 =&gt; 2}</span>
+</code></pre></div>
+<p>When all the keys in a map are atoms, you can use the keyword syntax for convenience:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">map</span> <span class="p">=</span> <span class="p">%{</span><span class="ss">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">b</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="go">%{a: 1, b: 2}</span>
+</code></pre></div>
+<p>In contrast to keyword lists, maps are very useful with pattern matching:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="p">%{}</span> <span class="p">=</span> <span class="p">%{</span><span class="ss">:a</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">=&gt;</span> <span class="ss">:b</span><span class="p">}</span>
+<span class="go">%{:a =&gt; 1, 2 =&gt; :b}</span>
+<span class="gp">iex&gt; </span><span class="p">%{</span><span class="ss">:a</span> <span class="p">=&gt;</span> <span class="n">a</span><span class="p">}</span> <span class="p">=</span> <span class="p">%{</span><span class="ss">:a</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">=&gt;</span> <span class="ss">:b</span><span class="p">}</span>
+<span class="go">%{:a =&gt; 1, 2 =&gt; :b}</span>
+<span class="gp">iex&gt; </span><span class="n">a</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="p">%{</span><span class="ss">:c</span> <span class="p">=&gt;</span> <span class="n">c</span><span class="p">}</span> <span class="p">=</span> <span class="p">%{</span><span class="ss">:a</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">=&gt;</span> <span class="ss">:b</span><span class="p">}</span>
+<span class="gr">** (MatchError) no match of right hand side value: %{2 =&gt; :b, :a =&gt; 1}</span>
+</code></pre></div>
+<p>As shown above, a map matches as long as the given keys exist in the given map. Therefore, an empty map matches all maps.</p>
+
+<p><a href="http://elixir-lang.org/docs/stable/elixir/Map.html">The <code>Map</code> module</a> provides a very similar API to the <code>Keyword</code> module with convenience functions to manipulate maps:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="nc">Map</span><span class="p">.</span><span class="n">get</span><span class="p">(%{</span><span class="ss">:a</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">=&gt;</span> <span class="ss">:b</span><span class="p">},</span> <span class="ss">:a</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="nc">Map</span><span class="p">.</span><span class="n">to_list</span><span class="p">(%{</span><span class="ss">:a</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">=&gt;</span> <span class="ss">:b</span><span class="p">})</span>
+<span class="go">[{2, :b}, {:a, 1}]</span>
+</code></pre></div>
+<p>One interesting property about maps is that they provide a particular syntax for updating and accessing atom keys:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">map</span> <span class="p">=</span> <span class="p">%{</span><span class="ss">:a</span> <span class="p">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="p">=&gt;</span> <span class="ss">:b</span><span class="p">}</span>
+<span class="go">%{:a =&gt; 1, 2 =&gt; :b}</span>
+
+<span class="gp">iex&gt; </span><span class="n">map</span><span class="p">.</span><span class="n">a</span>
+<span class="go">1</span>
+<span class="gp">iex&gt; </span><span class="n">map</span><span class="p">.</span><span class="n">c</span>
+<span class="gr">** (KeyError) key :c not found in: %{2 =&gt; :b, :a =&gt; 1}</span>
+
+<span class="gp">iex&gt; </span><span class="p">%{</span><span class="n">map</span> <span class="p">|</span> <span class="ss">:a</span> <span class="p">=&gt;</span> <span class="mi">2</span><span class="p">}</span>
+<span class="go">%{:a =&gt; 2, 2 =&gt; :b}</span>
+<span class="gp">iex&gt; </span><span class="p">%{</span><span class="n">map</span> <span class="p">|</span> <span class="ss">:c</span> <span class="p">=&gt;</span> <span class="mi">3</span><span class="p">}</span>
+<span class="gr">** (ArgumentError) argument error</span>
+</code></pre></div>
+<p>Both access and update syntaxes above require the given keys to exist. For example, accessing and updating the <code>:c</code> key failed there is no <code>:c</code> in the map.</p>
+
+<p>Elixir developers typically prefer to use the <code>map.field</code> syntax and pattern matching instead of the functions in the <code>Map</code> module when working with maps because they lead to an assertive style of programming. <a href="http://blog.plataformatec.com.br/2014/09/writing-assertive-code-with-elixir/">This blog post</a> provides insight and examples on how you get more concise and faster software by writing assertive code in Elixir.</p>
+
+<blockquote>
+<p>Note: Maps were recently introduced into the Erlang VM with <a href="http://www.erlang.org/eeps/eep-0043.html">EEP 43</a>. Erlang 17 provides a partial implementation of the EEP, where only &quot;small maps&quot; are supported. This means maps have good performance characteristics only when storing at maximum a couple of dozens keys. To fill in this gap, Elixir also provides <a href="http://elixir-lang.org/docs/stable/elixir/HashDict.html">the <code>HashDict</code> module</a> which uses a hashing algorithm to provide a dictionary that supports hundreds of thousands keys with good performance.</p>
+</blockquote>
+
+<h2 id="7.3-dicts">7.3 Dicts</h2>
+
+<p>In Elixir, both keyword lists and maps are called dictionaries. In other words, a dictionary is like an interface (we call them behaviours in Elixir) and both keyword lists and maps modules implement this interface.</p>
+
+<p>This interface is defined in the <a href="http://elixir-lang.org/docs/stable/elixir/Dict.html">the <code>Dict</code> module</a> module which also provides an API that delegates to the underlying implementations:</p>
+<div class="highlight"><pre><code class="language-iex" data-lang="iex"><span class="gp">iex&gt; </span><span class="n">keyword</span> <span class="p">=</span> <span class="p">[]</span>
+<span class="go">[]</span>
+<span class="gp">iex&gt; </span><span class="n">map</span> <span class="p">=</span> <span class="p">%{}</span>
+<span class="go">%{}</span>
+<span class="gp">iex&gt; </span><span class="nc">Dict</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="ss">:a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">[a: 1]</span>
+<span class="gp">iex&gt; </span><span class="nc">Dict</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">map</span><span class="p">,</span> <span class="ss">:a</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">%{a: 1}</span>
+</code></pre></div>
+<p>The <code>Dict</code> module allows any developer to implement their own variation of <code>Dict</code>, with specific characteristics, and hook into existing Elixir code. The <code>Dict</code> module also provides functions that are meant to work across dictionaries. For example, <code>Dict.equal?/2</code> can compare two dictionaries of any kind.</p>
+
+<p>That said, you may be wondering, which of <code>Keyword</code>, <code>Map</code> or <code>Dict</code> modules should you use in your code? The answer is: it depends.</p>
+
+<p>If your code is expecting one specific data structure as argument, use the respective module as it leads to more assertive code. For example, if you expect a keyword as an argument, explicitly use the <code>Keyword</code> module instead of <code>Dict</code>. However, if your API is meant to work with any dictionary, use the <code>Dict</code> module (and make sure to write tests that pass different dict implementations as arguments).</p>
+
+<p>This concludes our introduction to associative data structures in Elixir. You will find out that given keyword lists and maps, you will always have the right tool to tackle problems that require associative data structures in Elixir.</p>
+
+  </article><!-- .hfeed -->
+
+  
+  <div class="pagination loop-pagination">
+    
+      <a href="http://elixir-lang.org/getting_started/6.html" class="previous page-numbers spec">&larr; Previous</a>
+    
+      <a class="page-numbers spec" href="7.html#container">Top</a>
+    
+      <a href="http://elixir-lang.org/getting_started/8.html" class="next page-numbers spec">Next &rarr;</a>
+    
+  </div>
+  
+</div><!-- #content -->
+
+      </div><!-- #main -->
+
+      <div class="clear"></div>
+
+      <div id="copyright">
+        &copy; 2012-2014 <a href="http://plataformatec.com.br/">Plataformatec</a>. All rights reserved.
+      </div>
+    </div><!-- .wrap -->
+  </div><!-- #container -->
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-8268430-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+  <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="../js/toc/toc.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('.toc').toc({
+          title: '',
+          listType: 'ul',
+          minimumHeaders: 2,
+          headers: 'h2, h3, h4, h5, h6',
+          showSpeed: 0,
+        });
+    });
+  </script>
+</body>
+</html>
+
