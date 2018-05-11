@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="installing-rust">Installing Rust</h1>
+<h2 id="binary-installers">Binary installers</h2>
+<p>The Rust project provides official binary installers. You can get both releases and nightlies. Binary installers are the fastest and easiest way to get going with Rust. Because Rust is written in Rust, compiling the Rust compiler actually entails compiling it three times! This means it’s quite slow. But a binary install should be snappy!</p>
+<p>Rust now has a <a href="http://www.rust-lang.org/install.html">lovely downloads page</a>, so I recommend you just go check that out and download the proper version.</p>
+<p>Note that this book has been tested with Rust 0.11, and so if you use the latest nightly, something may have changed.</p>
+<h2 id="from-source">From Source</h2>
+<p>You will probably build the nightly version if you build from source, so be ready for some bugs in the code samples. This book was written for 0.11.</p>
+<p>The <a href="https://github.com/rust-lang/rust#building-from-source">Rust README</a> has great instructions for building form source. Just got follow their instructions!</p>
+<h3 id="future-proofing">Future Proofing</h3>
+<p>The version this book is written for is 0.11. While the language itself is pretty stable, things like the standard library and some major subsystems are being revised. I’ll be tweaking it with every new release.</p>
+<p>If you run</p>
+<pre><code>$ rustc</code></pre>
+<p>and it spits out a bunch of help information, you’re good to go with Rust.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="tasks-in-rust">Tasks in Rust</h1>
+<p>One of the things that Rust is super good at is concurrency. In order to understand Rust’s strengths, you have to understand its approach to concurrency, and then its approach to memory.</p>
+<h2 id="tasks">Tasks</h2>
+<p>The fundamental unit of computation in Rust is called a ‘task.’ Tasks are like threads, but you can choose the low-level details of how they operate. Rust now supports both 1:1 scheduled and N:M scheduled threads. Rust uses 1:1 threads by default. The details of what <em>exactly</em> that means are out of the scope of this tutorial, but the <a href="http://en.wikipedia.org/wiki/Thread_%28computing%29">Wikipedia page</a> has a good overview.</p>
+<p>Here’s some code that prints “Hello” 500 times:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">0u</span>, <span class="dv">500</span>) {
+        println!(<span class="st">&quot;Hello&quot;</span>);
+    }
+}</code></pre>
+<p>You may remember this from earlier. This loops 500 times, printing “Hello.” Now let’s make it roflscale with tasks:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">0u</span>, <span class="dv">500</span>) {
+        spawn(proc() {
+            println!(<span class="st">&quot;Hello&quot;</span>);
+        });
+    }
+}</code></pre>
+<p>That’s it! We spin up 500 tasks that print stuff. If you inspect your output, you can tell it’s working:</p>
+<pre><code>Hello
+HelloHello
+
+Hello</code></pre>
+<p>Ha! Printing to the screen is obviously something that tasks can step over each other with (if you’re curious, it’s because it is printing the string and the newline separately. Sometimes, another task gets to print its string before this task prints its newline). But the vast majority of things aren’t like that. Let’s take a look at the type signature of <code>spawn</code>:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> spawn(f: proc())</code></pre>
+<p>Spawn is a function that takes a proc: a closure that can only be run once. This means that Rust can do what it wants, moving the closure to another task, or other optimizations. The details aren’t particularly important at this stage, and Rust will be undergoing some reform with regards to closures soon, so just think of it as a closure, and that’s good enough.</p>
+<h2 id="pipes-channels-and-ports">Pipes, Channels, and Ports</h2>
+<p>If our tasks are 100% isolated, they wouldn’t be that useful: we need some kind of communication between tasks in order to get back useful results. We can communicate between tasks with pipes. Pipes have two ends: a channel that sends info down the pipe, and a port that receives info. If you’ve used these concepts in other languages, Rust’s are similar, except that Rust’s are explicitly typed. Some implementations of this pattern in other languages do not make this distinction. Otherwise, they’re very similar.</p>
+<p>Here’s an example of a task that sends us back a 10:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> (chan, port) = channel();
+
+    spawn(proc() {
+        chan.send(<span class="dv">10u</span>);
+    });
+
+    println!(<span class="st">&quot;{:s}&quot;</span>, port.recv().to_str());
+}</code></pre>
+<p>The <code>channel</code> function, imported by the prelude, creates both sides of this pipe. You can imagine that instead of sending 10, we might be doing some sort of complex calculation. It could be doing that work in the background while we did more important things.</p>
+<p>What about that <code>chan.send</code> bit? Well, the task captures the <code>chan</code> variable we set up before, so it’s just matter of using it. This is similar to Ruby’s blocks:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">foo = <span class="dv">10</span>
+<span class="dv">2</span>.times <span class="kw">do</span>
+  puts foo
+<span class="kw">end</span></code></pre>
+<p>This is really only one-way transit, though: what if we want to communicate back and forth? Setting up two ports and channels each time would be pretty annoying, so we have some standard library code for this.</p>
+<p>We make a function that just loops forever, gets an <code>int</code> off of the port, and sends the number plus 1 back down the channel. In the main function, we make a channel, send one end to a new task, and then send it a <code>22</code>, and print out the result. Because this task is running in the background, we can send it bunches of values:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::comm::{channel, Sender, Receiver};
+
+<span class="kw">fn</span> plus_one(sender: &amp;Sender&lt;<span class="kw">int</span>&gt;, receiver: &amp;Receiver&lt;<span class="kw">int</span>&gt;) {
+    <span class="kw">let</span> <span class="kw">mut</span> value: <span class="kw">int</span>;
+    <span class="kw">loop</span> {
+        value = receiver.recv();
+        sender.send(value + <span class="dv">1</span>);
+        <span class="kw">if</span> value == <span class="dv">0</span> { <span class="kw">break</span>; }
+    }
+}
+
+<span class="kw">fn</span> main () {
+    <span class="kw">let</span> (fromParentSender, fromParentReceiver) = channel();
+    <span class="kw">let</span> (fromChildSender, fromChildReceiver) = channel();
+
+    spawn(proc() {
+        plus_one(&amp;fromChildSender, &amp;fromParentReceiver);
+    });
+
+    fromParentSender.send(<span class="dv">22</span>);
+    fromParentSender.send(<span class="dv">23</span>);
+    fromParentSender.send(<span class="dv">24</span>);
+    fromParentSender.send(<span class="dv">25</span>);
+
+    <span class="kw">for</span> _ in range(<span class="dv">0u</span>, <span class="dv">4</span>) {
+        <span class="kw">let</span> answer = fromChildReceiver.recv();
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer.to_str());
+    }
+}</code></pre>
+<p>The <code>use</code> statement imports other modules. In this case, there’s a <code>std::comm</code> module that we’ll use parts of.</p>
+<p>Pretty simple. Our task is always waiting for work. If you run this, you’ll get some weird output at the end:</p>
+<pre><code>$ rustc tasks.rs &amp;&amp; ./tasks
+23
+24
+25
+26
+task &#39;&lt;unnamed&gt;&#39; failed at &#39;receiving on a closed channel&#39;, /home/steveklabnik/src/rust/src/libstd/comm/mod.rs:728</code></pre>
+<p><code>task failed at 'receiving on closed channel'</code>. Basically, we quit the program without closing our child task, and so it died when our main task (the one running <code>main</code>) died. By default, Rust tasks are bidirectionally linked, which means if one task fails, all of its children and parents fail too. We can fix this for now by telling our child to die:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::comm::{channel, Sender, Receiver};
+
+<span class="kw">fn</span> plus_one(sender: &amp;Sender&lt;<span class="kw">int</span>&gt;, receiver: &amp;Receiver&lt;<span class="kw">int</span>&gt;) {
+    <span class="kw">let</span> <span class="kw">mut</span> value: <span class="kw">int</span>;
+    <span class="kw">loop</span> {
+        value = receiver.recv();
+        sender.send(value + <span class="dv">1</span>);
+        <span class="kw">if</span> value == <span class="dv">0</span> { <span class="kw">break</span>; }
+    }
+}
+
+<span class="kw">fn</span> main () {
+    <span class="kw">let</span> (fromParentSender, fromParentReceiver) = channel();
+    <span class="kw">let</span> (fromChildSender, fromChildReceiver) = channel();
+
+    spawn(proc() {
+        plus_one(&amp;fromChildSender, &amp;fromParentReceiver);
+    });
+
+    fromParentSender.send(<span class="dv">22</span>);
+    fromParentSender.send(<span class="dv">23</span>);
+    fromParentSender.send(<span class="dv">24</span>);
+    fromParentSender.send(<span class="dv">24</span>);
+
+    fromParentSender.send(<span class="dv">0</span>);
+
+    <span class="kw">for</span> _ in range(<span class="dv">0i</span>, <span class="dv">4</span>) {
+        <span class="kw">let</span> answer = fromChildReceiver.recv();
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer.to_str());
+    }
+}</code></pre>
+<p>Now when we send a zero, our child task terminates. If you run this, you’ll get no errors at the end. We can also change our failure mode. Rust also provides unidirectional and unlinked failure modes as well, but I don’t want to talk about them right now. This would give you patterns like “Spin up a management task that is bidirectionally linked to main, but have it spin up children who are unlinked.” Neato.</p>
+<p>Rust tasks are so lightweight that you can conceivably spin up a ton of tasks, maybe even one per entity in your system. <a href="https://github.com/mozilla/servo">Servo</a> is a prototype browser rendering engine from Mozilla, and it spins up a <strong>ton</strong> of tasks. Parallel rendering, parsing, downloading, everything.</p>
+<p>I’m imagining that most production Rust programs will eventually have a main that spins up some sort of global task setup, and all the work gets done inside these tasks that communicate with each other. Like, for a video game:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+
+    spawn(proc() {
+        player_handler();
+    });
+
+    spawn(proc() {
+        world_handler();
+    });
+
+    spawn(proc() {
+        rendering_handler();
+    });
+
+    spawn(proc() {
+        io_handler();
+    });
+}</code></pre>
+<p>… with the associated channels, of course. This feels very Actor-y to me. I like it.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

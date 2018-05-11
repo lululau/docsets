@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="testing">Testing</h1>
+<p>Rubyists love testing, so before we go any farther, let’s talk about testing. In Rust, there is a unit testing framework built in, and it’s pretty simple. Let’s write some very simple code and tests to exercise it.</p>
+<p>In Rust, you annotate test methods like such:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> this_tests_code() {
+    <span class="co">// SOMETHING HERE</span>
+}</code></pre>
+<p>You’ll note that tests take no arguments and return nothing. If the function runs, the test passes, and if it errors in some way, the test fails. Let’s give it a shot: Open up <code>testing.rs</code> and put this in it:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> this_tests_code() {
+    println!(<span class="st">&quot;&quot;</span>);
+}</code></pre>
+<p>Then, use <code>rustc</code> with a special flag:</p>
+<pre><code>$ rustc --test testing.rs</code></pre>
+<p>This tells <code>rustc</code> to compile your tests, and replaces the <code>main</code> function with a test runner. Try it out:</p>
+<pre><code>$ ./testing</code></pre>
+<p>You should get some output that looks like this:</p>
+<pre><code>running 1 test
+
+test this_tests_code ... ok
+
+result: ok. 1 passed; 0 failed; 0 ignored</code></pre>
+<p>Bam! Now let’s make it fail:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> this_tests_code() {
+    <span class="kw">fail</span>!(<span class="st">&quot;Fail!&quot;</span>);
+}</code></pre>
+<p>Recompile, and the output should be:</p>
+<pre><code>running 1 test
+test this_tests_code ... FAILED
+
+failures:
+
+---- this_tests_code stdout ----
+  task &#39;this_tests_code&#39; failed at &#39;Fail!&#39;, testing.rs:5
+  
+
+failures:
+    this_tests_code
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured
+
+task &#39;&lt;main&gt;&#39; failed at &#39;Some tests failed&#39;, /some/path/to/something</code></pre>
+<p>Super simple. That’s all you need to know to get started. Next up: FizzBuzz.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

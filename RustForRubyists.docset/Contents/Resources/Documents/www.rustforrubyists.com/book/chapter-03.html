@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="writing-your-first-rust-program">Writing Your First Rust Program</h1>
+<p>Okay! Let’s get down to it: in order to call yourself an “X Programmer,” you must write “Hello, world” in X. So let’s do it. Open up a text file: I’ll use <code>vim</code> because I’m that kind of guy, but use whatever you want. Rust programs end in <code>.rs</code>:</p>
+<pre><code>$ vim hello.rs</code></pre>
+<p>Put this in it:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;Hello, world.&quot;</span>);
+}</code></pre>
+<p>And compile it with <code>rustc</code>:</p>
+<pre><code>$ rustc hello.rs</code></pre>
+<p>It should compile without error. If you get one, double check that you have the semicolons, the curlies, double quotation marks, and the parentheses. Errors look like this:</p>
+<pre><code>$ rustc hello.rs
+hello.rs:2:4: 2:11 error: expected `{` but found `println`
+hello.rs:2     println(&quot;Hello, world.&quot;);
+               ^~~~~~~</code></pre>
+<p>This happened when I left off the curly brace after the <code>main</code> function above.</p>
+<p>This isn’t an error:</p>
+<pre><code>$ rustc hello.rs
+warning: no debug symbols in executable (-arch x86_64)</code></pre>
+<p>It happens on OSX for some versions of Rust. You can safely ignore it.</p>
+<p>To run your program, do the Usual UNIX Thing:</p>
+<pre><code>$ ./hello</code></pre>
+<p>And you should see “Hello, world.” print to the screen. Congrats!</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

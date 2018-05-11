@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="traits-and-generics">Traits and Generics</h1>
+<p>Now that we understand a type that’s sorta generic, vectors, we can talk about how generic functions work. Then, we can use traits to make functions that work on generic monsters.</p>
+<h2 id="writing-functions-that-work-with-vectors">Writing functions that work with vectors</h2>
+<p>Because you’re still getting used to Rust code, let’s implement two versions of a method that print everything in a vector, and then refactor that into the generic form.</p>
+<p>Let’s do an exercise. You have this code:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span>, <span class="dv">2i</span>,<span class="dv">3i</span>];
+
+    print_vec(vec);
+}</code></pre>
+<p>Implement <code>print_vec</code> so that it puts out <code>1 2 3</code> with newlines between them. Hint: You can write ‘I want an array of ints’ with <code>&amp;[int]</code>. Remember how functions can often use borrowed pointers?</p>
+<p>I’ll wait.</p>
+<p>Done? I got this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> print_vec(v: &amp;[<span class="kw">int</span>]) {
+    <span class="kw">for</span> i in v.iter() {
+        println!(<span class="st">&quot;{:d}&quot;</span>, *i)
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+    print_vec(vec);
+}</code></pre>
+<p>Pretty straightforward. We take a slice (remember, ‘borrowed vector’ == ‘slice’) of ints, get a borrowed pointer to each of them, and print them out.</p>
+<p>Round two: Implement this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+    print_vec(vec);
+
+    <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+    print_vec_str(str_vec);
+}</code></pre>
+<p>You’ll often be seeing owned pointers with strings. Go ahead. You can do it!</p>
+<p>I got this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> print_vec(v: &amp;[<span class="kw">int</span>]) {
+    <span class="kw">for</span> i in v.iter() {
+        println!(<span class="st">&quot;{:d}&quot;</span>, *i)
+    }
+}
+
+<span class="kw">fn</span> print_vec_str(v: &amp;[&amp;<span class="kw">str</span>]) {
+    <span class="kw">for</span> i in v.iter() {
+        println!(<span class="st">&quot;{:s}&quot;</span>, *i)
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+    print_vec(vec);
+
+    <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+    print_vec_str(str_vec);
+}</code></pre>
+<p>You’ll notice we had to declare what type of <code>str</code> we had. See, strings are actually implemented as vectors of characters (encoded in UTF-8), so while they are sorta a type, you can’t have just <code>str</code> as a type. You gotta say <code>&amp;str</code>. As I mentioned before, there is also a mutable, heap-allocated string type, <code>Str</code>.</p>
+<p>Okay, obviously, this situation sucks! What can we do?</p>
+<p>We can use generics!</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec&lt;T&gt;(v: &amp;[T]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>];
+
+        print_vec(vec);
+
+        <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+        print_vec(str_vec);
+    }</code></pre>
+<p>This won’t compile, but it is closer. Let’s examine that signature more closely.</p>
+<ul>
+<li><code>&lt;T&gt;</code> says that we’re going to be making this function polymorphic over the type T.</li>
+<li>We then use it later to say we take a borrowed pointer of a vector of <code>T</code> s, <code>&amp;[T]</code></li>
+</ul>
+<p>If you try to compile this, you’ll get an error:</p>
+<pre><code>$ rustc traits.rs &amp;&amp; ./traits
+fizzbuzz.rs:5:28: 5:29 error: failed to find an implementation of trait std::fmt::Show for T
+fizzbuzz.rs:5             println!(&quot;{}&quot;, i)</code></pre>
+<p>This is a problem. Our generic type T does not have any restrictions on what kind of thing it is, which means we can’t guarantee that we’ll get something that has the ability to be displayed.</p>
+<p>For that, we need Traits.</p>
+<h2 id="traits">Traits</h2>
+<p>This <strong>will</strong> work:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> print_vec&lt;T: std::fmt::Show&gt;(v: &amp;[T]) {
+    <span class="kw">for</span> i in v.iter() {
+        println!(<span class="st">&quot;{}&quot;</span>, i)
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+    print_vec(vec);
+
+    <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+    print_vec(str_vec);
+}</code></pre>
+<p>The <code>&lt;T: std::fmt::Show&gt;</code> says: “We take any type <code>T</code> that implements the <code>Show</code> trait.</p>
+<p>Traits are sort of like ‘static duck typing’ or ‘structural typing.’ We get away with this in Ruby by just trusting the code we write, and for most of it, it just works out. Think about this:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">def</span> print_each(arr)
+      arr.each <span class="kw">do</span> |i|
+        puts i
+      <span class="kw">end</span>
+    <span class="kw">end</span></code></pre>
+<p>We trust that this will always work, because <code>Object</code> implements <code>#to_s</code>. But if we had this:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">def</span> print_each(arr)
+      arr.each <span class="kw">do</span> |i|
+        puts i + <span class="dv">1</span>
+      <span class="kw">end</span>
+    <span class="kw">end</span></code></pre>
+<p>We have an implicit type here: <code>arr</code> must contain things that <code>respond_to?(:+)</code>. In many ways, Rust is sorta like:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">def</span> print_each(arr)
+      assert arr.respond_to?(:+)
+
+      arr.each <span class="kw">do</span> |i|
+        puts i + <span class="dv">1</span>
+      <span class="kw">end</span>
+    <span class="kw">end</span></code></pre>
+<p>But it happens at compile time, not run time.</p>
+<p>Now, I’ve never written code where I felt the need to check for a <code>NoMethodError</code> or <code>TypeError</code>, as you’d get in Ruby:</p>
+<pre><code>irb(main):007:0&gt; print_each([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;])
+TypeError: can&#39;t convert Fixnum into String
+  from (irb):3:in `+&#39;
+  from (irb):3:in `block in print_each&#39;
+  from (irb):2:in `each&#39;
+  from (irb):2:in `print_each&#39;
+  from (irb):7
+  from /usr/local/ruby-1.9.3-p327/bin/irb:12:in `&lt;main&gt;&#39;</code></pre>
+<p>But I think that safety is the wrong way to look at this kind of static typing. The right way to look at it is that by giving the compiler more information about our code, it can make certain optimizations. Check this out:</p>
+<pre><code>$ cat traits.rs</code></pre>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec&lt;T: std::fmt::Show&gt;(v: &amp;[T]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>];
+
+        print_vec(vec);
+
+        <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+        print_vec(str_vec);
+    }</code></pre>
+<pre><code>$ rustc traits.rs &amp;&amp; ./traits
+1
+2
+3
+hey
+there
+yo
+
+$ nm -C traits | grep vec
+0000000000401500 t print_vec_2912::_85e5a3bc2d3e1a83::_00
+0000000000401ee0 t print_vec_2912::anon::expr_fn_2970
+0000000000404cd0 t print_vec_3218::_f1e1b4437dbb28a::_00
+0000000000405480 t print_vec_3218::anon::expr_fn_3252
+0000000000402c50 t vec::__extensions__::reserve_3030::_de1a9d6344b57ab::_00
+0000000000402d70 t vec::__extensions__::capacity_3032::_824484774e7757::_00
+0000000000404b50 t
+vec::__extensions__::push_fast_3194::_5cf6fa3bfa6090d7::_00
+0000000000404ae0 t
+vec::__extensions__::reserve_at_least_3192::_de1a9d6344b57ab::_00
+0000000000404840 t
+vec::__extensions__::reserve_no_inline_3182::_24c451fdab89623e::_00
+0000000000401c50 t vec::__extensions__::len_2959::_824484774e7757::_00
+0000000000401e80 t vec::__extensions__::len_2959::anon::expr_fn_2968
+00000000004048b0 t vec::__extensions__::len_3185::_824484774e7757::_00
+0000000000404a80 t vec::__extensions__::len_3185::anon::expr_fn_3190
+00000000004051f0 t vec::__extensions__::len_3243::_824484774e7757::_00
+0000000000405420 t vec::__extensions__::len_3243::anon::expr_fn_3250
+0000000000401a50 t vec::__extensions__::iter_2947::_d7a5bdd54e5e6f77::_00
+00000000004050a0 t vec::__extensions__::iter_3237::_55446721964a82e1::_00
+0000000000401680 t vec::__extensions__::next_2919::_5079d793a0f371c9::_00
+0000000000404e50 t vec::__extensions__::next_3224::_b423b136d356fe1d::_00
+0000000000404790 t vec::__extensions__::push_3179::_a91dd4803fb62a::_00
+0000000000401d00 t vec::as_imm_buf_2961::_caa46d7965b990b9::_00
+0000000000404970 t vec::as_imm_buf_3187::_62a416e4b98acea8::_00
+00000000004052a0 t vec::as_imm_buf_3245::_cb6b3bad8005286::_00
+0000000000401b30 t vec::raw::to_ptr_2950::_1df29a3554bbd95b::_00
+0000000000405180 t vec::raw::to_ptr_3240::_8c11f86a3948f562::_00
+                 U
+                 vec::rustrt::vec_reserve_shared_actual::_c688b9b8fd5bf21::_07
+
+
+$ mvim traits.rs
+....editing...
+$ cat traits.rs</code></pre>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec&lt;T: std::fmt::Show&gt;(v: &amp;[T]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>];
+
+        print_vec(vec);
+    }</code></pre>
+<pre><code>$ rustc traits.rs &amp;&amp; ./traits
+
+$ nm -C traits | grep vec
+00000000004012d0 t print_vec_2908::_85e5a3bc2d3e1a83::_00
+0000000000401cb0 t print_vec_2908::anon::expr_fn_2966
+0000000000402a20 t vec::__extensions__::reserve_3026::_de1a9d6344b57ab::_00
+0000000000402b40 t vec::__extensions__::capacity_3028::_824484774e7757::_00
+0000000000404920 t
+vec::__extensions__::push_fast_3190::_5cf6fa3bfa6090d7::_00
+00000000004048b0 t
+vec::__extensions__::reserve_at_least_3188::_de1a9d6344b57ab::_00
+0000000000404610 t
+vec::__extensions__::reserve_no_inline_3178::_24c451fdab89623e::_00
+0000000000401a20 t vec::__extensions__::len_2955::_824484774e7757::_00
+0000000000401c50 t vec::__extensions__::len_2955::anon::expr_fn_2964
+0000000000404680 t vec::__extensions__::len_3181::_824484774e7757::_00
+0000000000404850 t vec::__extensions__::len_3181::anon::expr_fn_3186
+0000000000401820 t vec::__extensions__::iter_2943::_d7a5bdd54e5e6f77::_00
+0000000000401450 t vec::__extensions__::next_2915::_5079d793a0f371c9::_00
+0000000000404560 t vec::__extensions__::push_3175::_a91dd4803fb62a::_00
+0000000000401ad0 t vec::as_imm_buf_2957::_caa46d7965b990b9::_00
+0000000000404740 t vec::as_imm_buf_3183::_62a416e4b98acea8::_00
+0000000000401900 t vec::raw::to_ptr_2946::_1df29a3554bbd95b::_00
+                 U
+                 vec::rustrt::vec_reserve_shared_actual::_c688b9b8fd5bf21::_07</code></pre>
+<p>Okay. So the first time we have our code, we have two calls to <code>print_vec</code>, one for a vector of strings and one for a vector of ints. The call to <code>nm</code>…</p>
+<p>Oh wait, I mentioned <code>nm</code> before, but let me tell you some more about it now!</p>
+<h2 id="a-diversion-about-nm">A diversion about nm</h2>
+<p>Here’s what my manpage says:</p>
+<pre><code>$ man nm
+
+NAME
+       nm - display name list (symbol table)
+
+SYNOPSIS
+       nm  [  -agnoprumxjlfPA  [  s segname sectname ]] [ - ] [ -t format ] [[
+       -arch arch_flag ]...] [ file ... ]
+
+DESCRIPTION
+       Nm displays the name list (symbol table) of each  object  file  in  the
+       argument list.</code></pre>
+<p>Cool! You’ve never had to think about symbol tables before, so let’s talk about them.</p>
+<p>When your compiler compiles something, you get an ‘object file’ out of it. This is the binary that you run: <code>rustc fizzbuzz.rs</code> produces <code>fizzbuzz</code>. This object file will contain a list of <code>symbols</code> and where they exist in memory. This matters when we want to write two bits of code that work together: If my library exposes a function called <code>my_function</code>, and you want to use it, the compiler needs to know where to find <code>my_function</code> in my library’s code. The compiler ‘mangles’ the names to fit its own scheme. This is called an “ABI”, or application binary interface. Have you ever seen this:</p>
+<pre><code>/Users/Steve/.rvm/rubies/ruby-1.9.3-p286/lib/ruby/1.9.1</code></pre>
+<p>And wondered why that 1.9.1 is there? That’s because Ruby 1.9.3 and Ruby 1.9.1 both share the same ABI, so gems that are linked against 1.9.1 can also be used with 1.9.3. They use the same scheme to generate symbols.</p>
+<p>Anyway, <code>nm</code> can show us this information. The first column is the location in memory, the second is the (mangled) name:</p>
+<pre><code>0000000100001bb8 S _rust_abi_version</code></pre>
+<p>That’s a fun, recursive symbol ;) Anyway, we can examine what symbols Rust exports to see some information about our executable, that’s my intention with <code>nm</code> in this case.</p>
+<h2 id="back-to-our-regularly-scheduled-investigation">Back to our regularly scheduled investigation</h2>
+<p>Here’s the important part of the two outputs of nm:</p>
+<pre><code>0000000000401500 t print_vec_2912::_85e5a3bc2d3e1a83::_00
+0000000000401ee0 t print_vec_2912::anon::expr_fn_2970
+0000000000404cd0 t print_vec_3218::_f1e1b4437dbb28a::_00
+0000000000405480 t print_vec_3218::anon::expr_fn_3252</code></pre>
+<p>and:</p>
+<pre><code>00000000004012d0 t print_vec_2908::_85e5a3bc2d3e1a83::_00
+0000000000401cb0 t print_vec_2908::anon::expr_fn_2966</code></pre>
+<p>See how they both have <code>print_vec</code>? These are the functions we made. And without even knowing what’s happening, you can see the difference: in the version of our code where we call <code>print_vec</code> on strings and ints, we have two versions of the function, and on the version where we just call it on ints, we have one version.</p>
+<p>Neat! We get specialized versions, but only specialized for the types we actually use. No generating code that’s useless. This process is called ‘monomorphization,’ which basically means we take something that can work with things of different types and change it (morph) into specialized (mono) versions. To simplify, the compiler takes this code:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec&lt;T: std::fmt::Show&gt;(v: &amp;[T]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i);
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+        print_vec(vec);
+
+        <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+        print_vec(str_vec);
+    }</code></pre>
+<p>And turns it into:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec_str(v: &amp;[&amp;<span class="kw">str</span>]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i);
+        }
+    }
+
+    <span class="kw">fn</span> print_vec_int(v: &amp;[<span class="kw">int</span>]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i);
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+        print_vec_int(vec);
+
+        <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+        print_vec_str(str_vec);
+    }</code></pre>
+<p>Complete with changing the calls at each call site to call the special version of the function. We call this ‘static dispatch,’ as opposed to the ‘dynamic dispatch’ that’d happen at runtime.</p>
+<p>(I am fudging a bit here with the <code>println!</code> macro line, but it’s the correct mental model. <code>{}</code> doesn’t actually work on <code>int</code>.)</p>
+<p>These are the kinds of optimizations that we get with static typing. Neat! I will say that there are efforts to bring this kind of optimization into dynamically typed languages as well, through analyzing the call site. So, for example:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">def</span> foo(arg)
+      puts arg
+    <span class="kw">end</span></code></pre>
+<p>If we call <code>foo</code> with a <code>String</code> <code>arg</code> a bunch of times in a row, the interpreter will JIT compile a version of <code>foo</code> specialized for <code>Strings</code>, and then replace the call site with something like:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">if</span> arg.kind_of? <span class="dt">String</span>
+      __super_optimized_foo_string(arg)
+    <span class="kw">else</span>
+      foo(arg)
+    <span class="kw">end</span></code></pre>
+<p>This would give you the same benefit, without the human typing. Not just that, but a sufficiently smart runtime would be able to actually determine more complex situations that a person may not. And, maybe after, say, 1000 calls with a String, just remove the check entirely.</p>
+<p>Anyway.</p>
+<h2 id="making-our-own-traits">Making our own Traits</h2>
+<p>We want all of our monsters to implement <code>attack</code>. So let’s make <code>Monster</code> a Trait. The syntax looks like this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">trait</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>);
+    }</code></pre>
+<p>This says that the <code>Monster</code> trait guarantees we have one method available on any type that implements the trait, <code>attack</code>. Here’s how we make one:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">trait</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>);
+    }
+
+    <span class="kw">struct</span> IndustrialRaverMonkey {
+        strength: <span class="kw">int</span>
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> IndustrialRaverMonkey {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The monkey attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> monkey = IndustrialRaverMonkey {strength:<span class="dv">35</span>};
+
+        monkey.attack();
+    }</code></pre>
+<p>Now we’re cooking with gas! Remember our old implementation?:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">impl</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            <span class="kw">match</span> *<span class="kw">self</span> {
+                ScubaArgentine(l, s, c, w) =&gt; println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, w),
+                IndustrialRaverMonkey(l, s, c, w) =&gt; println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, w)
+            }
+        }
+    }</code></pre>
+<p>Ugh. This is way better. No destructuring on types. We can write an implementation for absolutely anything:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">trait</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>);
+    }
+
+    <span class="kw">struct</span> IndustrialRaverMonkey {
+        strength: <span class="kw">int</span>
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> IndustrialRaverMonkey {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The monkey attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> <span class="kw">int</span> {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The int attacks for {:d}.&quot;</span>, *<span class="kw">self</span>)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> monkey = IndustrialRaverMonkey {strength:<span class="dv">35</span>};
+        monkey.attack();
+
+        <span class="kw">let</span> i = <span class="dv">10</span>;
+        i.attack();
+    }</code></pre>
+<p>Heh. Check it:</p>
+<pre><code>$ rustc dwemthy.rs &amp;&amp; ./dwemthy
+The monkey attacks for 35.
+The int attacks for 10.</code></pre>
+<p>Amusing.</p>
+<p>Okay, exercise: Make six different monsters, and create a vector with all of them in it. Then write a method that takes the vector, and prints out all of the monsters and their stats.</p>
+<p>I’ll wait. It took me a little while to write this: this is the hardest part of the book so far. Work through it; it’ll be painful. Don’t be afraid to ask for help. I had to ask <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">the rust IRC</a> for help once while doing it. They’re friendly, don’t worry.</p>
+<p>Done? Here’s mine:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">trait</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>);
+        <span class="kw">fn</span> new() -&gt; Self;
+    }
+
+    <span class="kw">struct</span> IndustrialRaverMonkey {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> DwarvenAngel {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> AssistantViceTentacleAndOmbudsman {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> TeethDeer {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> IntrepidDecomposedCyclist {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> Dragon {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> IndustrialRaverMonkey {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The monkey attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+
+        <span class="kw">fn</span> new() -&gt; IndustrialRaverMonkey {
+            IndustrialRaverMonkey {life: <span class="dv">46</span>, strength: <span class="dv">35</span>, charisma: <span class="dv">91</span>, weapon: <span class="dv">2</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> DwarvenAngel {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The angel attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; DwarvenAngel {
+            DwarvenAngel {life: <span class="dv">540</span>, strength: <span class="dv">6</span>, charisma: <span class="dv">144</span>, weapon: <span class="dv">50</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> AssistantViceTentacleAndOmbudsman {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The tentacle attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; AssistantViceTentacleAndOmbudsman {
+            AssistantViceTentacleAndOmbudsman {life: <span class="dv">320</span>, strength: <span class="dv">6</span>, charisma: <span class="dv">144</span>, weapon: <span class="dv">50</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> TeethDeer {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The deer attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; TeethDeer {
+            TeethDeer {life: <span class="dv">655</span>, strength: <span class="dv">192</span>, charisma: <span class="dv">19</span>, weapon: <span class="dv">109</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> IntrepidDecomposedCyclist {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The cyclist attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; IntrepidDecomposedCyclist {
+            IntrepidDecomposedCyclist {life: <span class="dv">901</span>, strength: <span class="dv">560</span>, charisma: <span class="dv">422</span>, weapon: <span class="dv">105</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> Dragon {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The dragon attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; Dragon {
+            Dragon {life: <span class="dv">1340</span>, strength: <span class="dv">451</span>, charisma: <span class="dv">1020</span>, weapon: <span class="dv">939</span>}
+        }
+    }
+
+    <span class="kw">fn</span> monsters_attack(monsters: &amp;[&amp;Monster]) {
+        <span class="kw">for</span> monster in monsters.iter() {
+            monster.attack();
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> monkey: &amp;IndustrialRaverMonkey               = &amp;Monster::new();
+        <span class="kw">let</span> angel: &amp;DwarvenAngel                         = &amp;Monster::new();
+        <span class="kw">let</span> tentacle: &amp;AssistantViceTentacleAndOmbudsman = &amp;Monster::new();
+        <span class="kw">let</span> deer: &amp;TeethDeer                             = &amp;Monster::new();
+        <span class="kw">let</span> cyclist: &amp;IntrepidDecomposedCyclist          = &amp;Monster::new();
+        <span class="kw">let</span> dragon: &amp;Dragon                              = &amp;Monster::new();
+
+        <span class="kw">let</span> dwemthys_vector: &amp;[&amp;Monster] = [monkey <span class="kw">as</span> &amp;Monster, angel <span class="kw">as</span> &amp;Monster, tentacle <span class="kw">as</span> &amp;Monster, deer <span class="kw">as</span> &amp;Monster, cyclist <span class="kw">as</span> &amp;Monster, dragon <span class="kw">as</span> &amp;Monster];
+
+        monsters_attack(dwemthys_vector);
+    }</code></pre>
+<p>Congrats! You’ve mastered Traits. They’re pretty awesome, right?</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

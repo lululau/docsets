@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="preamble">Preamble</h1>
+<p>Nobody should only learn one programming language. Before Ruby, I wrote things in C, C++, Java, Perl, PHP, and all sorts of things. I’ve always said that I love Ruby, but maybe someday, something would come along that’d be better for what I was building.</p>
+<p>I’m not sure if Rust is that language yet, but it is damn interesting. One of the worst things about Rust is that there’s next to no documentation, though. So, I decided that as I figured things out, I’d write them out so that you don’t have to suffer the way I did. Maybe ‘suffer’ is too strong a word; Rust is worth the hassle, though.</p>
+<p>In this book, we’ll talk about why you should care about Rust, how to get up and running, the basics of writing software in Rust, and maybe even something like building a Ruby gem with Rust.</p>
+<p>NOTE: While this book is called “Rust for Rubyists,” it should be accessible to anyone who knows about OOP and programming in a dynamically typed language. I will make analogies that will make the most sense to Rubyists, but you can still get a lot out of this book if you are a programmer of a different sort. If your favorite language is static, then you’re already ahead of the game. You can just disregard a lot of the analogies.</p>
+<h1 id="why-care-about-rust">Why care about Rust?</h1>
+<p>You already write software in Ruby. It pays your bills. You enjoy it. Why should you care about Rust?</p>
+<p>Alan Perlis once said:</p>
+<blockquote>
+<p>A language that doesn’t affect the way you think about programming is not worth knowing.</p>
+</blockquote>
+<p>Let’s think about Ruby for a minute: what’s its biggest weakness? For me, it’s these things:</p>
+<ul>
+<li>Concurrency</li>
+<li>Safety guarantees</li>
+<li>Lots of mutable state</li>
+<li>Only vaguely functional</li>
+<li>Speed</li>
+<li>Complexity. (Smalltalk’s semantics fit on an index card)</li>
+<li>Documentation</li>
+<li>nil</li>
+</ul>
+<p>What’s awesome about Ruby?</p>
+<ul>
+<li>Blocks</li>
+<li>Vaguely functional</li>
+<li>Syntax is pretty easy</li>
+<li>Focus on developer happiness</li>
+<li>Get up and running quickly</li>
+<li>Dynamically typed</li>
+</ul>
+<p>So we could learn a lot from a language that handles concurrency well, has good safety guarantees, is immutable by default, and is fast and simple. We don’t want to sacrifice anonymous functions, pretty syntax, or not making <code>AbstractFactoryFactoryImpls</code> just to get work done.</p>
+<p>I think that that language is Rust.</p>
+<p>Now: Rust is not perfect, by far. Its documentation is poor, but getting better, as I’ve been hired by Mozilla to fix it. It can feel quite complex. Fighting with a compiler can be frustrating. But the point is to <em>learn</em>. And using a language that’s very familiar, yet very different, can teach us a lot.</p>
+<p>Here’s “Hello World” in Rust:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        println!(<span class="st">&quot;Hello, world!&quot;</span>);
+    }</code></pre>
+<p>Here’s a parallel “Hello World” in Rust:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">for</span> _ in range(<span class="dv">0u</span>, <span class="dv">10</span>) {
+            spawn(proc() {
+                <span class="kw">let</span> greeting_message = <span class="st">&quot;Hello?&quot;</span>;
+                println!(<span class="st">&quot;{}&quot;</span>, greeting_message);
+            });
+        }
+    }</code></pre>
+<p>Here’s a rough port to Ruby:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="dv">10</span>.times <span class="kw">do</span>
+      <span class="dt">Thread</span>.new <span class="kw">do</span>
+        greeting_message = <span class="st">&quot;Hello?&quot;</span>
+
+        <span class="co"># This is weird in Ruby but it&#39;s closer to the println! macro</span>
+        <span class="co"># usage in the Rust example.</span>
+        puts <span class="st">&quot;</span><span class="ot">#{</span>greeting_message<span class="ot">}</span><span class="st">&quot;</span>
+      <span class="kw">end</span>
+    <span class="kw">end</span></code></pre>
+<p>That’s it. Note the stuff that’s <em>similar</em> to Ruby:</p>
+<ul>
+<li>Variables are in <code>snake_case</code></li>
+<li>We have ‘blocks’ that use <code>{}</code>. No <code>do/end</code> though.</li>
+<li>Variables, while statically typed, have inference, so we don’t need to declare types</li>
+</ul>
+<p>Here’s some stuff that’s <em>different</em>:</p>
+<ul>
+<li><code>;</code> s everywhere. You don’t always need them, but let’s put them in for now.</li>
+<li>slightly different syntax, <code>fn</code> rather than <code>def</code>.</li>
+<li>Because we have no <code>do/end</code>, we use <code>{}</code> s instead.</li>
+<li>The compiler will yell at us harder if we mess up.</li>
+</ul>
+<p>Oh, and:</p>
+<pre><code>$ time ./hello
+./hello 0.01s user 0.01s system 91% cpu 0.014 total
+
+$ time ruby hello.rb
+ruby hello.rb 0.02s user 0.01s system 95% cpu 0.026 total</code></pre>
+<p>Twice as fast. Yay irrelevant microbenchmarks!</p>
+<p>Anyway, I hope you get my point: There’s lots of things about Rust that make it syntactically vaguely similar enough to Ruby that you can feel at home, at least at first. And its strengths are some of Ruby’s greatest weaknesses. That’s why I think you can learn a lot from playing with Rust, even if you don’t do it as your day job.</p>
+<h1 id="installing-rust">Installing Rust</h1>
+<h2 id="binary-installers">Binary installers</h2>
+<p>The Rust project provides official binary installers. You can get both releases and nightlies. Binary installers are the fastest and easiest way to get going with Rust. Because Rust is written in Rust, compiling the Rust compiler actually entails compiling it three times! This means it’s quite slow. But a binary install should be snappy!</p>
+<p>Rust now has a <a href="http://www.rust-lang.org/install.html">lovely downloads page</a>, so I recommend you just go check that out and download the proper version.</p>
+<p>Note that this book has been tested with Rust 0.11, and so if you use the latest nightly, something may have changed.</p>
+<h2 id="from-source">From Source</h2>
+<p>You will probably build the nightly version if you build from source, so be ready for some bugs in the code samples. This book was written for 0.11.</p>
+<p>The <a href="https://github.com/rust-lang/rust#building-from-source">Rust README</a> has great instructions for building form source. Just got follow their instructions!</p>
+<h3 id="future-proofing">Future Proofing</h3>
+<p>The version this book is written for is 0.11. While the language itself is pretty stable, things like the standard library and some major subsystems are being revised. I’ll be tweaking it with every new release.</p>
+<p>If you run</p>
+<pre><code>$ rustc</code></pre>
+<p>and it spits out a bunch of help information, you’re good to go with Rust.</p>
+<h1 id="writing-your-first-rust-program">Writing Your First Rust Program</h1>
+<p>Okay! Let’s get down to it: in order to call yourself an “X Programmer,” you must write “Hello, world” in X. So let’s do it. Open up a text file: I’ll use <code>vim</code> because I’m that kind of guy, but use whatever you want. Rust programs end in <code>.rs</code>:</p>
+<pre><code>$ vim hello.rs</code></pre>
+<p>Put this in it:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;Hello, world.&quot;</span>);
+}</code></pre>
+<p>And compile it with <code>rustc</code>:</p>
+<pre><code>$ rustc hello.rs</code></pre>
+<p>It should compile without error. If you get one, double check that you have the semicolons, the curlies, double quotation marks, and the parentheses. Errors look like this:</p>
+<pre><code>$ rustc hello.rs
+hello.rs:2:4: 2:11 error: expected `{` but found `println`
+hello.rs:2     println(&quot;Hello, world.&quot;);
+               ^~~~~~~</code></pre>
+<p>This happened when I left off the curly brace after the <code>main</code> function above.</p>
+<p>This isn’t an error:</p>
+<pre><code>$ rustc hello.rs
+warning: no debug symbols in executable (-arch x86_64)</code></pre>
+<p>It happens on OSX for some versions of Rust. You can safely ignore it.</p>
+<p>To run your program, do the Usual UNIX Thing:</p>
+<pre><code>$ ./hello</code></pre>
+<p>And you should see “Hello, world.” print to the screen. Congrats!</p>
+<h1 id="testing">Testing</h1>
+<p>Rubyists love testing, so before we go any farther, let’s talk about testing. In Rust, there is a unit testing framework built in, and it’s pretty simple. Let’s write some very simple code and tests to exercise it.</p>
+<p>In Rust, you annotate test methods like such:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> this_tests_code() {
+    <span class="co">// SOMETHING HERE</span>
+}</code></pre>
+<p>You’ll note that tests take no arguments and return nothing. If the function runs, the test passes, and if it errors in some way, the test fails. Let’s give it a shot: Open up <code>testing.rs</code> and put this in it:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> this_tests_code() {
+    println!(<span class="st">&quot;&quot;</span>);
+}</code></pre>
+<p>Then, use <code>rustc</code> with a special flag:</p>
+<pre><code>$ rustc --test testing.rs</code></pre>
+<p>This tells <code>rustc</code> to compile your tests, and replaces the <code>main</code> function with a test runner. Try it out:</p>
+<pre><code>$ ./testing</code></pre>
+<p>You should get some output that looks like this:</p>
+<pre><code>running 1 test
+
+test this_tests_code ... ok
+
+result: ok. 1 passed; 0 failed; 0 ignored</code></pre>
+<p>Bam! Now let’s make it fail:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> this_tests_code() {
+    <span class="kw">fail</span>!(<span class="st">&quot;Fail!&quot;</span>);
+}</code></pre>
+<p>Recompile, and the output should be:</p>
+<pre><code>running 1 test
+test this_tests_code ... FAILED
+
+failures:
+
+---- this_tests_code stdout ----
+  task &#39;this_tests_code&#39; failed at &#39;Fail!&#39;, testing.rs:5
+  
+
+failures:
+    this_tests_code
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured
+
+task &#39;&lt;main&gt;&#39; failed at &#39;Some tests failed&#39;, /some/path/to/something</code></pre>
+<p>Super simple. That’s all you need to know to get started. Next up: FizzBuzz.</p>
+<h1 id="fizzbuzz">FizzBuzz</h1>
+<p>Of course, the first thing that your job interview for that cushy new Rust job will task you with is building FizzBuzz. Let’s do it!</p>
+<p>If you’re not familiar, FizzBuzz is a simple programming problem:</p>
+<blockquote>
+<p>“Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.”</p>
+</blockquote>
+<p>This will give us a good excuse to go over some basics of Rust: Looping, tests, printing to standard output, and a host of other simple things.</p>
+<p>First, a test. This will go in fizzbuzz.rs:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}</code></pre>
+<p>And compile it:</p>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:3:8: 3:20 error: unresolved name `div_by_three`.
+fizzbuzz.rs:3     if div_by_three(1) {
+                     ^~~~~~~~~~~~
+error: aborting due to previous error</code></pre>
+<p>This makes sense: We haven’t defined any functions yet. Let’s define one:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+   <span class="kw">true</span>
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}</code></pre>
+<p>Okay. Here’s some new syntax. The <code>num: int</code> says that we take one argument, <code>num</code>, and that it’s of an integer type. The <code>-&gt; bool</code> says that we return a boolean, and the <code>true</code>, well, returns true. Just like Ruby, the value of the last expression gets returned.</p>
+<p>You’ll also note we have an <code>if</code> expression. It’s pretty close to what you’d expect, but we have curly braces rather than our friends <code>do/end</code>.</p>
+<p>Now that we’ve got that cleared up, let’s compile and run our tests:</p>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:1:17: 1:18 warning: unused variable: `num`, #[warn(unused_variable)] on by default
+fizzbuzz.rs:1 fn div_by_three(num: int) -&gt; bool {
+                              ^
+
+running 1 test
+test test_div_by_three ... FAILED
+
+failures:
+
+---- test_div_by_three stdout ----
+    task &#39;test_div_by_three&#39; failed at &#39;One is not three&#39;, fizzbuzz.rs:8
+
+
+
+failures:
+    test_div_by_three
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured
+
+task &#39;&lt;main&gt;&#39; failed at &#39;Some tests failed&#39;, /home/steve/src/rust/src/libtest/lib.rs:243</code></pre>
+<p>Rust is kind enough to give us a warning: we never used the <code>num</code> argument. We then get our failure, “One is not three”, because we returned true. Now that we have a failing test, let’s make it pass:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+   <span class="kw">false</span>
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}</code></pre>
+<p>TDD means do the simplest thing! Compile and run it:</p>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:1:17: 1:18 warning: unused variable: `num`, #[warn(unused_variable)] on by default
+fizzbuzz.rs:1 fn div_by_three(num: int) -&gt; bool {
+                              ^
+
+$ ./fizzbuzz
+running 1 test
+test test_div_by_three ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<p>Awesome! We pass! We still have that warning, though… let’s write another test, and see what happens:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+   <span class="kw">false</span>
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three_with_three() {
+    <span class="kw">if</span> !div_by_three(<span class="dv">3</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;Three should be three&quot;</span>);
+    }
+}</code></pre>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:1:17: 1:18 warning: unused variable: `num`, #[warn(unused_variable)] on by default
+fizzbuzz.rs:1 fn div_by_three(num: int) -&gt; bool {
+                              ^
+
+
+$ ./fizzbuzz
+running 2 tests
+test test_div_by_three ... ok
+test test_div_by_three_with_three ... FAILED
+
+failures:
+
+---- test_div_by_three_with_three stdout ----
+    task &#39;test_div_by_three_with_three&#39; failed at &#39;Three should be three&#39;, fizzbuzz.rs:15
+
+
+
+failures:
+    test_div_by_three_with_three
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured
+
+task &#39;&lt;main&gt;&#39; failed at &#39;Some tests failed&#39;, /home/steve/src/rust/src/libtest/lib.rs:243</code></pre>
+<p>Great! It showed that our first test passed, and that our second one failed. Let’s make both tests pass:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+    <span class="kw">if</span> num % <span class="dv">3</span> == <span class="dv">0</span> {
+        <span class="kw">true</span>
+    } <span class="kw">else</span> {
+        <span class="kw">false</span>
+    }
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three_with_three() {
+    <span class="kw">if</span> !div_by_three(<span class="dv">3</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;Three should be three&quot;</span>);
+    }
+}</code></pre>
+<pre><code>$ rustc --test fizzbuzz.rs &amp;&amp; ./fizzbuzz
+running 2 tests
+test test_div_by_three_with_three ... ok
+test test_div_by_three ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<p>Awesome! This shows off how elses work, as well. It’s probably what you expected. Go ahead and try to refactor this into a one-liner.</p>
+<p>Done? How’d you do? Here’s mine:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+    num % <span class="dv">3</span> == <span class="dv">0</span>
+}</code></pre>
+<p>Wait, whaaaat? Remember,the last thing in a function is a return in Rust, but there’s one wrinkle: note there’s no semicolon here. If you had one, you’d get:</p>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:2:15: 2:16 note: consider removing this semicolon:
+fizzbuzz.rs:2     num % 3 == 0;
+                            ^
+fizzbuzz.rs:1:1: 3:2 error: not all control paths return a value
+fizzbuzz.rs:1 fn div_by_three(num: int) -&gt; bool {
+fizzbuzz.rs:2     num % 3 == 0;
+fizzbuzz.rs:3 }
+error: aborting due to previous error</code></pre>
+<p>Basically, ending an expression in Rust with a semicolon ignores the value of that expression. Another way to think about it is that the semicolon turns the expression into a statement, and statements don’t have values. This is kinda weird. It becomes natural after some use, though. And Rust is even smart enough to tell us that it’s probably a problem!</p>
+<p>Okay, now try to TDD out the <code>div_by_five</code> and <code>div_by_fifteen</code> methods. They should work the same way, but this will let you get practice actually writing it out. Once you see this, you’re ready to advance:</p>
+<pre><code>$ rustc --test fizzbuzz.rs &amp;&amp; ./fizzbuzz
+
+running 6 tests
+test test_div_by_fifteen ... ok
+test test_div_by_five_with_five ... ok
+test test_div_by_five ... ok
+test test_div_by_fifteen_with_fifteen ... ok
+test test_div_by_three ... ok
+test test_div_by_three_with_three ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<p>Okay! Let’s talk about the main program now. We’ve got the tools to build FizzBuzz, let’s make it work. First thing we need to do is print out all the numbers from one to 100. It’s easy!</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">100</span>) {
+            println!(<span class="st">&quot;num&quot;</span>);
+        }
+    }</code></pre>
+<p>Step one: print <strong>something</strong> 100 times. If you run this via <code>rustc fizzbuzz.rs &amp;&amp; ./fizzbuzz</code> you should see <code>num</code> printed 100 times. Note that our tests didn’t actually run. Not only are they not run, they’re actually not even in the executable:</p>
+<p>Compile with the test flag:</p>
+<pre><code>$ rustc --test fizzbuzz.rs</code></pre>
+<p>On Linux:</p>
+<pre><code>$ nm -C fizzbuzz | grep test</code></pre>
+<p>On OS X:</p>
+<pre><code>$ nm fizzbuzz | c++filt -p -i | grep test</code></pre>
+<p>Expected output:</p>
+<pre><code>0000000000403cd0 t test_div_by_five_with_five::_79fbef3fc431adf6::_00
+0000000000403ac0 t test_div_by_three_with_three::_79fbef3fc431adf6::_00
+0000000000403c10 t test_div_by_five_with_not_five::_79fbef3fc431adf6::_00
+0000000000403ee0 t test_div_by_fifteen_with_fifteen::_79fbef3fc431adf6::_00
+0000000000403a00 t test_div_by_three_with_not_three::_79fbef3fc431adf6::_00
+0000000000403e20 t test_div_by_fifteen_with_not_fifteen::_79fbef3fc431adf6::_00
+                 U test::test_main_static::_e5d562a4bc8c4dd6::_06
+000000000040fea0 T __test::main::_79fbef3fc431adf6::_00
+0000000000614890 D __test::tests::_7c31a8a9617a6a::_00</code></pre>
+<p>Compile without the test flag:</p>
+<pre><code>$ rustc fizzbuzz.rs</code></pre>
+<p>On Linux:</p>
+<pre><code>$ nm -C fizzbuzz | grep test</code></pre>
+<p>On OS X:</p>
+<pre><code>$ nm fizzbuzz | c++filt -p -i | grep test</code></pre>
+<p>Expected output:</p>
+<pre><code>$</code></pre>
+<p>Neat, huh? Rust is smart.</p>
+<p>Anyway, <code>nm</code>: The <code>nm</code> program lists all the symbols in a binary executable or library. The <code>-C</code> option is important on linux, it “de-mangles” the symbol names. On OS X, <code>nm</code> provides no symbol de-mangling option, so the output must be piped to <code>c++filt</code>. Rust uses the same mangling scheme as C++, so it’s compatible with all the existing tools. How it works isn’t that important, though. It’s cool low-level stuff if you’re into that sort of thing.</p>
+<p>Anywho, where were we? Oh, iteration:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">100</span>) {
+        println!(<span class="st">&quot;{:d}&quot;</span>, num);
+    }
+}</code></pre>
+<p>This uses string interpolation: the double curlies tell Rust where to place <code>num</code> in the string.</p>
+<p>Anyway, now we have 1 to 99. We need 1 to 100.</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        println!(<span class="st">&quot;{:d}&quot;</span>, num);
+    }
+}</code></pre>
+<p>Now we can put the two together:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        <span class="kw">let</span> <span class="kw">mut</span> answer = <span class="st">&quot;&quot;</span>;
+
+        <span class="kw">if</span> div_by_fifteen(num){
+            answer = <span class="st">&quot;FizzBuzz&quot;</span>;
+        }
+        <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) {
+            answer = <span class="st">&quot;Fizz&quot;</span>;
+        }
+        <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) {
+            answer = <span class="st">&quot;Buzz&quot;</span>;
+        }
+        <span class="kw">else</span> {
+            answer = <span class="st">&quot;&quot;</span>;
+        };
+
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer);
+    }
+}</code></pre>
+<p>Uhhhh <code>let mut</code>? <code>let</code> is the way that we make a local variable. <code>mut</code> means we plan to mutate that variable: yes, variables are immutable by default.</p>
+<p>Also, <code>:s</code> is the format string for a… string.</p>
+<p>We can shorten this up a bit with this syntax:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        <span class="kw">let</span> <span class="kw">mut</span> answer =
+            <span class="kw">if</span> div_by_fifteen(num){
+                <span class="st">&quot;FizzBuzz&quot;</span>
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) {
+                <span class="st">&quot;Fizz&quot;</span>
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) {
+                <span class="st">&quot;Buzz&quot;</span>
+            }
+            <span class="kw">else</span> {
+                <span class="st">&quot;&quot;</span>
+            };
+
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer);
+    }
+}</code></pre>
+<p>We’ve made the <code>if</code> assign the value to answer. Note that we had to remove the semicolons again; that lets the expression give its value to <code>answer.</code> Note that this _also_ makes answer immutable, so we can remove the <code>mut</code>:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        <span class="kw">let</span> answer =
+            <span class="kw">if</span> div_by_fifteen(num){
+                <span class="st">&quot;FizzBuzz&quot;</span>
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) {
+                <span class="st">&quot;Fizz&quot;</span>
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) {
+                <span class="st">&quot;Buzz&quot;</span>
+            }
+            <span class="kw">else</span> {
+                <span class="st">&quot;&quot;</span>
+            };
+
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer);
+    }
+}</code></pre>
+<p>Not too shabby! I love eliminating mutable state.</p>
+<p>Of course, this version gives us lots of empty lines, so what we actually want is:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        <span class="kw">let</span> answer =
+            <span class="kw">if</span> div_by_fifteen(num){
+                <span class="st">&quot;FizzBuzz&quot;</span>.to_str()
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) {
+                <span class="st">&quot;Fizz&quot;</span>.to_str()
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) {
+                <span class="st">&quot;Buzz&quot;</span>.to_str()
+            }
+            <span class="kw">else</span> {
+                num.to_str()
+            };
+
+        println!(<span class="st">&quot;{}&quot;</span>, answer);
+    }
+}</code></pre>
+<p>Why the “<code>to_str()</code>”s? There are two types of Strings in Rust: <code>Str</code>, which is a heap allocated string with dynamic length, and <code>&amp;str</code>, which is a borrowed, immutable view into a string. The literal is of type <code>&amp;str</code>, but we want a <code>Str</code>. <code>to_str()</code> turns a <code>&amp;str</code> into a <code>String</code>.</p>
+<p>Before, we could get away with a <code>&amp;str</code>, because they all had the same type. But since we’ve added an arm with an <code>int</code>, we need to make them all the same type, and there’s no way to convert an <code>int</code> into a <code>&amp;str</code>.</p>
+<p>Because the <code>if</code> returns a value, we could also do something like this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        println!(<span class="st">&quot;{:s}&quot;</span>, 
+            <span class="kw">if</span> div_by_fifteen(num) { <span class="st">&quot;FizzBuzz&quot;</span>.to_str() }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) { <span class="st">&quot;Fizz&quot;</span>.to_str() }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) { <span class="st">&quot;Buzz&quot;</span>.to_str() }
+            <span class="kw">else</span> { num.to_str() }
+        );
+    }
+}</code></pre>
+<p>It’s more compact, and removes the intermediate variable all together.</p>
+<p>We can do one other thing too: this whole <code>if/fail!</code> thing so common in tests seems too complex. Why do we have to write if over and over and over again? Meet <code>assert!</code>:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> test_div_by_fifteen_with_fifteen() {
+    <span class="kw">assert</span>!(div_by_fifteen(<span class="dv">15</span>))
+}</code></pre>
+<p>This will fail if it gets false, and pass if it gets true. Simple! You can also give it a message to be printed when the assertion fails, mostly useful when you are using <code>assert!</code> to test for preconditions and such:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">assert</span>!(<span class="dv">1</span> == <span class="dv">0</span>, <span class="st">&quot;1 does not equal 0!&quot;</span>);
+}</code></pre>
+<p>Try running it.</p>
+<p>Anyway, awesome! We’ve conquered FizzBuzz.</p>
+<h1 id="tasks-in-rust">Tasks in Rust</h1>
+<p>One of the things that Rust is super good at is concurrency. In order to understand Rust’s strengths, you have to understand its approach to concurrency, and then its approach to memory.</p>
+<h2 id="tasks">Tasks</h2>
+<p>The fundamental unit of computation in Rust is called a ‘task.’ Tasks are like threads, but you can choose the low-level details of how they operate. Rust now supports both 1:1 scheduled and N:M scheduled threads. Rust uses 1:1 threads by default. The details of what <em>exactly</em> that means are out of the scope of this tutorial, but the <a href="http://en.wikipedia.org/wiki/Thread_%28computing%29">Wikipedia page</a> has a good overview.</p>
+<p>Here’s some code that prints “Hello” 500 times:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">0u</span>, <span class="dv">500</span>) {
+        println!(<span class="st">&quot;Hello&quot;</span>);
+    }
+}</code></pre>
+<p>You may remember this from earlier. This loops 500 times, printing “Hello.” Now let’s make it roflscale with tasks:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">0u</span>, <span class="dv">500</span>) {
+        spawn(proc() {
+            println!(<span class="st">&quot;Hello&quot;</span>);
+        });
+    }
+}</code></pre>
+<p>That’s it! We spin up 500 tasks that print stuff. If you inspect your output, you can tell it’s working:</p>
+<pre><code>Hello
+HelloHello
+
+Hello</code></pre>
+<p>Ha! Printing to the screen is obviously something that tasks can step over each other with (if you’re curious, it’s because it is printing the string and the newline separately. Sometimes, another task gets to print its string before this task prints its newline). But the vast majority of things aren’t like that. Let’s take a look at the type signature of <code>spawn</code>:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> spawn(f: proc())</code></pre>
+<p>Spawn is a function that takes a proc: a closure that can only be run once. This means that Rust can do what it wants, moving the closure to another task, or other optimizations. The details aren’t particularly important at this stage, and Rust will be undergoing some reform with regards to closures soon, so just think of it as a closure, and that’s good enough.</p>
+<h2 id="pipes-channels-and-ports">Pipes, Channels, and Ports</h2>
+<p>If our tasks are 100% isolated, they wouldn’t be that useful: we need some kind of communication between tasks in order to get back useful results. We can communicate between tasks with pipes. Pipes have two ends: a channel that sends info down the pipe, and a port that receives info. If you’ve used these concepts in other languages, Rust’s are similar, except that Rust’s are explicitly typed. Some implementations of this pattern in other languages do not make this distinction. Otherwise, they’re very similar.</p>
+<p>Here’s an example of a task that sends us back a 10:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> (chan, port) = channel();
+
+    spawn(proc() {
+        chan.send(<span class="dv">10u</span>);
+    });
+
+    println!(<span class="st">&quot;{:s}&quot;</span>, port.recv().to_str());
+}</code></pre>
+<p>The <code>channel</code> function, imported by the prelude, creates both sides of this pipe. You can imagine that instead of sending 10, we might be doing some sort of complex calculation. It could be doing that work in the background while we did more important things.</p>
+<p>What about that <code>chan.send</code> bit? Well, the task captures the <code>chan</code> variable we set up before, so it’s just matter of using it. This is similar to Ruby’s blocks:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">foo = <span class="dv">10</span>
+<span class="dv">2</span>.times <span class="kw">do</span>
+  puts foo
+<span class="kw">end</span></code></pre>
+<p>This is really only one-way transit, though: what if we want to communicate back and forth? Setting up two ports and channels each time would be pretty annoying, so we have some standard library code for this.</p>
+<p>We make a function that just loops forever, gets an <code>int</code> off of the port, and sends the number plus 1 back down the channel. In the main function, we make a channel, send one end to a new task, and then send it a <code>22</code>, and print out the result. Because this task is running in the background, we can send it bunches of values:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::comm::{channel, Sender, Receiver};
+
+<span class="kw">fn</span> plus_one(sender: &amp;Sender&lt;<span class="kw">int</span>&gt;, receiver: &amp;Receiver&lt;<span class="kw">int</span>&gt;) {
+    <span class="kw">let</span> <span class="kw">mut</span> value: <span class="kw">int</span>;
+    <span class="kw">loop</span> {
+        value = receiver.recv();
+        sender.send(value + <span class="dv">1</span>);
+        <span class="kw">if</span> value == <span class="dv">0</span> { <span class="kw">break</span>; }
+    }
+}
+
+<span class="kw">fn</span> main () {
+    <span class="kw">let</span> (fromParentSender, fromParentReceiver) = channel();
+    <span class="kw">let</span> (fromChildSender, fromChildReceiver) = channel();
+
+    spawn(proc() {
+        plus_one(&amp;fromChildSender, &amp;fromParentReceiver);
+    });
+
+    fromParentSender.send(<span class="dv">22</span>);
+    fromParentSender.send(<span class="dv">23</span>);
+    fromParentSender.send(<span class="dv">24</span>);
+    fromParentSender.send(<span class="dv">25</span>);
+
+    <span class="kw">for</span> _ in range(<span class="dv">0u</span>, <span class="dv">4</span>) {
+        <span class="kw">let</span> answer = fromChildReceiver.recv();
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer.to_str());
+    }
+}</code></pre>
+<p>The <code>use</code> statement imports other modules. In this case, there’s a <code>std::comm</code> module that we’ll use parts of.</p>
+<p>Pretty simple. Our task is always waiting for work. If you run this, you’ll get some weird output at the end:</p>
+<pre><code>$ rustc tasks.rs &amp;&amp; ./tasks
+23
+24
+25
+26
+task &#39;&lt;unnamed&gt;&#39; failed at &#39;receiving on a closed channel&#39;, /home/steveklabnik/src/rust/src/libstd/comm/mod.rs:728</code></pre>
+<p><code>task failed at 'receiving on closed channel'</code>. Basically, we quit the program without closing our child task, and so it died when our main task (the one running <code>main</code>) died. By default, Rust tasks are bidirectionally linked, which means if one task fails, all of its children and parents fail too. We can fix this for now by telling our child to die:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::comm::{channel, Sender, Receiver};
+
+<span class="kw">fn</span> plus_one(sender: &amp;Sender&lt;<span class="kw">int</span>&gt;, receiver: &amp;Receiver&lt;<span class="kw">int</span>&gt;) {
+    <span class="kw">let</span> <span class="kw">mut</span> value: <span class="kw">int</span>;
+    <span class="kw">loop</span> {
+        value = receiver.recv();
+        sender.send(value + <span class="dv">1</span>);
+        <span class="kw">if</span> value == <span class="dv">0</span> { <span class="kw">break</span>; }
+    }
+}
+
+<span class="kw">fn</span> main () {
+    <span class="kw">let</span> (fromParentSender, fromParentReceiver) = channel();
+    <span class="kw">let</span> (fromChildSender, fromChildReceiver) = channel();
+
+    spawn(proc() {
+        plus_one(&amp;fromChildSender, &amp;fromParentReceiver);
+    });
+
+    fromParentSender.send(<span class="dv">22</span>);
+    fromParentSender.send(<span class="dv">23</span>);
+    fromParentSender.send(<span class="dv">24</span>);
+    fromParentSender.send(<span class="dv">24</span>);
+
+    fromParentSender.send(<span class="dv">0</span>);
+
+    <span class="kw">for</span> _ in range(<span class="dv">0i</span>, <span class="dv">4</span>) {
+        <span class="kw">let</span> answer = fromChildReceiver.recv();
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer.to_str());
+    }
+}</code></pre>
+<p>Now when we send a zero, our child task terminates. If you run this, you’ll get no errors at the end. We can also change our failure mode. Rust also provides unidirectional and unlinked failure modes as well, but I don’t want to talk about them right now. This would give you patterns like “Spin up a management task that is bidirectionally linked to main, but have it spin up children who are unlinked.” Neato.</p>
+<p>Rust tasks are so lightweight that you can conceivably spin up a ton of tasks, maybe even one per entity in your system. <a href="https://github.com/mozilla/servo">Servo</a> is a prototype browser rendering engine from Mozilla, and it spins up a <strong>ton</strong> of tasks. Parallel rendering, parsing, downloading, everything.</p>
+<p>I’m imagining that most production Rust programs will eventually have a main that spins up some sort of global task setup, and all the work gets done inside these tasks that communicate with each other. Like, for a video game:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+
+    spawn(proc() {
+        player_handler();
+    });
+
+    spawn(proc() {
+        world_handler();
+    });
+
+    spawn(proc() {
+        rendering_handler();
+    });
+
+    spawn(proc() {
+        io_handler();
+    });
+}</code></pre>
+<p>… with the associated channels, of course. This feels very Actor-y to me. I like it.</p>
+<h1 id="pointers-and-ownership-oh-my">Pointers, and ownership, oh my!</h1>
+<p>Since you program in Ruby, you probably don’t know about pointers, nor care. If you’re going to work in a language like Rust, though, you gotta know about them. So let’s talk about the concept real quick, then discuss how Rust handles pointers.</p>
+<h2 id="pointer-recap">Pointer recap</h2>
+<p>When you create a variable, you’re really giving a name to a chunk of memory somewhere. We’ll use C syntax for these examples:</p>
+<pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> i = <span class="dv">5</span>; <span class="dt">int</span> j = <span class="dv">6</span>;</code></pre>
+<pre><code>  location   value
+  ---------- -------
+  0x000000   5
+  0x000001   6</code></pre>
+<p>This is of course slightly simplified. Anyway, we can introduce indirection by making a pointer:</p>
+<pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> i = <span class="dv">5</span>; <span class="dt">int</span> j = <span class="dv">6</span>; <span class="dt">int</span> *pi = &amp;i;</code></pre>
+<pre><code>  location   value
+  ---------- ----------
+  0x000000   5
+  0x000001   6
+  0x000002   0x000000</code></pre>
+<p><code>pi</code> has a pointer to another memory location. We can access the value of the thing that <code>pi</code> points at by using the <code>*</code>:</p>
+<pre class="sourceCode c"><code class="sourceCode c">printf(<span class="st">&quot;The value of the thing pi points to is: %d</span><span class="ch">\n</span><span class="st">&quot;</span>, *pi);</code></pre>
+<p>The <code>*</code> dereferences the pointer, and gives us the value. Simple!</p>
+<p>Here’s the issue: you have no idea if the data that is being pointed to is good. What do you think this code does?:</p>
+<pre class="sourceCode c"><code class="sourceCode c"><span class="dt">int</span> *pi;
+printf(<span class="st">&quot;The value of the thing pi points to is: %d</span><span class="ch">\n</span><span class="st">&quot;</span>, *pi);</code></pre>
+<p>Who knows!?!? Probably something bad, but <strong>certainly</strong> not something expected. Rust introduces two different kinds of pointers: ‘owned’ and ‘borrowed.’ They indicate different levels of access, so that you know that different people aren’t messing with the things that are being pointed to. Imagine we spun up ten tasks, passed the same pointer to all of them, and let them go wild. We’d have no idea what was going on.</p>
+<h2 id="owned-pointer">Owned Pointer</h2>
+<p>An owned pointer tells Rust that you own a reference to something. We can create one with the <code>box</code> keyword:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> x = box <span class="dv">10i</span>;
+    println!(<span class="st">&quot;{:d}&quot;</span>, *x);
+}</code></pre>
+<p>You can’t make another owned pointer to this value:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> x = box <span class="dv">10i</span>;
+    <span class="kw">let</span> y = x;
+    println!(<span class="st">&quot;{:d}&quot;</span>, *x);
+}</code></pre>
+<p>This yields:</p>
+<pre><code>$ rustc owned.rs &amp;&amp; ./owned
+owned.rs:4:22: 4:24 error: use of partially moved value: `*x`
+owned.rs:4     println!(&quot;{:d}&quot;, *x);
+                                   ^~
+note: in expansion of format_args!
+&lt;std macros&gt;:2:23: 2:77 note: expansion site
+&lt;std macros&gt;:1:1: 3:2 note: in expansion of println!
+owned.rs:4:5: 4:26 note: expansion site
+owned.rs:3:9: 3:10 note: `x` moved here because it has type `Box&lt;int&gt;`, which is moved by default (use `ref` to override)
+owned.rs:3     let y = x;
+                      ^
+error: aborting due to previous error</code></pre>
+<p>It tells us that we moved the value of <code>x</code> to <code>y</code> and points out where the move happens. Neat. We can make a copy:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> x = box <span class="dv">10i</span>;
+    <span class="kw">let</span> y = x.clone();
+    println!(<span class="st">&quot;{:d}&quot;</span>, *x);
+}</code></pre>
+<p>This will work, though it will tell us that <code>y</code> was never used. And they point at two different copies of 10, not the same one.</p>
+<p>That said, you generally don’t need to use an owned pointer. You generally need them for recursive data structures, or when you have a <em>huge</em> chunk of data that you’re passing around between many functions.</p>
+<p>Instead, use a borrowed pointer.</p>
+<h2 id="borrowed-pointers">Borrowed Pointers</h2>
+<p>Enter borrowed pointers:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> plus_one(x: &amp;<span class="kw">int</span>) -&gt; <span class="kw">int</span> {
+    *x + <span class="dv">1</span>
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> y = box <span class="dv">10i</span>;
+
+    println!(<span class="st">&quot;{:d}&quot;</span>, plus_one(y));
+}</code></pre>
+<p>Borrowed pointers use an <code>&amp;</code>, as you can see. They don’t change any ownership semantics. They do let you write functions that take any other kind of pointer, without caring about those details. The compiler makes sure that all borrowed pointers do not outlive the thing they point to, which means you don’t have to worry about use-after-free or any of the other hairy pointer issues in C.</p>
+<p>Borrowed pointers can get a lot more complex, but this is the gist of them. Always use borrowed pointers when you can, they should be your go-to solution for all your pointer needs.</p>
+<h2 id="pointer-strategy">Pointer strategy</h2>
+<p>Basically, idiomatic Rust code will… not use pointers at all, and just use values. If you’re writing a function that needs to take a pointer, use borrowed pointers, rather than being specific.</p>
+<p>There are some more complex heap-allocated types in Rust, but they’re outside the scope of this introduction.</p>
+<h1 id="structs-and-methods">Structs and Methods</h1>
+<p>I’d like to talk about structs and methods, so let’s build a fun little project: <a href="http://mislav.uniqpath.com/poignant-guide/dwemthy/">DwemthysArray</a>. One of _why’s sillier examples, we make an array of monsters, and then fight them. We won’t be building the Array _exactly_, but something like it.</p>
+<h2 id="structs">Structs</h2>
+<p>Structs are ways of packaging up multiple values into one:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Monster {
+    health: <span class="kw">int</span>,
+    attack: <span class="kw">int</span>
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> m = Monster { health: <span class="dv">10</span>, attack: <span class="dv">20</span> };
+
+    println!(<span class="st">&quot;{:s}&quot;</span>, m.health.to_str());
+    println!(<span class="st">&quot;{:s}&quot;</span>, m.attack.to_str());
+}</code></pre>
+<p>This gives:</p>
+<pre><code>$ rustc dwemthysarray.rs &amp;&amp; ./dwemthysarray
+10
+20</code></pre>
+<p>Seems simple enough!</p>
+<h2 id="methods">Methods</h2>
+<p>Methods are basically functions that take a first argument named <code>self</code>. Python people who are reading will be high fiving each other in droves. Let’s add a method for our <code>Monster</code> s:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Monster {
+    health: <span class="kw">int</span>,
+    attack: <span class="kw">int</span>
+}
+
+<span class="kw">impl</span> Monster {
+    <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+        println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, <span class="kw">self</span>.attack);
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> m = Monster { health: <span class="dv">10</span>, attack: <span class="dv">20</span> };
+
+    m.attack();
+}</code></pre>
+<p>This gives:</p>
+<pre><code>The monster attacks for 20 damage.</code></pre>
+<p>Methods will want to take a borrowed pointer. We don’t care what the ownership semantics are. That’s the <code>&amp;self</code>, if you forgot.</p>
+<p>You can define associated functions (class methods, in Ruby, static methods, in Java) as well:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Monster {
+    health: <span class="kw">int</span>,
+    attack: <span class="kw">int</span>
+}
+
+<span class="kw">impl</span> Monster {
+    <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+        println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, <span class="kw">self</span>.attack);
+    }
+
+    <span class="kw">fn</span> count() {
+        println!(<span class="st">&quot;There are a bunch of monsters out tonight.&quot;</span>);
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> m = Monster { health: <span class="dv">10</span>, attack: <span class="dv">20</span> };
+
+    m.attack();
+    Monster::count();
+}</code></pre>
+<p>Constructors are a good reason to use associated functions:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Monster {
+    health: <span class="kw">int</span>,
+    attack: <span class="kw">int</span>
+}
+
+<span class="kw">impl</span> Monster {
+    <span class="kw">fn</span> new(health: <span class="kw">int</span>, attack: <span class="kw">int</span>) -&gt; Monster {
+        Monster { health:health, attack:attack }
+    }
+
+    <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+        println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, <span class="kw">self</span>.attack);
+    }
+
+    <span class="kw">fn</span> count() {
+        println!(<span class="st">&quot;There are a bunch of monsters out tonight.&quot;</span>);
+    }
+
+}
+
+<span class="kw">fn</span> main() {
+    Monster::new(<span class="dv">20</span>, <span class="dv">40</span>).attack();
+}</code></pre>
+<p>Note the lack of a semicolon inside <code>new</code>, so it’s acting as an expression. <code>new</code> is just a function that creates a new <code>Monster</code> struct and returns it. This gives:</p>
+<pre><code>The monster attacks for 40 damage.</code></pre>
+<p>as you’d expect.</p>
+<h2 id="enums">Enums</h2>
+<p>What if we want to define a few different types of things? In other languages, we’d use inheritance. In Rust, it seems like Enums are a better idea. Here’s an enum:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Monster {
+    ScubaArgentine(<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>),
+    IndustrialRaverMonkey(<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>)
+}
+
+
+<span class="kw">impl</span> Monster {
+    <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+        <span class="kw">match</span> *<span class="kw">self</span> {
+            ScubaArgentine(l, s, c, w) =&gt; println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, w),
+            IndustrialRaverMonkey(l, s, c, w) =&gt; println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, w)
+        }
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> irm = IndustrialRaverMonkey(<span class="dv">46</span>, <span class="dv">35</span>, <span class="dv">91</span>, <span class="dv">2</span>);
+    irm.attack();
+}</code></pre>
+<p>Okay, few new things here: We can see that there’s some duplication here. Obviously this isn’t the best way to do it, but I wanted to try this out before we got to the better implementation. We make an <code>Enum</code> that defines two different things, and then we use this <code>match</code> expression to “destructure” them and get at their… well, members, sorta.</p>
+<p>If you haven’t used pattern matching in another language, you’re missing out. It’s awesome. Here’s a simpler match expression:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> message(i: <span class="kw">int</span>) {
+    <span class="kw">match</span> i {
+        <span class="dv">1</span> =&gt; println!(<span class="st">&quot;ONE!&quot;</span>),
+        <span class="dv">2</span> =&gt; println!(<span class="st">&quot;Two is a prime.&quot;</span>),
+        <span class="dv">3</span> =&gt; println!(<span class="st">&quot;THREE!&quot;</span>),
+        _ =&gt; println!(<span class="st">&quot;no idea what that is, boss&quot;</span>)
+    }
+}
+
+<span class="kw">fn</span> main() {
+    message(<span class="dv">1</span>);
+    message(<span class="dv">2</span>);
+    message(<span class="dv">3</span>);
+}</code></pre>
+<p>Does that make sense? It’s sorta like a <code>case</code> statement, but it’s more powerful. If we leave off the <code>_</code> case, Rust will complain:</p>
+<pre><code>$ rustc match.rs &amp;&amp; ./match
+match.rs:2:4: 6:5 error: non-exhaustive patterns: `_` not covered
+match.rs:2     match i {
+match.rs:3         1 =&gt; println(&quot;ONE!&quot;),
+match.rs:4         2 =&gt; println(&quot;Two is a prime.&quot;),
+match.rs:5         3 =&gt; println(&quot;THREE!&quot;),
+match.rs:6     }
+error: aborting due to previous error</code></pre>
+<p>Neat. The reason we didn’t need to specify a <code>_</code> case in our monster code is that because we were matching an <code>enum</code>, rust knew we had covered all the possible cases. But since we’re matching an <code>int</code>, what would happen if we called, say, <code>message(349)</code>? Rust makes us specify a default case with <code>_</code> so that it knows exactly what we want. You also have to put the <code>_</code> case last, after any other cases, because Rust looks at them top-to-bottom, and will complain about unreachable patterns that come after <code>_</code>.</p>
+<p>The cool thing is that when pattern matching on a struct, the <code>match</code> can destructure it:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> p {
+    Point{x:x, y:y} =&gt; println!(<span class="st">&quot;X: {:d}, Y: {:d}&quot;</span>, x, y)
+}</code></pre>
+<p>We name the two fields of a <code>Point</code> <code>x</code> and <code>y</code>, and those names are valid within the match expression. Match is a lot more powerful (they can express ranges, options, and even variable binding), but this is its common use.</p>
+<h2 id="lets-build-monsters">Let’s build monsters!</h2>
+<p>Before we build some monsters, let’s look at the Right Way to implement them. We can do this with Traits, but that’s the next chapter.</p>
+<h1 id="vectors">Vectors</h1>
+<p>Before getting into generic functions that could handle multiple kinds of Monster, let’s first talk about a format that you end up using them with often: Vectors. Vectors are the ‘array’ in Dwemthy’s Array: they’re lists of things, but unlike in Ruby, the elements must all be of the same type. You can have any of the three kinds of pointers to vectors, and you’ll sometimes hear a borrowed pointer to a vector called a ‘slice.’</p>
+<h2 id="examples">Examples</h2>
+<p>See if this looks familiar:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> your_favorite_numbers = vec!(<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>);
+        <span class="kw">let</span> my_favorite_numbers = vec!(<span class="dv">4i</span>, <span class="dv">5i</span>, <span class="dv">6i</span>);
+
+        <span class="kw">let</span> our_favorite_numbers = your_favorite_numbers + my_favorite_numbers;
+
+        println!(<span class="st">&quot;The third favorite number is {:d}.&quot;</span>, *our_favorite_numbers.get(<span class="dv">2</span>))
+    }</code></pre>
+<p>Seems like business as usual: <code>+</code> adds two vectors, <code>get()</code> does an indexing operation.</p>
+<h2 id="mutability-inheritance">Mutability inheritance</h2>
+<p>You can mutate vectors if you make them so:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> <span class="kw">mut</span> another_vector = vec!(<span class="dv">4i</span>);
+        another_vector.push_all([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]);
+
+        println!(<span class="st">&quot;The second number is {:d}.&quot;</span>, *another_vector.get(<span class="dv">1</span>))
+    }</code></pre>
+<p>Of course, changing an element of a vector doesn’t make sense:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> a_vector = vec!(<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>);
+        a_vector.get(<span class="dv">0</span>) = <span class="dv">5</span>; <span class="co">// error: illegal left-hand side expression</span>
+
+        println!(<span class="st">&quot;The first number is {:d}.&quot;</span>, *a_vector.get(<span class="dv">0</span>))
+    }</code></pre>
+<p>But you can move it to a mutable one and then change it:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> a_vector = vec!(<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>);
+        <span class="kw">let</span> <span class="kw">mut</span> mut_vector = a_vector;
+        *mut_vector.get_mut(<span class="dv">0</span>) = <span class="dv">5</span>;
+
+        println!(<span class="st">&quot;The first number is {:d}.&quot;</span>, *mut_vector.get(<span class="dv">0</span>))
+    }</code></pre>
+<p>When you make an immutable vector mutable, it’s called ‘thawing’ the vector, and the opposite is ‘freezing’ a vector.</p>
+<p>That’s it! Vectors are pretty simple.</p>
+<h1 id="traits-and-generics">Traits and Generics</h1>
+<p>Now that we understand a type that’s sorta generic, vectors, we can talk about how generic functions work. Then, we can use traits to make functions that work on generic monsters.</p>
+<h2 id="writing-functions-that-work-with-vectors">Writing functions that work with vectors</h2>
+<p>Because you’re still getting used to Rust code, let’s implement two versions of a method that print everything in a vector, and then refactor that into the generic form.</p>
+<p>Let’s do an exercise. You have this code:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span>, <span class="dv">2i</span>,<span class="dv">3i</span>];
+
+    print_vec(vec);
+}</code></pre>
+<p>Implement <code>print_vec</code> so that it puts out <code>1 2 3</code> with newlines between them. Hint: You can write ‘I want an array of ints’ with <code>&amp;[int]</code>. Remember how functions can often use borrowed pointers?</p>
+<p>I’ll wait.</p>
+<p>Done? I got this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> print_vec(v: &amp;[<span class="kw">int</span>]) {
+    <span class="kw">for</span> i in v.iter() {
+        println!(<span class="st">&quot;{:d}&quot;</span>, *i)
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+    print_vec(vec);
+}</code></pre>
+<p>Pretty straightforward. We take a slice (remember, ‘borrowed vector’ == ‘slice’) of ints, get a borrowed pointer to each of them, and print them out.</p>
+<p>Round two: Implement this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+    print_vec(vec);
+
+    <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+    print_vec_str(str_vec);
+}</code></pre>
+<p>You’ll often be seeing owned pointers with strings. Go ahead. You can do it!</p>
+<p>I got this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> print_vec(v: &amp;[<span class="kw">int</span>]) {
+    <span class="kw">for</span> i in v.iter() {
+        println!(<span class="st">&quot;{:d}&quot;</span>, *i)
+    }
+}
+
+<span class="kw">fn</span> print_vec_str(v: &amp;[&amp;<span class="kw">str</span>]) {
+    <span class="kw">for</span> i in v.iter() {
+        println!(<span class="st">&quot;{:s}&quot;</span>, *i)
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+    print_vec(vec);
+
+    <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+    print_vec_str(str_vec);
+}</code></pre>
+<p>You’ll notice we had to declare what type of <code>str</code> we had. See, strings are actually implemented as vectors of characters (encoded in UTF-8), so while they are sorta a type, you can’t have just <code>str</code> as a type. You gotta say <code>&amp;str</code>. As I mentioned before, there is also a mutable, heap-allocated string type, <code>Str</code>.</p>
+<p>Okay, obviously, this situation sucks! What can we do?</p>
+<p>We can use generics!</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec&lt;T&gt;(v: &amp;[T]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>];
+
+        print_vec(vec);
+
+        <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+        print_vec(str_vec);
+    }</code></pre>
+<p>This won’t compile, but it is closer. Let’s examine that signature more closely.</p>
+<ul>
+<li><code>&lt;T&gt;</code> says that we’re going to be making this function polymorphic over the type T.</li>
+<li>We then use it later to say we take a borrowed pointer of a vector of <code>T</code> s, <code>&amp;[T]</code></li>
+</ul>
+<p>If you try to compile this, you’ll get an error:</p>
+<pre><code>$ rustc traits.rs &amp;&amp; ./traits
+fizzbuzz.rs:5:28: 5:29 error: failed to find an implementation of trait std::fmt::Show for T
+fizzbuzz.rs:5             println!(&quot;{}&quot;, i)</code></pre>
+<p>This is a problem. Our generic type T does not have any restrictions on what kind of thing it is, which means we can’t guarantee that we’ll get something that has the ability to be displayed.</p>
+<p>For that, we need Traits.</p>
+<h2 id="traits">Traits</h2>
+<p>This <strong>will</strong> work:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> print_vec&lt;T: std::fmt::Show&gt;(v: &amp;[T]) {
+    <span class="kw">for</span> i in v.iter() {
+        println!(<span class="st">&quot;{}&quot;</span>, i)
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+    print_vec(vec);
+
+    <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+    print_vec(str_vec);
+}</code></pre>
+<p>The <code>&lt;T: std::fmt::Show&gt;</code> says: “We take any type <code>T</code> that implements the <code>Show</code> trait.</p>
+<p>Traits are sort of like ‘static duck typing’ or ‘structural typing.’ We get away with this in Ruby by just trusting the code we write, and for most of it, it just works out. Think about this:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">def</span> print_each(arr)
+      arr.each <span class="kw">do</span> |i|
+        puts i
+      <span class="kw">end</span>
+    <span class="kw">end</span></code></pre>
+<p>We trust that this will always work, because <code>Object</code> implements <code>#to_s</code>. But if we had this:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">def</span> print_each(arr)
+      arr.each <span class="kw">do</span> |i|
+        puts i + <span class="dv">1</span>
+      <span class="kw">end</span>
+    <span class="kw">end</span></code></pre>
+<p>We have an implicit type here: <code>arr</code> must contain things that <code>respond_to?(:+)</code>. In many ways, Rust is sorta like:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">def</span> print_each(arr)
+      assert arr.respond_to?(:+)
+
+      arr.each <span class="kw">do</span> |i|
+        puts i + <span class="dv">1</span>
+      <span class="kw">end</span>
+    <span class="kw">end</span></code></pre>
+<p>But it happens at compile time, not run time.</p>
+<p>Now, I’ve never written code where I felt the need to check for a <code>NoMethodError</code> or <code>TypeError</code>, as you’d get in Ruby:</p>
+<pre><code>irb(main):007:0&gt; print_each([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;])
+TypeError: can&#39;t convert Fixnum into String
+  from (irb):3:in `+&#39;
+  from (irb):3:in `block in print_each&#39;
+  from (irb):2:in `each&#39;
+  from (irb):2:in `print_each&#39;
+  from (irb):7
+  from /usr/local/ruby-1.9.3-p327/bin/irb:12:in `&lt;main&gt;&#39;</code></pre>
+<p>But I think that safety is the wrong way to look at this kind of static typing. The right way to look at it is that by giving the compiler more information about our code, it can make certain optimizations. Check this out:</p>
+<pre><code>$ cat traits.rs</code></pre>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec&lt;T: std::fmt::Show&gt;(v: &amp;[T]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>];
+
+        print_vec(vec);
+
+        <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+        print_vec(str_vec);
+    }</code></pre>
+<pre><code>$ rustc traits.rs &amp;&amp; ./traits
+1
+2
+3
+hey
+there
+yo
+
+$ nm -C traits | grep vec
+0000000000401500 t print_vec_2912::_85e5a3bc2d3e1a83::_00
+0000000000401ee0 t print_vec_2912::anon::expr_fn_2970
+0000000000404cd0 t print_vec_3218::_f1e1b4437dbb28a::_00
+0000000000405480 t print_vec_3218::anon::expr_fn_3252
+0000000000402c50 t vec::__extensions__::reserve_3030::_de1a9d6344b57ab::_00
+0000000000402d70 t vec::__extensions__::capacity_3032::_824484774e7757::_00
+0000000000404b50 t
+vec::__extensions__::push_fast_3194::_5cf6fa3bfa6090d7::_00
+0000000000404ae0 t
+vec::__extensions__::reserve_at_least_3192::_de1a9d6344b57ab::_00
+0000000000404840 t
+vec::__extensions__::reserve_no_inline_3182::_24c451fdab89623e::_00
+0000000000401c50 t vec::__extensions__::len_2959::_824484774e7757::_00
+0000000000401e80 t vec::__extensions__::len_2959::anon::expr_fn_2968
+00000000004048b0 t vec::__extensions__::len_3185::_824484774e7757::_00
+0000000000404a80 t vec::__extensions__::len_3185::anon::expr_fn_3190
+00000000004051f0 t vec::__extensions__::len_3243::_824484774e7757::_00
+0000000000405420 t vec::__extensions__::len_3243::anon::expr_fn_3250
+0000000000401a50 t vec::__extensions__::iter_2947::_d7a5bdd54e5e6f77::_00
+00000000004050a0 t vec::__extensions__::iter_3237::_55446721964a82e1::_00
+0000000000401680 t vec::__extensions__::next_2919::_5079d793a0f371c9::_00
+0000000000404e50 t vec::__extensions__::next_3224::_b423b136d356fe1d::_00
+0000000000404790 t vec::__extensions__::push_3179::_a91dd4803fb62a::_00
+0000000000401d00 t vec::as_imm_buf_2961::_caa46d7965b990b9::_00
+0000000000404970 t vec::as_imm_buf_3187::_62a416e4b98acea8::_00
+00000000004052a0 t vec::as_imm_buf_3245::_cb6b3bad8005286::_00
+0000000000401b30 t vec::raw::to_ptr_2950::_1df29a3554bbd95b::_00
+0000000000405180 t vec::raw::to_ptr_3240::_8c11f86a3948f562::_00
+                 U
+                 vec::rustrt::vec_reserve_shared_actual::_c688b9b8fd5bf21::_07
+
+
+$ mvim traits.rs
+....editing...
+$ cat traits.rs</code></pre>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec&lt;T: std::fmt::Show&gt;(v: &amp;[T]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>];
+
+        print_vec(vec);
+    }</code></pre>
+<pre><code>$ rustc traits.rs &amp;&amp; ./traits
+
+$ nm -C traits | grep vec
+00000000004012d0 t print_vec_2908::_85e5a3bc2d3e1a83::_00
+0000000000401cb0 t print_vec_2908::anon::expr_fn_2966
+0000000000402a20 t vec::__extensions__::reserve_3026::_de1a9d6344b57ab::_00
+0000000000402b40 t vec::__extensions__::capacity_3028::_824484774e7757::_00
+0000000000404920 t
+vec::__extensions__::push_fast_3190::_5cf6fa3bfa6090d7::_00
+00000000004048b0 t
+vec::__extensions__::reserve_at_least_3188::_de1a9d6344b57ab::_00
+0000000000404610 t
+vec::__extensions__::reserve_no_inline_3178::_24c451fdab89623e::_00
+0000000000401a20 t vec::__extensions__::len_2955::_824484774e7757::_00
+0000000000401c50 t vec::__extensions__::len_2955::anon::expr_fn_2964
+0000000000404680 t vec::__extensions__::len_3181::_824484774e7757::_00
+0000000000404850 t vec::__extensions__::len_3181::anon::expr_fn_3186
+0000000000401820 t vec::__extensions__::iter_2943::_d7a5bdd54e5e6f77::_00
+0000000000401450 t vec::__extensions__::next_2915::_5079d793a0f371c9::_00
+0000000000404560 t vec::__extensions__::push_3175::_a91dd4803fb62a::_00
+0000000000401ad0 t vec::as_imm_buf_2957::_caa46d7965b990b9::_00
+0000000000404740 t vec::as_imm_buf_3183::_62a416e4b98acea8::_00
+0000000000401900 t vec::raw::to_ptr_2946::_1df29a3554bbd95b::_00
+                 U
+                 vec::rustrt::vec_reserve_shared_actual::_c688b9b8fd5bf21::_07</code></pre>
+<p>Okay. So the first time we have our code, we have two calls to <code>print_vec</code>, one for a vector of strings and one for a vector of ints. The call to <code>nm</code>…</p>
+<p>Oh wait, I mentioned <code>nm</code> before, but let me tell you some more about it now!</p>
+<h2 id="a-diversion-about-nm">A diversion about nm</h2>
+<p>Here’s what my manpage says:</p>
+<pre><code>$ man nm
+
+NAME
+       nm - display name list (symbol table)
+
+SYNOPSIS
+       nm  [  -agnoprumxjlfPA  [  s segname sectname ]] [ - ] [ -t format ] [[
+       -arch arch_flag ]...] [ file ... ]
+
+DESCRIPTION
+       Nm displays the name list (symbol table) of each  object  file  in  the
+       argument list.</code></pre>
+<p>Cool! You’ve never had to think about symbol tables before, so let’s talk about them.</p>
+<p>When your compiler compiles something, you get an ‘object file’ out of it. This is the binary that you run: <code>rustc fizzbuzz.rs</code> produces <code>fizzbuzz</code>. This object file will contain a list of <code>symbols</code> and where they exist in memory. This matters when we want to write two bits of code that work together: If my library exposes a function called <code>my_function</code>, and you want to use it, the compiler needs to know where to find <code>my_function</code> in my library’s code. The compiler ‘mangles’ the names to fit its own scheme. This is called an “ABI”, or application binary interface. Have you ever seen this:</p>
+<pre><code>/Users/Steve/.rvm/rubies/ruby-1.9.3-p286/lib/ruby/1.9.1</code></pre>
+<p>And wondered why that 1.9.1 is there? That’s because Ruby 1.9.3 and Ruby 1.9.1 both share the same ABI, so gems that are linked against 1.9.1 can also be used with 1.9.3. They use the same scheme to generate symbols.</p>
+<p>Anyway, <code>nm</code> can show us this information. The first column is the location in memory, the second is the (mangled) name:</p>
+<pre><code>0000000100001bb8 S _rust_abi_version</code></pre>
+<p>That’s a fun, recursive symbol ;) Anyway, we can examine what symbols Rust exports to see some information about our executable, that’s my intention with <code>nm</code> in this case.</p>
+<h2 id="back-to-our-regularly-scheduled-investigation">Back to our regularly scheduled investigation</h2>
+<p>Here’s the important part of the two outputs of nm:</p>
+<pre><code>0000000000401500 t print_vec_2912::_85e5a3bc2d3e1a83::_00
+0000000000401ee0 t print_vec_2912::anon::expr_fn_2970
+0000000000404cd0 t print_vec_3218::_f1e1b4437dbb28a::_00
+0000000000405480 t print_vec_3218::anon::expr_fn_3252</code></pre>
+<p>and:</p>
+<pre><code>00000000004012d0 t print_vec_2908::_85e5a3bc2d3e1a83::_00
+0000000000401cb0 t print_vec_2908::anon::expr_fn_2966</code></pre>
+<p>See how they both have <code>print_vec</code>? These are the functions we made. And without even knowing what’s happening, you can see the difference: in the version of our code where we call <code>print_vec</code> on strings and ints, we have two versions of the function, and on the version where we just call it on ints, we have one version.</p>
+<p>Neat! We get specialized versions, but only specialized for the types we actually use. No generating code that’s useless. This process is called ‘monomorphization,’ which basically means we take something that can work with things of different types and change it (morph) into specialized (mono) versions. To simplify, the compiler takes this code:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec&lt;T: std::fmt::Show&gt;(v: &amp;[T]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i);
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+        print_vec(vec);
+
+        <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+        print_vec(str_vec);
+    }</code></pre>
+<p>And turns it into:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> print_vec_str(v: &amp;[&amp;<span class="kw">str</span>]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i);
+        }
+    }
+
+    <span class="kw">fn</span> print_vec_int(v: &amp;[<span class="kw">int</span>]) {
+        <span class="kw">for</span> i in v.iter() {
+            println!(<span class="st">&quot;{}&quot;</span>, i);
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> vec = [<span class="dv">1i</span> ,<span class="dv">2i</span> ,<span class="dv">3i</span>];
+
+        print_vec_int(vec);
+
+        <span class="kw">let</span> str_vec = [<span class="st">&quot;hey&quot;</span>, <span class="st">&quot;there&quot;</span>, <span class="st">&quot;yo&quot;</span>];
+
+        print_vec_str(str_vec);
+    }</code></pre>
+<p>Complete with changing the calls at each call site to call the special version of the function. We call this ‘static dispatch,’ as opposed to the ‘dynamic dispatch’ that’d happen at runtime.</p>
+<p>(I am fudging a bit here with the <code>println!</code> macro line, but it’s the correct mental model. <code>{}</code> doesn’t actually work on <code>int</code>.)</p>
+<p>These are the kinds of optimizations that we get with static typing. Neat! I will say that there are efforts to bring this kind of optimization into dynamically typed languages as well, through analyzing the call site. So, for example:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">def</span> foo(arg)
+      puts arg
+    <span class="kw">end</span></code></pre>
+<p>If we call <code>foo</code> with a <code>String</code> <code>arg</code> a bunch of times in a row, the interpreter will JIT compile a version of <code>foo</code> specialized for <code>Strings</code>, and then replace the call site with something like:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="kw">if</span> arg.kind_of? <span class="dt">String</span>
+      __super_optimized_foo_string(arg)
+    <span class="kw">else</span>
+      foo(arg)
+    <span class="kw">end</span></code></pre>
+<p>This would give you the same benefit, without the human typing. Not just that, but a sufficiently smart runtime would be able to actually determine more complex situations that a person may not. And, maybe after, say, 1000 calls with a String, just remove the check entirely.</p>
+<p>Anyway.</p>
+<h2 id="making-our-own-traits">Making our own Traits</h2>
+<p>We want all of our monsters to implement <code>attack</code>. So let’s make <code>Monster</code> a Trait. The syntax looks like this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">trait</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>);
+    }</code></pre>
+<p>This says that the <code>Monster</code> trait guarantees we have one method available on any type that implements the trait, <code>attack</code>. Here’s how we make one:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">trait</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>);
+    }
+
+    <span class="kw">struct</span> IndustrialRaverMonkey {
+        strength: <span class="kw">int</span>
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> IndustrialRaverMonkey {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The monkey attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> monkey = IndustrialRaverMonkey {strength:<span class="dv">35</span>};
+
+        monkey.attack();
+    }</code></pre>
+<p>Now we’re cooking with gas! Remember our old implementation?:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">impl</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            <span class="kw">match</span> *<span class="kw">self</span> {
+                ScubaArgentine(l, s, c, w) =&gt; println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, w),
+                IndustrialRaverMonkey(l, s, c, w) =&gt; println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, w)
+            }
+        }
+    }</code></pre>
+<p>Ugh. This is way better. No destructuring on types. We can write an implementation for absolutely anything:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">trait</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>);
+    }
+
+    <span class="kw">struct</span> IndustrialRaverMonkey {
+        strength: <span class="kw">int</span>
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> IndustrialRaverMonkey {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The monkey attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> <span class="kw">int</span> {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The int attacks for {:d}.&quot;</span>, *<span class="kw">self</span>)
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> monkey = IndustrialRaverMonkey {strength:<span class="dv">35</span>};
+        monkey.attack();
+
+        <span class="kw">let</span> i = <span class="dv">10</span>;
+        i.attack();
+    }</code></pre>
+<p>Heh. Check it:</p>
+<pre><code>$ rustc dwemthy.rs &amp;&amp; ./dwemthy
+The monkey attacks for 35.
+The int attacks for 10.</code></pre>
+<p>Amusing.</p>
+<p>Okay, exercise: Make six different monsters, and create a vector with all of them in it. Then write a method that takes the vector, and prints out all of the monsters and their stats.</p>
+<p>I’ll wait. It took me a little while to write this: this is the hardest part of the book so far. Work through it; it’ll be painful. Don’t be afraid to ask for help. I had to ask <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">the rust IRC</a> for help once while doing it. They’re friendly, don’t worry.</p>
+<p>Done? Here’s mine:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">trait</span> Monster {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>);
+        <span class="kw">fn</span> new() -&gt; Self;
+    }
+
+    <span class="kw">struct</span> IndustrialRaverMonkey {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> DwarvenAngel {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> AssistantViceTentacleAndOmbudsman {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> TeethDeer {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> IntrepidDecomposedCyclist {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">struct</span> Dragon {
+        life: <span class="kw">int</span>,
+        strength: <span class="kw">int</span>,
+        charisma: <span class="kw">int</span>,
+        weapon: <span class="kw">int</span>,
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> IndustrialRaverMonkey {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The monkey attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+
+        <span class="kw">fn</span> new() -&gt; IndustrialRaverMonkey {
+            IndustrialRaverMonkey {life: <span class="dv">46</span>, strength: <span class="dv">35</span>, charisma: <span class="dv">91</span>, weapon: <span class="dv">2</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> DwarvenAngel {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The angel attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; DwarvenAngel {
+            DwarvenAngel {life: <span class="dv">540</span>, strength: <span class="dv">6</span>, charisma: <span class="dv">144</span>, weapon: <span class="dv">50</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> AssistantViceTentacleAndOmbudsman {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The tentacle attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; AssistantViceTentacleAndOmbudsman {
+            AssistantViceTentacleAndOmbudsman {life: <span class="dv">320</span>, strength: <span class="dv">6</span>, charisma: <span class="dv">144</span>, weapon: <span class="dv">50</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> TeethDeer {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The deer attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; TeethDeer {
+            TeethDeer {life: <span class="dv">655</span>, strength: <span class="dv">192</span>, charisma: <span class="dv">19</span>, weapon: <span class="dv">109</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> IntrepidDecomposedCyclist {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The cyclist attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; IntrepidDecomposedCyclist {
+            IntrepidDecomposedCyclist {life: <span class="dv">901</span>, strength: <span class="dv">560</span>, charisma: <span class="dv">422</span>, weapon: <span class="dv">105</span>}
+        }
+    }
+
+    <span class="kw">impl</span> Monster <span class="kw">for</span> Dragon {
+        <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+            println!(<span class="st">&quot;The dragon attacks for {:d}.&quot;</span>, <span class="kw">self</span>.strength)
+        }
+        <span class="kw">fn</span> new() -&gt; Dragon {
+            Dragon {life: <span class="dv">1340</span>, strength: <span class="dv">451</span>, charisma: <span class="dv">1020</span>, weapon: <span class="dv">939</span>}
+        }
+    }
+
+    <span class="kw">fn</span> monsters_attack(monsters: &amp;[&amp;Monster]) {
+        <span class="kw">for</span> monster in monsters.iter() {
+            monster.attack();
+        }
+    }
+
+    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> monkey: &amp;IndustrialRaverMonkey               = &amp;Monster::new();
+        <span class="kw">let</span> angel: &amp;DwarvenAngel                         = &amp;Monster::new();
+        <span class="kw">let</span> tentacle: &amp;AssistantViceTentacleAndOmbudsman = &amp;Monster::new();
+        <span class="kw">let</span> deer: &amp;TeethDeer                             = &amp;Monster::new();
+        <span class="kw">let</span> cyclist: &amp;IntrepidDecomposedCyclist          = &amp;Monster::new();
+        <span class="kw">let</span> dragon: &amp;Dragon                              = &amp;Monster::new();
+
+        <span class="kw">let</span> dwemthys_vector: &amp;[&amp;Monster] = [monkey <span class="kw">as</span> &amp;Monster, angel <span class="kw">as</span> &amp;Monster, tentacle <span class="kw">as</span> &amp;Monster, deer <span class="kw">as</span> &amp;Monster, cyclist <span class="kw">as</span> &amp;Monster, dragon <span class="kw">as</span> &amp;Monster];
+
+        monsters_attack(dwemthys_vector);
+    }</code></pre>
+<p>Congrats! You’ve mastered Traits. They’re pretty awesome, right?</p>
+<h1 id="standard-input">Standard Input</h1>
+<p>If we want to make this little text-based game, we need to figure out how to get text off of standard in. So let’s do another little programming project I enjoy when learning a new language: the numbers guessing game.</p>
+<h2 id="guessing-game">Guessing Game</h2>
+<p>The guessing game is really simple: You enter in a number between 1 and 100. The computer tells you if you’re too low, too high, or just right. You get five tries, after which the computer tells you the answer if you haven’t gotten it yet.</p>
+<p>I pick this example because it’s fun, not too hard, and lets us do text-based I/O with a teeny bit of logic. Let’s go!</p>
+<h2 id="using-stdin">Using <code>stdin()</code></h2>
+<p>Turns out getting text input is pretty simple. Just try this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io;
+
+<span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;INPUT:&quot;</span>);
+    <span class="kw">let</span> <span class="kw">mut</span> reader = io::stdin();
+
+    <span class="kw">let</span> input = reader.read_line().ok().expect(<span class="st">&quot;Failed to read line&quot;</span>);
+
+    println!(<span class="st">&quot;YOU TYPED:&quot;</span>);
+    println!(<span class="st">&quot;{:s}&quot;</span>, input);
+}</code></pre>
+<p>Give that a run. It should prompt you to type something in, and then echo out what you typed. Simple enough!</p>
+<p>I want to talk about that import, but first, let’s go over this <code>stdin()</code> business. Basically. <code>io::stdin()</code> will give you a reference to standard in. Next, the <code>read_line()</code> method. This reads stuff up to a <code>\n</code> from whatever it’s implemented on. So we grab that line, save it in a variable, and then print it out again. Super simple.</p>
+<p>This <code>ok().expect()</code> business we’ll talk about in a minute. First, what’s up with this <code>use</code> shenanigans?</p>
+<h2 id="how-to-use-use">How to use <code>use</code></h2>
+<p>Let’s talk about modules. One of the big things that sorta sucks about C (and Ruby) is that ‘modules’ are basically based on files. You include the file, and that’s about it. There’s no way to really qualify “I want this bit of code,” you say “I want this file that happens to have this code in it.”</p>
+<p>Rust basically pretends that it has these two lines at the beginning of every program:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">extern</span> crate std;
+<span class="kw">use</span> std::prelude::*;</code></pre>
+<p>Two things here. The first line is this <code>extern crate</code> business. I wanted to clarify my understanding, so I jumped into the <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">ever helpful Rust IRC</a> and asked:</p>
+<pre><code>pcwalton: basically &quot;extern mod&quot; is where you put the stuff you&#39;d put on the compiler link line in C++</code></pre>
+<p>(<code>extern crate</code> was <code>extern mod</code> back then.)</p>
+<p>Right. So we’re saying ‘please link against this library.’ Rust uses a load path to find where those libraries are, which you can modify with the <code>-L</code> command-line flag. For instance:</p>
+<pre><code>$ rustc -L ./lib -o foo foo.rs</code></pre>
+<p>Would compile <code>foo.rs</code> into <code>foo</code> while also looking for extra libraries in the <code>lib</code> directory. These libraries are called ‘crates’ in Rust, and you can make one of your own with the <code>--lib</code> flag to <code>rustc</code>:</p>
+<pre><code>$ rustc --lib -o bar bar.rs</code></pre>
+<p>This would make a shared library crate named <code>bar</code>. Technically, any time you compile something, it makes a crate: the <code>--lib</code> flag just says that we’re making a shared library explicitly, so Rust won’t look for a <code>main()</code>. When you invoke <code>rustc</code> normally, you’re also building a crate, it’s just not shared.</p>
+<p>Okay, so, once you’ve imported a crate, what do you get? Well, it will put a module with the same name as the crate into the current scope. But crates can also have other modules, which only get imported when you qualify them.</p>
+<p>Modules?</p>
+<p>Every Rust file can contain one top-level module, and modules can contain other modules. Modules look like this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">mod</span> foo {
+        <span class="kw">pub</span> <span class="kw">fn</span> bar() { <span class="st">&quot;bar&quot;</span> }
+        <span class="kw">pub</span> <span class="kw">fn</span> baz() { <span class="st">&quot;baz&quot;</span> }
+        <span class="kw">pub</span> <span class="kw">fn</span> qux() { <span class="st">&quot;qux&quot;</span> }
+    }</code></pre>
+<p>You just shove a <code>mod</code> around everything that goes in the module. To bring <code>bar</code> into scope, you:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">use</span> foo::bar;</code></pre>
+<p>To bring them all into scope, you:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">use</span> foo::*;</code></pre>
+<p>To bring <code>bar</code> and <code>baz</code> into scope, but not <code>qux</code> you do either one of these:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">use</span> foo::bar;
+    <span class="kw">use</span> foo::baz;
+
+    <span class="kw">use</span> foo::{bar,baz};</code></pre>
+<p>Pretty simple. So now we can see why the code acts like it has these two lines at the top:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">extern</span> crate std;
+    <span class="kw">use</span> std::prelude::*;</code></pre>
+<p>We want to link against the core library, and then import all the default io stuff into scope (that’s what the prelude is). This is why we need:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">use</span> std::io;</code></pre>
+<h2 id="casting-to-integer">Casting to integer</h2>
+<p>So, I was trying to cast a string to an integer to get this program going. So I wrote this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io;
+
+<span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;INPUT:&quot;</span>);
+    <span class="kw">let</span> <span class="kw">mut</span> reader = io::stdin();
+
+    <span class="kw">let</span> input = reader.read_line().ok().expect(<span class="st">&quot;Failed to read line&quot;</span>);
+    <span class="kw">let</span> input_num: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = from_str(input.as_slice().trim());
+
+    println!(<span class="st">&quot;YOU TYPED:&quot;</span>);
+    println!(<span class="st">&quot;{}&quot;</span>, input_num);
+}</code></pre>
+<p>I was gonna convert the string to an int, then back to a string to print it out to the screen.</p>
+<p>This gave an odd result:</p>
+<pre><code>$ rustc casting.rs &amp;&amp; ./casting
+INPUT:
+5
+YOU TYPED:
+Some(5)</code></pre>
+<p>Wait, huh? Here’s the thing: Rust <strong>knows</strong> that we might have a string that doesn’t make any sense as an integer. For example: <code>&quot;foo&quot;</code>. So it doesn’t actually return a string, it returns an <code>Option</code>. We can then use pattern matching to handle both cases. Observe:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io;
+
+<span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;INPUT:&quot;</span>);
+    <span class="kw">let</span> <span class="kw">mut</span> reader = io::stdin();
+
+    <span class="kw">let</span> input = reader.read_line().ok().expect(<span class="st">&quot;Failed to read line&quot;</span>);
+    <span class="kw">let</span> input_num: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = from_str(input.as_slice().trim());
+
+    <span class="kw">match</span> input_num {
+        <span class="kw">Some</span>(number) =&gt; println!(<span class="st">&quot;{:d}&quot;</span>, number),
+        <span class="kw">None</span>         =&gt; println!(<span class="st">&quot;Hey, put in a number.&quot;</span>)
+    }
+}</code></pre>
+<p>Remember <code>match</code>? It’s really good for matching against some kind of type and breaking it up. Here we match against our <code>Option</code> type. <code>Option</code> looks like this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> <span class="kw">Option</span>&lt;T&gt; {
+    <span class="kw">Some</span>(T),
+    <span class="kw">None</span>
+}</code></pre>
+<p><code>Option</code> is called <code>Maybe</code> in some other languages, but basically, you can think of it as a type that handles what we’d use <code>nil</code> for in Ruby. We may have <code>Some(int)</code>, but we also may have <code>None</code>. Computations that may fail in some way should return <code>None</code> if it fails. Simple. We can’t ever ignore a possible failure: the type system makes us handle it.</p>
+<h2 id="looping-forever">Looping forever</h2>
+<p>Looping forever is possible with <code>while true</code>, but like in Ruby, that’s kinda silly. Rust gives us <code>loop</code> to loop forever:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">loop</span> {
+    println!(<span class="st">&quot;HELLO&quot;</span>)
+}</code></pre>
+<p>Obviously you don’t want to actually run that. You can use <code>break</code> to break out of the loop:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> i = <span class="dv">0</span>;
+<span class="kw">loop</span> {
+    i += <span class="dv">1</span>;
+    <span class="kw">if</span> i == <span class="dv">5</span> { <span class="kw">break</span>; }
+    println!(<span class="st">&quot;hi&quot;</span>);
+}</code></pre>
+<p>This will print <code>&quot;hi&quot;</code> four times. You’re going to want to do this, because if someone mis-types a number, we don’t want to count it against them: we should just ask them to put in another number.</p>
+<h2 id="random-number-generation">Random Number Generation</h2>
+<p>Random number generation isn’t too bad:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::rand::Rng;
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> secret_number = std::rand::task_rng().gen_range(<span class="dv">1i</span>, <span class="dv">101</span>);
+    println!(<span class="st">&quot;{:d}&quot;</span>, secret_number);
+}</code></pre>
+<p>This will print out a different number each time you run it. This will get us a random number between 1 and 100.</p>
+<p>Okay! You should have all the tools you need to implement the guessing game. Have it it. I’m starting… now.</p>
+<h2 id="my-version">My version</h2>
+<p>Okay! That took me… about half an hour. Maybe 45 minutes. I found some helpful stuff in the standard library we didn’t talk about: <code>cmp</code>, mainly:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io;
+<span class="kw">use</span> std::rand::Rng;
+
+<span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;Guess the number!&quot;</span>);
+
+    <span class="kw">let</span> secret_number = std::rand::task_rng().gen_range(<span class="dv">1i</span>, <span class="dv">101</span>);
+    println!(<span class="st">&quot;Secret number is {}&quot;</span>, secret_number);
+
+    <span class="kw">let</span> max_number_of_tries = <span class="dv">5</span>
+    <span class="kw">let</span> <span class="kw">mut</span> guesses: <span class="kw">int</span> = <span class="dv">0</span>;
+    <span class="kw">let</span> <span class="kw">mut</span> reader = io::stdin();
+
+    <span class="kw">loop</span> {
+        <span class="kw">if</span> guesses == max_number_of_tries {
+          println!(<span class="st">&quot;You failed to guess within the limit of {:d} guesses!&quot;</span>, NUM_OF_TRIES);
+          <span class="kw">break</span>;
+        }
+        println!(<span class="st">&quot;Please input guess number {}&quot;</span>, guesses + <span class="dv">1</span>);
+
+        <span class="kw">let</span> input = reader.read_line().ok().expect(<span class="st">&quot;Failed to read line&quot;</span>);
+        <span class="kw">let</span> input_num: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = from_str(input.as_slice().trim());
+
+        <span class="kw">let</span> num = <span class="kw">match</span> input_num  {
+            <span class="kw">Some</span>(num) =&gt; num,
+            <span class="kw">None</span>      =&gt; {
+                println!(<span class="st">&quot;Please input a number.&quot;</span>);
+                continue;
+            }
+        };
+
+        println!(<span class="st">&quot;You guessed: {}&quot;</span>, num);
+        guesses += <span class="dv">1</span>;
+
+        <span class="kw">match</span> num.cmp(&amp;secret_number) {
+            Less    =&gt; println!(<span class="st">&quot;Too small!&quot;</span>),
+            Greater =&gt; println!(<span class="st">&quot;Too big!&quot;</span>),
+            Equal   =&gt; {
+                println!(<span class="st">&quot;You win!&quot;</span>);
+                println!(<span class="st">&quot;You took {} guesses!&quot;</span>, guesses);
+                <span class="kw">break</span>;
+            },
+        }
+    }
+}</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>I’m pretty sure at this point we have basically everything I was able to do as a child when programming stuff. You know enough of Rust now to be able to make silly little games and scripts. This is obviously neat, but from this point on, it’s more about libraries, style, and solving things in an idiomatic way than it is learning syntax. Of course, this was not a complete introduction to the language, but this is the end of the ‘beginner level’ stuff. You should have a basic idea of how to write many programs by this point. Pick a few projects, try them out.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

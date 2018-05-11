@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="fizzbuzz">FizzBuzz</h1>
+<p>Of course, the first thing that your job interview for that cushy new Rust job will task you with is building FizzBuzz. Let’s do it!</p>
+<p>If you’re not familiar, FizzBuzz is a simple programming problem:</p>
+<blockquote>
+<p>“Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.”</p>
+</blockquote>
+<p>This will give us a good excuse to go over some basics of Rust: Looping, tests, printing to standard output, and a host of other simple things.</p>
+<p>First, a test. This will go in fizzbuzz.rs:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}</code></pre>
+<p>And compile it:</p>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:3:8: 3:20 error: unresolved name `div_by_three`.
+fizzbuzz.rs:3     if div_by_three(1) {
+                     ^~~~~~~~~~~~
+error: aborting due to previous error</code></pre>
+<p>This makes sense: We haven’t defined any functions yet. Let’s define one:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+   <span class="kw">true</span>
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}</code></pre>
+<p>Okay. Here’s some new syntax. The <code>num: int</code> says that we take one argument, <code>num</code>, and that it’s of an integer type. The <code>-&gt; bool</code> says that we return a boolean, and the <code>true</code>, well, returns true. Just like Ruby, the value of the last expression gets returned.</p>
+<p>You’ll also note we have an <code>if</code> expression. It’s pretty close to what you’d expect, but we have curly braces rather than our friends <code>do/end</code>.</p>
+<p>Now that we’ve got that cleared up, let’s compile and run our tests:</p>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:1:17: 1:18 warning: unused variable: `num`, #[warn(unused_variable)] on by default
+fizzbuzz.rs:1 fn div_by_three(num: int) -&gt; bool {
+                              ^
+
+running 1 test
+test test_div_by_three ... FAILED
+
+failures:
+
+---- test_div_by_three stdout ----
+    task &#39;test_div_by_three&#39; failed at &#39;One is not three&#39;, fizzbuzz.rs:8
+
+
+
+failures:
+    test_div_by_three
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured
+
+task &#39;&lt;main&gt;&#39; failed at &#39;Some tests failed&#39;, /home/steve/src/rust/src/libtest/lib.rs:243</code></pre>
+<p>Rust is kind enough to give us a warning: we never used the <code>num</code> argument. We then get our failure, “One is not three”, because we returned true. Now that we have a failing test, let’s make it pass:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+   <span class="kw">false</span>
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}</code></pre>
+<p>TDD means do the simplest thing! Compile and run it:</p>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:1:17: 1:18 warning: unused variable: `num`, #[warn(unused_variable)] on by default
+fizzbuzz.rs:1 fn div_by_three(num: int) -&gt; bool {
+                              ^
+
+$ ./fizzbuzz
+running 1 test
+test test_div_by_three ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<p>Awesome! We pass! We still have that warning, though… let’s write another test, and see what happens:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+   <span class="kw">false</span>
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three_with_three() {
+    <span class="kw">if</span> !div_by_three(<span class="dv">3</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;Three should be three&quot;</span>);
+    }
+}</code></pre>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:1:17: 1:18 warning: unused variable: `num`, #[warn(unused_variable)] on by default
+fizzbuzz.rs:1 fn div_by_three(num: int) -&gt; bool {
+                              ^
+
+
+$ ./fizzbuzz
+running 2 tests
+test test_div_by_three ... ok
+test test_div_by_three_with_three ... FAILED
+
+failures:
+
+---- test_div_by_three_with_three stdout ----
+    task &#39;test_div_by_three_with_three&#39; failed at &#39;Three should be three&#39;, fizzbuzz.rs:15
+
+
+
+failures:
+    test_div_by_three_with_three
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured
+
+task &#39;&lt;main&gt;&#39; failed at &#39;Some tests failed&#39;, /home/steve/src/rust/src/libtest/lib.rs:243</code></pre>
+<p>Great! It showed that our first test passed, and that our second one failed. Let’s make both tests pass:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+    <span class="kw">if</span> num % <span class="dv">3</span> == <span class="dv">0</span> {
+        <span class="kw">true</span>
+    } <span class="kw">else</span> {
+        <span class="kw">false</span>
+    }
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three() {
+    <span class="kw">if</span> div_by_three(<span class="dv">1</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;One is not three&quot;</span>);
+    }
+}
+
+#[test]
+<span class="kw">fn</span> test_div_by_three_with_three() {
+    <span class="kw">if</span> !div_by_three(<span class="dv">3</span>) {
+        <span class="kw">fail</span>!(<span class="st">&quot;Three should be three&quot;</span>);
+    }
+}</code></pre>
+<pre><code>$ rustc --test fizzbuzz.rs &amp;&amp; ./fizzbuzz
+running 2 tests
+test test_div_by_three_with_three ... ok
+test test_div_by_three ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<p>Awesome! This shows off how elses work, as well. It’s probably what you expected. Go ahead and try to refactor this into a one-liner.</p>
+<p>Done? How’d you do? Here’s mine:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> div_by_three(num: <span class="kw">int</span>) -&gt; <span class="kw">bool</span> {
+    num % <span class="dv">3</span> == <span class="dv">0</span>
+}</code></pre>
+<p>Wait, whaaaat? Remember,the last thing in a function is a return in Rust, but there’s one wrinkle: note there’s no semicolon here. If you had one, you’d get:</p>
+<pre><code>$ rustc --test fizzbuzz.rs
+fizzbuzz.rs:2:15: 2:16 note: consider removing this semicolon:
+fizzbuzz.rs:2     num % 3 == 0;
+                            ^
+fizzbuzz.rs:1:1: 3:2 error: not all control paths return a value
+fizzbuzz.rs:1 fn div_by_three(num: int) -&gt; bool {
+fizzbuzz.rs:2     num % 3 == 0;
+fizzbuzz.rs:3 }
+error: aborting due to previous error</code></pre>
+<p>Basically, ending an expression in Rust with a semicolon ignores the value of that expression. Another way to think about it is that the semicolon turns the expression into a statement, and statements don’t have values. This is kinda weird. It becomes natural after some use, though. And Rust is even smart enough to tell us that it’s probably a problem!</p>
+<p>Okay, now try to TDD out the <code>div_by_five</code> and <code>div_by_fifteen</code> methods. They should work the same way, but this will let you get practice actually writing it out. Once you see this, you’re ready to advance:</p>
+<pre><code>$ rustc --test fizzbuzz.rs &amp;&amp; ./fizzbuzz
+
+running 6 tests
+test test_div_by_fifteen ... ok
+test test_div_by_five_with_five ... ok
+test test_div_by_five ... ok
+test test_div_by_fifteen_with_fifteen ... ok
+test test_div_by_three ... ok
+test test_div_by_three_with_three ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured</code></pre>
+<p>Okay! Let’s talk about the main program now. We’ve got the tools to build FizzBuzz, let’s make it work. First thing we need to do is print out all the numbers from one to 100. It’s easy!</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">100</span>) {
+            println!(<span class="st">&quot;num&quot;</span>);
+        }
+    }</code></pre>
+<p>Step one: print <strong>something</strong> 100 times. If you run this via <code>rustc fizzbuzz.rs &amp;&amp; ./fizzbuzz</code> you should see <code>num</code> printed 100 times. Note that our tests didn’t actually run. Not only are they not run, they’re actually not even in the executable:</p>
+<p>Compile with the test flag:</p>
+<pre><code>$ rustc --test fizzbuzz.rs</code></pre>
+<p>On Linux:</p>
+<pre><code>$ nm -C fizzbuzz | grep test</code></pre>
+<p>On OS X:</p>
+<pre><code>$ nm fizzbuzz | c++filt -p -i | grep test</code></pre>
+<p>Expected output:</p>
+<pre><code>0000000000403cd0 t test_div_by_five_with_five::_79fbef3fc431adf6::_00
+0000000000403ac0 t test_div_by_three_with_three::_79fbef3fc431adf6::_00
+0000000000403c10 t test_div_by_five_with_not_five::_79fbef3fc431adf6::_00
+0000000000403ee0 t test_div_by_fifteen_with_fifteen::_79fbef3fc431adf6::_00
+0000000000403a00 t test_div_by_three_with_not_three::_79fbef3fc431adf6::_00
+0000000000403e20 t test_div_by_fifteen_with_not_fifteen::_79fbef3fc431adf6::_00
+                 U test::test_main_static::_e5d562a4bc8c4dd6::_06
+000000000040fea0 T __test::main::_79fbef3fc431adf6::_00
+0000000000614890 D __test::tests::_7c31a8a9617a6a::_00</code></pre>
+<p>Compile without the test flag:</p>
+<pre><code>$ rustc fizzbuzz.rs</code></pre>
+<p>On Linux:</p>
+<pre><code>$ nm -C fizzbuzz | grep test</code></pre>
+<p>On OS X:</p>
+<pre><code>$ nm fizzbuzz | c++filt -p -i | grep test</code></pre>
+<p>Expected output:</p>
+<pre><code>$</code></pre>
+<p>Neat, huh? Rust is smart.</p>
+<p>Anyway, <code>nm</code>: The <code>nm</code> program lists all the symbols in a binary executable or library. The <code>-C</code> option is important on linux, it “de-mangles” the symbol names. On OS X, <code>nm</code> provides no symbol de-mangling option, so the output must be piped to <code>c++filt</code>. Rust uses the same mangling scheme as C++, so it’s compatible with all the existing tools. How it works isn’t that important, though. It’s cool low-level stuff if you’re into that sort of thing.</p>
+<p>Anywho, where were we? Oh, iteration:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">100</span>) {
+        println!(<span class="st">&quot;{:d}&quot;</span>, num);
+    }
+}</code></pre>
+<p>This uses string interpolation: the double curlies tell Rust where to place <code>num</code> in the string.</p>
+<p>Anyway, now we have 1 to 99. We need 1 to 100.</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        println!(<span class="st">&quot;{:d}&quot;</span>, num);
+    }
+}</code></pre>
+<p>Now we can put the two together:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        <span class="kw">let</span> <span class="kw">mut</span> answer = <span class="st">&quot;&quot;</span>;
+
+        <span class="kw">if</span> div_by_fifteen(num){
+            answer = <span class="st">&quot;FizzBuzz&quot;</span>;
+        }
+        <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) {
+            answer = <span class="st">&quot;Fizz&quot;</span>;
+        }
+        <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) {
+            answer = <span class="st">&quot;Buzz&quot;</span>;
+        }
+        <span class="kw">else</span> {
+            answer = <span class="st">&quot;&quot;</span>;
+        };
+
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer);
+    }
+}</code></pre>
+<p>Uhhhh <code>let mut</code>? <code>let</code> is the way that we make a local variable. <code>mut</code> means we plan to mutate that variable: yes, variables are immutable by default.</p>
+<p>Also, <code>:s</code> is the format string for a… string.</p>
+<p>We can shorten this up a bit with this syntax:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        <span class="kw">let</span> <span class="kw">mut</span> answer =
+            <span class="kw">if</span> div_by_fifteen(num){
+                <span class="st">&quot;FizzBuzz&quot;</span>
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) {
+                <span class="st">&quot;Fizz&quot;</span>
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) {
+                <span class="st">&quot;Buzz&quot;</span>
+            }
+            <span class="kw">else</span> {
+                <span class="st">&quot;&quot;</span>
+            };
+
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer);
+    }
+}</code></pre>
+<p>We’ve made the <code>if</code> assign the value to answer. Note that we had to remove the semicolons again; that lets the expression give its value to <code>answer.</code> Note that this _also_ makes answer immutable, so we can remove the <code>mut</code>:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        <span class="kw">let</span> answer =
+            <span class="kw">if</span> div_by_fifteen(num){
+                <span class="st">&quot;FizzBuzz&quot;</span>
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) {
+                <span class="st">&quot;Fizz&quot;</span>
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) {
+                <span class="st">&quot;Buzz&quot;</span>
+            }
+            <span class="kw">else</span> {
+                <span class="st">&quot;&quot;</span>
+            };
+
+        println!(<span class="st">&quot;{:s}&quot;</span>, answer);
+    }
+}</code></pre>
+<p>Not too shabby! I love eliminating mutable state.</p>
+<p>Of course, this version gives us lots of empty lines, so what we actually want is:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        <span class="kw">let</span> answer =
+            <span class="kw">if</span> div_by_fifteen(num){
+                <span class="st">&quot;FizzBuzz&quot;</span>.to_str()
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) {
+                <span class="st">&quot;Fizz&quot;</span>.to_str()
+            }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) {
+                <span class="st">&quot;Buzz&quot;</span>.to_str()
+            }
+            <span class="kw">else</span> {
+                num.to_str()
+            };
+
+        println!(<span class="st">&quot;{}&quot;</span>, answer);
+    }
+}</code></pre>
+<p>Why the “<code>to_str()</code>”s? There are two types of Strings in Rust: <code>Str</code>, which is a heap allocated string with dynamic length, and <code>&amp;str</code>, which is a borrowed, immutable view into a string. The literal is of type <code>&amp;str</code>, but we want a <code>Str</code>. <code>to_str()</code> turns a <code>&amp;str</code> into a <code>String</code>.</p>
+<p>Before, we could get away with a <code>&amp;str</code>, because they all had the same type. But since we’ve added an arm with an <code>int</code>, we need to make them all the same type, and there’s no way to convert an <code>int</code> into a <code>&amp;str</code>.</p>
+<p>Because the <code>if</code> returns a value, we could also do something like this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">for</span> num in range(<span class="dv">1i</span>, <span class="dv">101</span>) {
+        println!(<span class="st">&quot;{:s}&quot;</span>, 
+            <span class="kw">if</span> div_by_fifteen(num) { <span class="st">&quot;FizzBuzz&quot;</span>.to_str() }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_three(num) { <span class="st">&quot;Fizz&quot;</span>.to_str() }
+            <span class="kw">else</span> <span class="kw">if</span> div_by_five(num) { <span class="st">&quot;Buzz&quot;</span>.to_str() }
+            <span class="kw">else</span> { num.to_str() }
+        );
+    }
+}</code></pre>
+<p>It’s more compact, and removes the intermediate variable all together.</p>
+<p>We can do one other thing too: this whole <code>if/fail!</code> thing so common in tests seems too complex. Why do we have to write if over and over and over again? Meet <code>assert!</code>:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">#[test]
+<span class="kw">fn</span> test_div_by_fifteen_with_fifteen() {
+    <span class="kw">assert</span>!(div_by_fifteen(<span class="dv">15</span>))
+}</code></pre>
+<p>This will fail if it gets false, and pass if it gets true. Simple! You can also give it a message to be printed when the assertion fails, mostly useful when you are using <code>assert!</code> to test for preconditions and such:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> main() {
+    <span class="kw">assert</span>!(<span class="dv">1</span> == <span class="dv">0</span>, <span class="st">&quot;1 does not equal 0!&quot;</span>);
+}</code></pre>
+<p>Try running it.</p>
+<p>Anyway, awesome! We’ve conquered FizzBuzz.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="standard-input">Standard Input</h1>
+<p>If we want to make this little text-based game, we need to figure out how to get text off of standard in. So let’s do another little programming project I enjoy when learning a new language: the numbers guessing game.</p>
+<h2 id="guessing-game">Guessing Game</h2>
+<p>The guessing game is really simple: You enter in a number between 1 and 100. The computer tells you if you’re too low, too high, or just right. You get five tries, after which the computer tells you the answer if you haven’t gotten it yet.</p>
+<p>I pick this example because it’s fun, not too hard, and lets us do text-based I/O with a teeny bit of logic. Let’s go!</p>
+<h2 id="using-stdin">Using <code>stdin()</code></h2>
+<p>Turns out getting text input is pretty simple. Just try this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io;
+
+<span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;INPUT:&quot;</span>);
+    <span class="kw">let</span> <span class="kw">mut</span> reader = io::stdin();
+
+    <span class="kw">let</span> input = reader.read_line().ok().expect(<span class="st">&quot;Failed to read line&quot;</span>);
+
+    println!(<span class="st">&quot;YOU TYPED:&quot;</span>);
+    println!(<span class="st">&quot;{:s}&quot;</span>, input);
+}</code></pre>
+<p>Give that a run. It should prompt you to type something in, and then echo out what you typed. Simple enough!</p>
+<p>I want to talk about that import, but first, let’s go over this <code>stdin()</code> business. Basically. <code>io::stdin()</code> will give you a reference to standard in. Next, the <code>read_line()</code> method. This reads stuff up to a <code>\n</code> from whatever it’s implemented on. So we grab that line, save it in a variable, and then print it out again. Super simple.</p>
+<p>This <code>ok().expect()</code> business we’ll talk about in a minute. First, what’s up with this <code>use</code> shenanigans?</p>
+<h2 id="how-to-use-use">How to use <code>use</code></h2>
+<p>Let’s talk about modules. One of the big things that sorta sucks about C (and Ruby) is that ‘modules’ are basically based on files. You include the file, and that’s about it. There’s no way to really qualify “I want this bit of code,” you say “I want this file that happens to have this code in it.”</p>
+<p>Rust basically pretends that it has these two lines at the beginning of every program:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">extern</span> crate std;
+<span class="kw">use</span> std::prelude::*;</code></pre>
+<p>Two things here. The first line is this <code>extern crate</code> business. I wanted to clarify my understanding, so I jumped into the <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">ever helpful Rust IRC</a> and asked:</p>
+<pre><code>pcwalton: basically &quot;extern mod&quot; is where you put the stuff you&#39;d put on the compiler link line in C++</code></pre>
+<p>(<code>extern crate</code> was <code>extern mod</code> back then.)</p>
+<p>Right. So we’re saying ‘please link against this library.’ Rust uses a load path to find where those libraries are, which you can modify with the <code>-L</code> command-line flag. For instance:</p>
+<pre><code>$ rustc -L ./lib -o foo foo.rs</code></pre>
+<p>Would compile <code>foo.rs</code> into <code>foo</code> while also looking for extra libraries in the <code>lib</code> directory. These libraries are called ‘crates’ in Rust, and you can make one of your own with the <code>--lib</code> flag to <code>rustc</code>:</p>
+<pre><code>$ rustc --lib -o bar bar.rs</code></pre>
+<p>This would make a shared library crate named <code>bar</code>. Technically, any time you compile something, it makes a crate: the <code>--lib</code> flag just says that we’re making a shared library explicitly, so Rust won’t look for a <code>main()</code>. When you invoke <code>rustc</code> normally, you’re also building a crate, it’s just not shared.</p>
+<p>Okay, so, once you’ve imported a crate, what do you get? Well, it will put a module with the same name as the crate into the current scope. But crates can also have other modules, which only get imported when you qualify them.</p>
+<p>Modules?</p>
+<p>Every Rust file can contain one top-level module, and modules can contain other modules. Modules look like this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">mod</span> foo {
+        <span class="kw">pub</span> <span class="kw">fn</span> bar() { <span class="st">&quot;bar&quot;</span> }
+        <span class="kw">pub</span> <span class="kw">fn</span> baz() { <span class="st">&quot;baz&quot;</span> }
+        <span class="kw">pub</span> <span class="kw">fn</span> qux() { <span class="st">&quot;qux&quot;</span> }
+    }</code></pre>
+<p>You just shove a <code>mod</code> around everything that goes in the module. To bring <code>bar</code> into scope, you:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">use</span> foo::bar;</code></pre>
+<p>To bring them all into scope, you:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">use</span> foo::*;</code></pre>
+<p>To bring <code>bar</code> and <code>baz</code> into scope, but not <code>qux</code> you do either one of these:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">use</span> foo::bar;
+    <span class="kw">use</span> foo::baz;
+
+    <span class="kw">use</span> foo::{bar,baz};</code></pre>
+<p>Pretty simple. So now we can see why the code acts like it has these two lines at the top:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">extern</span> crate std;
+    <span class="kw">use</span> std::prelude::*;</code></pre>
+<p>We want to link against the core library, and then import all the default io stuff into scope (that’s what the prelude is). This is why we need:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">use</span> std::io;</code></pre>
+<h2 id="casting-to-integer">Casting to integer</h2>
+<p>So, I was trying to cast a string to an integer to get this program going. So I wrote this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io;
+
+<span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;INPUT:&quot;</span>);
+    <span class="kw">let</span> <span class="kw">mut</span> reader = io::stdin();
+
+    <span class="kw">let</span> input = reader.read_line().ok().expect(<span class="st">&quot;Failed to read line&quot;</span>);
+    <span class="kw">let</span> input_num: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = from_str(input.as_slice().trim());
+
+    println!(<span class="st">&quot;YOU TYPED:&quot;</span>);
+    println!(<span class="st">&quot;{}&quot;</span>, input_num);
+}</code></pre>
+<p>I was gonna convert the string to an int, then back to a string to print it out to the screen.</p>
+<p>This gave an odd result:</p>
+<pre><code>$ rustc casting.rs &amp;&amp; ./casting
+INPUT:
+5
+YOU TYPED:
+Some(5)</code></pre>
+<p>Wait, huh? Here’s the thing: Rust <strong>knows</strong> that we might have a string that doesn’t make any sense as an integer. For example: <code>&quot;foo&quot;</code>. So it doesn’t actually return a string, it returns an <code>Option</code>. We can then use pattern matching to handle both cases. Observe:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io;
+
+<span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;INPUT:&quot;</span>);
+    <span class="kw">let</span> <span class="kw">mut</span> reader = io::stdin();
+
+    <span class="kw">let</span> input = reader.read_line().ok().expect(<span class="st">&quot;Failed to read line&quot;</span>);
+    <span class="kw">let</span> input_num: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = from_str(input.as_slice().trim());
+
+    <span class="kw">match</span> input_num {
+        <span class="kw">Some</span>(number) =&gt; println!(<span class="st">&quot;{:d}&quot;</span>, number),
+        <span class="kw">None</span>         =&gt; println!(<span class="st">&quot;Hey, put in a number.&quot;</span>)
+    }
+}</code></pre>
+<p>Remember <code>match</code>? It’s really good for matching against some kind of type and breaking it up. Here we match against our <code>Option</code> type. <code>Option</code> looks like this:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> <span class="kw">Option</span>&lt;T&gt; {
+    <span class="kw">Some</span>(T),
+    <span class="kw">None</span>
+}</code></pre>
+<p><code>Option</code> is called <code>Maybe</code> in some other languages, but basically, you can think of it as a type that handles what we’d use <code>nil</code> for in Ruby. We may have <code>Some(int)</code>, but we also may have <code>None</code>. Computations that may fail in some way should return <code>None</code> if it fails. Simple. We can’t ever ignore a possible failure: the type system makes us handle it.</p>
+<h2 id="looping-forever">Looping forever</h2>
+<p>Looping forever is possible with <code>while true</code>, but like in Ruby, that’s kinda silly. Rust gives us <code>loop</code> to loop forever:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">loop</span> {
+    println!(<span class="st">&quot;HELLO&quot;</span>)
+}</code></pre>
+<p>Obviously you don’t want to actually run that. You can use <code>break</code> to break out of the loop:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">let</span> <span class="kw">mut</span> i = <span class="dv">0</span>;
+<span class="kw">loop</span> {
+    i += <span class="dv">1</span>;
+    <span class="kw">if</span> i == <span class="dv">5</span> { <span class="kw">break</span>; }
+    println!(<span class="st">&quot;hi&quot;</span>);
+}</code></pre>
+<p>This will print <code>&quot;hi&quot;</code> four times. You’re going to want to do this, because if someone mis-types a number, we don’t want to count it against them: we should just ask them to put in another number.</p>
+<h2 id="random-number-generation">Random Number Generation</h2>
+<p>Random number generation isn’t too bad:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::rand::Rng;
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> secret_number = std::rand::task_rng().gen_range(<span class="dv">1i</span>, <span class="dv">101</span>);
+    println!(<span class="st">&quot;{:d}&quot;</span>, secret_number);
+}</code></pre>
+<p>This will print out a different number each time you run it. This will get us a random number between 1 and 100.</p>
+<p>Okay! You should have all the tools you need to implement the guessing game. Have it it. I’m starting… now.</p>
+<h2 id="my-version">My version</h2>
+<p>Okay! That took me… about half an hour. Maybe 45 minutes. I found some helpful stuff in the standard library we didn’t talk about: <code>cmp</code>, mainly:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">use</span> std::io;
+<span class="kw">use</span> std::rand::Rng;
+
+<span class="kw">fn</span> main() {
+    println!(<span class="st">&quot;Guess the number!&quot;</span>);
+
+    <span class="kw">let</span> secret_number = std::rand::task_rng().gen_range(<span class="dv">1i</span>, <span class="dv">101</span>);
+    println!(<span class="st">&quot;Secret number is {}&quot;</span>, secret_number);
+
+    <span class="kw">let</span> max_number_of_tries = <span class="dv">5</span>
+    <span class="kw">let</span> <span class="kw">mut</span> guesses: <span class="kw">int</span> = <span class="dv">0</span>;
+    <span class="kw">let</span> <span class="kw">mut</span> reader = io::stdin();
+
+    <span class="kw">loop</span> {
+        <span class="kw">if</span> guesses == max_number_of_tries {
+          println!(<span class="st">&quot;You failed to guess within the limit of {:d} guesses!&quot;</span>, NUM_OF_TRIES);
+          <span class="kw">break</span>;
+        }
+        println!(<span class="st">&quot;Please input guess number {}&quot;</span>, guesses + <span class="dv">1</span>);
+
+        <span class="kw">let</span> input = reader.read_line().ok().expect(<span class="st">&quot;Failed to read line&quot;</span>);
+        <span class="kw">let</span> input_num: <span class="kw">Option</span>&lt;<span class="kw">int</span>&gt; = from_str(input.as_slice().trim());
+
+        <span class="kw">let</span> num = <span class="kw">match</span> input_num  {
+            <span class="kw">Some</span>(num) =&gt; num,
+            <span class="kw">None</span>      =&gt; {
+                println!(<span class="st">&quot;Please input a number.&quot;</span>);
+                continue;
+            }
+        };
+
+        println!(<span class="st">&quot;You guessed: {}&quot;</span>, num);
+        guesses += <span class="dv">1</span>;
+
+        <span class="kw">match</span> num.cmp(&amp;secret_number) {
+            Less    =&gt; println!(<span class="st">&quot;Too small!&quot;</span>),
+            Greater =&gt; println!(<span class="st">&quot;Too big!&quot;</span>),
+            Equal   =&gt; {
+                println!(<span class="st">&quot;You win!&quot;</span>);
+                println!(<span class="st">&quot;You took {} guesses!&quot;</span>, guesses);
+                <span class="kw">break</span>;
+            },
+        }
+    }
+}</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>I’m pretty sure at this point we have basically everything I was able to do as a child when programming stuff. You know enough of Rust now to be able to make silly little games and scripts. This is obviously neat, but from this point on, it’s more about libraries, style, and solving things in an idiomatic way than it is learning syntax. Of course, this was not a complete introduction to the language, but this is the end of the ‘beginner level’ stuff. You should have a basic idea of how to write many programs by this point. Pick a few projects, try them out.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

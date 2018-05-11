@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="why-care-about-rust">Why care about Rust?</h1>
+<p>You already write software in Ruby. It pays your bills. You enjoy it. Why should you care about Rust?</p>
+<p>Alan Perlis once said:</p>
+<blockquote>
+<p>A language that doesn’t affect the way you think about programming is not worth knowing.</p>
+</blockquote>
+<p>Let’s think about Ruby for a minute: what’s its biggest weakness? For me, it’s these things:</p>
+<ul>
+<li>Concurrency</li>
+<li>Safety guarantees</li>
+<li>Lots of mutable state</li>
+<li>Only vaguely functional</li>
+<li>Speed</li>
+<li>Complexity. (Smalltalk’s semantics fit on an index card)</li>
+<li>Documentation</li>
+<li>nil</li>
+</ul>
+<p>What’s awesome about Ruby?</p>
+<ul>
+<li>Blocks</li>
+<li>Vaguely functional</li>
+<li>Syntax is pretty easy</li>
+<li>Focus on developer happiness</li>
+<li>Get up and running quickly</li>
+<li>Dynamically typed</li>
+</ul>
+<p>So we could learn a lot from a language that handles concurrency well, has good safety guarantees, is immutable by default, and is fast and simple. We don’t want to sacrifice anonymous functions, pretty syntax, or not making <code>AbstractFactoryFactoryImpls</code> just to get work done.</p>
+<p>I think that that language is Rust.</p>
+<p>Now: Rust is not perfect, by far. Its documentation is poor, but getting better, as I’ve been hired by Mozilla to fix it. It can feel quite complex. Fighting with a compiler can be frustrating. But the point is to <em>learn</em>. And using a language that’s very familiar, yet very different, can teach us a lot.</p>
+<p>Here’s “Hello World” in Rust:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        println!(<span class="st">&quot;Hello, world!&quot;</span>);
+    }</code></pre>
+<p>Here’s a parallel “Hello World” in Rust:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">for</span> _ in range(<span class="dv">0u</span>, <span class="dv">10</span>) {
+            spawn(proc() {
+                <span class="kw">let</span> greeting_message = <span class="st">&quot;Hello?&quot;</span>;
+                println!(<span class="st">&quot;{}&quot;</span>, greeting_message);
+            });
+        }
+    }</code></pre>
+<p>Here’s a rough port to Ruby:</p>
+<pre class="sourceCode ruby"><code class="sourceCode ruby">    <span class="dv">10</span>.times <span class="kw">do</span>
+      <span class="dt">Thread</span>.new <span class="kw">do</span>
+        greeting_message = <span class="st">&quot;Hello?&quot;</span>
+
+        <span class="co"># This is weird in Ruby but it&#39;s closer to the println! macro</span>
+        <span class="co"># usage in the Rust example.</span>
+        puts <span class="st">&quot;</span><span class="ot">#{</span>greeting_message<span class="ot">}</span><span class="st">&quot;</span>
+      <span class="kw">end</span>
+    <span class="kw">end</span></code></pre>
+<p>That’s it. Note the stuff that’s <em>similar</em> to Ruby:</p>
+<ul>
+<li>Variables are in <code>snake_case</code></li>
+<li>We have ‘blocks’ that use <code>{}</code>. No <code>do/end</code> though.</li>
+<li>Variables, while statically typed, have inference, so we don’t need to declare types</li>
+</ul>
+<p>Here’s some stuff that’s <em>different</em>:</p>
+<ul>
+<li><code>;</code> s everywhere. You don’t always need them, but let’s put them in for now.</li>
+<li>slightly different syntax, <code>fn</code> rather than <code>def</code>.</li>
+<li>Because we have no <code>do/end</code>, we use <code>{}</code> s instead.</li>
+<li>The compiler will yell at us harder if we mess up.</li>
+</ul>
+<p>Oh, and:</p>
+<pre><code>$ time ./hello
+./hello 0.01s user 0.01s system 91% cpu 0.014 total
+
+$ time ruby hello.rb
+ruby hello.rb 0.02s user 0.01s system 95% cpu 0.026 total</code></pre>
+<p>Twice as fast. Yay irrelevant microbenchmarks!</p>
+<p>Anyway, I hope you get my point: There’s lots of things about Rust that make it syntactically vaguely similar enough to Ruby that you can feel at home, at least at first. And its strengths are some of Ruby’s greatest weaknesses. That’s why I think you can learn a lot from playing with Rust, even if you don’t do it as your day job.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="vectors">Vectors</h1>
+<p>Before getting into generic functions that could handle multiple kinds of Monster, let’s first talk about a format that you end up using them with often: Vectors. Vectors are the ‘array’ in Dwemthy’s Array: they’re lists of things, but unlike in Ruby, the elements must all be of the same type. You can have any of the three kinds of pointers to vectors, and you’ll sometimes hear a borrowed pointer to a vector called a ‘slice.’</p>
+<h2 id="examples">Examples</h2>
+<p>See if this looks familiar:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> your_favorite_numbers = vec!(<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>);
+        <span class="kw">let</span> my_favorite_numbers = vec!(<span class="dv">4i</span>, <span class="dv">5i</span>, <span class="dv">6i</span>);
+
+        <span class="kw">let</span> our_favorite_numbers = your_favorite_numbers + my_favorite_numbers;
+
+        println!(<span class="st">&quot;The third favorite number is {:d}.&quot;</span>, *our_favorite_numbers.get(<span class="dv">2</span>))
+    }</code></pre>
+<p>Seems like business as usual: <code>+</code> adds two vectors, <code>get()</code> does an indexing operation.</p>
+<h2 id="mutability-inheritance">Mutability inheritance</h2>
+<p>You can mutate vectors if you make them so:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> <span class="kw">mut</span> another_vector = vec!(<span class="dv">4i</span>);
+        another_vector.push_all([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]);
+
+        println!(<span class="st">&quot;The second number is {:d}.&quot;</span>, *another_vector.get(<span class="dv">1</span>))
+    }</code></pre>
+<p>Of course, changing an element of a vector doesn’t make sense:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> a_vector = vec!(<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>);
+        a_vector.get(<span class="dv">0</span>) = <span class="dv">5</span>; <span class="co">// error: illegal left-hand side expression</span>
+
+        println!(<span class="st">&quot;The first number is {:d}.&quot;</span>, *a_vector.get(<span class="dv">0</span>))
+    }</code></pre>
+<p>But you can move it to a mutable one and then change it:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust">    <span class="kw">fn</span> main() {
+        <span class="kw">let</span> a_vector = vec!(<span class="dv">1i</span>, <span class="dv">2i</span>, <span class="dv">3i</span>);
+        <span class="kw">let</span> <span class="kw">mut</span> mut_vector = a_vector;
+        *mut_vector.get_mut(<span class="dv">0</span>) = <span class="dv">5</span>;
+
+        println!(<span class="st">&quot;The first number is {:d}.&quot;</span>, *mut_vector.get(<span class="dv">0</span>))
+    }</code></pre>
+<p>When you make an immutable vector mutable, it’s called ‘thawing’ the vector, and the opposite is ‘freezing’ a vector.</p>
+<p>That’s it! Vectors are pretty simple.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>

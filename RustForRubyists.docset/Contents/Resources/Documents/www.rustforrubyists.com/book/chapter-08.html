@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rust for Rubyists</title>
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn the Rust programming language">
+   <meta name="author" content="Steve Klabnik">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        /*max-width: 700px;*/
+padding: 40px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+    </style>
+    <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://www.rustforrubyists.com/index.html">Home</a></li>
+          <li><a href="http://www.rustforrubyists.com/buy.html">Download an eBook</a></li>
+          <li class="active"><a href="index.html">Read Online</a></li>
+        </ul>
+        <h3 class="muted">Rust for Rubyists</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span16">
+<h1 id="structs-and-methods">Structs and Methods</h1>
+<p>I’d like to talk about structs and methods, so let’s build a fun little project: <a href="http://mislav.uniqpath.com/poignant-guide/dwemthy/">DwemthysArray</a>. One of _why’s sillier examples, we make an array of monsters, and then fight them. We won’t be building the Array _exactly_, but something like it.</p>
+<h2 id="structs">Structs</h2>
+<p>Structs are ways of packaging up multiple values into one:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Monster {
+    health: <span class="kw">int</span>,
+    attack: <span class="kw">int</span>
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> m = Monster { health: <span class="dv">10</span>, attack: <span class="dv">20</span> };
+
+    println!(<span class="st">&quot;{:s}&quot;</span>, m.health.to_str());
+    println!(<span class="st">&quot;{:s}&quot;</span>, m.attack.to_str());
+}</code></pre>
+<p>This gives:</p>
+<pre><code>$ rustc dwemthysarray.rs &amp;&amp; ./dwemthysarray
+10
+20</code></pre>
+<p>Seems simple enough!</p>
+<h2 id="methods">Methods</h2>
+<p>Methods are basically functions that take a first argument named <code>self</code>. Python people who are reading will be high fiving each other in droves. Let’s add a method for our <code>Monster</code> s:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Monster {
+    health: <span class="kw">int</span>,
+    attack: <span class="kw">int</span>
+}
+
+<span class="kw">impl</span> Monster {
+    <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+        println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, <span class="kw">self</span>.attack);
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> m = Monster { health: <span class="dv">10</span>, attack: <span class="dv">20</span> };
+
+    m.attack();
+}</code></pre>
+<p>This gives:</p>
+<pre><code>The monster attacks for 20 damage.</code></pre>
+<p>Methods will want to take a borrowed pointer. We don’t care what the ownership semantics are. That’s the <code>&amp;self</code>, if you forgot.</p>
+<p>You can define associated functions (class methods, in Ruby, static methods, in Java) as well:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Monster {
+    health: <span class="kw">int</span>,
+    attack: <span class="kw">int</span>
+}
+
+<span class="kw">impl</span> Monster {
+    <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+        println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, <span class="kw">self</span>.attack);
+    }
+
+    <span class="kw">fn</span> count() {
+        println!(<span class="st">&quot;There are a bunch of monsters out tonight.&quot;</span>);
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> m = Monster { health: <span class="dv">10</span>, attack: <span class="dv">20</span> };
+
+    m.attack();
+    Monster::count();
+}</code></pre>
+<p>Constructors are a good reason to use associated functions:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Monster {
+    health: <span class="kw">int</span>,
+    attack: <span class="kw">int</span>
+}
+
+<span class="kw">impl</span> Monster {
+    <span class="kw">fn</span> new(health: <span class="kw">int</span>, attack: <span class="kw">int</span>) -&gt; Monster {
+        Monster { health:health, attack:attack }
+    }
+
+    <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+        println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, <span class="kw">self</span>.attack);
+    }
+
+    <span class="kw">fn</span> count() {
+        println!(<span class="st">&quot;There are a bunch of monsters out tonight.&quot;</span>);
+    }
+
+}
+
+<span class="kw">fn</span> main() {
+    Monster::new(<span class="dv">20</span>, <span class="dv">40</span>).attack();
+}</code></pre>
+<p>Note the lack of a semicolon inside <code>new</code>, so it’s acting as an expression. <code>new</code> is just a function that creates a new <code>Monster</code> struct and returns it. This gives:</p>
+<pre><code>The monster attacks for 40 damage.</code></pre>
+<p>as you’d expect.</p>
+<h2 id="enums">Enums</h2>
+<p>What if we want to define a few different types of things? In other languages, we’d use inheritance. In Rust, it seems like Enums are a better idea. Here’s an enum:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Monster {
+    ScubaArgentine(<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>),
+    IndustrialRaverMonkey(<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>)
+}
+
+
+<span class="kw">impl</span> Monster {
+    <span class="kw">fn</span> attack(&amp;<span class="kw">self</span>) {
+        <span class="kw">match</span> *<span class="kw">self</span> {
+            ScubaArgentine(l, s, c, w) =&gt; println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, w),
+            IndustrialRaverMonkey(l, s, c, w) =&gt; println!(<span class="st">&quot;The monster attacks for {:d} damage.&quot;</span>, w)
+        }
+    }
+}
+
+<span class="kw">fn</span> main() {
+    <span class="kw">let</span> irm = IndustrialRaverMonkey(<span class="dv">46</span>, <span class="dv">35</span>, <span class="dv">91</span>, <span class="dv">2</span>);
+    irm.attack();
+}</code></pre>
+<p>Okay, few new things here: We can see that there’s some duplication here. Obviously this isn’t the best way to do it, but I wanted to try this out before we got to the better implementation. We make an <code>Enum</code> that defines two different things, and then we use this <code>match</code> expression to “destructure” them and get at their… well, members, sorta.</p>
+<p>If you haven’t used pattern matching in another language, you’re missing out. It’s awesome. Here’s a simpler match expression:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">fn</span> message(i: <span class="kw">int</span>) {
+    <span class="kw">match</span> i {
+        <span class="dv">1</span> =&gt; println!(<span class="st">&quot;ONE!&quot;</span>),
+        <span class="dv">2</span> =&gt; println!(<span class="st">&quot;Two is a prime.&quot;</span>),
+        <span class="dv">3</span> =&gt; println!(<span class="st">&quot;THREE!&quot;</span>),
+        _ =&gt; println!(<span class="st">&quot;no idea what that is, boss&quot;</span>)
+    }
+}
+
+<span class="kw">fn</span> main() {
+    message(<span class="dv">1</span>);
+    message(<span class="dv">2</span>);
+    message(<span class="dv">3</span>);
+}</code></pre>
+<p>Does that make sense? It’s sorta like a <code>case</code> statement, but it’s more powerful. If we leave off the <code>_</code> case, Rust will complain:</p>
+<pre><code>$ rustc match.rs &amp;&amp; ./match
+match.rs:2:4: 6:5 error: non-exhaustive patterns: `_` not covered
+match.rs:2     match i {
+match.rs:3         1 =&gt; println(&quot;ONE!&quot;),
+match.rs:4         2 =&gt; println(&quot;Two is a prime.&quot;),
+match.rs:5         3 =&gt; println(&quot;THREE!&quot;),
+match.rs:6     }
+error: aborting due to previous error</code></pre>
+<p>Neat. The reason we didn’t need to specify a <code>_</code> case in our monster code is that because we were matching an <code>enum</code>, rust knew we had covered all the possible cases. But since we’re matching an <code>int</code>, what would happen if we called, say, <code>message(349)</code>? Rust makes us specify a default case with <code>_</code> so that it knows exactly what we want. You also have to put the <code>_</code> case last, after any other cases, because Rust looks at them top-to-bottom, and will complain about unreachable patterns that come after <code>_</code>.</p>
+<p>The cool thing is that when pattern matching on a struct, the <code>match</code> can destructure it:</p>
+<pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">match</span> p {
+    Point{x:x, y:y} =&gt; println!(<span class="st">&quot;X: {:d}, Y: {:d}&quot;</span>, x, y)
+}</code></pre>
+<p>We name the two fields of a <code>Point</code> <code>x</code> and <code>y</code>, and those names are valid within the match expression. Match is a lot more powerful (they can express ranges, options, and even variable binding), but this is its common use.</p>
+<h2 id="lets-build-monsters">Let’s build monsters!</h2>
+<p>Before we build some monsters, let’s look at the Right Way to implement them. We can do this with Traits, but that’s the next chapter.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://steveklabnik.com/">Steve Klabnik</a> 2012 - 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+  </body>
+</html>
