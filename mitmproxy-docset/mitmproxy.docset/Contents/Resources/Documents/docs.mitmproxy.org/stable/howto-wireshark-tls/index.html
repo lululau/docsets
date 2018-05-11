@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
+    <title>Wireshark and SSL/TLS</title>
+    
+    
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <meta name="generator" content="Hugo 0.37.1" />
+</head>
+<body>
+
+<div class="columns container is-marginless">
+    <div id="sidebar" class="column is-one-quarter">
+        <div class="brand">
+    <a href="../../../mitmproxy.org/index.html">
+        <img src='../logo-docs.png' alt="mitmproxy docs"/>
+    </a>
+
+</div>
+<nav class="menu">
+    <p class="menu-label"> Overview </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../index.html">Introduction</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-installation/index.html">Installation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-tools/index.html">Tools</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Core concepts</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../concepts-howmitmproxyworks/index.html">How mitmproxy works</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-modes/index.html">Modes of operation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-certificates/index.html">Certificates</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-filters/index.html">Filter expressions</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-protocols/index.html">Protocols</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Addon Development </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../addons-overview/index.html">Addons</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-events/index.html">Events</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-scripting/index.html">Scripting</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> HOWTOs </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../howto-transparent/index.html">Transparent Proxying</a>
+        </li>
+    
+        <li >
+            <a class="is-active"
+                href="index.html">Wireshark and SSL/TLS</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-ignoredomains/index.html">Ignoring Domains</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-transparent-vms/index.html">Transparently Proxying VMs</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Tutorials </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tute-clientreplay/index.html">Client replay</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tute-highscores/index.html">Setting highscores on Apple GameCenter</a>
+        </li>
+    
+</ul>
+</nav>
+
+    </div>
+    <div id="main" class="column content">
+        
+        
+<a class="button is-small is-outlined is-link is-pulled-right"
+   target="_blank"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/howto-wireshark-tls.md"
+>
+    Edit on GitHub
+</a>
+
+
+
+        
+
+<h1 id="wireshark-and-ssl-tls-master-secrets"><a class="anchor" href="index.html#wireshark-and-ssl-tls-master-secrets">#&nbsp;&nbsp;</a>Wireshark and SSL/TLS Master Secrets</h1>
+
+<p>The SSL/SSL master keys can be logged by mitmproxy so that external programs can
+decrypt SSL/TLS connections both from and to the proxy. Recent versions of
+Wireshark can use these log files to decrypt packets. See the <a href="https://wiki.wireshark.org/SSL#Using_the_.28Pre.29-Master-Secret">Wireshark wiki</a> for more information.</p>
+
+<p>Key logging is enabled by setting the environment variable <code>SSLKEYLOGFILE</code> so
+that it points to a writable text file:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SSLKEYLOGFILE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$PWD<span style="color:#e6db74">/.mitmproxy/sslkeylogfile.txt&#34;</span> mitmproxy</code></pre></div>
+You can also <code>export</code> this environment variable to make it persistent for all applications started from your current shell session.</p>
+
+<p>You can specify the key file path in Wireshark via <code>Edit -&gt; Preferences -&gt;
+Protocols -&gt; SSL -&gt; (Pre)-Master-Secret log filename</code>. If your SSLKEYLOGFILE
+does not exist yet, just create an empty text file, so you can select it in
+Wireshark (or run mitmproxy to create and collect master secrets).</p>
+
+<p>Note that <code>SSLKEYLOGFILE</code> is respected by other programs as well, e.g., Firefox
+and Chrome. If this creates any issues, you can use <code>MITMPROXY_SSLKEYLOGFILE</code>
+instead without affecting other applications.</p>
+
+
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-4150636', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='../../../www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
+

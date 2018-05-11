@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
+    <title>Protocols</title>
+    
+    
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <meta name="generator" content="Hugo 0.37.1" />
+</head>
+<body>
+
+<div class="columns container is-marginless">
+    <div id="sidebar" class="column is-one-quarter">
+        <div class="brand">
+    <a href="../../../mitmproxy.org/index.html">
+        <img src='../logo-docs.png' alt="mitmproxy docs"/>
+    </a>
+
+</div>
+<nav class="menu">
+    <p class="menu-label"> Overview </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../index.html">Introduction</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-installation/index.html">Installation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-tools/index.html">Tools</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Core concepts</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../concepts-howmitmproxyworks/index.html">How mitmproxy works</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-modes/index.html">Modes of operation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-certificates/index.html">Certificates</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-filters/index.html">Filter expressions</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class="is-active"
+                href="index.html">Protocols</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Addon Development </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../addons-overview/index.html">Addons</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-events/index.html">Events</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-scripting/index.html">Scripting</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> HOWTOs </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../howto-transparent/index.html">Transparent Proxying</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-wireshark-tls/index.html">Wireshark and SSL/TLS</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-ignoredomains/index.html">Ignoring Domains</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-transparent-vms/index.html">Transparently Proxying VMs</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Tutorials </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tute-clientreplay/index.html">Client replay</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tute-highscores/index.html">Setting highscores on Apple GameCenter</a>
+        </li>
+    
+</ul>
+</nav>
+
+    </div>
+    <div id="main" class="column content">
+        
+        
+<a class="button is-small is-outlined is-link is-pulled-right"
+   target="_blank"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/concepts-protocols.md"
+>
+    Edit on GitHub
+</a>
+
+
+
+        
+
+<h1 id="protocols"><a class="anchor" href="index.html#protocols">#&nbsp;&nbsp;</a>Protocols</h1>
+
+<h2 id="http-1-0-and-http-1-1"><a class="anchor" href="index.html#http-1-0-and-http-1-1">#&nbsp;&nbsp;</a>HTTP/1.0 and HTTP/1.1</h2>
+
+<p><a href="http://tools.ietf.org/html/rfc7230">RFC7230: HTTP/1.1: Message Syntax and Routing</a></p>
+
+<p><a href="http://tools.ietf.org/html/rfc7231">RFC7231: HTTP/1.1: Semantics and Content</a></p>
+
+<p>HTTP/1.0 and HTTP/1.1 support in mitmproxy is based on our custom HTTP stack,
+which takes care of all semantics and on-the-wire parsing/serialization tasks.</p>
+
+<p>mitmproxy currently does not support HTTP trailers - but if you want to send
+us a PR, we promise to take look!</p>
+
+<h2 id="http-2"><a class="anchor" href="index.html#http-2">#&nbsp;&nbsp;</a>HTTP/2</h2>
+
+<p><a href="http://tools.ietf.org/html/rfc7540">RFC7540: Hypertext Transfer Protocol Version 2 (HTTP/2)</a></p>
+
+<p>HTTP/2 support in mitmproxy is based on
+<a href="https://github.com/python-hyper/hyper-h2">hyper-h2</a>. It fully encapsulates the
+internal state of HTTP/2 connections and provides an easy-to-use event-based
+API. mitmproxy supports the majority of HTTP/2 feature and tries to
+transparently pass-through as much information as possible.</p>
+
+<p>mitmproxy currently does not support HTTP/2 trailers - but if you want to send
+us a PR, we promise to take look!</p>
+
+<p>mitmproxy currently does not support HTTP/2 Cleartext (h2c) since none of the
+major browser vendors have implemented it.</p>
+
+<p>Some websites are still having problems with correct HTTP/2 support in their
+webservers and can cause errors, dropped connectiones, or simply no response at
+all. We are trying to be as tolerant and forgiving as possible with the types of
+data we send and receive, but
+<a href="https://github.com/mitmproxy/mitmproxy/issues/1745">some</a>
+<a href="https://github.com/mitmproxy/mitmproxy/issues/2823">faulty</a>
+<a href="https://github.com/mitmproxy/mitmproxy/issues/1824">implementations</a>
+<a href="https://github.com/mitmproxy/mitmproxy/issues/1891">simply</a> don&rsquo;t work well
+with mitmproxy.</p>
+
+<p>In order to increase the compatibility of mitmproxy with HTTP/2 webservers, we
+default to NOT forward any priority information that is sent by a client. You
+can enable it with: <code>http2_priority=true</code>.</p>
+
+<h2 id="websocket"><a class="anchor" href="index.html#websocket">#&nbsp;&nbsp;</a>WebSocket</h2>
+
+<p><a href="http://tools.ietf.org/html/rfc6455">RFC6455: The WebSocket Protocol</a></p>
+
+<p><a href="http://tools.ietf.org/html/rfc7692">RFC7692: Compression Extensions for WebSocket</a></p>
+
+<p>WebSocket support in mitmproxy is based on <a href="https://github.com/python-hyper/wsproto">wsproto</a> project. It fully encapsulates
+WebSocket frames/messages/connections and provides an easy-to-use event-based
+API.</p>
+
+<p>mitmproxy fully supports the compression extension for WebSocket messages,
+provided by wsproto. Message contents are automatically compressed and
+decompressed before firing events.</p>
+
+<p>mitmproxy currently does not display WebSocket messages in the console or web
+UI. Only the WebSocket handshake flow is shown, which contains a reference to
+the parent flow for all messages exchanged over this connection.</p>
+
+<p>If an endpoint sends a PING to mitmproxy, a PONG will be sent back immediately
+(with the same payload if present). To keep the other connection alive, a new
+PING (without a payload) is sent to the other endpoint. Unsolicited PONG&rsquo;s are
+not forwarded. All PING&rsquo;s and PONG&rsquo;s are logged (with payload if present).</p>
+
+<h2 id="raw-tcp-tcp-proxy-fallback"><a class="anchor" href="index.html#raw-tcp-tcp-proxy-fallback">#&nbsp;&nbsp;</a>Raw TCP / TCP Proxy / Fallback</h2>
+
+<p>In case mitmproxy does not handle a specific protocol, you can exempt
+hostnames from processing, so that mitmproxy acts as a generic TCP forwarder.
+This feature is closely related to the <em>passthrough</em> functionality,
+but differs in two important aspects:</p>
+
+<ul>
+<li>The raw TCP messages are printed to the event log.</li>
+<li>SSL connections will be intercepted.</li>
+</ul>
+
+<p>Please note that message interception or modification are not possible yet. If
+you are not interested in the raw TCP messages, you should use the ignore
+domains feature.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>command-line alias</td>
+<td><code>--tcp HOST</code></td>
+</tr>
+
+<tr>
+<td>mitmproxy shortcut</td>
+<td>press <code>O</code> then <code>T</code></td>
+</tr>
+</tbody>
+</table>
+
+
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-4150636', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='../../../www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
+

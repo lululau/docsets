@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
+    <title>Scripting</title>
+    
+    
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <meta name="generator" content="Hugo 0.37.1" />
+</head>
+<body>
+
+<div class="columns container is-marginless">
+    <div id="sidebar" class="column is-one-quarter">
+        <div class="brand">
+    <a href="../../../mitmproxy.org/index.html">
+        <img src='../logo-docs.png' alt="mitmproxy docs"/>
+    </a>
+
+</div>
+<nav class="menu">
+    <p class="menu-label"> Overview </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../index.html">Introduction</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-installation/index.html">Installation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-tools/index.html">Tools</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Core concepts</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../concepts-howmitmproxyworks/index.html">How mitmproxy works</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-modes/index.html">Modes of operation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-certificates/index.html">Certificates</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-filters/index.html">Filter expressions</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-protocols/index.html">Protocols</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Addon Development </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../addons-overview/index.html">Addons</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-events/index.html">Events</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class="is-active"
+                href="index.html">Scripting</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> HOWTOs </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../howto-transparent/index.html">Transparent Proxying</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-wireshark-tls/index.html">Wireshark and SSL/TLS</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-ignoredomains/index.html">Ignoring Domains</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-transparent-vms/index.html">Transparently Proxying VMs</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Tutorials </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tute-clientreplay/index.html">Client replay</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tute-highscores/index.html">Setting highscores on Apple GameCenter</a>
+        </li>
+    
+</ul>
+</nav>
+
+    </div>
+    <div id="main" class="column content">
+        
+        
+<a class="button is-small is-outlined is-link is-pulled-right"
+   target="_blank"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/addons-scripting.md"
+>
+    Edit on GitHub
+</a>
+
+
+
+        
+
+<h1 id="scripting"><a class="anchor" href="index.html#scripting">#&nbsp;&nbsp;</a>Scripting</h1>
+
+<p>Sometimes, we would like to write a quick script without going through the
+trouble of creating a class. The addons mechanism has a shorthand that allows a
+module as a whole to be treated as an addon object. This lets us place event
+handler functions in the module scope. For instance, here is a complete script
+that adds a header to every request.</p>
+
+
+<div class="example">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">request</span>(flow):
+    flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;myheader&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;value&#34;</span></code></pre></div>
+<div class="path">examples/addons/scripting.py</div>
+</div>
+
+
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-4150636', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='../../../www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
+

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
+    <title>Tools</title>
+    
+    
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <meta name="generator" content="Hugo 0.37.1" />
+</head>
+<body>
+
+<div class="columns container is-marginless">
+    <div id="sidebar" class="column is-one-quarter">
+        <div class="brand">
+    <a href="../../../mitmproxy.org/index.html">
+        <img src='../logo-docs.png' alt="mitmproxy docs"/>
+    </a>
+
+</div>
+<nav class="menu">
+    <p class="menu-label"> Overview </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../index.html">Introduction</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-installation/index.html">Installation</a>
+        </li>
+    
+        <li >
+            <a class="is-active"
+                href="index.html">Tools</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Core concepts</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../concepts-howmitmproxyworks/index.html">How mitmproxy works</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-modes/index.html">Modes of operation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-certificates/index.html">Certificates</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-filters/index.html">Filter expressions</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-protocols/index.html">Protocols</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Addon Development </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../addons-overview/index.html">Addons</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-events/index.html">Events</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-scripting/index.html">Scripting</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> HOWTOs </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../howto-transparent/index.html">Transparent Proxying</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-wireshark-tls/index.html">Wireshark and SSL/TLS</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-ignoredomains/index.html">Ignoring Domains</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-transparent-vms/index.html">Transparently Proxying VMs</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Tutorials </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tute-clientreplay/index.html">Client replay</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tute-highscores/index.html">Setting highscores on Apple GameCenter</a>
+        </li>
+    
+</ul>
+</nav>
+
+    </div>
+    <div id="main" class="column content">
+        
+        
+<a class="button is-small is-outlined is-link is-pulled-right"
+   target="_blank"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/overview-tools.md"
+>
+    Edit on GitHub
+</a>
+
+
+
+        
+
+<h1 id="overview"><a class="anchor" href="index.html#overview">#&nbsp;&nbsp;</a>Overview</h1>
+
+<p>You should think of the mitmproxy project&rsquo;s tools as a set of front-ends that
+expose the same underlying functionality. We aim to have feature parity across
+all of our tooling, and all tools share a common configuration mechanism and
+most command-line options.</p>
+
+<h2 id="mitmproxy"><a class="anchor" href="index.html#mitmproxy">#&nbsp;&nbsp;</a>mitmproxy</h2>
+
+
+<figure>
+    
+        <img src="../screenshots/mitmproxy.png" />
+    
+    
+</figure>
+
+
+<p><strong>mitmproxy</strong> is a console tool that allows interactive examination and
+modification of HTTP traffic. It differs from mitmdump in that all flows are
+kept in memory, which means that it&rsquo;s intended for taking and manipulating
+small-ish samples. Use the <code>?</code> shortcut key to view, context-sensitive
+documentation from any <strong>mitmproxy</strong> screen.</p>
+
+<h2 id="mitmweb"><a class="anchor" href="index.html#mitmweb">#&nbsp;&nbsp;</a>mitmweb</h2>
+
+
+<figure>
+    
+        <img src="../screenshots/mitmweb.png" />
+    
+    
+</figure>
+
+
+<p><strong>mitmweb</strong> is mitmproxy&rsquo;s web-based user interface that allows
+interactive examination and modification of HTTP traffic. Like
+mitmproxy, it differs from mitmdump in that all flows are kept in
+memory, which means that it&rsquo;s intended for taking and manipulating
+small-ish samples.</p>
+
+<div class="notification is-info"><p>Mitmweb is currently in beta. We consider it stable for all features
+currently exposed in the UI, but it still misses a lot of mitmproxy&rsquo;s
+features.</p>
+</div>
+
+
+<h2 id="mitmdump"><a class="anchor" href="index.html#mitmdump">#&nbsp;&nbsp;</a>mitmdump</h2>
+
+<p><strong>mitmdump</strong> is the command-line companion to mitmproxy. It provides
+tcpdump-like functionality to let you view, record, and programmatically
+transform HTTP traffic. See the <code>--help</code> flag output for complete
+documentation.</p>
+
+<h3 id="example-saving-traffic"><a class="anchor" href="index.html#example-saving-traffic">#&nbsp;&nbsp;</a>Example: Saving traffic</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -w outfile</code></pre></div>
+
+<p>Start up mitmdump in proxy mode, and write all traffic to <strong>outfile</strong>.</p>
+
+<h3 id="filtering-saved-traffic"><a class="anchor" href="index.html#filtering-saved-traffic">#&nbsp;&nbsp;</a>Filtering saved traffic</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nr infile -w outfile <span style="color:#e6db74">&#34;~m post&#34;</span></code></pre></div>
+
+<p>Start mitmdump without binding to the proxy port (<code>-n</code>), read all flows
+from infile, apply the specified filter expression (only match POSTs),
+and write to outfile.</p>
+
+<h3 id="client-replay"><a class="anchor" href="index.html#client-replay">#&nbsp;&nbsp;</a>Client replay</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nc outfile</code></pre></div>
+
+<p>Start mitmdump without binding to the proxy port (<code>-n</code>), then replay all
+requests from outfile (<code>-c filename</code>). Flags combine in the obvious way,
+so you can replay requests from one file, and write the resulting flows
+to another:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nc srcfile -w dstfile</code></pre></div>
+
+<p>See the <a href="../overview-features/index.html#client-side-replay">client-side replay</a> section for more information.</p>
+
+<h3 id="running-a-script"><a class="anchor" href="index.html#running-a-script">#&nbsp;&nbsp;</a>Running a script</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -s examples/add_header.py</code></pre></div>
+
+<p>This runs the <strong>add_header.py</strong> example script, which simply adds a new
+header to all responses.</p>
+
+<h3 id="scripted-data-transformation"><a class="anchor" href="index.html#scripted-data-transformation">#&nbsp;&nbsp;</a>Scripted data transformation</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -ns examples/add_header.py -r srcfile -w dstfile</code></pre></div>
+
+<p>This command loads flows from <strong>srcfile</strong>, transforms it according to
+the specified script, then writes it back to <strong>dstfile</strong>.</p>
+
+
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-4150636', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='../../../www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
+

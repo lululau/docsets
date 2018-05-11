@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
+    <title>Setting highscores on Apple GameCenter</title>
+    
+    
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <meta name="generator" content="Hugo 0.37.1" />
+</head>
+<body>
+
+<div class="columns container is-marginless">
+    <div id="sidebar" class="column is-one-quarter">
+        <div class="brand">
+    <a href="../../../mitmproxy.org/index.html">
+        <img src='../logo-docs.png' alt="mitmproxy docs"/>
+    </a>
+
+</div>
+<nav class="menu">
+    <p class="menu-label"> Overview </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../index.html">Introduction</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-installation/index.html">Installation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-tools/index.html">Tools</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Core concepts</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../concepts-howmitmproxyworks/index.html">How mitmproxy works</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-modes/index.html">Modes of operation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-certificates/index.html">Certificates</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-filters/index.html">Filter expressions</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-protocols/index.html">Protocols</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Addon Development </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../addons-overview/index.html">Addons</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-events/index.html">Events</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-scripting/index.html">Scripting</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> HOWTOs </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../howto-transparent/index.html">Transparent Proxying</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-wireshark-tls/index.html">Wireshark and SSL/TLS</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-ignoredomains/index.html">Ignoring Domains</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-transparent-vms/index.html">Transparently Proxying VMs</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Tutorials </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tute-clientreplay/index.html">Client replay</a>
+        </li>
+    
+        <li >
+            <a class="is-active"
+                href="index.html">Setting highscores on Apple GameCenter</a>
+        </li>
+    
+</ul>
+</nav>
+
+    </div>
+    <div id="main" class="column content">
+        
+        
+<a class="button is-small is-outlined is-link is-pulled-right"
+   target="_blank"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/tute-highscores.md"
+>
+    Edit on GitHub
+</a>
+
+
+
+        
+
+<h1 id="setting-highscores-on-apple-s-gamecenter"><a class="anchor" href="index.html#setting-highscores-on-apple-s-gamecenter">#&nbsp;&nbsp;</a>Setting highscores on Apple&rsquo;s GameCenter</h1>
+
+<h2 id="the-setup"><a class="anchor" href="index.html#the-setup">#&nbsp;&nbsp;</a>The setup</h2>
+
+<p>In this tutorial, I&rsquo;m going to show you how simple it is to creatively interfere
+with Apple Game Center traffic using mitmproxy. To set things up, <a href="../concepts-certificates/index.html">install the
+mitmproxy root certificate</a>. Then start
+mitmproxy on your desktop, and configure the iPhone to use it as a proxy.</p>
+
+<h2 id="taking-a-look-at-the-game-center-traffic"><a class="anchor" href="index.html#taking-a-look-at-the-game-center-traffic">#&nbsp;&nbsp;</a>Taking a look at the Game Center traffic</h2>
+
+<p>Lets take a first look at the Game Center traffic. The game I&rsquo;ll use in this
+tutorial is <a href="https://itunes.apple.com/us/app/super-mega-worm/id388541990?mt=8">Super Mega
+Worm</a> - a
+great little retro-apocalyptic sidescroller for the iPhone:</p>
+
+
+<figure>
+    
+        <img src="supermega.png" />
+    
+    
+</figure>
+
+
+<p>After finishing a game (take your time), watch the traffic flowing through
+mitmproxy:</p>
+
+
+<figure>
+    
+        <img src="one.png" />
+    
+    
+</figure>
+
+
+<p>We see a bunch of things we might expect - initialisation, the retrieval
+of leaderboards and so forth. Then, right at the end, there&rsquo;s a POST to
+this tantalising
+URL:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-none" data-lang="none">https://service.gc.apple.com/WebObjects/GKGameStatsService.woa/wa/submitScore</code></pre></div>
+
+<p>The contents of the submission are particularly interesting:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;plist</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.0&#34;</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;dict&gt;</span>
+    <span style="color:#f92672">&lt;key&gt;</span>scores<span style="color:#f92672">&lt;/key&gt;</span>
+    <span style="color:#f92672">&lt;array&gt;</span>
+      <span style="color:#f92672">&lt;dict&gt;</span>
+        <span style="color:#f92672">&lt;key&gt;</span>category<span style="color:#f92672">&lt;/key&gt;</span>
+        <span style="color:#f92672">&lt;string&gt;</span>SMW_Adv_USA1<span style="color:#f92672">&lt;/string&gt;</span>
+        <span style="color:#f92672">&lt;key&gt;</span>context<span style="color:#f92672">&lt;/key&gt;</span>
+        <span style="color:#f92672">&lt;integer&gt;</span>0<span style="color:#f92672">&lt;/integer&gt;</span>
+        <span style="color:#f92672">&lt;key&gt;</span>score-value<span style="color:#f92672">&lt;/key&gt;</span>
+        <span style="color:#f92672">&lt;integer&gt;</span>55<span style="color:#f92672">&lt;/integer&gt;</span>
+        <span style="color:#f92672">&lt;key&gt;</span>timestamp<span style="color:#f92672">&lt;/key&gt;</span>
+        <span style="color:#f92672">&lt;integer&gt;</span>1363515361321<span style="color:#f92672">&lt;/integer&gt;</span>
+      <span style="color:#f92672">&lt;/dict&gt;</span>
+    <span style="color:#f92672">&lt;/array&gt;</span>
+  <span style="color:#f92672">&lt;/dict&gt;</span>
+<span style="color:#f92672">&lt;/plist&gt;</span></code></pre></div>
+
+<p>This is a <a href="https://en.wikipedia.org/wiki/Property_list">property list</a>,
+containing an identifier for the game, a score (55, in this case), and a
+timestamp. Looks pretty simple to mess with.</p>
+
+<h2 id="modifying-and-replaying-the-score-submission"><a class="anchor" href="index.html#modifying-and-replaying-the-score-submission">#&nbsp;&nbsp;</a>Modifying and replaying the score submission</h2>
+
+<p>Lets edit the score submission. First, select it in mitmproxy, then
+press <span data-role="kbd">enter</span> to view it. Make sure you&rsquo;re
+viewing the request, not the response -you can use
+<span data-role="kbd">tab</span> to flick between the two. Now press
+<span data-role="kbd">e</span> for edit. You&rsquo;ll be prompted for the part
+of the request you want to change - press <span data-role="kbd">r</span>
+for raw body. Your preferred editor (taken from the EDITOR environment
+variable) will now fire up. Lets bump the score up to something a bit
+more ambitious:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;plist</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.0&#34;</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;dict&gt;</span>
+    <span style="color:#f92672">&lt;key&gt;</span>scores<span style="color:#f92672">&lt;/key&gt;</span>
+    <span style="color:#f92672">&lt;array&gt;</span>
+      <span style="color:#f92672">&lt;dict&gt;</span>
+        <span style="color:#f92672">&lt;key&gt;</span>category<span style="color:#f92672">&lt;/key&gt;</span>
+        <span style="color:#f92672">&lt;string&gt;</span>SMW_Adv_USA1<span style="color:#f92672">&lt;/string&gt;</span>
+        <span style="color:#f92672">&lt;key&gt;</span>context<span style="color:#f92672">&lt;/key&gt;</span>
+        <span style="color:#f92672">&lt;integer&gt;</span>0<span style="color:#f92672">&lt;/integer&gt;</span>
+        <span style="color:#f92672">&lt;key&gt;</span>score-value<span style="color:#f92672">&lt;/key&gt;</span>
+        <span style="color:#f92672">&lt;integer&gt;</span>2200272667<span style="color:#f92672">&lt;/integer&gt;</span>
+        <span style="color:#f92672">&lt;key&gt;</span>timestamp<span style="color:#f92672">&lt;/key&gt;</span>
+        <span style="color:#f92672">&lt;integer&gt;</span>1363515361321<span style="color:#f92672">&lt;/integer&gt;</span>
+      <span style="color:#f92672">&lt;/dict&gt;</span>
+    <span style="color:#f92672">&lt;/array&gt;</span>
+  <span style="color:#f92672">&lt;/dict&gt;</span>
+<span style="color:#f92672">&lt;/plist&gt;</span></code></pre></div>
+
+<p>Save the file and exit your editor.</p>
+
+<p>The final step is to replay this modified request. Simply press
+<span data-role="kbd">r</span> for replay.</p>
+
+<h2 id="the-glorious-result-and-some-intrigue"><a class="anchor" href="index.html#the-glorious-result-and-some-intrigue">#&nbsp;&nbsp;</a>The glorious result and some intrigue</h2>
+
+
+<figure>
+    
+        <img src="leaderboard.png" />
+    
+    
+</figure>
+
+
+<p>And that&rsquo;s it - according to the records, I am the greatest Super Mega Worm
+player of all time.</p>
+
+<p>There&rsquo;s a curious addendum to this tale. When I first wrote this tutorial, all
+the top competitors&rsquo; scores were the same: 2,147,483,647 (this is no longer the
+case, because there are now so many fellow cheaters using this tutorial). If you
+think that number seems familiar, you&rsquo;re right: it&rsquo;s 2^31-1, the maximum value
+you can fit into a signed 32-bit int. Now let me tell you another peculiar thing
+about Super Mega Worm - at the end of every game, it submits your highest
+previous score to the Game Center, not your current score. This means that it
+stores your highscore somewhere, and I&rsquo;m guessing that it reads that stored
+score back into a signed integer. So, if you <strong>were</strong> to cheat by the relatively
+pedestrian means of modifying the saved score on your jailbroken phone, then
+2^31-1 might well be the maximum score you could get. Then again, if the game
+itself stores its score in a signed 32-bit int, you could get the same score
+through perfect play, effectively beating the game. So, which is it in this
+case? I&rsquo;ll leave that for you to decide.</p>
+
+
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-4150636', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='../../../www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
+

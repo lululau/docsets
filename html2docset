@@ -206,3 +206,6 @@ html2docset -n httpie -k httpie -i ./httpie.png -d httpie-docset -p /httpie.org/
 
 # Command generate thymeleaf tutorials
 html2docset -n thymeleaf -k thymeleaf -i ./thymeleaf.png -d thymeleaf-docset -p /www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html -s thymeleaf --page-pattern='(extendingthymeleaf|thymeleafspring|usingthymeleaf).html' --link-pattern='^(extendingthymeleaf|thymeleafspring|usingthymeleaf).html#' --link-script='href.sub!(/^/, "/www.thymeleaf.org/doc/tutorials/3.0/");'
+
+# Command generate mitmproxy docs
+html2docset -n mitmproxy -k mitm -i ./mitmproxy.png -d mitmproxy-docset -p /docs.mitmproxy.org/stable/index.html -s mitm --page-pattern='/stable/.*/index.html' --link-pattern='index.html#?' --link-script='href.sub!(/^..\//, "");href.sub!(/^/, "/docs.mitmproxy.org/stable/");href.sub!(/index.html#/, "#{File.basename(File.dirname(path))}/index.html#");text=el.parent.children.last.text if text =~ /^#/'

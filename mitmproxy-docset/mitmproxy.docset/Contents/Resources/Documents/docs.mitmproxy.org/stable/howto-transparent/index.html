@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
+    <title>Transparent Proxying</title>
+    
+    
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <meta name="generator" content="Hugo 0.37.1" />
+</head>
+<body>
+
+<div class="columns container is-marginless">
+    <div id="sidebar" class="column is-one-quarter">
+        <div class="brand">
+    <a href="../../../mitmproxy.org/index.html">
+        <img src='../logo-docs.png' alt="mitmproxy docs"/>
+    </a>
+
+</div>
+<nav class="menu">
+    <p class="menu-label"> Overview </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../index.html">Introduction</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-installation/index.html">Installation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-tools/index.html">Tools</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Core concepts</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../concepts-howmitmproxyworks/index.html">How mitmproxy works</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-modes/index.html">Modes of operation</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-certificates/index.html">Certificates</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-filters/index.html">Filter expressions</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../concepts-protocols/index.html">Protocols</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Addon Development </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../addons-overview/index.html">Addons</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-events/index.html">Events</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-options/index.html">Options</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-commands/index.html">Commands</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../addons-scripting/index.html">Scripting</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> HOWTOs </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class="is-active"
+                href="index.html">Transparent Proxying</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-wireshark-tls/index.html">Wireshark and SSL/TLS</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-ignoredomains/index.html">Ignoring Domains</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../howto-transparent-vms/index.html">Transparently Proxying VMs</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label"> Tutorials </p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tute-clientreplay/index.html">Client replay</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tute-highscores/index.html">Setting highscores on Apple GameCenter</a>
+        </li>
+    
+</ul>
+</nav>
+
+    </div>
+    <div id="main" class="column content">
+        
+        
+<a class="button is-small is-outlined is-link is-pulled-right"
+   target="_blank"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/howto-transparent.md"
+>
+    Edit on GitHub
+</a>
+
+
+
+        
+
+<h1 id="transparent-proxying"><a class="anchor" href="index.html#transparent-proxying">#&nbsp;&nbsp;</a>Transparent Proxying</h1>
+
+<p>When a transparent proxy is used, traffic is redirected into a proxy at the
+network layer, without any client configuration being required. This makes
+transparent proxying ideal for those situations where you can&rsquo;t change client
+behaviour - proxy-oblivious mobile applications being a common example.</p>
+
+<p>To set up transparent proxying, we need two new components. The first is a
+redirection mechanism that transparently reroutes a TCP connection destined for
+a server on the Internet to a listening proxy server. This usually takes the
+form of a firewall on the same host as the proxy server -
+<a href="http://www.netfilter.org/">iptables</a> on Linux or
+<a href="https://en.wikipedia.org/wiki/PF_(firewall)">pf</a> on OSX. When the proxy
+receives a redirected connection, it sees a vanilla HTTP request, without a host
+specification. This is where the second new component comes in - a host module
+that allows us to query the redirector for the original destination of the TCP
+connection.</p>
+
+<p>At the moment, mitmproxy supports transparent proxying on OSX Lion and above,
+and all current flavors of Linux.</p>
+
+<h2 id="linux"><a class="anchor" href="index.html#linux">#&nbsp;&nbsp;</a>Linux</h2>
+
+<p>On Linux, mitmproxy integrates with the iptables redirection mechanism to
+achieve transparent mode.</p>
+
+<h3 id="1-enable-ip-forwarding"><a class="anchor" href="index.html#1-enable-ip-forwarding">#&nbsp;&nbsp;</a>1. Enable IP forwarding.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sysctl -w net.ipv4.ip_forward<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+sysctl -w net.ipv6.conf.all.forwarding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span></code></pre></div>
+
+<p>This makes sure that your machine forwards packets instead of rejecting them.</p>
+
+<p>If you want to persist this across reboots, you need to adjust your <code>/etc/sysctl.conf</code> or
+a newly created <code>/etc/sysctl.d/mitmproxy.conf</code> (see <a href="https://superuser.com/a/625852">here</a>).</p>
+
+<h3 id="2-disable-icmp-redirects"><a class="anchor" href="index.html#2-disable-icmp-redirects">#&nbsp;&nbsp;</a>2. Disable ICMP redirects.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sysctl -w net.ipv4.conf.all.send_redirects<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span></code></pre></div>
+
+<p>If your test device is on the same physical network, your machine shouldn&rsquo;t inform the device that
+there&rsquo;s a shorter route available by skipping the proxy.</p>
+
+<p>If you want to persist this across reboots, see above.</p>
+
+<h3 id="3-create-an-iptables-ruleset-that-redirects-the-desired-traffic-to-mitmproxy"><a class="anchor" href="index.html#3-create-an-iptables-ruleset-that-redirects-the-desired-traffic-to-mitmproxy">#&nbsp;&nbsp;</a>3. Create an iptables ruleset that redirects the desired traffic to mitmproxy.</h3>
+
+<p>Details will differ according to your setup, but the ruleset should look
+something like this:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">iptables -t nat -A PREROUTING -i eth0 -p tcp --dport <span style="color:#ae81ff">80</span> -j REDIRECT --to-port <span style="color:#ae81ff">8080</span>
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport <span style="color:#ae81ff">443</span> -j REDIRECT --to-port <span style="color:#ae81ff">8080</span>
+ip6tables -t nat -A PREROUTING -i eth0 -p tcp --dport <span style="color:#ae81ff">80</span> -j REDIRECT --to-port <span style="color:#ae81ff">8080</span>
+ip6tables -t nat -A PREROUTING -i eth0 -p tcp --dport <span style="color:#ae81ff">443</span> -j REDIRECT --to-port <span style="color:#ae81ff">8080</span></code></pre></div>
+
+<p>If you want to persist this across reboots, you can use the <code>iptables-persistent</code> package (see
+<a href="http://www.microhowto.info/howto/make_the_configuration_of_iptables_persistent_on_debian.html">here</a>).</p>
+
+<h3 id="4-fire-up-mitmproxy"><a class="anchor" href="index.html#4-fire-up-mitmproxy">#&nbsp;&nbsp;</a>4. Fire up mitmproxy.</h3>
+
+<p>You probably want a command like this:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmproxy --mode transparent --showhost</code></pre></div>
+
+<p>The <code>--mode transparent</code> option turns on transparent mode, and the <code>--showhost</code> argument tells
+ mitmproxy to use the value of the Host header for URL display.</p>
+
+<h3 id="5-finally-configure-your-test-device"><a class="anchor" href="index.html#5-finally-configure-your-test-device">#&nbsp;&nbsp;</a>5. Finally, configure your test device.</h3>
+
+<p>Set the test device up to use the host on which mitmproxy is running as the default gateway and
+<a href="../concepts-certificates/index.html">install the mitmproxy certificate authority on the test device</a>.</p>
+
+<h2 id="openbsd"><a class="anchor" href="index.html#openbsd">#&nbsp;&nbsp;</a>OpenBSD</h2>
+
+<h3 id="1-enable-ip-forwarding-1"><a class="anchor" href="index.html#1-enable-ip-forwarding-1">#&nbsp;&nbsp;</a>1. Enable IP forwarding.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo sysctl -w net.inet.ip.forwarding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span></code></pre></div>
+
+<h3 id="2-place-the-following-two-lines-in-etc-pf-conf"><a class="anchor" href="index.html#2-place-the-following-two-lines-in-etc-pf-conf">#&nbsp;&nbsp;</a>2. Place the following two lines in <strong>/etc/pf.conf</strong>.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-none" data-lang="none">mitm_if = &#34;re2&#34;
+pass in quick proto tcp from $mitm_if to port { 80, 443 } divert-to 127.0.0.1 port 8080</code></pre></div>
+
+<p>These rules tell pf to divert all traffic from <code>$mitm_if</code> destined for port 80
+or 443 to the local mitmproxy instance running on port 8080. You should replace
+<code>$mitm_if</code> value with the interface on which your test device will appear.</p>
+
+<h3 id="3-configure-pf-with-the-rules"><a class="anchor" href="index.html#3-configure-pf-with-the-rules">#&nbsp;&nbsp;</a>3. Configure pf with the rules.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">doas pfctl -f /etc/pf.conf</code></pre></div>
+
+<h3 id="4-and-now-enable-it"><a class="anchor" href="index.html#4-and-now-enable-it">#&nbsp;&nbsp;</a>4. And now enable it.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">doas pfctl -e</code></pre></div>
+
+<h3 id="5-fire-up-mitmproxy"><a class="anchor" href="index.html#5-fire-up-mitmproxy">#&nbsp;&nbsp;</a>5. Fire up mitmproxy.</h3>
+
+<p>You probably want a command like this:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmproxy --mode transparent --showhost</code></pre></div>
+
+<p>The <code>--mode transparent</code> option turns on transparent mode, and the <code>--showhost</code> argument tells
+mitmproxy to use the value of the Host header for URL display.</p>
+
+<h3 id="6-finally-configure-your-test-device"><a class="anchor" href="index.html#6-finally-configure-your-test-device">#&nbsp;&nbsp;</a>6. Finally, configure your test device.</h3>
+
+<p>Set the test device up to use the host on which mitmproxy is running as the default gateway and
+<a href="../concepts-certificates/index.html">install the mitmproxy certificate authority on the test device</a>.</p>
+
+<div class="notification is-info"><p>Note that the <strong>divert-to</strong> rules in the pf.conf given above only apply
+to inbound traffic. <strong>This means that they will NOT redirect traffic
+coming from the box running pf itself.</strong> We can&rsquo;t distinguish between an
+outbound connection from a non-mitmproxy app, and an outbound connection
+from mitmproxy itself - if you want to intercept your traffic, you
+should use an external host to run mitmproxy. Nonetheless, pf is
+flexible to cater for a range of creative possibilities, like
+intercepting traffic emanating from VMs. See the <strong>pf.conf</strong> man page
+for more.</p>
+</div>
+
+
+<h2 id="macos"><a class="anchor" href="index.html#macos">#&nbsp;&nbsp;</a>macOS</h2>
+
+<p>OSX Lion integrated the <a href="https://en.wikipedia.org/wiki/PF_(firewall)">pf</a>
+packet filter from the OpenBSD project, which mitmproxy uses to implement
+transparent mode on OSX. Note that this means we don&rsquo;t support transparent mode
+for earlier versions of OSX.</p>
+
+<h3 id="1-enable-ip-forwarding-2"><a class="anchor" href="index.html#1-enable-ip-forwarding-2">#&nbsp;&nbsp;</a>1. Enable IP forwarding.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo sysctl -w net.inet.ip.forwarding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span></code></pre></div>
+
+<h3 id="2-place-the-following-two-lines-in-a-file-called-say-pf-conf"><a class="anchor" href="index.html#2-place-the-following-two-lines-in-a-file-called-say-pf-conf">#&nbsp;&nbsp;</a>2. Place the following two lines in a file called, say, <strong>pf.conf</strong>.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-none" data-lang="none">rdr on en0 inet proto tcp to any port {80, 443} -&gt; 127.0.0.1 port 8080</code></pre></div>
+
+<p>These rules tell pf to redirect all traffic destined for port 80 or 443
+to the local mitmproxy instance running on port 8080. You should replace
+<code>en0</code> with the interface on which your test device will appear.</p>
+
+<h3 id="3-configure-pf-with-the-rules-1"><a class="anchor" href="index.html#3-configure-pf-with-the-rules-1">#&nbsp;&nbsp;</a>3. Configure pf with the rules.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo pfctl -f pf.conf</code></pre></div>
+
+<h3 id="4-and-now-enable-it-1"><a class="anchor" href="index.html#4-and-now-enable-it-1">#&nbsp;&nbsp;</a>4. And now enable it.</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo pfctl -e</code></pre></div>
+
+<h3 id="5-configure-sudoers-to-allow-mitmproxy-to-access-pfctl"><a class="anchor" href="index.html#5-configure-sudoers-to-allow-mitmproxy-to-access-pfctl">#&nbsp;&nbsp;</a>5. Configure sudoers to allow mitmproxy to access pfctl.</h3>
+
+<p>Edit the file <strong>/etc/sudoers</strong> on your system as root. Add the following line to
+the end of the file:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-none" data-lang="none">ALL ALL=NOPASSWD: /sbin/pfctl -s state</code></pre></div>
+
+<p>Note that this allows any user on the system to run the command <code>/sbin/pfctl -s
+state</code> as root without a password. This only allows inspection of the state
+table, so should not be an undue security risk. If you&rsquo;re special feel free to
+tighten the restriction up to the user running mitmproxy.</p>
+
+<h3 id="6-fire-up-mitmproxy"><a class="anchor" href="index.html#6-fire-up-mitmproxy">#&nbsp;&nbsp;</a>6. Fire up mitmproxy.</h3>
+
+<p>You probably want a command like this:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmproxy --mode transparent --showhost</code></pre></div>
+
+<p>The <code>--mode transparent</code> flag turns on transparent mode, and the <code>--showhost</code> argument tells
+mitmproxy to use the value of the Host header for URL display.</p>
+
+<h3 id="7-finally-configure-your-test-device"><a class="anchor" href="index.html#7-finally-configure-your-test-device">#&nbsp;&nbsp;</a>7. Finally, configure your test device.</h3>
+
+<p>Set the test device up to use the host on which mitmproxy is running as the default gateway and
+<a href="../concepts-certificates/index.html">install the mitmproxy certificate authority on the test device</a>.</p>
+
+<div class="notification is-info"><p>Note that the <strong>rdr</strong> rules in the pf.conf given above only apply to
+inbound traffic. <strong>This means that they will NOT redirect traffic coming
+from the box running pf itself.</strong> We can&rsquo;t distinguish between an
+outbound connection from a non-mitmproxy app, and an outbound connection
+from mitmproxy itself - if you want to intercept your OSX traffic, you
+should use an external host to run mitmproxy. Nonetheless, pf is
+flexible to cater for a range of creative possibilities, like
+intercepting traffic emanating from VMs. See the <strong>pf.conf</strong> man page
+for more.</p>
+</div>
+
+
+<h2 id="full-transparent-mode-on-linux"><a class="anchor" href="index.html#full-transparent-mode-on-linux">#&nbsp;&nbsp;</a>&ldquo;Full&rdquo; transparent mode on Linux</h2>
+
+<p>By default mitmproxy will use its own local IP address for its server-side
+connections. In case this isn&rsquo;t desired, the &ndash;spoof-source-address argument can
+be used to use the client&rsquo;s IP address for server-side connections. The
+following config is required for this mode to work:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">CLIENT_NET<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>.168.1.0/24
+TABLE_ID<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+MARK<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+
+echo <span style="color:#e6db74">&#34;</span>$TABLE_ID<span style="color:#e6db74">     mitmproxy&#34;</span> &gt;&gt; /etc/iproute2/rt_tables
+iptables -t mangle -A PREROUTING -d $CLIENT_NET -j MARK --set-mark $MARK
+iptables -t nat <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    -A PREROUTING -p tcp -s $CLIENT_NET <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --match multiport --dports <span style="color:#ae81ff">80</span>,443 -j <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    REDIRECT --to-port <span style="color:#ae81ff">8080</span>
+
+ip rule add fwmark $MARK lookup $TABLE_ID
+ip route add local $CLIENT_NET dev lo table $TABLE_ID</code></pre></div>
+
+<p>This mode does require root privileges though. There&rsquo;s a wrapper in the examples
+directory called &lsquo;mitmproxy_shim.c&rsquo;, which will enable you to use this mode with
+dropped privileges. It can be used as follows:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gcc examples/complex/full_transparency_shim.c -o mitmproxy_shim -lcap
+sudo chown root:root mitmproxy_shim
+sudo chmod u+s mitmproxy_shim
+./mitmproxy_shim <span style="color:#66d9ef">$(</span>which mitmproxy<span style="color:#66d9ef">)</span> --mode transparent --set spoof-source-address</code></pre></div>
+
+
+    </div>
+</div>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-4150636', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='../../../www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
+
