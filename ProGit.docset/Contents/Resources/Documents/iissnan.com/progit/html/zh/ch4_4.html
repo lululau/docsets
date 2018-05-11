@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>架设服务器 - 服务器上的 Git - Pro Git 简体中文版</title><link rel="stylesheet" type="text/css" href="../../assets/vendor/bootstrap/dist/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="../../assets/vendor/octicons/octicons/octicons.css"><link rel="stylesheet" type="text/css" href="../../assets/vendor/nprogress/nprogress.css"><link rel="stylesheet" type="text/css" href="../../assets/css/main.css"><link rel="shortcut icon" type="images/x-icon" href="../../assets/img/favicon.ico"></head><body><a href="ch4_4.html#main" class="sr-only">SKIP TO CONTENT</a><div id="pjax-container"><div id="header" class="navbar navbar-fixed-top navbar-inverse"><div class="container"><div class="navbar-header"><a id="brand" href="http://iissnan.com/progit/"><img src="../../assets/img/git-logo.png" alt="git" class="logo"></a><button type="button" data-toggle="collapse" data-target=".navigation" class="navbar-toggle"><span class="sr-only">Toggle Navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div><div class="navbar-collapse collapse navigation"><ul class="nav navbar-nav"><li class="dropdown"><a data-toggle="dropdown" href="ch4_4.html#" class="dropdown-toggle"><span class="octicon octicon-list-unordered"></span> 目录<b class="caret"></b></a><ul role="menu" class="dropdown-menu menu-toc"><li class="menu-toc-chapter"><a href="ch1_0.html">1   起步 </a><ul class="menu-section-links"><li><a href="ch1_1.html">1.1   关于版本控制 </a></li><li><a href="ch1_2.html">1.2   Git 简史 </a></li><li><a href="ch1_3.html">1.3   Git 基础 </a></li><li><a href="ch1_4.html">1.4   安装 Git </a></li><li><a href="ch1_5.html">1.5   初次运行 Git 前的配置 </a></li><li><a href="ch1_6.html">1.6   获取帮助 </a></li><li><a href="ch1_7.html">1.7   小结 </a></li></ul></li><li class="menu-toc-chapter"><a href="ch2_0.html">2   Git 基础 </a><ul class="menu-section-links"><li><a href="ch2_1.html">2.1   取得项目的 Git 仓库 </a></li><li><a href="ch2_2.html">2.2   记录每次更新到仓库 </a></li><li><a href="ch2_3.html">2.3   查看提交历史 </a></li><li><a href="ch2_4.html">2.4   撤消操作 </a></li><li><a href="ch2_5.html">2.5   远程仓库的使用 </a></li><li><a href="ch2_6.html">2.6   打标签 </a></li><li><a href="ch2_7.html">2.7   技巧和窍门 </a></li><li><a href="ch2_8.html">2.8   小结 </a></li></ul></li><li class="menu-toc-chapter"><a href="ch3_0.html">3   Git 分支 </a><ul class="menu-section-links"><li><a href="ch3_1.html">3.1   何谓分支 </a></li><li><a href="ch3_2.html">3.2   分支的新建与合并 </a></li><li><a href="ch3_3.html">3.3   分支的管理 </a></li><li><a href="ch3_4.html">3.4   利用分支进行开发的工作流程 </a></li><li><a href="ch3_5.html">3.5   远程分支 </a></li><li><a href="ch3_6.html">3.6   分支的衍合 </a></li><li><a href="ch3_7.html">3.7   小结 </a></li></ul></li><li class="menu-toc-chapter"><a href="ch4_0.html">4   服务器上的 Git </a><ul class="menu-section-links"><li><a href="ch4_1.html">4.1   协议 </a></li><li><a href="ch4_2.html">4.2   在服务器上部署 Git </a></li><li><a href="ch4_3.html">4.3   生成 SSH 公钥 </a></li><li><a href="ch4_4.html">4.4   架设服务器 </a></li><li><a href="ch4_5.html">4.5   公共访问 </a></li><li><a href="ch4_6.html">4.6   GitWeb </a></li><li><a href="ch4_7.html">4.7   Gitosis </a></li><li><a href="ch4_8.html">4.8   Gitolite </a></li><li><a href="ch4_9.html">4.9   Git 守护进程 </a></li><li><a href="ch4_10.html">4.10   Git 托管服务 </a></li><li><a href="ch4_11.html">4.11   小结 </a></li></ul></li><li class="menu-toc-chapter"><a href="ch5_0.html">5   分布式 Git </a><ul class="menu-section-links"><li><a href="ch5_1.html">5.1   分布式工作流程 </a></li><li><a href="ch5_2.html">5.2   为项目作贡献 </a></li><li><a href="ch5_3.html">5.3   项目的管理 </a></li><li><a href="ch5_4.html">5.4   小结 </a></li></ul></li><li class="menu-toc-chapter"><a href="ch6_0.html">6   Git 工具 </a><ul class="menu-section-links"><li><a href="ch6_1.html">6.1   修订版本（Revision）选择 </a></li><li><a href="ch6_2.html">6.2   交互式暂存 </a></li><li><a href="ch6_3.html">6.3   储藏（Stashing） </a></li><li><a href="ch6_4.html">6.4   重写历史 </a></li><li><a href="ch6_5.html">6.5   使用 Git 调试 </a></li><li><a href="ch6_6.html">6.6   子模块 </a></li><li><a href="ch6_7.html">6.7   子树合并 </a></li><li><a href="ch6_8.html">6.8   总结 </a></li></ul></li><li class="menu-toc-chapter"><a href="ch7_0.html">7   自定义 Git </a><ul class="menu-section-links"><li><a href="ch7_1.html">7.1   配置 Git </a></li><li><a href="ch7_2.html">7.2   Git属性 </a></li><li><a href="ch7_3.html">7.3   Git挂钩 </a></li><li><a href="ch7_4.html">7.4   Git 强制策略实例 #</a></li><li><a href="ch7_5.html">7.5   总结 </a></li></ul></li><li class="menu-toc-chapter"><a href="ch8_0.html">8   Git 与其他系统 </a><ul class="menu-section-links"><li><a href="ch8_1.html">8.1   Git 与 Subversion </a></li><li><a href="ch8_2.html">8.2   迁移到 Git </a></li><li><a href="ch8_3.html">8.3   总结 </a></li></ul></li><li class="menu-toc-chapter"><a href="ch9_0.html">9   Git 内部原理 </a><ul class="menu-section-links"><li><a href="ch9_1.html">9.1   底层命令 (Plumbing) 和高层命令 (Porcelain) </a></li><li><a href="ch9_2.html">9.2   Git 对象 </a></li><li><a href="ch9_3.html">9.3   Git References </a></li><li><a href="ch9_4.html">9.4   Packfiles </a></li><li><a href="ch9_5.html">9.5   The Refspec </a></li><li><a href="ch9_6.html">9.6   传输协议 </a></li><li><a href="ch9_7.html">9.7   维护及数据恢复 </a></li><li><a href="ch9_8.html">9.8   总结 </a></li></ul></li></ul></li></ul><ul class="nav navbar-nav navbar-right"><li class="dropdown"><a data-toggle="dropdown" href="ch4_4.html#" class="dropdown-toggle"><span class="octicon octicon-globe"></span> 其他语言<b class="caret"></b></a><ul role="menu" class="dropdown-menu"><li><a href="http://iissnan.com/progit/index.en.html">English</a></li><li><a href="http://iissnan.com/progit/index.html">简体中文</a></li><li><a href="http://iissnan.com/progit/index.zh-tw.html">正體中文</a></li></ul></li><li><a href="http://iissnan.com/progit/about.html"><span class="octicon octicon-question"></span> 关于</a></li></ul></div></div></div><div id="main" class="container"><div class="row wrap"><div class="col-md-12"><div class="ph20"><h2>架设服务器</h2>
+
+<p>现在我们过一边服务器端架设 SSH 访问的流程。本例将使用 <code>authorized_keys</code> 方法来给用户授权。我们还将假定使用类似 Ubuntu 这样的标准 Linux 发行版。首先，创建一个名为 &#39;git&#39; 的用户，并为其创建一个 <code>.ssh</code> 目录。</p>
+
+<pre><code>$ sudo adduser git
+$ su git
+$ cd
+$ mkdir .ssh</code></pre>
+
+<p>接下来，把开发者的 SSH 公钥添加到这个用户的 <code>authorized_keys</code> 文件中。假设你通过电邮收到了几个公钥并存到了临时文件里。重复一下，公钥大致看起来是这个样子：</p>
+
+<pre><code>$ cat /tmp/id_rsa.john.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCB007n/ww+ouN4gSLKssMxXnBOvf9LGt4L
+ojG6rs6hPB09j9R/T17/x4lhJA0F3FR1rP6kYBRsWj2aThGw6HXLm9/5zytK6Ztg3RPKK+4k
+Yjh6541NYsnEAZuXz0jTTyAUfrtU3Z5E003C4oxOj6H0rfIF1kKI9MAQLMdpGW1GYEIgS9Ez
+Sdfd8AcCIicTDWbqLAcU4UpkaX8KyGlLwsNuuGztobF8m72ALC/nLF6JLtPofwFBlgc+myiv
+O7TCUSBdLQlgMVOFq1I2uPWQOkOWQAHukEOmfjy2jctxSDBQ220ymjaNsHT4kgtZg2AYYgPq
+dAv8JggJICUvax2T9va5 gsg-keypair</code></pre>
+
+<p>只要把它们逐个追加到 <code>authorized_keys</code> 文件尾部即可：</p>
+
+<pre><code>$ cat /tmp/id_rsa.john.pub &gt;&gt; ~/.ssh/authorized_keys
+$ cat /tmp/id_rsa.josie.pub &gt;&gt; ~/.ssh/authorized_keys
+$ cat /tmp/id_rsa.jessica.pub &gt;&gt; ~/.ssh/authorized_keys</code></pre>
+
+<p>现在可以用 <code>--bare</code> 选项运行 <code>git init</code> 来建立一个裸仓库，这会初始化一个不包含工作目录的仓库。</p>
+
+<pre><code>$ cd /opt/git
+$ mkdir project.git
+$ cd project.git
+$ git --bare init</code></pre>
+
+<p>这时，Join，Josie 或者 Jessica 就可以把它加为远程仓库，推送一个分支，从而把第一个版本的项目文件上传到仓库里了。值得注意的是，每次添加一个新项目都需要通过 shell 登入主机并创建一个裸仓库目录。我们不妨以 <code>gitserver</code> 作为 <code>git</code> 用户及项目仓库所在的主机名。如果在网络内部运行该主机，并在 DNS 中设定 <code>gitserver</code> 指向该主机，那么以下这些命令都是可用的：</p>
+
+<pre><code># 在 John 的电脑上
+$ cd myproject
+$ git init
+$ git add .
+$ git commit -m &#39;initial commit&#39;
+$ git remote add origin git@gitserver:/opt/git/project.git
+$ git push origin master</code></pre>
+
+<p>这样，其他人的克隆和推送也一样变得很简单：</p>
+
+<pre><code>$ git clone git@gitserver:/opt/git/project.git
+$ cd project
+$ vim README
+$ git commit -am &#39;fix for the README file&#39;
+$ git push origin master</code></pre>
+
+<p>用这个方法可以很快捷地为少数几个开发者架设一个可读写的 Git 服务。</p>
+
+<p>作为一个额外的防范措施，你可以用 Git 自带的 <code>git-shell</code> 工具限制 <code>git</code> 用户的活动范围。只要把它设为 <code>git</code> 用户登入的 shell，那么该用户就无法使用普通的 bash 或者 csh 什么的 shell 程序。编辑 <code>/etc/passwd</code> 文件：</p>
+
+<pre><code>$ sudo vim /etc/passwd</code></pre>
+
+<p>在文件末尾，你应该能找到类似这样的行：</p>
+
+<pre><code>git:x:1000:1000::/home/git:/bin/sh</code></pre>
+
+<p>把 <code>bin/sh</code> 改为 <code>/usr/bin/git-shell</code> （或者用 <code>which git-shell</code> 查看它的实际安装路径）。该行修改后的样子如下：</p>
+
+<pre><code>git:x:1000:1000::/home/git:/usr/bin/git-shell</code></pre>
+
+<p>现在 <code>git</code> 用户只能用 SSH 连接来推送和获取 Git 仓库，而不能直接使用主机 shell。尝试普通 SSH 登录的话，会看到下面这样的拒绝信息：</p>
+
+<pre><code>$ ssh git@gitserver
+fatal: What do you think I am? A shell?
+Connection to gitserver closed.</code></pre>
+
+</div></div></div><div class="footer"><div class="pull-left"><span class="build-date">构建时间：2015-01-17 00:32:21</span>，<span class="build-source-version">基于书籍源码版本：<a href="https://github.com/progit/progit/tree/6895c8264604032f24ffdee44123b922aabadf5b" target="_blank">6895c82</a></span>，<span class="application-version">程序版本：0.0.7</span>。</div><div class="pull-right">制作者<a href="http://iissnan.com" target="_blank"> iissnan</a></div></div></div></div><script src="../../assets/vendor/jquery/dist/jquery.min.js"></script><script src="../../assets/vendor/jquery-pjax/jquery.pjax.js"></script><script src="../../assets/vendor/nprogress/nprogress.js"></script><script src="../../assets/vendor/bootstrap/dist/js/bootstrap.min.js"></script><script src="../../assets/js/main.js"></script></body></html>
