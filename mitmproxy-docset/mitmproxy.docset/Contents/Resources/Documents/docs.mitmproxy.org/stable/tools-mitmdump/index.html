@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
-    <title>Wireshark and SSL/TLS</title>
+    <title>mitmdump</title>
     
     
     <link rel="stylesheet" href="../css/style.css">
@@ -59,8 +59,8 @@
         </li>
     
         <li >
-            <a class=""
-                href="../tools-mitmdump/index.html">mitmdump</a>
+            <a class="is-active"
+                href="index.html">mitmdump</a>
         </li>
     
         <li >
@@ -158,8 +158,8 @@
         </li>
     
         <li >
-            <a class="is-active"
-                href="index.html">Wireshark and SSL/TLS</a>
+            <a class=""
+                href="../howto-wireshark-tls/index.html">Wireshark and SSL/TLS</a>
         </li>
     
         <li >
@@ -199,7 +199,7 @@
         
 <a class="button is-small is-outlined is-link is-pulled-right"
    target="_blank"
-   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/howto-wireshark-tls.md"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/tools-mitmdump.md"
 >
     Edit on GitHub
 </a>
@@ -208,25 +208,53 @@
 
         
 
-<h1 id="wireshark-and-ssl-tls-master-secrets"><a class="anchor" href="index.html#wireshark-and-ssl-tls-master-secrets">#&nbsp;&nbsp;</a>Wireshark and SSL/TLS Master Secrets</h1>
+<h2 id="mitmdump"><a class="anchor" href="index.html#mitmdump">#&nbsp;&nbsp;</a>mitmdump</h2>
 
-<p>The SSL/SSL master keys can be logged by mitmproxy so that external programs can
-decrypt SSL/TLS connections both from and to the proxy. Recent versions of
-Wireshark can use these log files to decrypt packets. See the <a href="https://wiki.wireshark.org/SSL#Using_the_.28Pre.29-Master-Secret">Wireshark wiki</a> for more information.</p>
+<p><strong>mitmdump</strong> is the command-line companion to mitmproxy. It provides
+tcpdump-like functionality to let you view, record, and programmatically
+transform HTTP traffic. See the <code>--help</code> flag output for complete
+documentation.</p>
 
-<p>Key logging is enabled by setting the environment variable <code>SSLKEYLOGFILE</code> so
-that it points to a writable text file:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SSLKEYLOGFILE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$PWD<span style="color:#e6db74">/.mitmproxy/sslkeylogfile.txt&#34;</span> mitmproxy</code></pre></div>
-You can also <code>export</code> this environment variable to make it persistent for all applications started from your current shell session.</p>
+<h3 id="example-saving-traffic"><a class="anchor" href="index.html#example-saving-traffic">#&nbsp;&nbsp;</a>Example: Saving traffic</h3>
 
-<p>You can specify the key file path in Wireshark via <code>Edit -&gt; Preferences -&gt;
-Protocols -&gt; SSL -&gt; (Pre)-Master-Secret log filename</code>. If your SSLKEYLOGFILE
-does not exist yet, just create an empty text file, so you can select it in
-Wireshark (or run mitmproxy to create and collect master secrets).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -w outfile</code></pre></div>
 
-<p>Note that <code>SSLKEYLOGFILE</code> is respected by other programs as well, e.g., Firefox
-and Chrome. If this creates any issues, you can use <code>MITMPROXY_SSLKEYLOGFILE</code>
-instead without affecting other applications.</p>
+<p>Start up mitmdump in proxy mode, and write all traffic to <strong>outfile</strong>.</p>
+
+<h3 id="filtering-saved-traffic"><a class="anchor" href="index.html#filtering-saved-traffic">#&nbsp;&nbsp;</a>Filtering saved traffic</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nr infile -w outfile <span style="color:#e6db74">&#34;~m post&#34;</span></code></pre></div>
+
+<p>Start mitmdump without binding to the proxy port (<code>-n</code>), read all flows
+from infile, apply the specified filter expression (only match POSTs),
+and write to outfile.</p>
+
+<h3 id="client-replay"><a class="anchor" href="index.html#client-replay">#&nbsp;&nbsp;</a>Client replay</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nc outfile</code></pre></div>
+
+<p>Start mitmdump without binding to the proxy port (<code>-n</code>), then replay all
+requests from outfile (<code>-c filename</code>). Flags combine in the obvious way,
+so you can replay requests from one file, and write the resulting flows
+to another:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nc srcfile -w dstfile</code></pre></div>
+
+<p>See the <a href="../overview-features/index.html#client-side-replay">client-side replay</a> section for more information.</p>
+
+<h3 id="running-a-script"><a class="anchor" href="index.html#running-a-script">#&nbsp;&nbsp;</a>Running a script</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -s examples/add_header.py</code></pre></div>
+
+<p>This runs the <strong>add_header.py</strong> example script, which simply adds a new
+header to all responses.</p>
+
+<h3 id="scripted-data-transformation"><a class="anchor" href="index.html#scripted-data-transformation">#&nbsp;&nbsp;</a>Scripted data transformation</h3>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -ns examples/add_header.py -r srcfile -w dstfile</code></pre></div>
+
+<p>This command loads flows from <strong>srcfile</strong>, transforms it according to
+the specified script, then writes it back to <strong>dstfile</strong>.</p>
 
 
     </div>

@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -41,13 +41,31 @@
         </li>
     
         <li >
+            <a class="is-active"
+                href="../overview-features/">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
             <a class=""
-                href="../overview-tools/">Tools</a>
+                href="../tools-mitmproxy/">mitmproxy</a>
         </li>
     
         <li >
-            <a class="is-active"
-                href="../overview-features/">Features</a>
+            <a class=""
+                href="../tools-mitmdump/">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/">mitmweb</a>
         </li>
     
 </ul>
@@ -365,7 +383,7 @@ their <code>.stream</code> attribute to <code>True</code>:</p>
 
 <div class="example">
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">responseheaders</span>(flow):
-    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;
+    <span style="color:#e6db74">&#34;&#34;&#34;
 </span><span style="color:#e6db74">    Enables streaming for all responses.
 </span><span style="color:#e6db74">    This is equivalent to passing `--set stream_large_bodies=1` to mitmproxy.
 </span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
@@ -405,7 +423,7 @@ the <code>upstream_cert</code> option.</p>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>

@@ -184,16 +184,6 @@ Taking a look at the Game Center traffic Lets take a first look at the Game Cent
     </item>
     
     <item>
-      <title>Tools</title>
-      <link>/overview-tools/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/overview-tools/</guid>
-      <description>Overview You should think of the mitmproxy project&amp;rsquo;s tools as a set of front-ends that expose the same underlying functionality. We aim to have feature parity across all of our tooling, and all tools share a common configuration mechanism and most command-line options.
-mitmproxy   mitmproxy is a console tool that allows interactive examination and modification of HTTP traffic. It differs from mitmdump in that all flows are kept in memory, which means that it&amp;rsquo;s intended for taking and manipulating small-ish samples.</description>
-    </item>
-    
-    <item>
       <title>Transparent Proxying</title>
       <link>/howto-transparent/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -221,6 +211,37 @@ To set up transparent proxying, we need two new components. The first is a redir
       <guid>/howto-wireshark-tls/</guid>
       <description>Wireshark and SSL/TLS Master Secrets The SSL/SSL master keys can be logged by mitmproxy so that external programs can decrypt SSL/TLS connections both from and to the proxy. Recent versions of Wireshark can use these log files to decrypt packets. See the Wireshark wiki for more information.
 Key logging is enabled by setting the environment variable SSLKEYLOGFILE so that it points to a writable text file: SSLKEYLOGFILE=&amp;#34;$PWD/.mitmproxy/sslkeylogfile.txt&amp;#34; mitmproxy You can also export this environment variable to make it persistent for all applications started from your current shell session.</description>
+    </item>
+    
+    <item>
+      <title>mitmdump</title>
+      <link>/tools-mitmdump/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tools-mitmdump/</guid>
+      <description>mitmdump mitmdump is the command-line companion to mitmproxy. It provides tcpdump-like functionality to let you view, record, and programmatically transform HTTP traffic. See the --help flag output for complete documentation.
+Example: Saving traffic mitmdump -w outfile Start up mitmdump in proxy mode, and write all traffic to outfile.
+Filtering saved traffic mitmdump -nr infile -w outfile &amp;#34;~m post&amp;#34; Start mitmdump without binding to the proxy port (-n), read all flows from infile, apply the specified filter expression (only match POSTs), and write to outfile.</description>
+    </item>
+    
+    <item>
+      <title>mitmproxy</title>
+      <link>/tools-mitmproxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tools-mitmproxy/</guid>
+      <description>mitmproxy   mitmproxy is a console tool that allows interactive examination and modification of HTTP traffic. It differs from mitmdump in that all flows are kept in memory, which means that it&amp;rsquo;s intended for taking and manipulating small-ish samples. Use the ? shortcut key to view, context-sensitive documentation from any mitmproxy screen.
+Key binding configuration Mitmproxy&amp;rsquo;s key bindings can be customized through in the ~/.mitmproxy/keys.yaml file. This file consists of a sequence of maps, with the following keys:</description>
+    </item>
+    
+    <item>
+      <title>mitmweb</title>
+      <link>/tools-mitmweb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/tools-mitmweb/</guid>
+      <description>mitmweb   mitmweb is mitmproxy&amp;rsquo;s web-based user interface that allows interactive examination and modification of HTTP traffic. Like mitmproxy, it differs from mitmdump in that all flows are kept in memory, which means that it&amp;rsquo;s intended for taking and manipulating small-ish samples.
+Mitmweb is currently in beta. We consider it stable for all features currently exposed in the UI, but it still misses a lot of mitmproxy&amp;rsquo;s features.</description>
     </item>
     
   </channel>

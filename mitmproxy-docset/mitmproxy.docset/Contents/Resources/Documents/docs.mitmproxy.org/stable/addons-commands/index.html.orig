@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/">Tools</a>
+                href="../overview-features/">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/">Features</a>
+                href="../tools-mitmdump/">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/">mitmweb</a>
         </li>
     
 </ul>
@@ -213,10 +231,10 @@ console are built by binding commands to keys.</p>
     <span style="color:#66d9ef">def</span> __init__(self):
         self<span style="color:#f92672">.</span>num <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-    <span style="color:#a6e22e">@command.command</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;myaddon.inc&#34;</span>)
+    <span style="color:#a6e22e">@command.command</span>(<span style="color:#e6db74">&#34;myaddon.inc&#34;</span>)
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">inc</span>(self) <span style="color:#f92672">-&gt;</span> None:
         self<span style="color:#f92672">.</span>num <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;num = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> self<span style="color:#f92672">.</span>num)
+        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;num = </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> self<span style="color:#f92672">.</span>num)
 
 
 addons <span style="color:#f92672">=</span> [
@@ -269,11 +287,11 @@ working with certain important data types. The most useful of these are the
     <span style="color:#66d9ef">def</span> __init__(self):
         self<span style="color:#f92672">.</span>num <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-    <span style="color:#a6e22e">@command.command</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;myaddon.addheader&#34;</span>)
+    <span style="color:#a6e22e">@command.command</span>(<span style="color:#e6db74">&#34;myaddon.addheader&#34;</span>)
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">addheader</span>(self, flows: typing<span style="color:#f92672">.</span>Sequence[flow<span style="color:#f92672">.</span>Flow]) <span style="color:#f92672">-&gt;</span> None:
         <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> flows:
-            f<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;myheader&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;value&#34;</span>
-        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>alert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;done&#34;</span>)
+            f<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;myheader&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;value&#34;</span>
+        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>alert(<span style="color:#e6db74">&#34;done&#34;</span>)
 
 
 addons <span style="color:#f92672">=</span> [
@@ -331,7 +349,7 @@ example to illustrate this, and also demonstrate another special type: paths.</p
     <span style="color:#66d9ef">def</span> __init__(self):
         self<span style="color:#f92672">.</span>num <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-    <span style="color:#a6e22e">@command.command</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;myaddon.histogram&#34;</span>)
+    <span style="color:#a6e22e">@command.command</span>(<span style="color:#e6db74">&#34;myaddon.histogram&#34;</span>)
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">histogram</span>(
         self,
         flows: typing<span style="color:#f92672">.</span>Sequence[flow<span style="color:#f92672">.</span>Flow],
@@ -341,11 +359,11 @@ example to illustrate this, and also demonstrate another special type: paths.</p
         <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> flows:
             totals[f<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>host] <span style="color:#f92672">=</span> totals<span style="color:#f92672">.</span>setdefault(f<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>host, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
 
-        fp <span style="color:#f92672">=</span> open(path, <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;w+&#34;</span>)
+        fp <span style="color:#f92672">=</span> open(path, <span style="color:#e6db74">&#34;w+&#34;</span>)
         <span style="color:#66d9ef">for</span> cnt, dom <span style="color:#f92672">in</span> sorted([(v, k) <span style="color:#66d9ef">for</span> (k, v) <span style="color:#f92672">in</span> totals<span style="color:#f92672">.</span>items()]):
-            fp<span style="color:#f92672">.</span>write(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">: </span><span style="color:#e6db74">%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (cnt, dom))
+            fp<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">: </span><span style="color:#e6db74">%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (cnt, dom))
 
-        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>alert(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;done&#34;</span>)
+        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>alert(<span style="color:#e6db74">&#34;done&#34;</span>)
 
 
 addons <span style="color:#f92672">=</span> [
@@ -388,7 +406,7 @@ at the moment, and provides a convenient way to snip up flow data.</li>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>

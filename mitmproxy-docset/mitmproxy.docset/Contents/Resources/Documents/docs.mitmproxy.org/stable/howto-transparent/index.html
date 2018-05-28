@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/index.html">Tools</a>
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/index.html">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/index.html">Features</a>
+                href="../tools-mitmdump/index.html">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/index.html">mitmweb</a>
         </li>
     
 </ul>
@@ -368,13 +386,44 @@ mitmproxy to use the value of the Host header for URL display.</p>
 inbound traffic. <strong>This means that they will NOT redirect traffic coming
 from the box running pf itself.</strong> We can&rsquo;t distinguish between an
 outbound connection from a non-mitmproxy app, and an outbound connection
-from mitmproxy itself - if you want to intercept your OSX traffic, you
-should use an external host to run mitmproxy. Nonetheless, pf is
+from mitmproxy itself. If you want to intercept your own macOS traffic, see the work-around below or use an external host to run mitmproxy. In fact, PF is
 flexible to cater for a range of creative possibilities, like
 intercepting traffic emanating from VMs. See the <strong>pf.conf</strong> man page
 for more.</p>
 </div>
 
+
+<h3 id="work-around-to-redirect-traffic-originating-from-the-machine-itself"><a class="anchor" href="index.html#work-around-to-redirect-traffic-originating-from-the-machine-itself">#&nbsp;&nbsp;</a>Work-around to redirect traffic originating from the machine itself</h3>
+
+<p>Follow the steps <strong>1, 2</strong> as above. In step <strong>3</strong> change the contents of the file <strong>pf.conf</strong> to</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-none" data-lang="none">#The ports to redirect to proxy
+redir_ports = &#34;{http, https}&#34;
+
+#The address the transparent proxy is listening on
+tproxy = &#34;127.0.0.1 port 8080&#34;
+
+#The user the transparent proxy is running as
+tproxy_user = &#34;nobody&#34;
+
+#The users whose connection must be redirected.
+#
+#This cannot involve the user which runs the
+#transparent proxy as that would cause an infinite loop.
+#
+#Here we redirect for all users which don&#39;t run transparent proxy.
+redir_users = &#34;{ !=&#34; $tproxy_user &#34;}&#34;
+
+#If you only wish to redirect traffic for particular users
+#you may also do:
+#redir_users = &#34;{= john, = jane}&#34;
+
+rdr pass proto tcp from any to any port $redir_ports -&gt; $tproxy
+pass out route-to (lo0 127.0.0.1) proto tcp from any to any port $redir_ports user $redir_users</code></pre></div>
+
+<p>Follow steps <strong>4-6</strong> above. This will redirect the packets from all users other than <code>nobody</code> on the machine to mitmproxy. To avoid circularity, run mitmproxy as the user <code>nobody</code>. Hence step <strong>7</strong> should look like:</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo -u nobody mitmproxy --mode transparent --showhost</code></pre></div>
 
 <h2 id="full-transparent-mode-on-linux"><a class="anchor" href="index.html#full-transparent-mode-on-linux">#&nbsp;&nbsp;</a>&ldquo;Full&rdquo; transparent mode on Linux</h2>
 
@@ -412,7 +461,7 @@ sudo chmod u+s mitmproxy_shim
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='../../../www.google-analytics.com/analytics.js'></script>

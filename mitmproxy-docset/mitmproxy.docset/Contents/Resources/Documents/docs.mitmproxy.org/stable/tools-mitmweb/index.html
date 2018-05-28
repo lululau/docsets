@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
-    <title>Wireshark and SSL/TLS</title>
+    <title>mitmweb</title>
     
     
     <link rel="stylesheet" href="../css/style.css">
@@ -64,8 +64,8 @@
         </li>
     
         <li >
-            <a class=""
-                href="../tools-mitmweb/index.html">mitmweb</a>
+            <a class="is-active"
+                href="index.html">mitmweb</a>
         </li>
     
 </ul>
@@ -158,8 +158,8 @@
         </li>
     
         <li >
-            <a class="is-active"
-                href="index.html">Wireshark and SSL/TLS</a>
+            <a class=""
+                href="../howto-wireshark-tls/index.html">Wireshark and SSL/TLS</a>
         </li>
     
         <li >
@@ -199,7 +199,7 @@
         
 <a class="button is-small is-outlined is-link is-pulled-right"
    target="_blank"
-   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/howto-wireshark-tls.md"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/tools-mitmweb.md"
 >
     Edit on GitHub
 </a>
@@ -208,25 +208,28 @@
 
         
 
-<h1 id="wireshark-and-ssl-tls-master-secrets"><a class="anchor" href="index.html#wireshark-and-ssl-tls-master-secrets">#&nbsp;&nbsp;</a>Wireshark and SSL/TLS Master Secrets</h1>
+<h2 id="mitmweb"><a class="anchor" href="index.html#mitmweb">#&nbsp;&nbsp;</a>mitmweb</h2>
 
-<p>The SSL/SSL master keys can be logged by mitmproxy so that external programs can
-decrypt SSL/TLS connections both from and to the proxy. Recent versions of
-Wireshark can use these log files to decrypt packets. See the <a href="https://wiki.wireshark.org/SSL#Using_the_.28Pre.29-Master-Secret">Wireshark wiki</a> for more information.</p>
 
-<p>Key logging is enabled by setting the environment variable <code>SSLKEYLOGFILE</code> so
-that it points to a writable text file:
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">SSLKEYLOGFILE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$PWD<span style="color:#e6db74">/.mitmproxy/sslkeylogfile.txt&#34;</span> mitmproxy</code></pre></div>
-You can also <code>export</code> this environment variable to make it persistent for all applications started from your current shell session.</p>
+<figure>
+    
+        <img src="../screenshots/mitmweb.png" />
+    
+    
+</figure>
 
-<p>You can specify the key file path in Wireshark via <code>Edit -&gt; Preferences -&gt;
-Protocols -&gt; SSL -&gt; (Pre)-Master-Secret log filename</code>. If your SSLKEYLOGFILE
-does not exist yet, just create an empty text file, so you can select it in
-Wireshark (or run mitmproxy to create and collect master secrets).</p>
 
-<p>Note that <code>SSLKEYLOGFILE</code> is respected by other programs as well, e.g., Firefox
-and Chrome. If this creates any issues, you can use <code>MITMPROXY_SSLKEYLOGFILE</code>
-instead without affecting other applications.</p>
+<p><strong>mitmweb</strong> is mitmproxy&rsquo;s web-based user interface that allows
+interactive examination and modification of HTTP traffic. Like
+mitmproxy, it differs from mitmdump in that all flows are kept in
+memory, which means that it&rsquo;s intended for taking and manipulating
+small-ish samples.</p>
+
+<div class="notification is-info"><p>Mitmweb is currently in beta. We consider it stable for all features
+currently exposed in the UI, but it still misses a lot of mitmproxy&rsquo;s
+features.</p>
+</div>
+
 
 
     </div>

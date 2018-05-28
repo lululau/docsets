@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/">Tools</a>
+                href="../overview-features/">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/">Features</a>
+                href="../tools-mitmdump/">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/">mitmweb</a>
         </li>
     
 </ul>
@@ -241,7 +259,7 @@ all the information mitmproxy needs to proceed.</p>
 different. The client connects to the proxy and makes a request that
 looks like this:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#960050;background-color:#1e0010">CONNECT example.com:443 HTTP/1.1</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">CONNECT</span> example.com:443 <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span></code></pre></div>
 
 <p>A conventional proxy can neither view nor manipulate a TLS-encrypted
 data stream, so a CONNECT request simply asks the proxy to open a pipe
@@ -283,7 +301,7 @@ blush, it seems that the CONNECT request above gives us all we need - in this
 example, both of these values are &ldquo;example.com&rdquo;. But what if the client had
 initiated the connection as follows:</p>
 
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#960050;background-color:#1e0010">CONNECT 10.1.1.1:443 HTTP/1.1</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#a6e22e">CONNECT</span> 10.1.1.1:443 <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span></code></pre></div>
 
 <p>Using the IP address is perfectly legitimate because it gives us enough
 information to initiate the pipe, even though it doesn&rsquo;t reveal the
@@ -494,7 +512,7 @@ and up) in the generic sense, unless otherwise specified.</p>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>

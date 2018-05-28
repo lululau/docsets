@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="icon" type="image/png" href="../favicon.ico">
-    <title>Tools</title>
+    <title>mitmweb</title>
     
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -41,13 +41,31 @@
         </li>
     
         <li >
-            <a class="is-active"
-                href="../overview-tools/">Tools</a>
+            <a class=""
+                href="../overview-features/">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/">Features</a>
+                href="../tools-mitmdump/">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class="is-active"
+                href="../tools-mitmweb/">mitmweb</a>
         </li>
     
 </ul>
@@ -181,7 +199,7 @@
         
 <a class="button is-small is-outlined is-link is-pulled-right"
    target="_blank"
-   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/overview-tools.md"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/tools-mitmweb.md"
 >
     Edit on GitHub
 </a>
@@ -189,30 +207,6 @@
 
 
         
-
-<h1 id="overview"><a class="anchor" href="#overview">#&nbsp;&nbsp;</a>Overview</h1>
-
-<p>You should think of the mitmproxy project&rsquo;s tools as a set of front-ends that
-expose the same underlying functionality. We aim to have feature parity across
-all of our tooling, and all tools share a common configuration mechanism and
-most command-line options.</p>
-
-<h2 id="mitmproxy"><a class="anchor" href="#mitmproxy">#&nbsp;&nbsp;</a>mitmproxy</h2>
-
-
-<figure>
-    
-        <img src="../screenshots/mitmproxy.png" />
-    
-    
-</figure>
-
-
-<p><strong>mitmproxy</strong> is a console tool that allows interactive examination and
-modification of HTTP traffic. It differs from mitmdump in that all flows are
-kept in memory, which means that it&rsquo;s intended for taking and manipulating
-small-ish samples. Use the <code>?</code> shortcut key to view, context-sensitive
-documentation from any <strong>mitmproxy</strong> screen.</p>
 
 <h2 id="mitmweb"><a class="anchor" href="#mitmweb">#&nbsp;&nbsp;</a>mitmweb</h2>
 
@@ -237,61 +231,13 @@ features.</p>
 </div>
 
 
-<h2 id="mitmdump"><a class="anchor" href="#mitmdump">#&nbsp;&nbsp;</a>mitmdump</h2>
-
-<p><strong>mitmdump</strong> is the command-line companion to mitmproxy. It provides
-tcpdump-like functionality to let you view, record, and programmatically
-transform HTTP traffic. See the <code>--help</code> flag output for complete
-documentation.</p>
-
-<h3 id="example-saving-traffic"><a class="anchor" href="#example-saving-traffic">#&nbsp;&nbsp;</a>Example: Saving traffic</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -w outfile</code></pre></div>
-
-<p>Start up mitmdump in proxy mode, and write all traffic to <strong>outfile</strong>.</p>
-
-<h3 id="filtering-saved-traffic"><a class="anchor" href="#filtering-saved-traffic">#&nbsp;&nbsp;</a>Filtering saved traffic</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nr infile -w outfile <span style="color:#e6db74">&#34;~m post&#34;</span></code></pre></div>
-
-<p>Start mitmdump without binding to the proxy port (<code>-n</code>), read all flows
-from infile, apply the specified filter expression (only match POSTs),
-and write to outfile.</p>
-
-<h3 id="client-replay"><a class="anchor" href="#client-replay">#&nbsp;&nbsp;</a>Client replay</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nc outfile</code></pre></div>
-
-<p>Start mitmdump without binding to the proxy port (<code>-n</code>), then replay all
-requests from outfile (<code>-c filename</code>). Flags combine in the obvious way,
-so you can replay requests from one file, and write the resulting flows
-to another:</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nc srcfile -w dstfile</code></pre></div>
-
-<p>See the <a href="../overview-features/#client-side-replay">client-side replay</a> section for more information.</p>
-
-<h3 id="running-a-script"><a class="anchor" href="#running-a-script">#&nbsp;&nbsp;</a>Running a script</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -s examples/add_header.py</code></pre></div>
-
-<p>This runs the <strong>add_header.py</strong> example script, which simply adds a new
-header to all responses.</p>
-
-<h3 id="scripted-data-transformation"><a class="anchor" href="#scripted-data-transformation">#&nbsp;&nbsp;</a>Scripted data transformation</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -ns examples/add_header.py -r srcfile -w dstfile</code></pre></div>
-
-<p>This command loads flows from <strong>srcfile</strong>, transforms it according to
-the specified script, then writes it back to <strong>dstfile</strong>.</p>
-
 
     </div>
 </div>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>

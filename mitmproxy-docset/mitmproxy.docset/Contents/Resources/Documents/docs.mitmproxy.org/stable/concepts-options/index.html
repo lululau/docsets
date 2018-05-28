@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/index.html">Tools</a>
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/index.html">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/index.html">Features</a>
+                href="../tools-mitmdump/index.html">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/index.html">mitmweb</a>
         </li>
     
 </ul>
@@ -245,14 +263,6 @@ the mitmproxy tools.</p>
           </td>
           </tr>
 <tr>
-          <th>allow_remote<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
-          <td>bool</td>
-          <td>Allow remote clients to connect to proxy. If set to false, client will not be able to connect to proxy unless it is on the same network or the proxyauth option is set<br/>
-            Default: False
-            
-          </td>
-          </tr>
-<tr>
           <th>anticache<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
           <td>bool</td>
           <td>Strip out request headers that might cause the server to return 304-not-modified.<br/>
@@ -269,18 +279,26 @@ the mitmproxy tools.</p>
           </td>
           </tr>
 <tr>
-          <th>body_size_limit<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
-          <td>optional str</td>
-          <td>Byte size limit of HTTP request and response bodies. Understands k/m/g suffixes, i.e. 3m for 3 megabytes.<br/>
-            Default: None
+          <th>block_global<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
+          <td>bool</td>
+          <td>Block connections from globally reachable networks, as defined in the IANA special purpose registries.<br/>
+            Default: True
             
           </td>
           </tr>
 <tr>
-          <th>cadir<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
-          <td>str</td>
-          <td>Location of the default mitmproxy CA files.<br/>
-            Default: ~/.mitmproxy
+          <th>block_private<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
+          <td>bool</td>
+          <td>Block connections from private networks, as defined in the IANA special purpose registries. This option does not affect loopback addresses.<br/>
+            Default: False
+            
+          </td>
+          </tr>
+<tr>
+          <th>body_size_limit<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
+          <td>optional str</td>
+          <td>Byte size limit of HTTP request and response bodies. Understands k/m/g suffixes, i.e. 3m for 3 megabytes.<br/>
+            Default: None
             
           </td>
           </tr>
@@ -321,6 +339,14 @@ the mitmproxy tools.</p>
           <td>sequence of str</td>
           <td>Replay client requests from a saved file.<br/>
             Default: []
+            
+          </td>
+          </tr>
+<tr>
+          <th>confdir<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
+          <td>str</td>
+          <td>Location of the default mitmproxy configuration files.<br/>
+            Default: ~/.mitmproxy
             
           </td>
           </tr>
@@ -533,6 +559,14 @@ the mitmproxy tools.</p>
           </td>
           </tr>
 <tr>
+          <th>readfile_filter<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
+          <td>optional str</td>
+          <td>Read only matching flows.<br/>
+            Default: None
+            
+          </td>
+          </tr>
+<tr>
           <th>replacements<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
           <td>sequence of str</td>
           <td>Replacement patterns of the form "/pattern/regex/replacement", where the separator can be any character.<br/>
@@ -693,7 +727,7 @@ the mitmproxy tools.</p>
           </td>
           </tr>
 <tr>
-          <th>ssl_verify_upstream_trusted_cadir<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
+          <th>ssl_verify_upstream_trusted_confdir<br/><span class='badge'>mitmproxy</span> <span class='badge'>mitmdump</span> <span class='badge'>mitmweb</span></th>
           <td>optional str</td>
           <td>Path to a directory of trusted CA certificates for upstream server verification prepared using the c_rehash tool.<br/>
             Default: None
@@ -869,7 +903,7 @@ the mitmproxy tools.</p>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='../../../www.google-analytics.com/analytics.js'></script>

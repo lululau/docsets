@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/index.html">Tools</a>
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/index.html">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/index.html">Features</a>
+                href="../tools-mitmdump/index.html">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/index.html">mitmweb</a>
         </li>
     
 </ul>
@@ -201,7 +219,7 @@ that adds a header to every request.</p>
 
 <div class="example">
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">request</span>(flow):
-    flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;myheader&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;value&#34;</span></code></pre></div>
+    flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;myheader&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;value&#34;</span></code></pre></div>
 <div class="path">examples/addons/scripting.py</div>
 </div>
 
@@ -211,7 +229,7 @@ that adds a header to every request.</p>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='../../../www.google-analytics.com/analytics.js'></script>

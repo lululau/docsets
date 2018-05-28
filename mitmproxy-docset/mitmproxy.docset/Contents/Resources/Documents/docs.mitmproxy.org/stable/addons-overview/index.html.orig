@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/">Tools</a>
+                href="../overview-features/">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/">Features</a>
+                href="../tools-mitmdump/">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/">mitmweb</a>
         </li>
     
 </ul>
@@ -235,7 +253,7 @@ mitmproxy&rsquo;s HTTP flow classes:</p>
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">request</span>(self, flow):
         self<span style="color:#f92672">.</span>num <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>num <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;We&#39;ve seen </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> flows&#34;</span> <span style="color:#f92672">%</span> self<span style="color:#f92672">.</span>num)
+        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;We&#39;ve seen </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> flows&#34;</span> <span style="color:#f92672">%</span> self<span style="color:#f92672">.</span>num)
 
 
 addons <span style="color:#f92672">=</span> [
@@ -262,7 +280,7 @@ but the flag is identical for all tools:</p>
 finds into the addons mechanism.</li>
 <li>Addons are just objects - in this case our addon is an instance of <code>Counter</code>.</li>
 <li>The <code>request</code> method is an example of an <strong>event</strong>. Addons simply implement a
-method for each event they wan to handle. Each event has a signature
+method for each event they want to handle. Each event has a signature
 consisting of arguments that are passed to the method. For <code>request</code>, this is
 an instance of <code>mitmproxy.http.HTTPFlow</code>.</li>
 <li>Finally, the <code>ctx</code> module is a holdall module that exposes a set of standard
@@ -278,7 +296,7 @@ logging.</li>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>

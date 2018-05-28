@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://mitmproxy.org/index.xml" rel="feed" type="application/rss+xml" title="mitmproxy.org">
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
@@ -37,9 +37,9 @@
                     </a>
                     <div class="navbar-dropdown is-boxed">
                         <a class="navbar-item" target="_blank" href="https://docs.mitmproxy.org/stable">
-                            v3 (latest release) </a>
-                        <a class="navbar-item"  target="_blank" href="https://mitmproxy.readthedocs.io/en/v2.0.2/">
-                            v2 </a>
+                            v4 (latest release) </a>
+                        <a class="navbar-item" target="_blank" href="https://docs.mitmproxy.org/archive/v3">
+                            v3</a>
 
                         <hr class="navbar-divider">
 
@@ -111,12 +111,12 @@
                             <div id="install-button">
                                 <a id="install-windows"
                                    class="button is-hidden is-primary is-medium"
-                                   href="https://github.com/mitmproxy/mitmproxy/releases/download/v3.0.4/mitmproxy-3.0.4-windows-installer.exe">
+                                   href="https://github.com/mitmproxy/mitmproxy/releases/download/v4.0.1/mitmproxy-4.0.1-windows-installer.exe">
                                     Download Windows Installer
                                 </a>
                                 <a id="install-linux"
                                    class="button is-hidden is-primary is-medium"
-                                   href="https://github.com/mitmproxy/mitmproxy/releases/download/v3.0.4/mitmproxy-3.0.4-linux.tar.gz">
+                                   href="https://github.com/mitmproxy/mitmproxy/releases/download/v4.0.1/mitmproxy-4.0.1-linux.tar.gz">
                                     Download for Linux
                                 </a>
                                 <pre id="install-macos" class="shell-command is-hidden">
@@ -131,7 +131,7 @@
                                 </a>
                             </div>
                             <p>
-                                <a class="has-text-dark" href="./tags/releases/">Release Notes (v3.0)</a>
+                                <a class="has-text-dark" href="./tags/releases/">Release Notes (v4.0)</a>
                                 –
                                 <a class="has-text-dark"
                                    href="https://docs.mitmproxy.org/stable/overview-installation/">
@@ -460,7 +460,7 @@
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>

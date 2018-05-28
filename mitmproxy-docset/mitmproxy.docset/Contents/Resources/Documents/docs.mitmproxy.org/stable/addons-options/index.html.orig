@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/">Tools</a>
+                href="../overview-features/">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/">Features</a>
+                href="../tools-mitmdump/">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/">mitmweb</a>
         </li>
     
 </ul>
@@ -216,16 +234,16 @@ get full support throughout mitmproxy&rsquo;s toolchain simply by declaring a ty
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load</span>(self, loader):
         loader<span style="color:#f92672">.</span>add_option(
-            name <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;addheader&#34;</span>,
+            name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;addheader&#34;</span>,
             typespec <span style="color:#f92672">=</span> bool,
             default <span style="color:#f92672">=</span> False,
-            help <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;Add a count header to responses&#34;</span>,
+            help <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Add a count header to responses&#34;</span>,
         )
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">response</span>(self, flow):
         <span style="color:#66d9ef">if</span> ctx<span style="color:#f92672">.</span>options<span style="color:#f92672">.</span>addheader:
             self<span style="color:#f92672">.</span>num <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>num <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-            flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>headers[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;count&#34;</span>] <span style="color:#f92672">=</span> str(self<span style="color:#f92672">.</span>num)
+            flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;count&#34;</span>] <span style="color:#f92672">=</span> str(self<span style="color:#f92672">.</span>num)
 
 
 addons <span style="color:#f92672">=</span> [
@@ -289,20 +307,20 @@ back, and an error is displayed to the user. Let&rsquo;s see an example.</p>
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AddHeader</span>:
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load</span>(self, loader):
         loader<span style="color:#f92672">.</span>add_option(
-            name <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;addheader&#34;</span>,
+            name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;addheader&#34;</span>,
             typespec <span style="color:#f92672">=</span> typing<span style="color:#f92672">.</span>Optional[int],
             default <span style="color:#f92672">=</span> None,
-            help <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;Add a header to responses&#34;</span>,
+            help <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Add a header to responses&#34;</span>,
         )
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">configure</span>(self, updates):
-        <span style="color:#66d9ef">if</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;addheader&#34;</span> <span style="color:#f92672">in</span> updates:
+        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;addheader&#34;</span> <span style="color:#f92672">in</span> updates:
             <span style="color:#66d9ef">if</span> ctx<span style="color:#f92672">.</span>options<span style="color:#f92672">.</span>addheader <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> None <span style="color:#f92672">and</span> ctx<span style="color:#f92672">.</span>options<span style="color:#f92672">.</span>addheader <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">100</span>:
-                <span style="color:#66d9ef">raise</span> exceptions<span style="color:#f92672">.</span>OptionsError(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;addheader must be &lt;= 100&#34;</span>)
+                <span style="color:#66d9ef">raise</span> exceptions<span style="color:#f92672">.</span>OptionsError(<span style="color:#e6db74">&#34;addheader must be &lt;= 100&#34;</span>)
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">response</span>(self, flow):
         <span style="color:#66d9ef">if</span> ctx<span style="color:#f92672">.</span>options<span style="color:#f92672">.</span>addheader <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> None:
-            flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>headers[<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;addheader&#34;</span>] <span style="color:#f92672">=</span> str(ctx<span style="color:#f92672">.</span>options<span style="color:#f92672">.</span>addheader)
+            flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;addheader&#34;</span>] <span style="color:#f92672">=</span> str(ctx<span style="color:#f92672">.</span>options<span style="color:#f92672">.</span>addheader)
 
 
 addons <span style="color:#f92672">=</span> [
@@ -338,7 +356,7 @@ Loading script: ./examples/addons/options-configure.py
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>

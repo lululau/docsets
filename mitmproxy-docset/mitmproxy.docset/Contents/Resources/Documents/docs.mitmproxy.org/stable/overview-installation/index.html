@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/index.html">Tools</a>
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/index.html">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/index.html">Features</a>
+                href="../tools-mitmdump/index.html">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/index.html">mitmweb</a>
         </li>
     
 </ul>
@@ -218,33 +236,34 @@ the repository maintainers directly for issues with native packages.</p>
 
 <h2 id="windows"><a class="anchor" href="index.html#windows">#&nbsp;&nbsp;</a>Windows</h2>
 
-<p>The recommended way to install mitmproxy on Windows is to download our
-binary-packages from our
-<a href="https://github.com/mitmproxy/mitmproxy/releases/latest">releases</a> page.</p>
+<p>All the mitmproxy tools are fully supported under <a href="https://docs.microsoft.com/en-us/windows/wsl/about">WSL (Windows Subsystem for
+Linux)</a>. We recommend to <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">install WSL</a>, and then
+follow the mitmproxy installation instructions for Linux.</p>
 
-<p>FIXME: WSL</p>
+<p>We also distribute native Windows packages for all tools other than the
+mitmproxy console app, which only works under WSL. To install mitmproxy on Windows,
+download the binary packages from our
+<a href="https://github.com/mitmproxy/mitmproxy/releases/latest">releases</a> page.</p>
 
 <p>After installation, you&rsquo;ll find shortcuts for mitmweb and mitmdump in the start
 menu. Both executables are added to your PATH and can be invoked from the
-command line. The console interface is not supported on native Windows.</p>
+command line.</p>
 
 <h1 id="advanced-installation"><a class="anchor" href="index.html#advanced-installation">#&nbsp;&nbsp;</a>Advanced Installation</h1>
 
 <h2 id="self-contained-pre-built-binary-packages"><a class="anchor" href="index.html#self-contained-pre-built-binary-packages">#&nbsp;&nbsp;</a>Self-contained Pre-built Binary Packages</h2>
 
-<p>For some platforms we provide pre-built binary packages containing
-ready-to-run executables. This includes a self-contained Python 3
-environment, a recent OpenSSL that support ALPN and HTTP/2, and other
-dependencies that would otherwise we cumbersome to compile and install.</p>
+<p>For some platforms we provide pre-built binary packages containing ready-to-run
+executables. This includes a self-contained Python 3 environment, a recent
+OpenSSL that support ALPN and HTTP/2, and other dependencies that would
+otherwise be cumbersome to compile and install.</p>
 
-<p>Please be advised that we do not update these binaries after the initial
-release. This means we do not include security-related updates of our
-dependencies in already released mitmproxy versions. If there is a
-severe issue, we might consider releasing a bugfix release of mitmproxy
-and corresponding binary packages.</p>
-
-<p>We only support the latest version of mitmproxy with bugfix and security
-updates through regular minor releases.</p>
+<p>Dependencies in the binary packages are frozen on release, and can&rsquo;t be updated
+in situ. This means that we necessarily capture any bugs or security issues that
+may be present. We don&rsquo;t generally release new binary packages simply to update
+dependencies (though we may do so if we become aware of a really serious issue).
+If you use our binary packages, please make sure you update regularly to ensure
+that everything remains current.</p>
 
 <h2 id="docker-images"><a class="anchor" href="index.html#docker-images">#&nbsp;&nbsp;</a>Docker Images</h2>
 
@@ -295,7 +314,7 @@ on GitHub.</p>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='../../../www.google-analytics.com/analytics.js'></script>

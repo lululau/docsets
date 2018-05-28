@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="icon" type="image/png" href="https://docs.mitmproxy.org/stable/favicon.ico">
-    <title>Tools</title>
+    <title>mitmproxy</title>
     
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -41,13 +41,31 @@
         </li>
     
         <li >
+            <a class=""
+                href="../overview-features/index.html">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
             <a class="is-active"
-                href="index.html">Tools</a>
+                href="index.html">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/index.html">Features</a>
+                href="../tools-mitmdump/index.html">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/index.html">mitmweb</a>
         </li>
     
 </ul>
@@ -181,7 +199,7 @@
         
 <a class="button is-small is-outlined is-link is-pulled-right"
    target="_blank"
-   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/overview-tools.md"
+   href="https://github.com/mitmproxy/mitmproxy/blob/master/docs/src/content/tools-mitmproxy.md"
 >
     Edit on GitHub
 </a>
@@ -189,13 +207,6 @@
 
 
         
-
-<h1 id="overview"><a class="anchor" href="index.html#overview">#&nbsp;&nbsp;</a>Overview</h1>
-
-<p>You should think of the mitmproxy project&rsquo;s tools as a set of front-ends that
-expose the same underlying functionality. We aim to have feature parity across
-all of our tooling, and all tools share a common configuration mechanism and
-most command-line options.</p>
 
 <h2 id="mitmproxy"><a class="anchor" href="index.html#mitmproxy">#&nbsp;&nbsp;</a>mitmproxy</h2>
 
@@ -214,76 +225,36 @@ kept in memory, which means that it&rsquo;s intended for taking and manipulating
 small-ish samples. Use the <code>?</code> shortcut key to view, context-sensitive
 documentation from any <strong>mitmproxy</strong> screen.</p>
 
-<h2 id="mitmweb"><a class="anchor" href="index.html#mitmweb">#&nbsp;&nbsp;</a>mitmweb</h2>
+<h3 id="key-binding-configuration"><a class="anchor" href="index.html#key-binding-configuration">#&nbsp;&nbsp;</a>Key binding configuration</h3>
+
+<p>Mitmproxy&rsquo;s key bindings can be customized through in the
+<code>~/.mitmproxy/keys.yaml</code> file. This file consists of a sequence of maps, with
+the following keys:</p>
+
+<ul>
+<li><code>key</code> (<strong>mandatory</strong>): The key to bind.</li>
+<li><code>cmd</code> (<strong>mandatory</strong>): The command to execute when the key is pressed.</li>
+<li><code>context</code>: A list of contexts in which the key should be bound. By default this is <strong>global</strong> (i.e. the key is bound everywhere). Valid contexts are <code>chooser</code>, <code>commands</code>, <code>dataviewer</code>, <code>eventlog</code>, <code>flowlist</code>, <code>flowview</code>, <code>global</code>, <code>grideditor</code>, <code>help</code>, <code>keybindings</code>, <code>options</code>.</li>
+<li><code>help</code>: A help string for the binding which will be shown in the key binding browser.</li>
+</ul>
+
+<h4 id="example"><a class="anchor" href="index.html#example">#&nbsp;&nbsp;</a>Example</h4>
 
 
-<figure>
-    
-        <img src="../screenshots/mitmweb.png" />
-    
-    
-</figure>
-
-
-<p><strong>mitmweb</strong> is mitmproxy&rsquo;s web-based user interface that allows
-interactive examination and modification of HTTP traffic. Like
-mitmproxy, it differs from mitmdump in that all flows are kept in
-memory, which means that it&rsquo;s intended for taking and manipulating
-small-ish samples.</p>
-
-<div class="notification is-info"><p>Mitmweb is currently in beta. We consider it stable for all features
-currently exposed in the UI, but it still misses a lot of mitmproxy&rsquo;s
-features.</p>
+<div class="example">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">-
+  <span style="color:#75715e"># Simple global binding</span>
+  key: ctrl a
+  cmd: replay.client @marked
+-
+  <span style="color:#75715e"># Bind key only in the lfowlist</span>
+  <span style="color:#75715e"># Note that 1 is quoted, or YAML interprets it as a digit</span>
+  key: <span style="color:#e6db74">&#34;1&#34;</span>
+  ctx: [<span style="color:#e6db74">&#34;flowlist&#34;</span>]
+  cmd: console.nav.down
+  help: Go to next flow</code></pre></div>
+<div class="path">examples/keys.yaml</div>
 </div>
-
-
-<h2 id="mitmdump"><a class="anchor" href="index.html#mitmdump">#&nbsp;&nbsp;</a>mitmdump</h2>
-
-<p><strong>mitmdump</strong> is the command-line companion to mitmproxy. It provides
-tcpdump-like functionality to let you view, record, and programmatically
-transform HTTP traffic. See the <code>--help</code> flag output for complete
-documentation.</p>
-
-<h3 id="example-saving-traffic"><a class="anchor" href="index.html#example-saving-traffic">#&nbsp;&nbsp;</a>Example: Saving traffic</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -w outfile</code></pre></div>
-
-<p>Start up mitmdump in proxy mode, and write all traffic to <strong>outfile</strong>.</p>
-
-<h3 id="filtering-saved-traffic"><a class="anchor" href="index.html#filtering-saved-traffic">#&nbsp;&nbsp;</a>Filtering saved traffic</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nr infile -w outfile <span style="color:#e6db74">&#34;~m post&#34;</span></code></pre></div>
-
-<p>Start mitmdump without binding to the proxy port (<code>-n</code>), read all flows
-from infile, apply the specified filter expression (only match POSTs),
-and write to outfile.</p>
-
-<h3 id="client-replay"><a class="anchor" href="index.html#client-replay">#&nbsp;&nbsp;</a>Client replay</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nc outfile</code></pre></div>
-
-<p>Start mitmdump without binding to the proxy port (<code>-n</code>), then replay all
-requests from outfile (<code>-c filename</code>). Flags combine in the obvious way,
-so you can replay requests from one file, and write the resulting flows
-to another:</p>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -nc srcfile -w dstfile</code></pre></div>
-
-<p>See the <a href="../overview-features/index.html#client-side-replay">client-side replay</a> section for more information.</p>
-
-<h3 id="running-a-script"><a class="anchor" href="index.html#running-a-script">#&nbsp;&nbsp;</a>Running a script</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -s examples/add_header.py</code></pre></div>
-
-<p>This runs the <strong>add_header.py</strong> example script, which simply adds a new
-header to all responses.</p>
-
-<h3 id="scripted-data-transformation"><a class="anchor" href="index.html#scripted-data-transformation">#&nbsp;&nbsp;</a>Scripted data transformation</h3>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mitmdump -ns examples/add_header.py -r srcfile -w dstfile</code></pre></div>
-
-<p>This command loads flows from <strong>srcfile</strong>, transforms it according to
-the specified script, then writes it back to <strong>dstfile</strong>.</p>
 
 
     </div>
@@ -291,7 +262,7 @@ the specified script, then writes it back to <strong>dstfile</strong>.</p>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='../../../www.google-analytics.com/analytics.js'></script>

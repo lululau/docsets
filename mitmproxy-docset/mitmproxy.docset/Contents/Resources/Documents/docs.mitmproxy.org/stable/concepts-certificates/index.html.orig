@@ -11,7 +11,7 @@
     
     <link rel="stylesheet" href="../css/style.css">
     
-    <meta name="generator" content="Hugo 0.37.1" />
+    <meta name="generator" content="Hugo 0.40.3" />
 </head>
 <body>
 
@@ -42,12 +42,30 @@
     
         <li >
             <a class=""
-                href="../overview-tools/">Tools</a>
+                href="../overview-features/">Features</a>
+        </li>
+    
+</ul>
+
+    <p class="menu-label">Tools</p>
+    <ul class="menu-list">
+    
+    
+    
+    
+        <li >
+            <a class=""
+                href="../tools-mitmproxy/">mitmproxy</a>
         </li>
     
         <li >
             <a class=""
-                href="../overview-features/">Features</a>
+                href="../tools-mitmdump/">mitmdump</a>
+        </li>
+    
+        <li >
+            <a class=""
+                href="../tools-mitmweb/">mitmweb</a>
         </li>
     
 </ul>
@@ -225,7 +243,7 @@ documentation for some common platforms. The mitmproxy CA cert is located in
 <code>~/.mitmproxy</code> after it has been generated at the first start of mitmproxy.</p>
 
 <ul>
-<li><a href="http://jasdev.me/intercepting-ios-traffic">IOS</a><br />
+<li><a href="http://jasdev.me/intercepting-ios-traffic">IOS</a>
 On iOS 10.3 and onwards, you also need to enable full trust for the mitmproxy
 root certificate:
 
@@ -238,7 +256,7 @@ the mitmproxy certificate.</li>
 <li><a href="https://docs.oracle.com/cd/E19906-01/820-4916/geygn/index.html">Java</a></li>
 <li><a href="http://wiki.cacert.org/FAQ/ImportRootCert#Android_Phones_.26_Tablets">Android/Android Simulator</a></li>
 <li><a href="https://web.archive.org/web/20160612045445/http://windows.microsoft.com/en-ca/windows/import-export-certificates-private-keys#1TC=windows-7">Windows</a></li>
-<li><a href="https://technet.microsoft.com/en-us/library/cc732443.aspx">Windows (automated)</a><br /></li>
+<li><a href="https://technet.microsoft.com/en-us/library/cc732443.aspx">Windows (automated)</a></li>
 </ul>
 
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">certutil.exe -importpfx Root mitmproxy-ca-cert.p12</code></pre></div>
@@ -359,14 +377,14 @@ cat cert.key cert.crt <span style="color:#ae81ff">\&gt;</span> cert.pem</code></
 <p>By default, mitmproxy will use <code>~/.mitmproxy/mitmproxy-ca.pem</code> as the
 certificate authority to generate certificates for all domains for which
 no custom certificate is provided (see above). You can use your own
-certificate authority by passing the <code>--cadir DIRECTORY</code> option to
+certificate authority by passing the <code>--set confdir=DIRECTORY</code> option to
 mitmproxy. Mitmproxy will then look for <code>mitmproxy-ca.pem</code> in the
 specified directory. If no such file exists, it will be generated
 automatically.</p>
 
 <h2 id="using-a-client-side-certificate"><a class="anchor" href="#using-a-client-side-certificate">#&nbsp;&nbsp;</a>Using a client side certificate</h2>
 
-<p>You can use a client certificate by passing the <code>--client-certs DIRECTORY|FILE</code>
+<p>You can use a client certificate by passing the <code>--set client_certs=DIRECTORY|FILE</code>
 option to mitmproxy. Using a directory allows certs to be selected based on
 hostname, while using a filename allows a single specific certificate to be used
 for all SSL connections. Certificate files must be in the PEM format and should
@@ -374,7 +392,7 @@ contain both the unencrypted private key and the certificate.</p>
 
 <h3 id="multiple-client-certificates"><a class="anchor" href="#multiple-client-certificates">#&nbsp;&nbsp;</a>Multiple client certificates</h3>
 
-<p>You can specify a directory to <code>--client-certs</code>, in which case the matching
+<p>You can specify a directory to <code>--set client_certs=DIRECTORY</code>, in which case the matching
 certificate is looked up by filename. So, if you visit example.org, mitmproxy
 looks for a file named <code>example.org.pem</code> in the specified directory and uses
 this as the client cert.</p>
@@ -385,7 +403,7 @@ this as the client cert.</p>
 
 <script>
 window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-4150636', 'auto');
+ga('create', 'UA-4150636-13', 'auto');
 ga('send', 'pageview');
 </script>
 <script async src='//www.google-analytics.com/analytics.js'></script>
