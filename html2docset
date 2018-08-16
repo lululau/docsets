@@ -209,3 +209,6 @@ html2docset -n thymeleaf -k thymeleaf -i ./thymeleaf.png -d thymeleaf-docset -p 
 
 # Command generate mitmproxy docs
 html2docset -n mitmproxy -k mitm -i ./mitmproxy.png -d mitmproxy-docset -p /docs.mitmproxy.org/stable/index.html -s mitm --page-pattern='/stable/.*/index.html' --link-pattern='index.html#?' --link-script='href.sub!(/^..\//, "");href.sub!(/^/, "/docs.mitmproxy.org/stable/");href.sub!(/index.html#/, "#{File.basename(File.dirname(path))}/index.html#");text=el.parent.children.last.text if text =~ /^#/'
+
+# Command generate kotlin reference
+./html2docset -n kotlin-reference -k kr -i ./kotlin.png -d kotlin-reference-docset -p /kotlinlang.org/docs/reference/basic-syntax.html -s kotlin-ref --page-pattern='/kotlinlang.org/docs/reference/.*.html' --link-pattern='[\w-]+.html' --link-script='href.sub!(/^/, "/kotlinlang.org/docs/reference/"); text.gsub!(/^\s+/, "")'

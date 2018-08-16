@@ -1,0 +1,20 @@
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+          <key>CFBundleIdentifier</key>
+          <string>kotlin-reference</string>
+          <key>CFBundleName</key>
+          <string>kotlin-reference</string>
+          <key>DashDocSetFamily</key>
+          <string>kotlin-reference</string>
+          <key>DocSetPlatformFamily</key>
+          <string>kr</string>
+          <key>isDashDocset</key>
+          <true/>
+          <key>isJavaScriptEnabled</key>
+          <true/>
+          <key>dashIndexFilePath</key>
+          <string>/kotlinlang.org/docs/reference/basic-syntax.html</string>
+  </dict>
+  </plist>
