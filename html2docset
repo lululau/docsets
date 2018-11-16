@@ -212,3 +212,6 @@ html2docset -n mitmproxy -k mitm -i ./mitmproxy.png -d mitmproxy-docset -p /docs
 
 # Command generate kotlin reference
 ./html2docset -n kotlin-reference -k kr -i ./kotlin.png -d kotlin-reference-docset -p /kotlinlang.org/docs/reference/basic-syntax.html -s kotlin-ref --page-pattern='/kotlinlang.org/docs/reference/.*.html' --link-pattern='[\w-]+.html' --link-script='href.sub!(/^/, "/kotlinlang.org/docs/reference/"); text.gsub!(/^\s+/, "")'
+
+# Command generate Element UI reference
+./html2docset -n element-guides -k elem -i ./element.png -d element-guides-docset -p /index.html -s element-ui --page-pattern='/index.html' --link-pattern=sasasssasasasa
