@@ -215,3 +215,6 @@ html2docset -n mitmproxy -k mitm -i ./mitmproxy.png -d mitmproxy-docset -p /docs
 
 # Command generate Element UI reference
 ./html2docset -n element-guides -k elem -i ./element.png -d element-guides-docset -p /index.html -s element-ui --page-pattern='/index.html' --link-pattern=sasasssasasasa
+
+# Command generate Elastic Search Java reference
+./html2docset -n elastic-search-java -k esj -i ./elastic.png -d elastic-search-java-docset -p /www.elastic.co/guide/en/elasticsearch/client/java-rest/6.6/index.html  -s elastic_search_java --page-pattern='/www.elastic.co/guide/en/elasticsearch/client/java-rest/6.6/.*.html' --link-script='text.gsub!(/^\s+/, "")'

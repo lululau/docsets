@@ -1,0 +1,13 @@
+User-Agent: *
+Disallow: /search
+Disallow: /guide_template
+Disallow: /archive
+Sitemap: https://www.elastic.co/sitemap.xml
+Sitemap: https://www.elastic.co/guide/sitemap.xml
+Sitemap: https://www.elastic.co/sitemap-de.xml
+Sitemap: https://www.elastic.co/sitemap-fr.xml
+Sitemap: https://www.elastic.co/sitemap-jp.xml
+Sitemap: https://www.elastic.co/sitemap-kr.xml
+Sitemap: https://www.elastic.co/sitemap-cn.xml
+Sitemap: https://www.elastic.co/sitemap-es.xml
+Sitemap: https://www.elastic.co/sitemap-pt.xml
