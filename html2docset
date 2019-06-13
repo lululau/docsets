@@ -218,3 +218,7 @@ html2docset -n mitmproxy -k mitm -i ./mitmproxy.png -d mitmproxy-docset -p /docs
 
 # Command generate Elastic Search Java reference
 ./html2docset -n elastic-search-java -k esj -i ./elastic.png -d elastic-search-java-docset -p /www.elastic.co/guide/en/elasticsearch/client/java-rest/6.6/index.html  -s elastic_search_java --page-pattern='/www.elastic.co/guide/en/elasticsearch/client/java-rest/6.6/.*.html' --link-script='text.gsub!(/^\s+/, "")'
+
+
+# Command generate arthas docs
+html2docset -n arthas -k arthas -i ./arthas.png -d arthas-docset -p /alibaba.github.io/arthas/commands.html -s arthas --page-pattern='/alibaba.github.io/arthas/.*.html' --link-pattern='/alibaba.github.io/arthas/.*.html' --link-script=''

@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>命令列表 &mdash; Arthas 3.1.1 文档</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/overrides.css" type="text/css" />
+    <link rel="index" title="索引" href="https://alibaba.github.io/arthas/genindex.html" />
+    <link rel="search" title="搜索" href="https://alibaba.github.io/arthas/search.html" />
+    <link rel="next" title="dashboard" href="dashboard.html" />
+    <link rel="prev" title="批处理功能" href="https://alibaba.github.io/arthas/batch-support.html" />
+<script src="_static/center_page.js"></script>
+<link rel="stylesheet" href="../../cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
+ 
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="https://alibaba.github.io/arthas/index.html" class="icon icon-home"> Arthas
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="https://alibaba.github.io/arthas/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://alibaba.github.io/arthas/en/">English Docs</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://alibaba.github.io/arthas/arthas-tutorials?language=cn">在线教程(推荐)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="/alibaba.github.io/arthas/install-detail.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="/alibaba.github.io/arthas/quick-start.html">快速入门</a></li>
+<li class="toctree-l1"><a class="reference internal" href="/alibaba.github.io/arthas/advanced-use.html">进阶使用</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="commands.html#">命令列表</a><ul>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/dashboard.html">dashboard</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/thread.html">thread</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/jvm.html">jvm</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/sysprop.html">sysprop</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/sysenv.html">sysenv</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/mbean.html">mbean</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/getstatic.html">getstatic</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/ognl.html">ognl</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/sc.html">sc</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/sm.html">sm</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/dump.html">dump</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/jad.html">jad</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/classloader.html">classloader</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/mc.html">mc</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/redefine.html">redefine</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/monitor.html">monitor</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/watch.html">watch</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/trace.html">trace</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/stack.html">stack</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/tt.html">tt</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/cat.html">cat</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/pwd.html">pwd</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/options.html">options</a></li>
+  <li class="toctree-l2"><a class="reference internal" href="/alibaba.github.io/arthas/commands.html#arthas">Arthas 基础命令</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="https://alibaba.github.io/arthas/docker.html">Docker</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/alibaba/arthas/issues?q=label%3Auser-case">用户案例</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/alibaba/arthas/issues?q=label%3Aquestion-answered">常见问题</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/alibaba/arthas">Fork me at GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/alibaba/arthas/blob/master/CONTRIBUTING.md">参与贡献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://alibaba.github.io/arthas/release-notes.html">Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://alibaba.github.io/arthas/contact-us.html">QQ群/钉钉群</a></li>
+              </ul>
+
+              
+              
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="https://alibaba.github.io/arthas/index.html">Arthas</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+          
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div role="navigation" aria-label="breadcrumbs navigation">
+
+            <ul class="wy-breadcrumbs">
+              
+              <li><a href="https://alibaba.github.io/arthas/index.html">Docs</a> &raquo;</li>
+              
+              <li>命令列表</li>
+              
+              
+              <li class="wy-breadcrumbs-aside">
+                
+                
+                
+                <a href="https://github.com/alibaba/arthas/blob/master/site/src/site/sphinx/commands.md" class="fa fa-github"> Edit on GitHub</a>
+                
+                
+                
+              </li>
+              
+            </ul>
+
+            
+            <hr/>
+          </div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div itemprop="articleBody">
+              
+              <div class="section" id="">
+                <span id="id1"></span><h1>命令列表<a class="headerlink" href="commands.html#" title="永久链接至标题">¶</a></h1>
+                <div class="toctree-wrapper compound">
+                  <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="dashboard.html">dashboard</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="thread.html">thread</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="jvm.html">jvm</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="sysprop.html">sysprop</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="sysenv.html">sysenv</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="mbean.html">mbean</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="getstatic.html">getstatic</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="ognl.html">ognl</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="sc.html">sc</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="sm.html">sm</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="dump.html">dump</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="jad.html">jad</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="classloader.html">classloader</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="mc.html">mc</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="redefine.html">redefine</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="monitor.html">monitor</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="watch.html">watch</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="trace.html">trace</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="stack.html">stack</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="tt.html">tt</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="cat.html">cat</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="pwd.html">pwd</a></li>
+                    <li class="toctree-l1"><a class="reference internal" href="options.html">options</a></li>
+                  </ul>
+                </div>
+                <div class="section" id="arthas">
+                  <span id="arthas"></span><h2>Arthas 基础命令<a class="headerlink" href="commands.html#arthas" title="永久链接至标题">¶</a></h2>
+                  <ul class="simple">
+                    <li>help——查看命令帮助信息</li>
+                    <li>cls——清空当前屏幕区域</li>
+                    <li>session——查看当前会话的信息</li>
+                    <li><a class="reference internal" href="https://alibaba.github.io/arthas/reset.html"><span class="doc">reset</span></a>——重置增强类，将被 Arthas 增强过的类全部还原，Arthas 服务端关闭时会重置所有增强过的类</li>
+                    <li>version——输出当前目标 Java 进程所加载的 Arthas 版本号</li>
+                    <li>history——打印命令历史</li>
+                    <li>quit——退出当前 Arthas 客户端，其他 Arthas 客户端不受影响</li>
+                    <li>shutdown——关闭 Arthas 服务端，所有 Arthas 客户端全部退出</li>
+                    <li><a class="reference internal" href="https://alibaba.github.io/arthas/keymap.html"><span class="doc">keymap</span></a>——Arthas快捷键列表及自定义快捷键</li>
+                  </ul>
+                </div>
+              </div>
+
+
+            </div>
+            
+          </div>
+          <footer>
+            
+            <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+              
+              <a href="dashboard.html" class="btn btn-neutral float-right" title="dashboard" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+              
+              
+              <a href="https://alibaba.github.io/arthas/batch-support.html" class="btn btn-neutral" title="批处理功能" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+              
+            </div>
+            
+
+            <hr/>
+
+            <div role="contentinfo">
+              <p>
+                &copy; Copyright 2018-2019, Alibaba Middleware Group, and contributors.
+
+              </p>
+            </div>
+            Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+          </footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+  <script type="text/javascript">
+   var DOCUMENTATION_OPTIONS = {
+     URL_ROOT:'./',
+     VERSION:'3.1.1',
+     LANGUAGE:'zh_CN',
+     COLLAPSE_INDEX:false,
+     FILE_SUFFIX:'.html',
+     HAS_SOURCE:  true,
+     SOURCELINK_SUFFIX: '.txt'
+   };
+  </script>
+  <script type="text/javascript" src="_static/jquery.js"></script>
+  <script type="text/javascript" src="_static/underscore.js"></script>
+  <script type="text/javascript" src="_static/doctools.js"></script>
+  <script type="text/javascript" src="_static/translations.js"></script>
+  <script type="text/javascript" src="../../cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js%3Fconfig=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+   jQuery(function () {
+     SphinxRtdTheme.Navigation.enable(true);
+   });
+  </script>
+  <div class="github-fork-ribbon-wrapper right">
+    <div class="github-fork-ribbon">
+      <a href="https://github.com/alibaba/arthas" target="_blank">Fork me at GitHub</a>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="_static/add_badges.js"></script>
+
+  <script src="../../cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  <script src="../../cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.5.0/highlightjs-line-numbers.min.js"></script>
+  <script>
+   document.querySelectorAll('div.hljs > pre').forEach(function(block) {
+     hljs.highlightBlock(block);
+     hljs.lineNumbersBlock(block);
+   });
+  </script>
+
+  <script>
+   var _hmt = _hmt || [];
+   (function() {
+     var hm = document.createElement("script");
+     hm.src = "https://hm.baidu.com/hm.js?d5c5e25b100f0eb51a4c35c8a86ea9b4";
+     var s = document.getElementsByTagName("script")[0]; 
+     s.parentNode.insertBefore(hm, s);
+   })();
+  </script>  
+ 
+
+
+</body>
+</html>

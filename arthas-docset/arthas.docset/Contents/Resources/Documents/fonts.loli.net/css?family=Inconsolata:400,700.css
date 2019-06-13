@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Inconsolata Regular'), local('Inconsolata-Regular'), url(https://gstatic.loli.net/s/inconsolata/v17/QldKNThLqRwH-OJ1UHjlKGlZ5q0.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Inconsolata Bold'), local('Inconsolata-Bold'), url(https://gstatic.loli.net/s/inconsolata/v17/QldXNThLqRwH-OJ1UHjlKGHiw71p5_k.ttf) format('truetype');
+}
