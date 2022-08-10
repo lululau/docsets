@@ -234,3 +234,6 @@ html2docset -n 'Playwright Docs' -k pw -i ./pw.png -d docs-docset -p /playwright
 
 
 html2docset -n 'Playwright API' -k pw -i ./pw.png -d api-docset -p /playwright.dev/python/docs/api/intro.html -s api --page-pattern='/python/docs/api/.*html' --link-pattern='^[a-z-]+.html(#[a-z-]+)?$' --link-script='href.sub!(/^/, "/playwright.dev/python/docs/api/");'
+
+
+html2docset -n 'Tianrun API Docs' -k tr -i ./tr.png -d docset -p /wiki.cticloud.cn/html/wiki/API/权限验证/接口鉴权.html -s html --page-pattern='.*html' --link-pattern='/API/.*html' --link-script=''
