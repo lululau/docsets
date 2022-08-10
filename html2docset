@@ -228,3 +228,9 @@ html2docset -n arthas -k arthas -i ./arthas.png -d arthas-docset -p /alibaba.git
 # Command generate miller docs
 wget -E -H -k -K -p -r -l 1 https://miller.readthedocs.io/en/latest
 html2docset -n miller -k mlr -i ./miller.png -d miller-docset -p /miller.readthedocs.io/en/latest.html -s web --page-pattern='/en/latest/.*html' --link-pattern='^(\.\./|index.html#)' --link-script='href.sub!(/^\.\./, "/miller.readthedocs.io/en/latest");href.sub!(/^index.html#/, "/miller.readthedocs.io/en/latest/#{File.basename(File.dirname(path))}/index.html#");'
+
+
+html2docset -n 'Playwright Docs' -k pw -i ./pw.png -d docs-docset -p /playwright.dev/python/docs/intro.html -s docs --page-pattern='/python/docs/.*html' --link-pattern='^[a-z-]+.html(#[a-z-]+)?$' --link-script='href.sub!(/^/, "/playwright.dev/python/docs/");'
+
+
+html2docset -n 'Playwright API' -k pw -i ./pw.png -d api-docset -p /playwright.dev/python/docs/api/intro.html -s api --page-pattern='/python/docs/api/.*html' --link-pattern='^[a-z-]+.html(#[a-z-]+)?$' --link-script='href.sub!(/^/, "/playwright.dev/python/docs/api/");'
