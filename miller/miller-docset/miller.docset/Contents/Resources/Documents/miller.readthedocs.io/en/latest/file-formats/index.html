@@ -1,0 +1,2712 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>File formats - Miller Latest Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="../../../../fonts.googleapis.com/css%3Ffamily=Lato:300,300i,400,400i,700,700i|Lato+Mono:400,400i,700,700i&amp;display=fallback.css">
+        <style>:root{--md-text-font:"Lato";--md-code-font:"Lato Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+      <link rel="stylesheet" href="../../../_/static/css/badge_only.css">
+    
+      <link rel="stylesheet" href="../../../_/static/css/readthedocs-doc-embed.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="index.html#file-formats" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../latest.html" title="Miller Latest Documentation" class="md-header__button md-logo" aria-label="Miller Latest Documentation" data-md-component="logo">
+      
+  <img src="../images/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Miller Latest Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              File formats
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="../../../../github.com/johnkerl/miller.html" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    miller
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../latest.html" title="Miller Latest Documentation" class="md-nav__button md-logo" aria-label="Miller Latest Documentation" data-md-component="logo">
+      
+  <img src="../images/favicon.png" alt="logo">
+
+    </a>
+    Miller Latest Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="../../../../github.com/johnkerl/miller.html" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    miller
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../latest.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-miller/index.html" class="md-nav__link">
+        Installing Miller
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10min/index.html" class="md-nav__link">
+        Miller in 10 minutes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keystroke-savers/index.html" class="md-nav__link">
+        Keystroke-savers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller-programming-language/index.html" class="md-nav__link">
+        Intro to Miller's programming language
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller-on-windows/index.html" class="md-nav__link">
+        Miller on Windows
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/index.html" class="md-nav__link">
+        Community
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure-of-these-documents/index.html" class="md-nav__link">
+        Structure of these documents
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Miller in more detail
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Miller in more detail" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Miller in more detail
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/index.html" class="md-nav__link">
+        Features
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          File formats
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="index.html" class="md-nav__link md-nav__link--active">
+        File formats
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="index.html#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#csvtsvasvusvetc" class="md-nav__link">
+    CSV/TSV/ASV/USV/etc.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#json" class="md-nav__link">
+    JSON
+  </a>
+  
+    <nav class="md-nav" aria-label="JSON">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#single-level-json-objects" class="md-nav__link">
+    Single-level JSON objects
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#nested-json-objects" class="md-nav__link">
+    Nested JSON objects
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#json-in-csv" class="md-nav__link">
+    JSON-in-CSV
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#json-lines" class="md-nav__link">
+    JSON Lines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#pprint-pretty-printed-tabular" class="md-nav__link">
+    PPRINT: Pretty-printed tabular
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#markdown-tabular" class="md-nav__link">
+    Markdown tabular
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#xtab-vertical-tabular" class="md-nav__link">
+    XTAB: Vertical tabular
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#dkvp-key-value-pairs" class="md-nav__link">
+    DKVP: Key-value pairs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#nidx-index-numbered-toolkit-style" class="md-nav__link">
+    NIDX: Index-numbered (toolkit style)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#data-conversion-keystroke-savers" class="md-nav__link">
+    Data-conversion keystroke-savers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#comments-in-data" class="md-nav__link">
+    Comments in data
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unix-toolkit-context/index.html" class="md-nav__link">
+        Unix-toolkit context
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../record-heterogeneity/index.html" class="md-nav__link">
+        Record-heterogeneity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internationalization/index.html" class="md-nav__link">
+        Internationalization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../output-colorization/index.html" class="md-nav__link">
+        Output colorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/index.html" class="md-nav__link">
+        Customization: .mlrrc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vimrc/index.html" class="md-nav__link">
+        Syntax highlighting: vimrc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../repl/index.html" class="md-nav__link">
+        The REPL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../online-help/index.html" class="md-nav__link">
+        Online help
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/index.html" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          FAQs and examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="FAQs and examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          FAQs and examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv-with-and-without-headers/index.html" class="md-nav__link">
+        CSV, with and without headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shapes-of-data/index.html" class="md-nav__link">
+        Shapes of data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operating-on-all-fields/index.html" class="md-nav__link">
+        Operating on all fields
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operating-on-all-records/index.html" class="md-nav__link">
+        Operating on all records
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questions-about-then-chaining/index.html" class="md-nav__link">
+        Questions about then-chaining
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questions-about-joins/index.html" class="md-nav__link">
+        Questions about joins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../date-time-examples/index.html" class="md-nav__link">
+        Date/time examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-symbols-and-formatting/index.html" class="md-nav__link">
+        Special symbols and formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shell-commands/index.html" class="md-nav__link">
+        Running shell commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-cleaning-examples/index.html" class="md-nav__link">
+        Data-cleaning examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-diving-examples/index.html" class="md-nav__link">
+        Data-diving examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../log-processing-examples/index.html" class="md-nav__link">
+        Log-processing examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql-examples/index.html" class="md-nav__link">
+        SQL examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl-and-helm/index.html" class="md-nav__link">
+        Processing Kubectl and Helm output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dkvp-examples/index.html" class="md-nav__link">
+        DKVP I/O examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics-examples/index.html" class="md-nav__link">
+        Statistics examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../randomizing-examples/index.html" class="md-nav__link">
+        Randomizing examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../two-pass-algorithms/index.html" class="md-nav__link">
+        Two-pass algorithms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../programming-examples/index.html" class="md-nav__link">
+        Programming-language examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc-examples/index.html" class="md-nav__link">
+        Miscellaneous examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Main reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Main reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Main reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-overview/index.html" class="md-nav__link">
+        Miller command structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-then-chaining/index.html" class="md-nav__link">
+        Then-chaining
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-flag-list/index.html" class="md-nav__link">
+        List of command-line flags
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-verbs/index.html" class="md-nav__link">
+        List of verbs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-in-place-processing/index.html" class="md-nav__link">
+        In-place mode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-number-formatting/index.html" class="md-nav__link">
+        Number formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-separators/index.html" class="md-nav__link">
+        Separators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsing-and-formatting-fields/index.html" class="md-nav__link">
+        Parsing and formatting fields
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flatten-unflatten/index.html" class="md-nav__link">
+        Flatten/unflatten: converting between JSON and tabular formats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sorting/index.html" class="md-nav__link">
+        Sorting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streaming-and-memory/index.html" class="md-nav__link">
+        Streaming processing, and memory usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-compressed-data/index.html" class="md-nav__link">
+        Compressed data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu/index.html" class="md-nav__link">
+        CPU/multicore usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scripting/index.html" class="md-nav__link">
+        Scripting with Miller
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-env-vars/index.html" class="md-nav__link">
+        Miller environment variables
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Types reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Types reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-data-types/index.html" class="md-nav__link">
+        Data types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-strings/index.html" class="md-nav__link">
+        Strings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-regular-expressions/index.html" class="md-nav__link">
+        Regular expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-arithmetic/index.html" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-maps/index.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-arrays/index.html" class="md-nav__link">
+        Arrays
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-null-data/index.html" class="md-nav__link">
+        Null/empty/absent data
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          DSL reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DSL reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          DSL reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl/index.html" class="md-nav__link">
+        DSL overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-syntax/index.html" class="md-nav__link">
+        DSL syntax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-variables/index.html" class="md-nav__link">
+        DSL variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-control-structures/index.html" class="md-nav__link">
+        DSL control structures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-operators/index.html" class="md-nav__link">
+        DSL operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-builtin-functions/index.html" class="md-nav__link">
+        DSL built-in functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-user-defined-functions/index.html" class="md-nav__link">
+        DSL user-defined functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-higher-order-functions/index.html" class="md-nav__link">
+        DSL higher-order functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-filter-statements/index.html" class="md-nav__link">
+        DSL filter statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-output-statements/index.html" class="md-nav__link">
+        DSL output statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-unset-statements/index.html" class="md-nav__link">
+        DSL unset statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-time/index.html" class="md-nav__link">
+        DSL datetime/timezone functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-errors/index.html" class="md-nav__link">
+        DSL errors and transparency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-differences/index.html" class="md-nav__link">
+        Differences from other programming languages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-complexity/index.html" class="md-nav__link">
+        A note on the complexity of Miller's expression language
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Background
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Background" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Background
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why/index.html" class="md-nav__link">
+        Why?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../etymology/index.html" class="md-nav__link">
+        Why call it Miller?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../originality/index.html" class="md-nav__link">
+        How original is Miller?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../performance/index.html" class="md-nav__link">
+        Performance
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Misc. reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Misc. reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Misc. reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-auxiliary-commands/index.html" class="md-nav__link">
+        Auxiliary commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manpage/index.html" class="md-nav__link">
+        Manual page
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/index.html" class="md-nav__link">
+        Building from source
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-release/index.html" class="md-nav__link">
+        How to create a new release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-docs/index.html" class="md-nav__link">
+        Documents for previous releases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/index.html" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../new-in-miller-6/index.html" class="md-nav__link">
+        What's new in Miller 6
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="index.html#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#csvtsvasvusvetc" class="md-nav__link">
+    CSV/TSV/ASV/USV/etc.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#json" class="md-nav__link">
+    JSON
+  </a>
+  
+    <nav class="md-nav" aria-label="JSON">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#single-level-json-objects" class="md-nav__link">
+    Single-level JSON objects
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#nested-json-objects" class="md-nav__link">
+    Nested JSON objects
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#json-in-csv" class="md-nav__link">
+    JSON-in-CSV
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#json-lines" class="md-nav__link">
+    JSON Lines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#pprint-pretty-printed-tabular" class="md-nav__link">
+    PPRINT: Pretty-printed tabular
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#markdown-tabular" class="md-nav__link">
+    Markdown tabular
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#xtab-vertical-tabular" class="md-nav__link">
+    XTAB: Vertical tabular
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#dkvp-key-value-pairs" class="md-nav__link">
+    DKVP: Key-value pairs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#nidx-index-numbered-toolkit-style" class="md-nav__link">
+    NIDX: Index-numbered (toolkit style)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#data-conversion-keystroke-savers" class="md-nav__link">
+    Data-conversion keystroke-savers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#comments-in-data" class="md-nav__link">
+    Comments in data
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/johnkerl/miller/edit/main/docs/src/file-formats.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<!---  PLEASE DO NOT EDIT DIRECTLY. EDIT THE .md.in FILE PLEASE. --->
+<div>
+<span class="quicklinks">
+Quick links:
+&nbsp;
+<a class="quicklink" href="../reference-main-flag-list/index.html">Flags</a>
+&nbsp;
+<a class="quicklink" href="../reference-verbs/index.html">Verbs</a>
+&nbsp;
+<a class="quicklink" href="../reference-dsl-builtin-functions/index.html">Functions</a>
+&nbsp;
+<a class="quicklink" href="../glossary/index.html">Glossary</a>
+&nbsp;
+<a class="quicklink" href="../release-docs/index.html">Release docs</a>
+</span>
+</div>
+<h1 id="file-formats">File formats<a class="headerlink" href="index.html#file-formats" title="Permanent link">&para;</a></h1>
+<p>Miller handles name-indexed data using several formats: some you probably know
+by name, such as CSV, TSV, JSON, and JSON Lines -- and other formats you're likely already
+seeing and using in your structured data.</p>
+<p>Additionally, Miller gives you the option of including comments within your data.</p>
+<h2 id="examples">Examples<a class="headerlink" href="index.html#examples" title="Permanent link">&para;</a></h2>
+<pre class="pre-highlight-in-pair">
+<b>mlr help file-formats</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+CSV/CSV-lite: comma-separated values with separate header line
+TSV: same but with tabs in places of commas
++---------------------+
+| apple,bat,cog       |
+| 1,2,3               | Record 1: "apple":"1", "bat":"2", "cog":"3"
+| 4,5,6               | Record 2: "apple":"4", "bat":"5", "cog":"6"
++---------------------+
+
+JSON (array of objects):
++---------------------+
+| [                   |
+| {                   |
+|  "apple": 1,        | Record 1: "apple":"1", "bat":"2", "cog":"3"
+|  "bat": 2,          |
+|  "cog": 3           |
+| },                  |
+| {                   |
+|   "dish": {         | Record 2: "dish.egg":"7",
+|     "egg": 7,       | "dish.flint":"8", "garlic":""
+|     "flint": 8      |
+|   },                |
+|   "garlic": ""      |
+| }                   |
+| ]                   |
++---------------------+
+
+JSON Lines (sequence of one-line objects):
++------------------------------------------------+
+| {"apple": 1, "bat": 2, "cog": 3}               |
+| {"dish": {"egg": 7, "flint": 8}, "garlic": ""} |
++------------------------------------------------+
+  Record 1: "apple":"1", "bat":"2", "cog":"3"
+  Record 2: "dish:egg":"7", "dish:flint":"8", "garlic":""
+
+PPRINT: pretty-printed tabular
++---------------------+
+| apple bat cog       |
+| 1     2   3         | Record 1: "apple:"1", "bat":"2", "cog":"3"
+| 4     5   6         | Record 2: "apple":"4", "bat":"5", "cog":"6"
++---------------------+
+
+Markdown tabular (supported for output only):
++-----------------------+
+| | apple | bat | cog | |
+| | ---   | --- | --- | |
+| | 1     | 2   | 3   | | Record 1: "apple:"1", "bat":"2", "cog":"3"
+| | 4     | 5   | 6   | | Record 2: "apple":"4", "bat":"5", "cog":"6"
++-----------------------+
+
+XTAB: pretty-printed transposed tabular
++---------------------+
+| apple 1             | Record 1: "apple":"1", "bat":"2", "cog":"3"
+| bat   2             |
+| cog   3             |
+|                     |
+| dish 7              | Record 2: "dish":"7", "egg":"8"
+| egg  8              |
++---------------------+
+
+DKVP: delimited key-value pairs (Miller default format)
++---------------------+
+| apple=1,bat=2,cog=3 | Record 1: "apple":"1", "bat":"2", "cog":"3"
+| dish=7,egg=8,flint  | Record 2: "dish":"7", "egg":"8", "3":"flint"
++---------------------+
+
+NIDX: implicitly numerically indexed (Unix-toolkit style)
++---------------------+
+| the quick brown     | Record 1: "1":"the", "2":"quick", "3":"brown"
+| fox jumped          | Record 2: "1":"fox", "2":"jumped"
++---------------------+
+</pre>
+
+<h2 id="csvtsvasvusvetc">CSV/TSV/ASV/USV/etc.<a class="headerlink" href="index.html#csvtsvasvusvetc" title="Permanent link">&para;</a></h2>
+<p>When <code>mlr</code> is invoked with the <code>--csv</code> or <code>--csvlite</code> option, key names are found on the first record and values are taken from subsequent records.  This includes the case of CSV-formatted files.  See <a href="../record-heterogeneity/index.html">Record Heterogeneity</a> for how Miller handles changes of field names within a single data stream.</p>
+<p>Miller has record separator <code>RS</code> and field separator <code>FS</code>, just as <code>awk</code> does. (See also the <a href="../reference-main-separators/index.html">separators page</a>.)</p>
+<p><strong>TSV (tab-separated values):</strong> <code>FS</code> is tab and <code>RS</code> is newline (or carriage return + linefeed for
+Windows).  On input, if fields have <code>\r</code>, <code>\n</code>, <code>\t</code>, or <code>\\</code>, those are decoded as carriage return,
+newline, tab, and backslash, respectively. On output, the reverse is done -- for example, if a field
+has an embedded newline, that newline is replaced by <code>\n</code>.</p>
+<p><strong>ASV (ASCII-separated values):</strong> the flags <code>--asv</code>, <code>--iasv</code>, <code>--oasv</code>, <code>--asvlite</code>, <code>--iasvlite</code>, and <code>--oasvlite</code> are analogous except they use ASCII FS and RS <code>0x1f</code> and <code>0x1e</code>, respectively.</p>
+<p><strong>USV (Unicode-separated values):</strong> likewise, the flags <code>--usv</code>, <code>--iusv</code>, <code>--ousv</code>, <code>--usvlite</code>, <code>--iusvlite</code>, and <code>--ousvlite</code> use Unicode FS and RS <code>U+241F</code> (UTF-8 <code>0x0xe2909f</code>) and <code>U+241E</code> (UTF-8 <code>0xe2909e</code>), respectively.</p>
+<p>Miller's <code>--csv</code> flag supports <a href="https://tools.ietf.org/html/rfc4180">RFC-4180 CSV</a>. This includes CRLF line-terminators by default, regardless of platform.</p>
+<p>Here are the differences between CSV and CSV-lite:</p>
+<ul>
+<li>
+<p>CSV-lite naively splits lines on newline, and fields on comma -- embedded commas and newlines are not escaped in any way.</p>
+</li>
+<li>
+<p>CSV supports <a href="https://tools.ietf.org/html/rfc4180">RFC-4180</a>-style double-quoting, including the ability to have commas and/or LF/CRLF line-endings contained within an input field; CSV-lite does not.</p>
+</li>
+<li>
+<p>CSV does not allow heterogeneous data; CSV-lite does (see also <a href="../record-heterogeneity/index.html">Record Heterogeneity</a>).</p>
+</li>
+<li>
+<p>TSV-lite is simply CSV-lite with field separator set to tab instead of comma.
+In particular, no encode/decode of  <code>\r</code>, <code>\n</code>, <code>\t</code>, or <code>\\</code> is done.</p>
+</li>
+<li>
+<p>CSV-lite allows changing FS and/or RS to any values, perhaps multi-character.</p>
+</li>
+<li>
+<p>In short, use-cases for CSV-lite and TSV-lite are often found when dealing with CSV/TSV files which are formatted in some non-standard way -- you have a little more flexibility available to you. (As an example of this flexibility: ASV and USV are nothing more than CSV-lite with different values for FS and RS.)</p>
+</li>
+</ul>
+<p>CSV, TSV, CSV-lite, and TSV-lite have in common the <code>--implicit-csv-header</code> flag for input and the <code>--headerless-csv-output</code> flag for output.</p>
+<p>See also the <a href="../reference-main-flag-list/index.html#csv-only-flags"><code>--lazy-quotes</code> flag</a> which can help with CSV files which are not fully compliant with RFC-4180.</p>
+<h2 id="json">JSON<a class="headerlink" href="index.html#json" title="Permanent link">&para;</a></h2>
+<p><a href="https://json.org">JSON</a> is a format which supports scalars (numbers, strings,
+boolean, etc.) as well as "objects" (maps) and "arrays" (lists), while Miller
+is a tool for handling <strong>tabular data</strong> only.  By <em>tabular JSON</em> I mean the
+data is either a sequence of one or more objects, or an array consisting of one
+or more objects.  Miller treats JSON objects as name-indexed records.</p>
+<p>This means Miller cannot (and should not) handle arbitrary JSON.  In practice,
+though, Miller can handle single JSON objects as well as list of them. The only
+kinds of JSON that are unmillerable are single scalars (e.g. file contents <code>3</code>)
+and arrays of non-object (e.g. file contents <code>[1,2,3,4,5]</code>).  Check out
+<a href="https://stedolan.github.io/jq/">jq</a> for a tool which handles all valid JSON.</p>
+<p>In short, if you have tabular data represented in JSON -- lists of objects,
+either with or without outermost <code>[...]</code> -- [then Miller can handle that for
+you.</p>
+<h3 id="single-level-json-objects">Single-level JSON objects<a class="headerlink" href="index.html#single-level-json-objects" title="Permanent link">&para;</a></h3>
+<p>An <strong>array of single-level objects</strong> is, quite simply, <strong>a table</strong>:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --json head -n 2 then cut -f color,shape data/json-example-1.json</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+[
+{
+  "color": "yellow",
+  "shape": "triangle"
+},
+{
+  "color": "red",
+  "shape": "square"
+}
+]
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --json head -n 2 then cut -f color,u,v data/json-example-1.json</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+[
+{
+  "color": "yellow",
+  "u": 0.632170,
+  "v": 0.988721
+},
+{
+  "color": "red",
+  "u": 0.219668,
+  "v": 0.001257
+}
+]
+</pre>
+
+<p>Single-level JSON data goes back and forth between JSON and tabular formats
+in the direct way:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --ijson --opprint head -n 2 then cut -f color,u,v data/json-example-1.json</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+color  u        v
+yellow 0.632170 0.988721
+red    0.219668 0.001257
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --ijson --opprint cat data/json-example-1.json</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+color  shape    flag i  u        v        w        x
+yellow triangle 1    11 0.632170 0.988721 0.436498 5.798188
+red    square   1    15 0.219668 0.001257 0.792778 2.944117
+red    circle   1    16 0.209017 0.290052 0.138103 5.065034
+red    square   0    48 0.956274 0.746720 0.775542 7.117831
+purple triangle 0    51 0.435535 0.859129 0.812290 5.753095
+red    square   0    64 0.201551 0.953110 0.771991 5.612050
+purple triangle 0    65 0.684281 0.582372 0.801405 5.805148
+yellow circle   1    73 0.603365 0.423708 0.639785 7.006414
+yellow circle   1    87 0.285656 0.833516 0.635058 6.350036
+purple square   0    91 0.259926 0.824322 0.723735 6.854221
+</pre>
+
+<h3 id="nested-json-objects">Nested JSON objects<a class="headerlink" href="index.html#nested-json-objects" title="Permanent link">&para;</a></h3>
+<p>Additionally, Miller can <strong>tabularize nested objects by concatenating keys</strong>. If your processing has
+input as well as output in JSON format, JSON structure is preserved throughout the processing:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --json head -n 2 data/json-example-2.json</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+[
+{
+  "flag": 1,
+  "i": 11,
+  "attributes": {
+    "color": "yellow",
+    "shape": "triangle"
+  },
+  "values": {
+    "u": 0.632170,
+    "v": 0.988721,
+    "w": 0.436498,
+    "x": 5.798188
+  }
+},
+{
+  "flag": 1,
+  "i": 15,
+  "attributes": {
+    "color": "red",
+    "shape": "square"
+  },
+  "values": {
+    "u": 0.219668,
+    "v": 0.001257,
+    "w": 0.792778,
+    "x": 2.944117
+  }
+}
+]
+</pre>
+
+<p>But if the input format is JSON and the output format is not (or vice versa) then key-concatenation applies:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --ijson --opprint head -n 4 data/json-example-2.json</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+flag i  attributes.color attributes.shape values.u values.v values.w values.x
+1    11 yellow           triangle         0.632170 0.988721 0.436498 5.798188
+1    15 red              square           0.219668 0.001257 0.792778 2.944117
+1    16 red              circle           0.209017 0.290052 0.138103 5.065034
+0    48 red              square           0.956274 0.746720 0.775542 7.117831
+</pre>
+
+<p>This is discussed in more detail on the page <a href="../flatten-unflatten/index.html">Flatten/unflatten: JSON vs. tabular formats</a>.</p>
+<p>Use <code>--jflatsep yourseparatorhere</code> to specify the string used for key concatenation: this defaults to a single dot.</p>
+<h3 id="json-in-csv">JSON-in-CSV<a class="headerlink" href="index.html#json-in-csv" title="Permanent link">&para;</a></h3>
+<p>It's quite common to have CSV data which contains stringified JSON as a column.
+See the <a href="../reference-main-data-types/index.html#json-parse-and-stringify">JSON parse and stringify section</a> for ways to
+decode these in Miller.</p>
+<h2 id="json-lines">JSON Lines<a class="headerlink" href="index.html#json-lines" title="Permanent link">&para;</a></h2>
+<p><a href="https://jsonlines.org">JSON Lines</a> is similar to JSON, except:</p>
+<ul>
+<li>UTF-8 encoding must be supported</li>
+<li>There is no outermost <code>[...]</code></li>
+<li>Each record is on a single line</li>
+</ul>
+<p>Miller handles this:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --icsv --ojson head -n 2 example.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+[
+{
+  "color": "yellow",
+  "shape": "triangle",
+  "flag": "true",
+  "k": 1,
+  "index": 11,
+  "quantity": 43.6498,
+  "rate": 9.8870
+},
+{
+  "color": "red",
+  "shape": "square",
+  "flag": "true",
+  "k": 2,
+  "index": 15,
+  "quantity": 79.2778,
+  "rate": 0.0130
+}
+]
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --icsv --ojsonl head -n 2 example.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+{"color": "yellow", "shape": "triangle", "flag": "true", "k": 1, "index": 11, "quantity": 43.6498, "rate": 9.8870}
+{"color": "red", "shape": "square", "flag": "true", "k": 2, "index": 15, "quantity": 79.2778, "rate": 0.0130}
+</pre>
+
+<p>Note that for <em>input</em> data, either is acceptable: whether you use <code>--ijson</code> or <code>--ijsonl</code>, Miller
+won't reject your input data for lack of outermost <code>[...]</code>, nor will it reject your data for placement
+of newlines. The difference is on <em>output</em>: using <code>--ojson</code>, you get outermost <code>[...]</code> and pretty-printed
+records; using <code>--ojsonl</code>, you get no outermost <code>[...]</code>, and one line per record.</p>
+<h2 id="pprint-pretty-printed-tabular">PPRINT: Pretty-printed tabular<a class="headerlink" href="index.html#pprint-pretty-printed-tabular" title="Permanent link">&para;</a></h2>
+<p>Miller's pretty-print format is like CSV, but column-aligned.  For example, compare</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --ocsv cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a,b,i,x,y
+pan,pan,1,0.346791,0.726802
+eks,pan,2,0.758679,0.522151
+wye,wye,3,0.204603,0.338318
+eks,wye,4,0.381399,0.134188
+wye,pan,5,0.573288,0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --opprint cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a   b   i x        y
+pan pan 1 0.346791 0.726802
+eks pan 2 0.758679 0.522151
+wye wye 3 0.204603 0.338318
+eks wye 4 0.381399 0.134188
+wye pan 5 0.573288 0.863624
+</pre>
+
+<p>Note that while Miller is a line-at-a-time processor and retains input lines in memory only where necessary (e.g. for sort), pretty-print output requires it to accumulate all input lines (so that it can compute maximum column widths) before producing any output. This has two consequences: (a) pretty-print output won't work on <code>tail -f</code> contexts, where Miller will be waiting for an end-of-file marker which never arrives; (b) pretty-print output for large files is constrained by available machine memory.</p>
+<p>See <a href="../record-heterogeneity/index.html">Record Heterogeneity</a> for how Miller handles changes of field names within a single data stream.</p>
+<p>For output only (this isn't supported in the input-scanner as of 5.0.0) you can use <code>--barred</code> with pprint output format:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --opprint --barred cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
++-----+-----+---+----------+----------+
+| a   | b   | i | x        | y        |
++-----+-----+---+----------+----------+
+| pan | pan | 1 | 0.346791 | 0.726802 |
+| eks | pan | 2 | 0.758679 | 0.522151 |
+| wye | wye | 3 | 0.204603 | 0.338318 |
+| eks | wye | 4 | 0.381399 | 0.134188 |
+| wye | pan | 5 | 0.573288 | 0.863624 |
++-----+-----+---+----------+----------+
+</pre>
+
+<h2 id="markdown-tabular">Markdown tabular<a class="headerlink" href="index.html#markdown-tabular" title="Permanent link">&para;</a></h2>
+<p>Markdown format looks like this:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --omd cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+| a | b | i | x | y |
+| --- | --- | --- | --- | --- |
+| pan | pan | 1 | 0.346791 | 0.726802 |
+| eks | pan | 2 | 0.758679 | 0.522151 |
+| wye | wye | 3 | 0.204603 | 0.338318 |
+| eks | wye | 4 | 0.381399 | 0.134188 |
+| wye | pan | 5 | 0.573288 | 0.863624 |
+</pre>
+
+<p>which renders like this when dropped into various web tools (e.g. github comments):</p>
+<p><img alt="pix/omd.png" src="../pix/omd.png" /></p>
+<p>As of Miller 4.3.0, markdown format is supported only for output, not input.</p>
+<h2 id="xtab-vertical-tabular">XTAB: Vertical tabular<a class="headerlink" href="index.html#xtab-vertical-tabular" title="Permanent link">&para;</a></h2>
+<p>This is perhaps most useful for looking a very wide and/or multi-column data which causes line-wraps on the screen (but see also
+<a href="https://github.com/twosigma/ngrid/">ngrid</a> for an entirely different, very powerful option). Namely:</p>
+<pre class="pre-highlight-in-pair">
+<b>$ grep -v '^#' /etc/passwd | head -n 6 | mlr --nidx --fs : --opprint cat</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+1          2 3  4  5                          6               7
+nobody     * -2 -2 Unprivileged User          /var/empty      /usr/bin/false
+root       * 0  0  System Administrator       /var/root       /bin/sh
+daemon     * 1  1  System Services            /var/root       /usr/bin/false
+_uucp      * 4  4  Unix to Unix Copy Protocol /var/spool/uucp /usr/sbin/uucico
+_taskgated * 13 13 Task Gate Daemon           /var/empty      /usr/bin/false
+_networkd  * 24 24 Network Services           /var/networkd   /usr/bin/false
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>$ grep -v '^#' /etc/passwd | head -n 2 | mlr --nidx --fs : --oxtab cat</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+1 nobody
+2 *
+3 -2
+4 -2
+5 Unprivileged User
+6 /var/empty
+7 /usr/bin/false
+
+1 root
+2 *
+3 0
+4 0
+5 System Administrator
+6 /var/root
+7 /bin/sh
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>$ grep -v '^#' /etc/passwd | head -n 2 | \</b>
+<b>  mlr --nidx --fs : --ojson \</b>
+<b>    label name,password,uid,gid,gecos,home_dir,shell</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+[
+{
+  "name": "nobody",
+  "password": "*",
+  "uid": -2,
+  "gid": -2,
+  "gecos": "Unprivileged User",
+  "home_dir": "/var/empty",
+  "shell": "/usr/bin/false"
+},
+{
+  "name": "root",
+  "password": "*",
+  "uid": 0,
+  "gid": 0,
+  "gecos": "System Administrator",
+  "home_dir": "/var/root",
+  "shell": "/bin/sh"
+}
+]
+</pre>
+
+<h2 id="dkvp-key-value-pairs">DKVP: Key-value pairs<a class="headerlink" href="index.html#dkvp-key-value-pairs" title="Permanent link">&para;</a></h2>
+<p>Miller's default file format is DKVP, for <strong>delimited key-value pairs</strong>. Example:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=3,x=0.204603,y=0.338318
+a=eks,b=wye,i=4,x=0.381399,y=0.134188
+a=wye,b=pan,i=5,x=0.573288,y=0.863624
+</pre>
+
+<p>Such data are easy to generate, e.g. in Ruby with</p>
+<pre class="pre-non-highlight-non-pair">
+puts "host=#{hostname},seconds=#{t2-t1},message=#{msg}"
+</pre>
+
+<pre class="pre-non-highlight-non-pair">
+puts mymap.collect{|k,v| "#{k}=#{v}"}.join(',')
+</pre>
+
+<p>or <code>print</code> statements in various languages, e.g.</p>
+<pre class="pre-non-highlight-non-pair">
+echo "type=3,user=$USER,date=$date\n";
+</pre>
+
+<pre class="pre-non-highlight-non-pair">
+logger.log("type=3,user=$USER,date=$date\n");
+</pre>
+
+<p>Fields lacking an IPS will have positional index (starting at 1) used as the key, as in NIDX format. For example, <code>dish=7,egg=8,flint</code> is parsed as <code>"dish" =&gt; "7", "egg" =&gt; "8", "3" =&gt; "flint"</code> and <code>dish,egg,flint</code> is parsed as <code>"1" =&gt; "dish", "2" =&gt; "egg", "3" =&gt; "flint"</code>.</p>
+<p>As discussed in <a href="../record-heterogeneity/index.html">Record Heterogeneity</a>, Miller handles changes of field names within the same data stream. But using DKVP format this is particularly natural. One of my favorite use-cases for Miller is in application/server logs, where I log all sorts of lines such as</p>
+<pre class="pre-non-highlight-non-pair">
+resource=/path/to/file,loadsec=0.45,ok=true
+record_count=100, resource=/path/to/file
+resource=/some/other/path,loadsec=0.97,ok=false
+</pre>
+
+<p>etc. and I just log them as needed. Then later, I can use <code>grep</code>, <code>mlr --opprint group-like</code>, etc.
+to analyze my logs.</p>
+<p>See the <a href="../reference-main-separators/index.html">separators page</a> regarding how to specify separators other than the default equals-sign and comma.</p>
+<h2 id="nidx-index-numbered-toolkit-style">NIDX: Index-numbered (toolkit style)<a class="headerlink" href="index.html#nidx-index-numbered-toolkit-style" title="Permanent link">&para;</a></h2>
+<p>With <code>--inidx --ifs ' ' --repifs</code>, Miller splits lines on spaces and assigns integer field names starting with 1.</p>
+<p>This recapitulates Unix-toolkit behavior.</p>
+<p>Example with index-numbered output:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=3,x=0.204603,y=0.338318
+a=eks,b=wye,i=4,x=0.381399,y=0.134188
+a=wye,b=pan,i=5,x=0.573288,y=0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --onidx --ofs ' ' cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+pan pan 1 0.346791 0.726802
+eks pan 2 0.758679 0.522151
+wye wye 3 0.204603 0.338318
+eks wye 4 0.381399 0.134188
+wye pan 5 0.573288 0.863624
+</pre>
+
+<p>Example with index-numbered input:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/mydata.txt</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+oh say can you see
+by the dawn's
+early light
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --inidx --ifs ' ' --odkvp cat data/mydata.txt</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+1=oh,2=say,3=can,4=you,5=see
+1=by,2=the,3=dawn's
+1=early,2=light
+</pre>
+
+<p>Example with index-numbered input and output:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/mydata.txt</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+oh say can you see
+by the dawn's
+early light
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --nidx --fs ' ' --repifs cut -f 2,3 data/mydata.txt</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+say can
+the dawn's
+light
+</pre>
+
+<h2 id="data-conversion-keystroke-savers">Data-conversion keystroke-savers<a class="headerlink" href="index.html#data-conversion-keystroke-savers" title="Permanent link">&para;</a></h2>
+<p>While you can do format conversion using <code>mlr --icsv --ojson cat myfile.csv</code>, there are also keystroke-savers for this purpose, such as <code>mlr --c2j cat myfile.csv</code>.  For a complete list:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr help format-conversion-keystroke-saver-flags</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+FORMAT-CONVERSION KEYSTROKE-SAVER FLAGS
+As keystroke-savers for format-conversion you may use the following.
+The letters c, t, j, l, d, n, x, p, and m refer to formats CSV, TSV, DKVP, NIDX,
+JSON, JSON Lines, XTAB, PPRINT, and markdown, respectively. Note that markdown
+format is available for output only.
+
+| In\out | CSV   | TSV   | JSON   | JSONL  | DKVP   | NIDX   | XTAB   | PPRINT | Markdown |
++--------+-------+-------+--------+--------+--------+--------+--------+----------+
+| CSV    |       | --c2t | --c2j  | --c2l  | --c2d  | --c2n  | --c2x  | --c2p  | --c2m    |
+| TSV    | --t2c |       | --t2j  | --t2l  | --t2d  | --t2n  | --t2x  | --t2p  | --t2m    |
+| JSON   | --j2c | --j2t |        | --j2l  | --j2d  | --j2n  | --j2x  | --j2p  | --j2m    |
+| JSONL  | --l2c | --l2t |        |        | --l2d  | --l2n  | --l2x  | --l2p  | --l2m    |
+| DKVP   | --d2c | --d2t | --d2j  | --d2l  |        | --d2n  | --d2x  | --d2p  | --d2m    |
+| NIDX   | --n2c | --n2t | --n2j  | --n2l  | --n2d  |        | --n2x  | --n2p  | --n2m    |
+| XTAB   | --x2c | --x2t | --x2j  | --x2l  | --x2d  | --x2n  |        | --x2p  | --x2m    |
+| PPRINT | --p2c | --p2t | --p2j  | --p2l  | --p2d  | --p2n  | --p2x  |        | --p2m    |
+
+-p                       Keystroke-saver for `--nidx --fs space --repifs`.
+-T                       Keystroke-saver for `--nidx --fs tab`.
+</pre>
+
+<h2 id="comments-in-data">Comments in data<a class="headerlink" href="index.html#comments-in-data" title="Permanent link">&para;</a></h2>
+<p>You can include comments within your data files, and either have them ignored, or passed directly through to the standard output as soon as they are encountered:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr help comments-in-data-flags</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+COMMENTS-IN-DATA FLAGS
+Miller lets you put comments in your data, such as
+
+    # This is a comment for a CSV file
+    a,b,c
+    1,2,3
+    4,5,6
+
+Notes:
+
+* Comments are only honored at the start of a line.
+* In the absence of any of the below four options, comments are data like
+  any other text. (The comments-in-data feature is opt-in.)
+* When `--pass-comments` is used, comment lines are written to standard output
+  immediately upon being read; they are not part of the record stream.  Results
+  may be counterintuitive. A suggestion is to place comments at the start of
+  data files.
+
+--pass-comments          Immediately print commented lines (prefixed by `#`)
+                         within the input.
+--pass-comments-with {string}
+                         Immediately print commented lines within input, with
+                         specified prefix.
+--skip-comments          Ignore commented lines (prefixed by `#`) within the
+                         input.
+--skip-comments-with {string}
+                         Ignore commented lines within input, with specified
+                         prefix.
+</pre>
+
+<p>Examples:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/budget.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+# Asana -- here are the budget figures you asked for!
+type,quantity
+purple,456.78
+green,678.12
+orange,123.45
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --skip-comments --icsv --opprint sort -nr quantity data/budget.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+type   quantity
+green  678.12
+purple 456.78
+orange 123.45
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --pass-comments --icsv --opprint sort -nr quantity data/budget.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+# Asana -- here are the budget figures you asked for!
+type   quantity
+green  678.12
+purple 456.78
+orange 123.45
+</pre>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="index.html#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../features/index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Features" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Features
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../unix-toolkit-context/index.html" class="md-footer__link md-footer__link--next" aria-label="Next: Unix-toolkit context" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Unix-toolkit context
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="../../../../squidfunk.github.io/mkdocs-material/index.html" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="../../../../cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js"></script>
+      
+        <script src="../javascripts/tables.js"></script>
+      
+        <script src="../readthedocs-data.js"></script>
+      
+        <script src="../../../_/static/core/js/readthedocs-doc-embed.js"></script>
+      
+        <script src="../../../_/static/javascript/readthedocs-analytics.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,6535 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>DSL built-in functions - Miller Latest Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="../../../../fonts.googleapis.com/css%3Ffamily=Lato:300,300i,400,400i,700,700i|Lato+Mono:400,400i,700,700i&amp;display=fallback.css">
+        <style>:root{--md-text-font:"Lato";--md-code-font:"Lato Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+      <link rel="stylesheet" href="../../../_/static/css/badge_only.css">
+    
+      <link rel="stylesheet" href="../../../_/static/css/readthedocs-doc-embed.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="index.html#dsl-built-in-functions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../latest.html" title="Miller Latest Documentation" class="md-header__button md-logo" aria-label="Miller Latest Documentation" data-md-component="logo">
+      
+  <img src="../images/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Miller Latest Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DSL built-in functions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="../../../../github.com/johnkerl/miller.html" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    miller
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../latest.html" title="Miller Latest Documentation" class="md-nav__button md-logo" aria-label="Miller Latest Documentation" data-md-component="logo">
+      
+  <img src="../images/favicon.png" alt="logo">
+
+    </a>
+    Miller Latest Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="../../../../github.com/johnkerl/miller.html" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    miller
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../latest.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-miller/index.html" class="md-nav__link">
+        Installing Miller
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10min/index.html" class="md-nav__link">
+        Miller in 10 minutes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keystroke-savers/index.html" class="md-nav__link">
+        Keystroke-savers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller-programming-language/index.html" class="md-nav__link">
+        Intro to Miller's programming language
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller-on-windows/index.html" class="md-nav__link">
+        Miller on Windows
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/index.html" class="md-nav__link">
+        Community
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure-of-these-documents/index.html" class="md-nav__link">
+        Structure of these documents
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Miller in more detail
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Miller in more detail" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Miller in more detail
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/index.html" class="md-nav__link">
+        Features
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-formats/index.html" class="md-nav__link">
+        File formats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unix-toolkit-context/index.html" class="md-nav__link">
+        Unix-toolkit context
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../record-heterogeneity/index.html" class="md-nav__link">
+        Record-heterogeneity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internationalization/index.html" class="md-nav__link">
+        Internationalization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../output-colorization/index.html" class="md-nav__link">
+        Output colorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/index.html" class="md-nav__link">
+        Customization: .mlrrc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vimrc/index.html" class="md-nav__link">
+        Syntax highlighting: vimrc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../repl/index.html" class="md-nav__link">
+        The REPL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../online-help/index.html" class="md-nav__link">
+        Online help
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/index.html" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          FAQs and examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="FAQs and examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          FAQs and examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv-with-and-without-headers/index.html" class="md-nav__link">
+        CSV, with and without headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shapes-of-data/index.html" class="md-nav__link">
+        Shapes of data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operating-on-all-fields/index.html" class="md-nav__link">
+        Operating on all fields
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operating-on-all-records/index.html" class="md-nav__link">
+        Operating on all records
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questions-about-then-chaining/index.html" class="md-nav__link">
+        Questions about then-chaining
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questions-about-joins/index.html" class="md-nav__link">
+        Questions about joins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../date-time-examples/index.html" class="md-nav__link">
+        Date/time examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-symbols-and-formatting/index.html" class="md-nav__link">
+        Special symbols and formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shell-commands/index.html" class="md-nav__link">
+        Running shell commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-cleaning-examples/index.html" class="md-nav__link">
+        Data-cleaning examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-diving-examples/index.html" class="md-nav__link">
+        Data-diving examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../log-processing-examples/index.html" class="md-nav__link">
+        Log-processing examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql-examples/index.html" class="md-nav__link">
+        SQL examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl-and-helm/index.html" class="md-nav__link">
+        Processing Kubectl and Helm output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dkvp-examples/index.html" class="md-nav__link">
+        DKVP I/O examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics-examples/index.html" class="md-nav__link">
+        Statistics examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../randomizing-examples/index.html" class="md-nav__link">
+        Randomizing examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../two-pass-algorithms/index.html" class="md-nav__link">
+        Two-pass algorithms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../programming-examples/index.html" class="md-nav__link">
+        Programming-language examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc-examples/index.html" class="md-nav__link">
+        Miscellaneous examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Main reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Main reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Main reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-overview/index.html" class="md-nav__link">
+        Miller command structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-then-chaining/index.html" class="md-nav__link">
+        Then-chaining
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-flag-list/index.html" class="md-nav__link">
+        List of command-line flags
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-verbs/index.html" class="md-nav__link">
+        List of verbs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-in-place-processing/index.html" class="md-nav__link">
+        In-place mode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-number-formatting/index.html" class="md-nav__link">
+        Number formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-separators/index.html" class="md-nav__link">
+        Separators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsing-and-formatting-fields/index.html" class="md-nav__link">
+        Parsing and formatting fields
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flatten-unflatten/index.html" class="md-nav__link">
+        Flatten/unflatten: converting between JSON and tabular formats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sorting/index.html" class="md-nav__link">
+        Sorting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streaming-and-memory/index.html" class="md-nav__link">
+        Streaming processing, and memory usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-compressed-data/index.html" class="md-nav__link">
+        Compressed data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu/index.html" class="md-nav__link">
+        CPU/multicore usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scripting/index.html" class="md-nav__link">
+        Scripting with Miller
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-env-vars/index.html" class="md-nav__link">
+        Miller environment variables
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Types reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Types reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-data-types/index.html" class="md-nav__link">
+        Data types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-strings/index.html" class="md-nav__link">
+        Strings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-regular-expressions/index.html" class="md-nav__link">
+        Regular expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-arithmetic/index.html" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-maps/index.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-arrays/index.html" class="md-nav__link">
+        Arrays
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-null-data/index.html" class="md-nav__link">
+        Null/empty/absent data
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          DSL reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DSL reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          DSL reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl/index.html" class="md-nav__link">
+        DSL overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-syntax/index.html" class="md-nav__link">
+        DSL syntax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-variables/index.html" class="md-nav__link">
+        DSL variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-control-structures/index.html" class="md-nav__link">
+        DSL control structures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-operators/index.html" class="md-nav__link">
+        DSL operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          DSL built-in functions
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="index.html" class="md-nav__link md-nav__link--active">
+        DSL built-in functions
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="index.html#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#functions-by-class" class="md-nav__link">
+    Functions by class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#arithmetic-functions" class="md-nav__link">
+    Arithmetic functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Arithmetic functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#bitcount" class="md-nav__link">
+    bitcount
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#madd" class="md-nav__link">
+    madd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mexp" class="md-nav__link">
+    mexp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mmul" class="md-nav__link">
+    mmul
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#msub" class="md-nav__link">
+    msub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#pow" class="md-nav__link">
+    pow
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_1" class="md-nav__link">
+    %
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_2" class="md-nav__link">
+    &amp;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_3" class="md-nav__link">
+    *
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_4" class="md-nav__link">
+    **
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_5" class="md-nav__link">
+    +
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#-" class="md-nav__link">
+    -
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_6" class="md-nav__link">
+    .*
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_7" class="md-nav__link">
+    .+
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#-_1" class="md-nav__link">
+    .-
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_8" class="md-nav__link">
+    ./
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_9" class="md-nav__link">
+    /
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_10" class="md-nav__link">
+    //
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_11" class="md-nav__link">
+    &lt;&lt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_12" class="md-nav__link">
+    &gt;&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_13" class="md-nav__link">
+    &gt;&gt;&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_14" class="md-nav__link">
+    ^
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_15" class="md-nav__link">
+    |
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_16" class="md-nav__link">
+    ~
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#boolean-functions" class="md-nav__link">
+    Boolean functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Boolean functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#_17" class="md-nav__link">
+    !
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_18" class="md-nav__link">
+    !=
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_19" class="md-nav__link">
+    !=~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_20" class="md-nav__link">
+    &amp;&amp;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_21" class="md-nav__link">
+    &lt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_22" class="md-nav__link">
+    &lt;=
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_23" class="md-nav__link">
+    &lt;=&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_24" class="md-nav__link">
+    ==
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_25" class="md-nav__link">
+    =~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_26" class="md-nav__link">
+    &gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_27" class="md-nav__link">
+    &gt;=
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_28" class="md-nav__link">
+    ?:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_29" class="md-nav__link">
+    ??
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_30" class="md-nav__link">
+    ???
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_31" class="md-nav__link">
+    ^^
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_32" class="md-nav__link">
+    ||
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#collections-functions" class="md-nav__link">
+    Collections functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Collections functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#append" class="md-nav__link">
+    append
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#arrayify" class="md-nav__link">
+    arrayify
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#concat" class="md-nav__link">
+    concat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#depth" class="md-nav__link">
+    depth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#flatten" class="md-nav__link">
+    flatten
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#get_keys" class="md-nav__link">
+    get_keys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#get_values" class="md-nav__link">
+    get_values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#haskey" class="md-nav__link">
+    haskey
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#json_parse" class="md-nav__link">
+    json_parse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#json_stringify" class="md-nav__link">
+    json_stringify
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#leafcount" class="md-nav__link">
+    leafcount
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#length" class="md-nav__link">
+    length
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mapdiff" class="md-nav__link">
+    mapdiff
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mapexcept" class="md-nav__link">
+    mapexcept
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mapselect" class="md-nav__link">
+    mapselect
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mapsum" class="md-nav__link">
+    mapsum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#unflatten" class="md-nav__link">
+    unflatten
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#conversion-functions" class="md-nav__link">
+    Conversion functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Conversion functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#boolean" class="md-nav__link">
+    boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#float" class="md-nav__link">
+    float
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fmtifnum" class="md-nav__link">
+    fmtifnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fmtnum" class="md-nav__link">
+    fmtnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#hexfmt" class="md-nav__link">
+    hexfmt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#int" class="md-nav__link">
+    int
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#joink" class="md-nav__link">
+    joink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#joinkv" class="md-nav__link">
+    joinkv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#joinv" class="md-nav__link">
+    joinv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splita" class="md-nav__link">
+    splita
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitax" class="md-nav__link">
+    splitax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitkv" class="md-nav__link">
+    splitkv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitkvx" class="md-nav__link">
+    splitkvx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitnv" class="md-nav__link">
+    splitnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitnvx" class="md-nav__link">
+    splitnvx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#string" class="md-nav__link">
+    string
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#hashing-functions" class="md-nav__link">
+    Hashing functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Hashing functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#md5" class="md-nav__link">
+    md5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sha1" class="md-nav__link">
+    sha1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sha256" class="md-nav__link">
+    sha256
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sha512" class="md-nav__link">
+    sha512
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#higher-order-functions-functions" class="md-nav__link">
+    Higher-order-functions functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Higher-order-functions functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#any" class="md-nav__link">
+    any
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#apply" class="md-nav__link">
+    apply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#every" class="md-nav__link">
+    every
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fold" class="md-nav__link">
+    fold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#reduce" class="md-nav__link">
+    reduce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#select" class="md-nav__link">
+    select
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sort" class="md-nav__link">
+    sort
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#math-functions" class="md-nav__link">
+    Math functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Math functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#abs" class="md-nav__link">
+    abs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#acos" class="md-nav__link">
+    acos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#acosh" class="md-nav__link">
+    acosh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asin" class="md-nav__link">
+    asin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asinh" class="md-nav__link">
+    asinh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#atan" class="md-nav__link">
+    atan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#atan2" class="md-nav__link">
+    atan2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#atanh" class="md-nav__link">
+    atanh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#cbrt" class="md-nav__link">
+    cbrt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#ceil" class="md-nav__link">
+    ceil
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#cos" class="md-nav__link">
+    cos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#cosh" class="md-nav__link">
+    cosh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#erf" class="md-nav__link">
+    erf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#erfc" class="md-nav__link">
+    erfc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#exp" class="md-nav__link">
+    exp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#expm1" class="md-nav__link">
+    expm1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#floor" class="md-nav__link">
+    floor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#invqnorm" class="md-nav__link">
+    invqnorm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#log" class="md-nav__link">
+    log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#log10" class="md-nav__link">
+    log10
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#log1p" class="md-nav__link">
+    log1p
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#logifit" class="md-nav__link">
+    logifit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#max" class="md-nav__link">
+    max
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#min" class="md-nav__link">
+    min
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#qnorm" class="md-nav__link">
+    qnorm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#round" class="md-nav__link">
+    round
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#roundm" class="md-nav__link">
+    roundm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sgn" class="md-nav__link">
+    sgn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sin" class="md-nav__link">
+    sin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sinh" class="md-nav__link">
+    sinh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sqrt" class="md-nav__link">
+    sqrt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#tan" class="md-nav__link">
+    tan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#tanh" class="md-nav__link">
+    tanh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urand" class="md-nav__link">
+    urand
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urand32" class="md-nav__link">
+    urand32
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urandelement" class="md-nav__link">
+    urandelement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urandint" class="md-nav__link">
+    urandint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urandrange" class="md-nav__link">
+    urandrange
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#string-functions" class="md-nav__link">
+    String functions
+  </a>
+  
+    <nav class="md-nav" aria-label="String functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#capitalize" class="md-nav__link">
+    capitalize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#clean_whitespace" class="md-nav__link">
+    clean_whitespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#collapse_whitespace" class="md-nav__link">
+    collapse_whitespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#format" class="md-nav__link">
+    format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#gssub" class="md-nav__link">
+    gssub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#gsub" class="md-nav__link">
+    gsub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#latin1_to_utf8" class="md-nav__link">
+    latin1_to_utf8
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#lstrip" class="md-nav__link">
+    lstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#regextract" class="md-nav__link">
+    regextract
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#regextract_or_else" class="md-nav__link">
+    regextract_or_else
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#rstrip" class="md-nav__link">
+    rstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#ssub" class="md-nav__link">
+    ssub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strip" class="md-nav__link">
+    strip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strlen" class="md-nav__link">
+    strlen
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sub" class="md-nav__link">
+    sub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#substr" class="md-nav__link">
+    substr
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#substr0" class="md-nav__link">
+    substr0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#substr1" class="md-nav__link">
+    substr1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#tolower" class="md-nav__link">
+    tolower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#toupper" class="md-nav__link">
+    toupper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#truncate" class="md-nav__link">
+    truncate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#unformat" class="md-nav__link">
+    unformat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#unformatx" class="md-nav__link">
+    unformatx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#utf8_to_latin1" class="md-nav__link">
+    utf8_to_latin1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_33" class="md-nav__link">
+    .
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#system-functions" class="md-nav__link">
+    System functions
+  </a>
+  
+    <nav class="md-nav" aria-label="System functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#exec" class="md-nav__link">
+    exec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#hostname" class="md-nav__link">
+    hostname
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#os" class="md-nav__link">
+    os
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#system" class="md-nav__link">
+    system
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#version" class="md-nav__link">
+    version
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#time-functions" class="md-nav__link">
+    Time functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Time functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#dhms2fsec" class="md-nav__link">
+    dhms2fsec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#dhms2sec" class="md-nav__link">
+    dhms2sec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fsec2dhms" class="md-nav__link">
+    fsec2dhms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fsec2hms" class="md-nav__link">
+    fsec2hms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#gmt2localtime" class="md-nav__link">
+    gmt2localtime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#gmt2sec" class="md-nav__link">
+    gmt2sec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#hms2fsec" class="md-nav__link">
+    hms2fsec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#hms2sec" class="md-nav__link">
+    hms2sec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#localtime2gmt" class="md-nav__link">
+    localtime2gmt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#localtime2sec" class="md-nav__link">
+    localtime2sec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2dhms" class="md-nav__link">
+    sec2dhms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2gmt" class="md-nav__link">
+    sec2gmt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2gmtdate" class="md-nav__link">
+    sec2gmtdate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2hms" class="md-nav__link">
+    sec2hms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2localdate" class="md-nav__link">
+    sec2localdate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2localtime" class="md-nav__link">
+    sec2localtime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strftime" class="md-nav__link">
+    strftime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strftime_local" class="md-nav__link">
+    strftime_local
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strptime" class="md-nav__link">
+    strptime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strptime_local" class="md-nav__link">
+    strptime_local
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#systime" class="md-nav__link">
+    systime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#systimeint" class="md-nav__link">
+    systimeint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#uptime" class="md-nav__link">
+    uptime
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#typing-functions" class="md-nav__link">
+    Typing functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Typing functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_absent" class="md-nav__link">
+    asserting_absent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_array" class="md-nav__link">
+    asserting_array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_bool" class="md-nav__link">
+    asserting_bool
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_boolean" class="md-nav__link">
+    asserting_boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_empty" class="md-nav__link">
+    asserting_empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_empty_map" class="md-nav__link">
+    asserting_empty_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_error" class="md-nav__link">
+    asserting_error
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_float" class="md-nav__link">
+    asserting_float
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_int" class="md-nav__link">
+    asserting_int
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_map" class="md-nav__link">
+    asserting_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_nonempty_map" class="md-nav__link">
+    asserting_nonempty_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_not_array" class="md-nav__link">
+    asserting_not_array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_not_empty" class="md-nav__link">
+    asserting_not_empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_not_map" class="md-nav__link">
+    asserting_not_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_not_null" class="md-nav__link">
+    asserting_not_null
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_null" class="md-nav__link">
+    asserting_null
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_numeric" class="md-nav__link">
+    asserting_numeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_present" class="md-nav__link">
+    asserting_present
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_string" class="md-nav__link">
+    asserting_string
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_absent" class="md-nav__link">
+    is_absent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_array" class="md-nav__link">
+    is_array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_bool" class="md-nav__link">
+    is_bool
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_boolean" class="md-nav__link">
+    is_boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_empty" class="md-nav__link">
+    is_empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_empty_map" class="md-nav__link">
+    is_empty_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_error" class="md-nav__link">
+    is_error
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_float" class="md-nav__link">
+    is_float
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_int" class="md-nav__link">
+    is_int
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_map" class="md-nav__link">
+    is_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_nan" class="md-nav__link">
+    is_nan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_nonempty_map" class="md-nav__link">
+    is_nonempty_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_not_array" class="md-nav__link">
+    is_not_array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_not_empty" class="md-nav__link">
+    is_not_empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_not_map" class="md-nav__link">
+    is_not_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_not_null" class="md-nav__link">
+    is_not_null
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_null" class="md-nav__link">
+    is_null
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_numeric" class="md-nav__link">
+    is_numeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_present" class="md-nav__link">
+    is_present
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_string" class="md-nav__link">
+    is_string
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#typeof" class="md-nav__link">
+    typeof
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-user-defined-functions/index.html" class="md-nav__link">
+        DSL user-defined functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-higher-order-functions/index.html" class="md-nav__link">
+        DSL higher-order functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-filter-statements/index.html" class="md-nav__link">
+        DSL filter statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-output-statements/index.html" class="md-nav__link">
+        DSL output statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-unset-statements/index.html" class="md-nav__link">
+        DSL unset statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-time/index.html" class="md-nav__link">
+        DSL datetime/timezone functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-errors/index.html" class="md-nav__link">
+        DSL errors and transparency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-differences/index.html" class="md-nav__link">
+        Differences from other programming languages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-complexity/index.html" class="md-nav__link">
+        A note on the complexity of Miller's expression language
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Background
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Background" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Background
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why/index.html" class="md-nav__link">
+        Why?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../etymology/index.html" class="md-nav__link">
+        Why call it Miller?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../originality/index.html" class="md-nav__link">
+        How original is Miller?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../performance/index.html" class="md-nav__link">
+        Performance
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Misc. reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Misc. reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Misc. reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-auxiliary-commands/index.html" class="md-nav__link">
+        Auxiliary commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manpage/index.html" class="md-nav__link">
+        Manual page
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/index.html" class="md-nav__link">
+        Building from source
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-release/index.html" class="md-nav__link">
+        How to create a new release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-docs/index.html" class="md-nav__link">
+        Documents for previous releases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/index.html" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../new-in-miller-6/index.html" class="md-nav__link">
+        What's new in Miller 6
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="index.html#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#functions-by-class" class="md-nav__link">
+    Functions by class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#arithmetic-functions" class="md-nav__link">
+    Arithmetic functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Arithmetic functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#bitcount" class="md-nav__link">
+    bitcount
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#madd" class="md-nav__link">
+    madd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mexp" class="md-nav__link">
+    mexp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mmul" class="md-nav__link">
+    mmul
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#msub" class="md-nav__link">
+    msub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#pow" class="md-nav__link">
+    pow
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_1" class="md-nav__link">
+    %
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_2" class="md-nav__link">
+    &amp;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_3" class="md-nav__link">
+    *
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_4" class="md-nav__link">
+    **
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_5" class="md-nav__link">
+    +
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#-" class="md-nav__link">
+    -
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_6" class="md-nav__link">
+    .*
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_7" class="md-nav__link">
+    .+
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#-_1" class="md-nav__link">
+    .-
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_8" class="md-nav__link">
+    ./
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_9" class="md-nav__link">
+    /
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_10" class="md-nav__link">
+    //
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_11" class="md-nav__link">
+    &lt;&lt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_12" class="md-nav__link">
+    &gt;&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_13" class="md-nav__link">
+    &gt;&gt;&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_14" class="md-nav__link">
+    ^
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_15" class="md-nav__link">
+    |
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_16" class="md-nav__link">
+    ~
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#boolean-functions" class="md-nav__link">
+    Boolean functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Boolean functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#_17" class="md-nav__link">
+    !
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_18" class="md-nav__link">
+    !=
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_19" class="md-nav__link">
+    !=~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_20" class="md-nav__link">
+    &amp;&amp;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_21" class="md-nav__link">
+    &lt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_22" class="md-nav__link">
+    &lt;=
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_23" class="md-nav__link">
+    &lt;=&gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_24" class="md-nav__link">
+    ==
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_25" class="md-nav__link">
+    =~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_26" class="md-nav__link">
+    &gt;
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_27" class="md-nav__link">
+    &gt;=
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_28" class="md-nav__link">
+    ?:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_29" class="md-nav__link">
+    ??
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_30" class="md-nav__link">
+    ???
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_31" class="md-nav__link">
+    ^^
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_32" class="md-nav__link">
+    ||
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#collections-functions" class="md-nav__link">
+    Collections functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Collections functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#append" class="md-nav__link">
+    append
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#arrayify" class="md-nav__link">
+    arrayify
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#concat" class="md-nav__link">
+    concat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#depth" class="md-nav__link">
+    depth
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#flatten" class="md-nav__link">
+    flatten
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#get_keys" class="md-nav__link">
+    get_keys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#get_values" class="md-nav__link">
+    get_values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#haskey" class="md-nav__link">
+    haskey
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#json_parse" class="md-nav__link">
+    json_parse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#json_stringify" class="md-nav__link">
+    json_stringify
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#leafcount" class="md-nav__link">
+    leafcount
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#length" class="md-nav__link">
+    length
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mapdiff" class="md-nav__link">
+    mapdiff
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mapexcept" class="md-nav__link">
+    mapexcept
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mapselect" class="md-nav__link">
+    mapselect
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#mapsum" class="md-nav__link">
+    mapsum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#unflatten" class="md-nav__link">
+    unflatten
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#conversion-functions" class="md-nav__link">
+    Conversion functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Conversion functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#boolean" class="md-nav__link">
+    boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#float" class="md-nav__link">
+    float
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fmtifnum" class="md-nav__link">
+    fmtifnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fmtnum" class="md-nav__link">
+    fmtnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#hexfmt" class="md-nav__link">
+    hexfmt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#int" class="md-nav__link">
+    int
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#joink" class="md-nav__link">
+    joink
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#joinkv" class="md-nav__link">
+    joinkv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#joinv" class="md-nav__link">
+    joinv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splita" class="md-nav__link">
+    splita
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitax" class="md-nav__link">
+    splitax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitkv" class="md-nav__link">
+    splitkv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitkvx" class="md-nav__link">
+    splitkvx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitnv" class="md-nav__link">
+    splitnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#splitnvx" class="md-nav__link">
+    splitnvx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#string" class="md-nav__link">
+    string
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#hashing-functions" class="md-nav__link">
+    Hashing functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Hashing functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#md5" class="md-nav__link">
+    md5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sha1" class="md-nav__link">
+    sha1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sha256" class="md-nav__link">
+    sha256
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sha512" class="md-nav__link">
+    sha512
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#higher-order-functions-functions" class="md-nav__link">
+    Higher-order-functions functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Higher-order-functions functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#any" class="md-nav__link">
+    any
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#apply" class="md-nav__link">
+    apply
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#every" class="md-nav__link">
+    every
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fold" class="md-nav__link">
+    fold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#reduce" class="md-nav__link">
+    reduce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#select" class="md-nav__link">
+    select
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sort" class="md-nav__link">
+    sort
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#math-functions" class="md-nav__link">
+    Math functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Math functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#abs" class="md-nav__link">
+    abs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#acos" class="md-nav__link">
+    acos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#acosh" class="md-nav__link">
+    acosh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asin" class="md-nav__link">
+    asin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asinh" class="md-nav__link">
+    asinh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#atan" class="md-nav__link">
+    atan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#atan2" class="md-nav__link">
+    atan2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#atanh" class="md-nav__link">
+    atanh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#cbrt" class="md-nav__link">
+    cbrt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#ceil" class="md-nav__link">
+    ceil
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#cos" class="md-nav__link">
+    cos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#cosh" class="md-nav__link">
+    cosh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#erf" class="md-nav__link">
+    erf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#erfc" class="md-nav__link">
+    erfc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#exp" class="md-nav__link">
+    exp
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#expm1" class="md-nav__link">
+    expm1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#floor" class="md-nav__link">
+    floor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#invqnorm" class="md-nav__link">
+    invqnorm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#log" class="md-nav__link">
+    log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#log10" class="md-nav__link">
+    log10
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#log1p" class="md-nav__link">
+    log1p
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#logifit" class="md-nav__link">
+    logifit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#max" class="md-nav__link">
+    max
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#min" class="md-nav__link">
+    min
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#qnorm" class="md-nav__link">
+    qnorm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#round" class="md-nav__link">
+    round
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#roundm" class="md-nav__link">
+    roundm
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sgn" class="md-nav__link">
+    sgn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sin" class="md-nav__link">
+    sin
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sinh" class="md-nav__link">
+    sinh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sqrt" class="md-nav__link">
+    sqrt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#tan" class="md-nav__link">
+    tan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#tanh" class="md-nav__link">
+    tanh
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urand" class="md-nav__link">
+    urand
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urand32" class="md-nav__link">
+    urand32
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urandelement" class="md-nav__link">
+    urandelement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urandint" class="md-nav__link">
+    urandint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#urandrange" class="md-nav__link">
+    urandrange
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#string-functions" class="md-nav__link">
+    String functions
+  </a>
+  
+    <nav class="md-nav" aria-label="String functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#capitalize" class="md-nav__link">
+    capitalize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#clean_whitespace" class="md-nav__link">
+    clean_whitespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#collapse_whitespace" class="md-nav__link">
+    collapse_whitespace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#format" class="md-nav__link">
+    format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#gssub" class="md-nav__link">
+    gssub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#gsub" class="md-nav__link">
+    gsub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#latin1_to_utf8" class="md-nav__link">
+    latin1_to_utf8
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#lstrip" class="md-nav__link">
+    lstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#regextract" class="md-nav__link">
+    regextract
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#regextract_or_else" class="md-nav__link">
+    regextract_or_else
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#rstrip" class="md-nav__link">
+    rstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#ssub" class="md-nav__link">
+    ssub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strip" class="md-nav__link">
+    strip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strlen" class="md-nav__link">
+    strlen
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sub" class="md-nav__link">
+    sub
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#substr" class="md-nav__link">
+    substr
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#substr0" class="md-nav__link">
+    substr0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#substr1" class="md-nav__link">
+    substr1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#tolower" class="md-nav__link">
+    tolower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#toupper" class="md-nav__link">
+    toupper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#truncate" class="md-nav__link">
+    truncate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#unformat" class="md-nav__link">
+    unformat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#unformatx" class="md-nav__link">
+    unformatx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#utf8_to_latin1" class="md-nav__link">
+    utf8_to_latin1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#_33" class="md-nav__link">
+    .
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#system-functions" class="md-nav__link">
+    System functions
+  </a>
+  
+    <nav class="md-nav" aria-label="System functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#exec" class="md-nav__link">
+    exec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#hostname" class="md-nav__link">
+    hostname
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#os" class="md-nav__link">
+    os
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#system" class="md-nav__link">
+    system
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#version" class="md-nav__link">
+    version
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#time-functions" class="md-nav__link">
+    Time functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Time functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#dhms2fsec" class="md-nav__link">
+    dhms2fsec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#dhms2sec" class="md-nav__link">
+    dhms2sec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fsec2dhms" class="md-nav__link">
+    fsec2dhms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#fsec2hms" class="md-nav__link">
+    fsec2hms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#gmt2localtime" class="md-nav__link">
+    gmt2localtime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#gmt2sec" class="md-nav__link">
+    gmt2sec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#hms2fsec" class="md-nav__link">
+    hms2fsec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#hms2sec" class="md-nav__link">
+    hms2sec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#localtime2gmt" class="md-nav__link">
+    localtime2gmt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#localtime2sec" class="md-nav__link">
+    localtime2sec
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2dhms" class="md-nav__link">
+    sec2dhms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2gmt" class="md-nav__link">
+    sec2gmt
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2gmtdate" class="md-nav__link">
+    sec2gmtdate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2hms" class="md-nav__link">
+    sec2hms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2localdate" class="md-nav__link">
+    sec2localdate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#sec2localtime" class="md-nav__link">
+    sec2localtime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strftime" class="md-nav__link">
+    strftime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strftime_local" class="md-nav__link">
+    strftime_local
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strptime" class="md-nav__link">
+    strptime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#strptime_local" class="md-nav__link">
+    strptime_local
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#systime" class="md-nav__link">
+    systime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#systimeint" class="md-nav__link">
+    systimeint
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#uptime" class="md-nav__link">
+    uptime
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#typing-functions" class="md-nav__link">
+    Typing functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Typing functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_absent" class="md-nav__link">
+    asserting_absent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_array" class="md-nav__link">
+    asserting_array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_bool" class="md-nav__link">
+    asserting_bool
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_boolean" class="md-nav__link">
+    asserting_boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_empty" class="md-nav__link">
+    asserting_empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_empty_map" class="md-nav__link">
+    asserting_empty_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_error" class="md-nav__link">
+    asserting_error
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_float" class="md-nav__link">
+    asserting_float
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_int" class="md-nav__link">
+    asserting_int
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_map" class="md-nav__link">
+    asserting_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_nonempty_map" class="md-nav__link">
+    asserting_nonempty_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_not_array" class="md-nav__link">
+    asserting_not_array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_not_empty" class="md-nav__link">
+    asserting_not_empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_not_map" class="md-nav__link">
+    asserting_not_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_not_null" class="md-nav__link">
+    asserting_not_null
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_null" class="md-nav__link">
+    asserting_null
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_numeric" class="md-nav__link">
+    asserting_numeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_present" class="md-nav__link">
+    asserting_present
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#asserting_string" class="md-nav__link">
+    asserting_string
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_absent" class="md-nav__link">
+    is_absent
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_array" class="md-nav__link">
+    is_array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_bool" class="md-nav__link">
+    is_bool
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_boolean" class="md-nav__link">
+    is_boolean
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_empty" class="md-nav__link">
+    is_empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_empty_map" class="md-nav__link">
+    is_empty_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_error" class="md-nav__link">
+    is_error
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_float" class="md-nav__link">
+    is_float
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_int" class="md-nav__link">
+    is_int
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_map" class="md-nav__link">
+    is_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_nan" class="md-nav__link">
+    is_nan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_nonempty_map" class="md-nav__link">
+    is_nonempty_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_not_array" class="md-nav__link">
+    is_not_array
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_not_empty" class="md-nav__link">
+    is_not_empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_not_map" class="md-nav__link">
+    is_not_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_not_null" class="md-nav__link">
+    is_not_null
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_null" class="md-nav__link">
+    is_null
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_numeric" class="md-nav__link">
+    is_numeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_present" class="md-nav__link">
+    is_present
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#is_string" class="md-nav__link">
+    is_string
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#typeof" class="md-nav__link">
+    typeof
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/johnkerl/miller/edit/main/docs/src/reference-dsl-builtin-functions.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<!---  PLEASE DO NOT EDIT DIRECTLY. EDIT THE .md.in FILE PLEASE. --->
+<div>
+<span class="quicklinks">
+Quick links:
+&nbsp;
+<a class="quicklink" href="../reference-main-flag-list/index.html">Flags</a>
+&nbsp;
+<a class="quicklink" href="../reference-verbs/index.html">Verbs</a>
+&nbsp;
+<a class="quicklink" href="index.html">Functions</a>
+&nbsp;
+<a class="quicklink" href="../glossary/index.html">Glossary</a>
+&nbsp;
+<a class="quicklink" href="../release-docs/index.html">Release docs</a>
+</span>
+</div>
+<h1 id="dsl-built-in-functions">DSL built-in functions<a class="headerlink" href="index.html#dsl-built-in-functions" title="Permanent link">&para;</a></h1>
+<p>These are functions in the <a href="../miller-programming-language/index.html">Miller programming language</a>
+that you can call when you use <code>mlr put</code> and <code>mlr filter</code>. For example, when you type</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --icsv --opprint --from example.csv put '</b>
+<b>  $color = toupper($color);</b>
+<b>  $shape = gsub($shape, "[aeiou]", "*");</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+color  shape    flag  k  index quantity rate
+YELLOW tr**ngl* true  1  11    43.6498  9.8870
+RED    sq**r*   true  2  15    79.2778  0.0130
+RED    c*rcl*   true  3  16    13.8103  2.9010
+RED    sq**r*   false 4  48    77.5542  7.4670
+PURPLE tr**ngl* false 5  51    81.2290  8.5910
+RED    sq**r*   false 6  64    77.1991  9.5310
+PURPLE tr**ngl* false 7  65    80.1405  5.8240
+YELLOW c*rcl*   true  8  73    63.9785  4.2370
+YELLOW c*rcl*   true  9  87    63.5058  8.3350
+PURPLE sq**r*   false 10 91    72.3735  8.2430
+</pre>
+
+<p>the <code>toupper</code> and <code>gsub</code> bits are <em>functions</em>.</p>
+<h2 id="overview">Overview<a class="headerlink" href="index.html#overview" title="Permanent link">&para;</a></h2>
+<p>At the command line, you can use <code>mlr -f</code> and <code>mlr -F</code> for information much
+like what's on this page.</p>
+<p>Each function takes a specific number of arguments, as shown below, except for
+functions marked as variadic such as <code>min</code> and <code>max</code>. (The latter compute min
+and max of any number of arguments.) There is no notion of optional or
+default-on-absent arguments. All argument-passing is positional rather than by
+name; arguments are passed by value, not by reference.</p>
+<p>At the command line, you can get a list of all functions using <code>mlr -f</code>, with
+details using <code>mlr -F</code>.  (Or, <code>mlr help usage-functions-by-class</code> to get
+details in the order shown on this page.) You can get detail for a given
+function using <code>mlr help function namegoeshere</code>, e.g.  <code>mlr help function
+gsub</code>.</p>
+<p>Operators are listed here along with functions. In this case, the
+argument-count is the number of items involved in the infix operator, e.g. we
+say <code>x+y</code> so the details for the <code>+</code> operator say that its number of arguments
+is 2. Unary operators such as <code>!</code> and <code>~</code> show argument-count of 1; the ternary
+<code>? :</code> operator shows an argument-count of 3.</p>
+<h2 id="functions-by-class">Functions by class<a class="headerlink" href="index.html#functions-by-class" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="index.html#arithmetic-functions"><strong>Arithmetic functions</strong></a>:  <a href="index.html#bitcount">bitcount</a>,  <a href="index.html#madd">madd</a>,  <a href="index.html#mexp">mexp</a>,  <a href="index.html#mmul">mmul</a>,  <a href="index.html#msub">msub</a>,  <a href="index.html#pow">pow</a>,  <a href="index.html#percent">%</a>,  <a href="index.html#bitwise-and">&amp;</a>,  <a href="index.html#times">*</a>,  <a href="index.html#exponentiation">**</a>,  <a href="index.html#plus">+</a>,  <a href="index.html#minus">-</a>,  <a href="index.html#dot-times">.*</a>,  <a href="index.html#dot-plus">.+</a>,  <a href="index.html#dot-minus">.-</a>,  <a href="index.html#dot-slash">./</a>,  <a href="index.html#slash">/</a>,  <a href="index.html#slash-slash">//</a>,  <a href="index.html#lsh">&lt;&lt;</a>,  <a href="index.html#srsh">&gt;&gt;</a>,  <a href="index.html#ursh">&gt;&gt;&gt;</a>,  <a href="index.html#bitwise-xor">^</a>,  <a href="index.html#bitwise-or">|</a>,  <a href="index.html#bitwise-not">~</a>.</li>
+<li><a href="index.html#boolean-functions"><strong>Boolean functions</strong></a>:  <a href="index.html#exclamation-point">!</a>,  <a href="index.html#exclamation-point-equals">!=</a>,  <a href="index.html#regnotmatch">!=~</a>,  <a href="index.html#logical-and">&amp;&amp;</a>,  <a href="index.html#less-than">&lt;</a>,  <a href="index.html#less-than-or-equals">&lt;=</a>,  <a href="index.html#&lt;=&gt;">&lt;=&gt;</a>,  <a href="index.html#double-equals">==</a>,  <a href="index.html#regmatch">=~</a>,  <a href="index.html#greater-than">&gt;</a>,  <a href="index.html#greater-than-or-equals">&gt;=</a>,  <a href="index.html#question-mark-colon">?:</a>,  <a href="index.html#absent-coalesce">??</a>,  <a href="index.html#absent-empty-coalesce">???</a>,  <a href="index.html#logical-xor">^^</a>,  <a href="index.html#logical-or">||</a>.</li>
+<li><a href="index.html#collections-functions"><strong>Collections functions</strong></a>:  <a href="index.html#append">append</a>,  <a href="index.html#arrayify">arrayify</a>,  <a href="index.html#concat">concat</a>,  <a href="index.html#depth">depth</a>,  <a href="index.html#flatten">flatten</a>,  <a href="index.html#get_keys">get_keys</a>,  <a href="index.html#get_values">get_values</a>,  <a href="index.html#haskey">haskey</a>,  <a href="index.html#json_parse">json_parse</a>,  <a href="index.html#json_stringify">json_stringify</a>,  <a href="index.html#leafcount">leafcount</a>,  <a href="index.html#length">length</a>,  <a href="index.html#mapdiff">mapdiff</a>,  <a href="index.html#mapexcept">mapexcept</a>,  <a href="index.html#mapselect">mapselect</a>,  <a href="index.html#mapsum">mapsum</a>,  <a href="index.html#unflatten">unflatten</a>.</li>
+<li><a href="index.html#conversion-functions"><strong>Conversion functions</strong></a>:  <a href="index.html#boolean">boolean</a>,  <a href="index.html#float">float</a>,  <a href="index.html#fmtifnum">fmtifnum</a>,  <a href="index.html#fmtnum">fmtnum</a>,  <a href="index.html#hexfmt">hexfmt</a>,  <a href="index.html#int">int</a>,  <a href="index.html#joink">joink</a>,  <a href="index.html#joinkv">joinkv</a>,  <a href="index.html#joinv">joinv</a>,  <a href="index.html#splita">splita</a>,  <a href="index.html#splitax">splitax</a>,  <a href="index.html#splitkv">splitkv</a>,  <a href="index.html#splitkvx">splitkvx</a>,  <a href="index.html#splitnv">splitnv</a>,  <a href="index.html#splitnvx">splitnvx</a>,  <a href="index.html#string">string</a>.</li>
+<li><a href="index.html#hashing-functions"><strong>Hashing functions</strong></a>:  <a href="index.html#md5">md5</a>,  <a href="index.html#sha1">sha1</a>,  <a href="index.html#sha256">sha256</a>,  <a href="index.html#sha512">sha512</a>.</li>
+<li><a href="index.html#higher-order-functions-functions"><strong>Higher-order-functions functions</strong></a>:  <a href="index.html#any">any</a>,  <a href="index.html#apply">apply</a>,  <a href="index.html#every">every</a>,  <a href="index.html#fold">fold</a>,  <a href="index.html#reduce">reduce</a>,  <a href="index.html#select">select</a>,  <a href="index.html#sort">sort</a>.</li>
+<li><a href="index.html#math-functions"><strong>Math functions</strong></a>:  <a href="index.html#abs">abs</a>,  <a href="index.html#acos">acos</a>,  <a href="index.html#acosh">acosh</a>,  <a href="index.html#asin">asin</a>,  <a href="index.html#asinh">asinh</a>,  <a href="index.html#atan">atan</a>,  <a href="index.html#atan2">atan2</a>,  <a href="index.html#atanh">atanh</a>,  <a href="index.html#cbrt">cbrt</a>,  <a href="index.html#ceil">ceil</a>,  <a href="index.html#cos">cos</a>,  <a href="index.html#cosh">cosh</a>,  <a href="index.html#erf">erf</a>,  <a href="index.html#erfc">erfc</a>,  <a href="index.html#exp">exp</a>,  <a href="index.html#expm1">expm1</a>,  <a href="index.html#floor">floor</a>,  <a href="index.html#invqnorm">invqnorm</a>,  <a href="index.html#log">log</a>,  <a href="index.html#log10">log10</a>,  <a href="index.html#log1p">log1p</a>,  <a href="index.html#logifit">logifit</a>,  <a href="index.html#max">max</a>,  <a href="index.html#min">min</a>,  <a href="index.html#qnorm">qnorm</a>,  <a href="index.html#round">round</a>,  <a href="index.html#roundm">roundm</a>,  <a href="index.html#sgn">sgn</a>,  <a href="index.html#sin">sin</a>,  <a href="index.html#sinh">sinh</a>,  <a href="index.html#sqrt">sqrt</a>,  <a href="index.html#tan">tan</a>,  <a href="index.html#tanh">tanh</a>,  <a href="index.html#urand">urand</a>,  <a href="index.html#urand32">urand32</a>,  <a href="index.html#urandelement">urandelement</a>,  <a href="index.html#urandint">urandint</a>,  <a href="index.html#urandrange">urandrange</a>.</li>
+<li><a href="index.html#string-functions"><strong>String functions</strong></a>:  <a href="index.html#capitalize">capitalize</a>,  <a href="index.html#clean_whitespace">clean_whitespace</a>,  <a href="index.html#collapse_whitespace">collapse_whitespace</a>,  <a href="index.html#format">format</a>,  <a href="index.html#gssub">gssub</a>,  <a href="index.html#gsub">gsub</a>,  <a href="index.html#latin1_to_utf8">latin1_to_utf8</a>,  <a href="index.html#lstrip">lstrip</a>,  <a href="index.html#regextract">regextract</a>,  <a href="index.html#regextract_or_else">regextract_or_else</a>,  <a href="index.html#rstrip">rstrip</a>,  <a href="index.html#ssub">ssub</a>,  <a href="index.html#strip">strip</a>,  <a href="index.html#strlen">strlen</a>,  <a href="index.html#sub">sub</a>,  <a href="index.html#substr">substr</a>,  <a href="index.html#substr0">substr0</a>,  <a href="index.html#substr1">substr1</a>,  <a href="index.html#tolower">tolower</a>,  <a href="index.html#toupper">toupper</a>,  <a href="index.html#truncate">truncate</a>,  <a href="index.html#unformat">unformat</a>,  <a href="index.html#unformatx">unformatx</a>,  <a href="index.html#utf8_to_latin1">utf8_to_latin1</a>,  <a href="index.html#dot">.</a>.</li>
+<li><a href="index.html#system-functions"><strong>System functions</strong></a>:  <a href="index.html#exec">exec</a>,  <a href="index.html#hostname">hostname</a>,  <a href="index.html#os">os</a>,  <a href="index.html#system">system</a>,  <a href="index.html#version">version</a>.</li>
+<li><a href="index.html#time-functions"><strong>Time functions</strong></a>:  <a href="index.html#dhms2fsec">dhms2fsec</a>,  <a href="index.html#dhms2sec">dhms2sec</a>,  <a href="index.html#fsec2dhms">fsec2dhms</a>,  <a href="index.html#fsec2hms">fsec2hms</a>,  <a href="index.html#gmt2localtime">gmt2localtime</a>,  <a href="index.html#gmt2sec">gmt2sec</a>,  <a href="index.html#hms2fsec">hms2fsec</a>,  <a href="index.html#hms2sec">hms2sec</a>,  <a href="index.html#localtime2gmt">localtime2gmt</a>,  <a href="index.html#localtime2sec">localtime2sec</a>,  <a href="index.html#sec2dhms">sec2dhms</a>,  <a href="index.html#sec2gmt">sec2gmt</a>,  <a href="index.html#sec2gmtdate">sec2gmtdate</a>,  <a href="index.html#sec2hms">sec2hms</a>,  <a href="index.html#sec2localdate">sec2localdate</a>,  <a href="index.html#sec2localtime">sec2localtime</a>,  <a href="index.html#strftime">strftime</a>,  <a href="index.html#strftime_local">strftime_local</a>,  <a href="index.html#strptime">strptime</a>,  <a href="index.html#strptime_local">strptime_local</a>,  <a href="index.html#systime">systime</a>,  <a href="index.html#systimeint">systimeint</a>,  <a href="index.html#uptime">uptime</a>.</li>
+<li><a href="index.html#typing-functions"><strong>Typing functions</strong></a>:  <a href="index.html#asserting_absent">asserting_absent</a>,  <a href="index.html#asserting_array">asserting_array</a>,  <a href="index.html#asserting_bool">asserting_bool</a>,  <a href="index.html#asserting_boolean">asserting_boolean</a>,  <a href="index.html#asserting_empty">asserting_empty</a>,  <a href="index.html#asserting_empty_map">asserting_empty_map</a>,  <a href="index.html#asserting_error">asserting_error</a>,  <a href="index.html#asserting_float">asserting_float</a>,  <a href="index.html#asserting_int">asserting_int</a>,  <a href="index.html#asserting_map">asserting_map</a>,  <a href="index.html#asserting_nonempty_map">asserting_nonempty_map</a>,  <a href="index.html#asserting_not_array">asserting_not_array</a>,  <a href="index.html#asserting_not_empty">asserting_not_empty</a>,  <a href="index.html#asserting_not_map">asserting_not_map</a>,  <a href="index.html#asserting_not_null">asserting_not_null</a>,  <a href="index.html#asserting_null">asserting_null</a>,  <a href="index.html#asserting_numeric">asserting_numeric</a>,  <a href="index.html#asserting_present">asserting_present</a>,  <a href="index.html#asserting_string">asserting_string</a>,  <a href="index.html#is_absent">is_absent</a>,  <a href="index.html#is_array">is_array</a>,  <a href="index.html#is_bool">is_bool</a>,  <a href="index.html#is_boolean">is_boolean</a>,  <a href="index.html#is_empty">is_empty</a>,  <a href="index.html#is_empty_map">is_empty_map</a>,  <a href="index.html#is_error">is_error</a>,  <a href="index.html#is_float">is_float</a>,  <a href="index.html#is_int">is_int</a>,  <a href="index.html#is_map">is_map</a>,  <a href="index.html#is_nan">is_nan</a>,  <a href="index.html#is_nonempty_map">is_nonempty_map</a>,  <a href="index.html#is_not_array">is_not_array</a>,  <a href="index.html#is_not_empty">is_not_empty</a>,  <a href="index.html#is_not_map">is_not_map</a>,  <a href="index.html#is_not_null">is_not_null</a>,  <a href="index.html#is_null">is_null</a>,  <a href="index.html#is_numeric">is_numeric</a>,  <a href="index.html#is_present">is_present</a>,  <a href="index.html#is_string">is_string</a>,  <a href="index.html#typeof">typeof</a>.</li>
+</ul>
+<h2 id="arithmetic-functions">Arithmetic functions<a class="headerlink" href="index.html#arithmetic-functions" title="Permanent link">&para;</a></h2>
+<h3 id="bitcount">bitcount<a class="headerlink" href="index.html#bitcount" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+bitcount  (class=arithmetic #args=1) Count of 1-bits.
+</pre>
+
+<h3 id="madd">madd<a class="headerlink" href="index.html#madd" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+madd  (class=arithmetic #args=3) a + b mod m (integers)
+</pre>
+
+<h3 id="mexp">mexp<a class="headerlink" href="index.html#mexp" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+mexp  (class=arithmetic #args=3) a ** b mod m (integers)
+</pre>
+
+<h3 id="mmul">mmul<a class="headerlink" href="index.html#mmul" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+mmul  (class=arithmetic #args=3) a * b mod m (integers)
+</pre>
+
+<h3 id="msub">msub<a class="headerlink" href="index.html#msub" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+msub  (class=arithmetic #args=3) a - b mod m (integers)
+</pre>
+
+<h3 id="pow">pow<a class="headerlink" href="index.html#pow" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+pow  (class=arithmetic #args=2) Exponentiation. Same as **, but as a function.
+</pre>
+
+<p><a id=percent> </a></p>
+<h3 id="_1">%<a class="headerlink" href="index.html#_1" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+%  (class=arithmetic #args=2) Remainder; never negative-valued (pythonic).
+</pre>
+
+<p><a id=bitwise-and> </a></p>
+<h3 id="_2">&amp;<a class="headerlink" href="index.html#_2" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+&  (class=arithmetic #args=2) Bitwise AND.
+</pre>
+
+<p><a id=times> </a></p>
+<h3 id="_3">*<a class="headerlink" href="index.html#_3" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+*  (class=arithmetic #args=2) Multiplication, with integer*integer overflow to float.
+</pre>
+
+<p><a id=exponentiation> </a></p>
+<h3 id="_4">**<a class="headerlink" href="index.html#_4" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+**  (class=arithmetic #args=2) Exponentiation. Same as pow, but as an infix operator.
+</pre>
+
+<p><a id=plus> </a></p>
+<h3 id="_5">+<a class="headerlink" href="index.html#_5" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
++  (class=arithmetic #args=1,2) Addition as binary operator; unary plus operator.
+</pre>
+
+<p><a id=minus> </a></p>
+<h3 id="-">-<a class="headerlink" href="index.html#-" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+-  (class=arithmetic #args=1,2) Subtraction as binary operator; unary negation operator.
+</pre>
+
+<p><a id=dot-times> </a></p>
+<h3 id="_6">.*<a class="headerlink" href="index.html#_6" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+.*  (class=arithmetic #args=2) Multiplication, with integer-to-integer overflow.
+</pre>
+
+<p><a id=dot-plus> </a></p>
+<h3 id="_7">.+<a class="headerlink" href="index.html#_7" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+.+  (class=arithmetic #args=2) Addition, with integer-to-integer overflow.
+</pre>
+
+<p><a id=dot-minus> </a></p>
+<h3 id="-_1">.-<a class="headerlink" href="index.html#-_1" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+.-  (class=arithmetic #args=2) Subtraction, with integer-to-integer overflow.
+</pre>
+
+<p><a id=dot-slash> </a></p>
+<h3 id="_8">./<a class="headerlink" href="index.html#_8" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+./  (class=arithmetic #args=2) Integer division, rounding toward zero.
+</pre>
+
+<p><a id=slash> </a></p>
+<h3 id="_9">/<a class="headerlink" href="index.html#_9" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+/  (class=arithmetic #args=2) Division. Integer / integer is integer when exact, else floating-point: e.g. 6/3 is 2 but 6/4 is 1.5.
+</pre>
+
+<p><a id=slash-slash> </a></p>
+<h3 id="_10">//<a class="headerlink" href="index.html#_10" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+//  (class=arithmetic #args=2) Pythonic integer division, rounding toward negative.
+</pre>
+
+<p><a id=lsh> </a></p>
+<h3 id="_11">&lt;&lt;<a class="headerlink" href="index.html#_11" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+<<  (class=arithmetic #args=2) Bitwise left-shift.
+</pre>
+
+<p><a id=srsh> </a></p>
+<h3 id="_12">&gt;&gt;<a class="headerlink" href="index.html#_12" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+>>  (class=arithmetic #args=2) Bitwise signed right-shift.
+</pre>
+
+<p><a id=ursh> </a></p>
+<h3 id="_13">&gt;&gt;&gt;<a class="headerlink" href="index.html#_13" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+>>>  (class=arithmetic #args=2) Bitwise unsigned right-shift.
+</pre>
+
+<p><a id=bitwise-xor> </a></p>
+<h3 id="_14">^<a class="headerlink" href="index.html#_14" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+^  (class=arithmetic #args=2) Bitwise XOR.
+</pre>
+
+<p><a id=bitwise-or> </a></p>
+<h3 id="_15">|<a class="headerlink" href="index.html#_15" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+|  (class=arithmetic #args=2) Bitwise OR.
+</pre>
+
+<p><a id=bitwise-not> </a></p>
+<h3 id="_16">~<a class="headerlink" href="index.html#_16" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+~  (class=arithmetic #args=1) Bitwise NOT. Beware '$y=~$x' since =~ is the regex-match operator: try '$y = ~$x'.
+</pre>
+
+<h2 id="boolean-functions">Boolean functions<a class="headerlink" href="index.html#boolean-functions" title="Permanent link">&para;</a></h2>
+<p><a id=exclamation-point> </a></p>
+<h3 id="_17">!<a class="headerlink" href="index.html#_17" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+!  (class=boolean #args=1) Logical negation.
+</pre>
+
+<p><a id=exclamation-point-equals> </a></p>
+<h3 id="_18">!=<a class="headerlink" href="index.html#_18" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+!=  (class=boolean #args=2) String/numeric inequality. Mixing number and string results in string compare.
+</pre>
+
+<p><a id=regnotmatch> </a></p>
+<h3 id="_19">!=~<a class="headerlink" href="index.html#_19" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+!=~  (class=boolean #args=2) String (left-hand side) does not match regex (right-hand side), e.g. '$name !=~ "^a.*b$"'.
+</pre>
+
+<p><a id=logical-and> </a></p>
+<h3 id="_20">&amp;&amp;<a class="headerlink" href="index.html#_20" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+&&  (class=boolean #args=2) Logical AND.
+</pre>
+
+<p><a id=less-than> </a></p>
+<h3 id="_21">&lt;<a class="headerlink" href="index.html#_21" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+<  (class=boolean #args=2) String/numeric less-than. Mixing number and string results in string compare.
+</pre>
+
+<p><a id=less-than-or-equals> </a></p>
+<h3 id="_22">&lt;=<a class="headerlink" href="index.html#_22" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+<=  (class=boolean #args=2) String/numeric less-than-or-equals. Mixing number and string results in string compare.
+</pre>
+
+<h3 id="_23">&lt;=&gt;<a class="headerlink" href="index.html#_23" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+<=>  (class=boolean #args=2) Comparator, nominally for sorting. Given a <=> b, returns <0, 0, >0 as a < b, a == b, or a > b, respectively.
+</pre>
+
+<p><a id=double-equals> </a></p>
+<h3 id="_24">==<a class="headerlink" href="index.html#_24" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+==  (class=boolean #args=2) String/numeric equality. Mixing number and string results in string compare.
+</pre>
+
+<p><a id=regmatch> </a></p>
+<h3 id="_25">=~<a class="headerlink" href="index.html#_25" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+=~  (class=boolean #args=2) String (left-hand side) matches regex (right-hand side), e.g. '$name =~ "^a.*b$"'. Capture groups \1 through \9 are matched from (...) in the right-hand side, and can be used within subsequent DSL statements. See also "Regular expressions" at https://miller.readthedocs.io.
+Examples:
+With if-statement: if ($url =~ "http.*com") { ... }
+Without if-statement: given $line = "index ab09 file", and $line =~ "([a-z][a-z])([0-9][0-9])", then $label = "[\1:\2]", $label is "[ab:09]"
+</pre>
+
+<p><a id=greater-than> </a></p>
+<h3 id="_26">&gt;<a class="headerlink" href="index.html#_26" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+>  (class=boolean #args=2) String/numeric greater-than. Mixing number and string results in string compare.
+</pre>
+
+<p><a id=greater-than-or-equals> </a></p>
+<h3 id="_27">&gt;=<a class="headerlink" href="index.html#_27" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+>=  (class=boolean #args=2) String/numeric greater-than-or-equals. Mixing number and string results in string compare.
+</pre>
+
+<p><a id=question-mark-colon> </a></p>
+<h3 id="_28">?:<a class="headerlink" href="index.html#_28" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+?:  (class=boolean #args=3) Standard ternary operator.
+</pre>
+
+<p><a id=absent-coalesce> </a></p>
+<h3 id="_29">??<a class="headerlink" href="index.html#_29" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+??  (class=boolean #args=2) Absent-coalesce operator. $a ?? 1 evaluates to 1 if $a isn't defined in the current record.
+</pre>
+
+<p><a id=absent-empty-coalesce> </a></p>
+<h3 id="_30">???<a class="headerlink" href="index.html#_30" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+???  (class=boolean #args=2) Absent/empty-coalesce operator. $a ??? 1 evaluates to 1 if $a isn't defined in the current record, or has empty value.
+</pre>
+
+<p><a id=logical-xor> </a></p>
+<h3 id="_31">^^<a class="headerlink" href="index.html#_31" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+^^  (class=boolean #args=2) Logical XOR.
+</pre>
+
+<p><a id=logical-or> </a></p>
+<h3 id="_32">||<a class="headerlink" href="index.html#_32" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+||  (class=boolean #args=2) Logical OR.
+</pre>
+
+<h2 id="collections-functions">Collections functions<a class="headerlink" href="index.html#collections-functions" title="Permanent link">&para;</a></h2>
+<h3 id="append">append<a class="headerlink" href="index.html#append" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+append  (class=collections #args=2) Appends second argument to end of first argument, which must be an array.
+</pre>
+
+<h3 id="arrayify">arrayify<a class="headerlink" href="index.html#arrayify" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+arrayify  (class=collections #args=1) Walks through a nested map/array, converting any map with consecutive keys "1", "2", ... into an array. Useful to wrap the output of unflatten.
+</pre>
+
+<h3 id="concat">concat<a class="headerlink" href="index.html#concat" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+concat  (class=collections #args=variadic) Returns the array concatenation of the arguments. Non-array arguments are treated as single-element arrays.
+Examples:
+concat(1,2,3) is [1,2,3]
+concat([1,2],3) is [1,2,3]
+concat([1,2],[3]) is [1,2,3]
+</pre>
+
+<h3 id="depth">depth<a class="headerlink" href="index.html#depth" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+depth  (class=collections #args=1) Prints maximum depth of map/array. Scalars have depth 0.
+</pre>
+
+<h3 id="flatten">flatten<a class="headerlink" href="index.html#flatten" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+flatten  (class=collections #args=2,3) Flattens multi-level maps to single-level ones. Useful for nested JSON-like structures for non-JSON file formats like CSV. With two arguments, the first argument is a map (maybe $*) and the second argument is the flatten separator. With three arguments, the first argument is prefix, the second is the flatten separator, and the third argument is a map; flatten($*, ".") is the same as flatten("", ".", $*). See "Flatten/unflatten: converting between JSON and tabular formats" at https://miller.readthedocs.io for more information.
+Examples:
+flatten({"a":[1,2],"b":3}, ".") is {"a.1": 1, "a.2": 2, "b": 3}.
+flatten("a", ".", {"b": { "c": 4 }}) is {"a.b.c" : 4}.
+flatten("", ".", {"a": { "b": 3 }}) is {"a.b" : 3}.
+</pre>
+
+<h3 id="get_keys">get_keys<a class="headerlink" href="index.html#get_keys" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+get_keys  (class=collections #args=1) Returns array of keys of map or array
+</pre>
+
+<h3 id="get_values">get_values<a class="headerlink" href="index.html#get_values" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+get_values  (class=collections #args=1) Returns array of values of map or array -- in the latter case, returns a copy of the array
+</pre>
+
+<h3 id="haskey">haskey<a class="headerlink" href="index.html#haskey" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+haskey  (class=collections #args=2) True/false if map has/hasn't key, e.g. 'haskey($*, "a")' or 'haskey(mymap, mykey)', or true/false if array index is in bounds / out of bounds. Error if 1st argument is not a map or array. Note -n..-1 alias to 1..n in Miller arrays.
+</pre>
+
+<h3 id="json_parse">json_parse<a class="headerlink" href="index.html#json_parse" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+json_parse  (class=collections #args=1) Converts value from JSON-formatted string.
+</pre>
+
+<h3 id="json_stringify">json_stringify<a class="headerlink" href="index.html#json_stringify" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+json_stringify  (class=collections #args=1,2) Converts value to JSON-formatted string. Default output is single-line. With optional second boolean argument set to true, produces multiline output.
+</pre>
+
+<h3 id="leafcount">leafcount<a class="headerlink" href="index.html#leafcount" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+leafcount  (class=collections #args=1) Counts total number of terminal values in map/array. For single-level map/array, same as length.
+</pre>
+
+<h3 id="length">length<a class="headerlink" href="index.html#length" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+length  (class=collections #args=1) Counts number of top-level entries in array/map. Scalars have length 1.
+</pre>
+
+<h3 id="mapdiff">mapdiff<a class="headerlink" href="index.html#mapdiff" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+mapdiff  (class=collections #args=variadic) With 0 args, returns empty map. With 1 arg, returns copy of arg. With 2 or more, returns copy of arg 1 with all keys from any of remaining argument maps removed.
+</pre>
+
+<h3 id="mapexcept">mapexcept<a class="headerlink" href="index.html#mapexcept" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+mapexcept  (class=collections #args=variadic) Returns a map with keys from remaining arguments, if any, unset. Remaining arguments can be strings or arrays of string. E.g. 'mapexcept({1:2,3:4,5:6}, 1, 5, 7)' is '{3:4}' and 'mapexcept({1:2,3:4,5:6}, [1, 5, 7])' is '{3:4}'.
+</pre>
+
+<h3 id="mapselect">mapselect<a class="headerlink" href="index.html#mapselect" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+mapselect  (class=collections #args=variadic) Returns a map with only keys from remaining arguments set. Remaining arguments can be strings or arrays of string. E.g. 'mapselect({1:2,3:4,5:6}, 1, 5, 7)' is '{1:2,5:6}' and 'mapselect({1:2,3:4,5:6}, [1, 5, 7])' is '{1:2,5:6}'.
+</pre>
+
+<h3 id="mapsum">mapsum<a class="headerlink" href="index.html#mapsum" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+mapsum  (class=collections #args=variadic) With 0 args, returns empty map. With >= 1 arg, returns a map with key-value pairs from all arguments. Rightmost collisions win, e.g. 'mapsum({1:2,3:4},{1:5})' is '{1:5,3:4}'.
+</pre>
+
+<h3 id="unflatten">unflatten<a class="headerlink" href="index.html#unflatten" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+unflatten  (class=collections #args=2) Reverses flatten. Useful for nested JSON-like structures for non-JSON file formats like CSV. The first argument is a map, and the second argument is the flatten separator. See also arrayify. See "Flatten/unflatten: converting between JSON and tabular formats" at https://miller.readthedocs.io for more information.
+Example:
+unflatten({"a.b.c" : 4}, ".") is {"a": "b": { "c": 4 }}.
+</pre>
+
+<h2 id="conversion-functions">Conversion functions<a class="headerlink" href="index.html#conversion-functions" title="Permanent link">&para;</a></h2>
+<h3 id="boolean">boolean<a class="headerlink" href="index.html#boolean" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+boolean  (class=conversion #args=1) Convert int/float/bool/string to boolean.
+</pre>
+
+<h3 id="float">float<a class="headerlink" href="index.html#float" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+float  (class=conversion #args=1) Convert int/float/bool/string to float.
+</pre>
+
+<h3 id="fmtifnum">fmtifnum<a class="headerlink" href="index.html#fmtifnum" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+fmtifnum  (class=conversion #args=2) Identical to fmtnum, except returns the first argument as-is if the output would be an error.
+Examples:
+fmtifnum(3.4, "%.6f") gives 3.400000"
+fmtifnum("abc", "%.6f") gives abc"
+$* = fmtifnum($*, "%.6f") formats numeric fields in the current record, leaving non-numeric ones alone
+</pre>
+
+<h3 id="fmtnum">fmtnum<a class="headerlink" href="index.html#fmtnum" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+fmtnum  (class=conversion #args=2) Convert int/float/bool to string using printf-style format string (https://pkg.go.dev/fmt), e.g. '$s = fmtnum($n, "%08d")' or '$t = fmtnum($n, "%.6e")'. This function recurses on array and map values.
+Example:
+$x = fmtnum($x, "%.6f")
+</pre>
+
+<h3 id="hexfmt">hexfmt<a class="headerlink" href="index.html#hexfmt" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+hexfmt  (class=conversion #args=1) Convert int to hex string, e.g. 255 to "0xff".
+</pre>
+
+<h3 id="int">int<a class="headerlink" href="index.html#int" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+int  (class=conversion #args=1) Convert int/float/bool/string to int.
+</pre>
+
+<h3 id="joink">joink<a class="headerlink" href="index.html#joink" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+joink  (class=conversion #args=2) Makes string from map/array keys. First argument is map/array; second is separator string.
+Examples:
+joink({"a":3,"b":4,"c":5}, ",") = "a,b,c".
+joink([1,2,3], ",") = "1,2,3".
+</pre>
+
+<h3 id="joinkv">joinkv<a class="headerlink" href="index.html#joinkv" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+joinkv  (class=conversion #args=3) Makes string from map/array key-value pairs. First argument is map/array; second is pair-separator string; third is field-separator string. Mnemonic: the "=" comes before the "," in the output and in the arguments to joinkv.
+Examples:
+joinkv([3,4,5], "=", ",") = "1=3,2=4,3=5"
+joinkv({"a":3,"b":4,"c":5}, ":", ";") = "a:3;b:4;c:5"
+</pre>
+
+<h3 id="joinv">joinv<a class="headerlink" href="index.html#joinv" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+joinv  (class=conversion #args=2) Makes string from map/array values. First argument is map/array; second is separator string.
+Examples:
+joinv([3,4,5], ",") = "3,4,5"
+joinv({"a":3,"b":4,"c":5}, ",") = "3,4,5"
+</pre>
+
+<h3 id="splita">splita<a class="headerlink" href="index.html#splita" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+splita  (class=conversion #args=2) Splits string into array with type inference. First argument is string to split; second is the separator to split on.
+Example:
+splita("3,4,5", ",") = [3,4,5]
+</pre>
+
+<h3 id="splitax">splitax<a class="headerlink" href="index.html#splitax" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+splitax  (class=conversion #args=2) Splits string into array without type inference. First argument is string to split; second is the separator to split on.
+Example:
+splitax("3,4,5", ",") = ["3","4","5"]
+</pre>
+
+<h3 id="splitkv">splitkv<a class="headerlink" href="index.html#splitkv" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+splitkv  (class=conversion #args=3) Splits string by separators into map with type inference. First argument is string to split; second argument is pair separator; third argument is field separator.
+Example:
+splitkv("a=3,b=4,c=5", "=", ",") = {"a":3,"b":4,"c":5}
+</pre>
+
+<h3 id="splitkvx">splitkvx<a class="headerlink" href="index.html#splitkvx" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+splitkvx  (class=conversion #args=3) Splits string by separators into map without type inference (keys and values are strings). First argument is string to split; second argument is pair separator; third argument is field separator.
+Example:
+splitkvx("a=3,b=4,c=5", "=", ",") = {"a":"3","b":"4","c":"5"}
+</pre>
+
+<h3 id="splitnv">splitnv<a class="headerlink" href="index.html#splitnv" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+splitnv  (class=conversion #args=2) Splits string by separator into integer-indexed map with type inference. First argument is string to split; second argument is separator to split on.
+Example:
+splitnv("a,b,c", ",") = {"1":"a","2":"b","3":"c"}
+</pre>
+
+<h3 id="splitnvx">splitnvx<a class="headerlink" href="index.html#splitnvx" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+splitnvx  (class=conversion #args=2) Splits string by separator into integer-indexed map without type inference (values are strings). First argument is string to split; second argument is separator to split on.
+Example:
+splitnvx("3,4,5", ",") = {"1":"3","2":"4","3":"5"}
+</pre>
+
+<h3 id="string">string<a class="headerlink" href="index.html#string" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+string  (class=conversion #args=1) Convert int/float/bool/string/array/map to string.
+</pre>
+
+<h2 id="hashing-functions">Hashing functions<a class="headerlink" href="index.html#hashing-functions" title="Permanent link">&para;</a></h2>
+<h3 id="md5">md5<a class="headerlink" href="index.html#md5" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+md5  (class=hashing #args=1) MD5 hash.
+</pre>
+
+<h3 id="sha1">sha1<a class="headerlink" href="index.html#sha1" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sha1  (class=hashing #args=1) SHA1 hash.
+</pre>
+
+<h3 id="sha256">sha256<a class="headerlink" href="index.html#sha256" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sha256  (class=hashing #args=1) SHA256 hash.
+</pre>
+
+<h3 id="sha512">sha512<a class="headerlink" href="index.html#sha512" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sha512  (class=hashing #args=1) SHA512 hash.
+</pre>
+
+<h2 id="higher-order-functions-functions">Higher-order-functions functions<a class="headerlink" href="index.html#higher-order-functions-functions" title="Permanent link">&para;</a></h2>
+<h3 id="any">any<a class="headerlink" href="index.html#any" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+any  (class=higher-order-functions #args=2) Given a map or array as first argument and a function as second argument, yields a boolean true if the argument function returns true for any array/map element, false otherwise. For arrays, the function should take one argument, for array element; for maps, it should take two, for map-element key and value. In either case it should return a boolean.
+Examples:
+Array example: any([10,20,30], func(e) {return $index == e})
+Map example: any({"a": "foo", "b": "bar"}, func(k,v) {return $[k] == v})
+</pre>
+
+<h3 id="apply">apply<a class="headerlink" href="index.html#apply" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+apply  (class=higher-order-functions #args=2) Given a map or array as first argument and a function as second argument, applies the function to each element of the array/map. For arrays, the function should take one argument, for array element; it should return a new element. For maps, it should take two arguments, for map-element key and value; it should return a new key-value pair (i.e. a single-entry map).
+Examples:
+Array example: apply([1,2,3,4,5], func(e) {return e ** 3}) returns [1, 8, 27, 64, 125].
+Map example: apply({"a":1, "b":3, "c":5}, func(k,v) {return {toupper(k): v ** 2}}) returns {"A": 1, "B":9, "C": 25}",
+</pre>
+
+<h3 id="every">every<a class="headerlink" href="index.html#every" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+every  (class=higher-order-functions #args=2) Given a map or array as first argument and a function as second argument, yields a boolean true if the argument function returns true for every array/map element, false otherwise. For arrays, the function should take one argument, for array element; for maps, it should take two, for map-element key and value. In either case it should return a boolean.
+Examples:
+Array example: every(["a", "b", "c"], func(e) {return $[e] >= 0})
+Map example: every({"a": "foo", "b": "bar"}, func(k,v) {return $[k] == v})
+</pre>
+
+<h3 id="fold">fold<a class="headerlink" href="index.html#fold" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+fold  (class=higher-order-functions #args=3) Given a map or array as first argument and a function as second argument, accumulates entries into a final output -- for example, sum or product. For arrays, the function should take two arguments, for accumulated value and array element. For maps, it should take four arguments, for accumulated key and value, and map-element key and value; it should return the updated accumulator as a new key-value pair (i.e. a single-entry map). The start value for the accumulator is taken from the third argument.
+Examples:
+Array example: fold([1,2,3,4,5], func(acc,e) {return acc + e**3}, 10000) returns 10225.
+Map example: fold({"a":1, "b":3, "c": 5}, func(acck,accv,ek,ev) {return {"sum": accv+ev**2}}, {"sum":10000}) returns 10035.
+</pre>
+
+<h3 id="reduce">reduce<a class="headerlink" href="index.html#reduce" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+reduce  (class=higher-order-functions #args=2) Given a map or array as first argument and a function as second argument, accumulates entries into a final output -- for example, sum or product. For arrays, the function should take two arguments, for accumulated value and array element, and return the accumulated element. For maps, it should take four arguments, for accumulated key and value, and map-element key and value; it should return the updated accumulator as a new key-value pair (i.e. a single-entry map). The start value for the accumulator is the first element for arrays, or the first element's key-value pair for maps.
+Examples:
+Array example: reduce([1,2,3,4,5], func(acc,e) {return acc + e**3}) returns 225.
+Map example: reduce({"a":1, "b":3, "c": 5}, func(acck,accv,ek,ev) {return {"sum_of_squares": accv + ev**2}}) returns {"sum_of_squares": 35}.
+</pre>
+
+<h3 id="select">select<a class="headerlink" href="index.html#select" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+select  (class=higher-order-functions #args=2) Given a map or array as first argument and a function as second argument, includes each input element in the output if the function returns true. For arrays, the function should take one argument, for array element; for maps, it should take two, for map-element key and value. In either case it should return a boolean.
+Examples:
+Array example: select([1,2,3,4,5], func(e) {return e >= 3}) returns [3, 4, 5].
+Map example: select({"a":1, "b":3, "c":5}, func(k,v) {return v >= 3}) returns {"b":3, "c": 5}.
+</pre>
+
+<h3 id="sort">sort<a class="headerlink" href="index.html#sort" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sort  (class=higher-order-functions #args=1-2) Given a map or array as first argument and string flags or function as optional second argument, returns a sorted copy of the input. With one argument, sorts array elements with numbers first numerically and then strings lexically, and map elements likewise by map keys. If the second argument is a string, it can contain any of "f" for lexical ("n" is for the above default), "c" for case-folded lexical, or "t" for natural sort order. An additional "r" in that string is for reverse. An additional "v" in that string means sort maps by value, rather than by key. If the second argument is a function, then for arrays it should take two arguments a and b, returning < 0, 0, or > 0 as a < b, a == b, or a > b respectively; for maps the function should take four arguments ak, av, bk, and bv, again returning < 0, 0, or > 0, using a and b's keys and values.
+Examples:
+Default sorting: sort([3,"A",1,"B",22]) returns [1, 3, 20, "A", "B"].
+  Note that this is numbers before strings.
+Default sorting: sort(["E","a","c","B","d"]) returns ["B", "E", "a", "c", "d"].
+  Note that this is uppercase before lowercase.
+Case-folded ascending: sort(["E","a","c","B","d"], "c") returns ["a", "B", "c", "d", "E"].
+Case-folded descending: sort(["E","a","c","B","d"], "cr") returns ["E", "d", "c", "B", "a"].
+Natural sorting: sort(["a1","a10","a100","a2","a20","a200"], "t") returns ["a1", "a2", "a10", "a20", "a100", "a200"].
+Array with function: sort([5,2,3,1,4], func(a,b) {return b <=> a}) returns [5,4,3,2,1].
+Map with function: sort({"c":2,"a":3,"b":1}, func(ak,av,bk,bv) {return bv <=> av}) returns {"a":3,"c":2,"b":1}.
+Map without function: sort({"c":2,"a":3,"b":1}) returns {"a":3,"b":1,"c":2}.
+Map without function: sort({"c":2,"a":3,"b":1}, "v") returns {"b":1,"c":2,"a":3}.
+Map without function: sort({"c":2,"a":3,"b":1}, "vnr") returns {"a":3,"c":2,"b":1}.
+</pre>
+
+<h2 id="math-functions">Math functions<a class="headerlink" href="index.html#math-functions" title="Permanent link">&para;</a></h2>
+<h3 id="abs">abs<a class="headerlink" href="index.html#abs" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+abs  (class=math #args=1) Absolute value.
+</pre>
+
+<h3 id="acos">acos<a class="headerlink" href="index.html#acos" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+acos  (class=math #args=1) Inverse trigonometric cosine.
+</pre>
+
+<h3 id="acosh">acosh<a class="headerlink" href="index.html#acosh" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+acosh  (class=math #args=1) Inverse hyperbolic cosine.
+</pre>
+
+<h3 id="asin">asin<a class="headerlink" href="index.html#asin" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asin  (class=math #args=1) Inverse trigonometric sine.
+</pre>
+
+<h3 id="asinh">asinh<a class="headerlink" href="index.html#asinh" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asinh  (class=math #args=1) Inverse hyperbolic sine.
+</pre>
+
+<h3 id="atan">atan<a class="headerlink" href="index.html#atan" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+atan  (class=math #args=1) One-argument arctangent.
+</pre>
+
+<h3 id="atan2">atan2<a class="headerlink" href="index.html#atan2" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+atan2  (class=math #args=2) Two-argument arctangent.
+</pre>
+
+<h3 id="atanh">atanh<a class="headerlink" href="index.html#atanh" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+atanh  (class=math #args=1) Inverse hyperbolic tangent.
+</pre>
+
+<h3 id="cbrt">cbrt<a class="headerlink" href="index.html#cbrt" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+cbrt  (class=math #args=1) Cube root.
+</pre>
+
+<h3 id="ceil">ceil<a class="headerlink" href="index.html#ceil" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+ceil  (class=math #args=1) Ceiling: nearest integer at or above.
+</pre>
+
+<h3 id="cos">cos<a class="headerlink" href="index.html#cos" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+cos  (class=math #args=1) Trigonometric cosine.
+</pre>
+
+<h3 id="cosh">cosh<a class="headerlink" href="index.html#cosh" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+cosh  (class=math #args=1) Hyperbolic cosine.
+</pre>
+
+<h3 id="erf">erf<a class="headerlink" href="index.html#erf" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+erf  (class=math #args=1) Error function.
+</pre>
+
+<h3 id="erfc">erfc<a class="headerlink" href="index.html#erfc" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+erfc  (class=math #args=1) Complementary error function.
+</pre>
+
+<h3 id="exp">exp<a class="headerlink" href="index.html#exp" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+exp  (class=math #args=1) Exponential function e**x.
+</pre>
+
+<h3 id="expm1">expm1<a class="headerlink" href="index.html#expm1" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+expm1  (class=math #args=1) e**x - 1.
+</pre>
+
+<h3 id="floor">floor<a class="headerlink" href="index.html#floor" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+floor  (class=math #args=1) Floor: nearest integer at or below.
+</pre>
+
+<h3 id="invqnorm">invqnorm<a class="headerlink" href="index.html#invqnorm" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+invqnorm  (class=math #args=1) Inverse of normal cumulative distribution function. Note that invqorm(urand()) is normally distributed.
+</pre>
+
+<h3 id="log">log<a class="headerlink" href="index.html#log" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+log  (class=math #args=1) Natural (base-e) logarithm.
+</pre>
+
+<h3 id="log10">log10<a class="headerlink" href="index.html#log10" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+log10  (class=math #args=1) Base-10 logarithm.
+</pre>
+
+<h3 id="log1p">log1p<a class="headerlink" href="index.html#log1p" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+log1p  (class=math #args=1) log(1-x).
+</pre>
+
+<h3 id="logifit">logifit<a class="headerlink" href="index.html#logifit" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+logifit  (class=math #args=3) Given m and b from logistic regression, compute fit: $yhat=logifit($x,$m,$b).
+</pre>
+
+<h3 id="max">max<a class="headerlink" href="index.html#max" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+max  (class=math #args=variadic) Max of n numbers; null loses.
+</pre>
+
+<h3 id="min">min<a class="headerlink" href="index.html#min" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+min  (class=math #args=variadic) Min of n numbers; null loses.
+</pre>
+
+<h3 id="qnorm">qnorm<a class="headerlink" href="index.html#qnorm" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+qnorm  (class=math #args=1) Normal cumulative distribution function.
+</pre>
+
+<h3 id="round">round<a class="headerlink" href="index.html#round" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+round  (class=math #args=1) Round to nearest integer.
+</pre>
+
+<h3 id="roundm">roundm<a class="headerlink" href="index.html#roundm" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+roundm  (class=math #args=2) Round to nearest multiple of m: roundm($x,$m) is the same as round($x/$m)*$m.
+</pre>
+
+<h3 id="sgn">sgn<a class="headerlink" href="index.html#sgn" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sgn  (class=math #args=1) +1, 0, -1 for positive, zero, negative input respectively.
+</pre>
+
+<h3 id="sin">sin<a class="headerlink" href="index.html#sin" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sin  (class=math #args=1) Trigonometric sine.
+</pre>
+
+<h3 id="sinh">sinh<a class="headerlink" href="index.html#sinh" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sinh  (class=math #args=1) Hyperbolic sine.
+</pre>
+
+<h3 id="sqrt">sqrt<a class="headerlink" href="index.html#sqrt" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sqrt  (class=math #args=1) Square root.
+</pre>
+
+<h3 id="tan">tan<a class="headerlink" href="index.html#tan" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+tan  (class=math #args=1) Trigonometric tangent.
+</pre>
+
+<h3 id="tanh">tanh<a class="headerlink" href="index.html#tanh" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+tanh  (class=math #args=1) Hyperbolic tangent.
+</pre>
+
+<h3 id="urand">urand<a class="headerlink" href="index.html#urand" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+urand  (class=math #args=0) Floating-point numbers uniformly distributed on the unit interval.
+Example:
+Int-valued example: '$n=floor(20+urand()*11)'.
+</pre>
+
+<h3 id="urand32">urand32<a class="headerlink" href="index.html#urand32" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+urand32  (class=math #args=0) Integer uniformly distributed 0 and 2**32-1 inclusive.
+</pre>
+
+<h3 id="urandelement">urandelement<a class="headerlink" href="index.html#urandelement" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+urandelement  (class=math #args=1) Random sample from the first argument, which must be an non-empty array.
+</pre>
+
+<h3 id="urandint">urandint<a class="headerlink" href="index.html#urandint" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+urandint  (class=math #args=2) Integer uniformly distributed between inclusive integer endpoints.
+</pre>
+
+<h3 id="urandrange">urandrange<a class="headerlink" href="index.html#urandrange" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+urandrange  (class=math #args=2) Floating-point numbers uniformly distributed on the interval [a, b).
+</pre>
+
+<h2 id="string-functions">String functions<a class="headerlink" href="index.html#string-functions" title="Permanent link">&para;</a></h2>
+<h3 id="capitalize">capitalize<a class="headerlink" href="index.html#capitalize" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+capitalize  (class=string #args=1) Convert string's first character to uppercase.
+</pre>
+
+<h3 id="clean_whitespace">clean_whitespace<a class="headerlink" href="index.html#clean_whitespace" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+clean_whitespace  (class=string #args=1) Same as collapse_whitespace and strip.
+</pre>
+
+<h3 id="collapse_whitespace">collapse_whitespace<a class="headerlink" href="index.html#collapse_whitespace" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+collapse_whitespace  (class=string #args=1) Strip repeated whitespace from string.
+</pre>
+
+<h3 id="format">format<a class="headerlink" href="index.html#format" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+format  (class=string #args=variadic) Using first argument as format string, interpolate remaining arguments in place of each "{}" in the format string. Too-few arguments are treated as the empty string; too-many arguments are discarded.
+Examples:
+format("{}:{}:{}", 1,2)     gives "1:2:".
+format("{}:{}:{}", 1,2,3)   gives "1:2:3".
+format("{}:{}:{}", 1,2,3,4) gives "1:2:3".
+</pre>
+
+<h3 id="gssub">gssub<a class="headerlink" href="index.html#gssub" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+gssub  (class=string #args=3) Like gsub but does no regexing. No characters are special.
+Example:
+gssub("ab.d.fg", ".", "X") gives "abXdXfg"
+</pre>
+
+<h3 id="gsub">gsub<a class="headerlink" href="index.html#gsub" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+gsub  (class=string #args=3) '$name = gsub($name, "old", "new")': replace all, with support for regular expressions. Capture groups \1 through \9 in the new part are matched from (...) in the old part, and must be used within the same call to gsub -- they don't persist for subsequent DSL statements. See also =~ and regextract. See also "Regular expressions" at https://miller.readthedocs.io.
+Examples:
+gsub("ababab", "ab", "XY") gives "XYXYXY"
+gsub("abc.def", ".", "X") gives "XXXXXXX"
+gsub("abc.def", "\.", "X") gives "abcXdef"
+gsub("abcdefg", "[ce]", "X") gives "abXdXfg"
+gsub("prefix4529:suffix8567", "(....ix)([0-9]+)", "[\1 : \2]") gives "[prefix : 4529]:[suffix : 8567]"
+</pre>
+
+<h3 id="latin1_to_utf8">latin1_to_utf8<a class="headerlink" href="index.html#latin1_to_utf8" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+latin1_to_utf8  (class=string #args=1) Tries to convert Latin-1-encoded string to UTF-8-encoded string. If argument is array or map, recurses into it.
+Examples:
+$y = latin1_to_utf8($x)
+$* = latin1_to_utf8($*)
+</pre>
+
+<h3 id="lstrip">lstrip<a class="headerlink" href="index.html#lstrip" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+lstrip  (class=string #args=1) Strip leading whitespace from string.
+</pre>
+
+<h3 id="regextract">regextract<a class="headerlink" href="index.html#regextract" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+regextract  (class=string #args=2) Extracts a substring (the first, if there are multiple matches), matching a regular expression, from the input. Does not use capture groups; see also the =~ operator which does.
+Examples:
+regextract("index ab09 file", "[a-z][a-z][0-9][0-9]") gives "ab09"
+regextract("index a999 file", "[a-z][a-z][0-9][0-9]") gives (absent), which will result in an assignment not happening.
+</pre>
+
+<h3 id="regextract_or_else">regextract_or_else<a class="headerlink" href="index.html#regextract_or_else" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+regextract_or_else  (class=string #args=3) Like regextract but the third argument is the return value in case the input string (first argument) doesn't match the pattern (second argument).
+Examples:
+regextract_or_else("index ab09 file", "[a-z][a-z][0-9][0-9]", "nonesuch") gives "ab09"
+regextract_or_else("index a999 file", "[a-z][a-z][0-9][0-9]", "nonesuch") gives "nonesuch"
+</pre>
+
+<h3 id="rstrip">rstrip<a class="headerlink" href="index.html#rstrip" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+rstrip  (class=string #args=1) Strip trailing whitespace from string.
+</pre>
+
+<h3 id="ssub">ssub<a class="headerlink" href="index.html#ssub" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+ssub  (class=string #args=3) Like sub but does no regexing. No characters are special.
+Example:
+ssub("abc.def", ".", "X") gives "abcXdef"
+</pre>
+
+<h3 id="strip">strip<a class="headerlink" href="index.html#strip" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+strip  (class=string #args=1) Strip leading and trailing whitespace from string.
+</pre>
+
+<h3 id="strlen">strlen<a class="headerlink" href="index.html#strlen" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+strlen  (class=string #args=1) String length.
+</pre>
+
+<h3 id="sub">sub<a class="headerlink" href="index.html#sub" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sub  (class=string #args=3) '$name = sub($name, "old", "new")': replace once (first match, if there are multiple matches), with support for regular expressions. Capture groups \1 through \9 in the new part are matched from (...) in the old part, and must be used within the same call to sub -- they don't persist for subsequent DSL statements. See also =~ and regextract. See also "Regular expressions" at https://miller.readthedocs.io.
+Examples:
+sub("ababab", "ab", "XY") gives "XYabab"
+sub("abc.def", ".", "X") gives "Xbc.def"
+sub("abc.def", "\.", "X") gives "abcXdef"
+sub("abcdefg", "[ce]", "X") gives "abXdefg"
+sub("prefix4529:suffix8567", "suffix([0-9]+)", "name\1") gives "prefix4529:name8567"
+</pre>
+
+<h3 id="substr">substr<a class="headerlink" href="index.html#substr" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+substr  (class=string #args=3) substr is an alias for substr0. See also substr1. Miller is generally 1-up with all array and string indices, but, this is a backward-compatibility issue with Miller 5 and below. Arrays are new in Miller 6; the substr function is older.
+</pre>
+
+<h3 id="substr0">substr0<a class="headerlink" href="index.html#substr0" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+substr0  (class=string #args=3) substr0(s,m,n) gives substring of s from 0-up position m to n inclusive. Negative indices -len .. -1 alias to 0 .. len-1. See also substr and substr1.
+</pre>
+
+<h3 id="substr1">substr1<a class="headerlink" href="index.html#substr1" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+substr1  (class=string #args=3) substr1(s,m,n) gives substring of s from 1-up position m to n inclusive. Negative indices -len .. -1 alias to 1 .. len. See also substr and substr0.
+</pre>
+
+<h3 id="tolower">tolower<a class="headerlink" href="index.html#tolower" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+tolower  (class=string #args=1) Convert string to lowercase.
+</pre>
+
+<h3 id="toupper">toupper<a class="headerlink" href="index.html#toupper" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+toupper  (class=string #args=1) Convert string to uppercase.
+</pre>
+
+<h3 id="truncate">truncate<a class="headerlink" href="index.html#truncate" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+truncate  (class=string #args=2) Truncates string first argument to max length of int second argument.
+</pre>
+
+<h3 id="unformat">unformat<a class="headerlink" href="index.html#unformat" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+unformat  (class=string #args=2) Using first argument as format string, unpacks second argument into an array of matches, with type-inference. On non-match, returns error -- use is_error() to check.
+Examples:
+unformat("{}:{}:{}",  "1:2:3") gives [1, 2, 3].
+unformat("{}h{}m{}s", "3h47m22s") gives [3, 47, 22].
+is_error(unformat("{}h{}m{}s", "3:47:22")) gives true.
+</pre>
+
+<h3 id="unformatx">unformatx<a class="headerlink" href="index.html#unformatx" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+unformatx  (class=string #args=2) Same as unformat, but without type-inference.
+Examples:
+unformatx("{}:{}:{}",  "1:2:3") gives ["1", "2", "3"].
+unformatx("{}h{}m{}s", "3h47m22s") gives ["3", "47", "22"].
+is_error(unformatx("{}h{}m{}s", "3:47:22")) gives true.
+</pre>
+
+<h3 id="utf8_to_latin1">utf8_to_latin1<a class="headerlink" href="index.html#utf8_to_latin1" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+utf8_to_latin1  (class=string #args=1) Tries to convert UTF-8-encoded string to Latin-1-encoded string. If argument is array or map, recurses into it.
+Examples:
+$y = utf8_to_latin1($x)
+$* = utf8_to_latin1($*)
+</pre>
+
+<p><a id=dot> </a></p>
+<h3 id="_33">.<a class="headerlink" href="index.html#_33" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+.  (class=string #args=2) String concatenation. Non-strings are coerced, so you can do '"ax".98' etc.
+</pre>
+
+<h2 id="system-functions">System functions<a class="headerlink" href="index.html#system-functions" title="Permanent link">&para;</a></h2>
+<h3 id="exec">exec<a class="headerlink" href="index.html#exec" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+exec  (class=system #args=variadic) '$output = exec( "command", ["arg1", "arg2"], {"env": ["ENV_VAR=ENV_VALUE"], "dir": "/tmp/run_command_here", "stdin_string": "this is input fed to program", "combined_output": true )' Run a command via executable, path, args and environment, yielding its stdout minus final carriage return.
+Example:
+exec("echo", ["Hello", "$YOUR_NAME"], {"env": "YOUR_NAME=World"}) outputs "Hello World"
+</pre>
+
+<h3 id="hostname">hostname<a class="headerlink" href="index.html#hostname" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+hostname  (class=system #args=0) Returns the hostname as a string.
+</pre>
+
+<h3 id="os">os<a class="headerlink" href="index.html#os" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+os  (class=system #args=0) Returns the operating-system name as a string.
+</pre>
+
+<h3 id="system">system<a class="headerlink" href="index.html#system" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+system  (class=system #args=1) Run command string, yielding its stdout minus final carriage return.
+</pre>
+
+<h3 id="version">version<a class="headerlink" href="index.html#version" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+version  (class=system #args=0) Returns the Miller version as a string.
+</pre>
+
+<h2 id="time-functions">Time functions<a class="headerlink" href="index.html#time-functions" title="Permanent link">&para;</a></h2>
+<h3 id="dhms2fsec">dhms2fsec<a class="headerlink" href="index.html#dhms2fsec" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+dhms2fsec  (class=time #args=1) Recovers floating-point seconds as in dhms2fsec("5d18h53m20.250000s") = 500000.250000
+</pre>
+
+<h3 id="dhms2sec">dhms2sec<a class="headerlink" href="index.html#dhms2sec" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+dhms2sec  (class=time #args=1) Recovers integer seconds as in dhms2sec("5d18h53m20s") = 500000
+</pre>
+
+<h3 id="fsec2dhms">fsec2dhms<a class="headerlink" href="index.html#fsec2dhms" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+fsec2dhms  (class=time #args=1) Formats floating-point seconds as in fsec2dhms(500000.25) = "5d18h53m20.250000s"
+</pre>
+
+<h3 id="fsec2hms">fsec2hms<a class="headerlink" href="index.html#fsec2hms" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+fsec2hms  (class=time #args=1) Formats floating-point seconds as in fsec2hms(5000.25) = "01:23:20.250000"
+</pre>
+
+<h3 id="gmt2localtime">gmt2localtime<a class="headerlink" href="index.html#gmt2localtime" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+gmt2localtime  (class=time #args=1,2) Convert from a GMT-time string to a local-time string. Consulting $TZ unless second argument is supplied.
+Examples:
+gmt2localtime("1999-12-31T22:00:00Z") = "2000-01-01 00:00:00" with TZ="Asia/Istanbul"
+gmt2localtime("1999-12-31T22:00:00Z", "Asia/Istanbul") = "2000-01-01 00:00:00"
+</pre>
+
+<h3 id="gmt2sec">gmt2sec<a class="headerlink" href="index.html#gmt2sec" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+gmt2sec  (class=time #args=1) Parses GMT timestamp as integer seconds since the epoch.
+Example:
+gmt2sec("2001-02-03T04:05:06Z") = 981173106
+</pre>
+
+<h3 id="hms2fsec">hms2fsec<a class="headerlink" href="index.html#hms2fsec" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+hms2fsec  (class=time #args=1) Recovers floating-point seconds as in hms2fsec("01:23:20.250000") = 5000.250000
+</pre>
+
+<h3 id="hms2sec">hms2sec<a class="headerlink" href="index.html#hms2sec" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+hms2sec  (class=time #args=1) Recovers integer seconds as in hms2sec("01:23:20") = 5000
+</pre>
+
+<h3 id="localtime2gmt">localtime2gmt<a class="headerlink" href="index.html#localtime2gmt" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+localtime2gmt  (class=time #args=1,2) Convert from a local-time string to a GMT-time string. Consults $TZ unless second argument is supplied.
+Examples:
+localtime2gmt("2000-01-01 00:00:00") = "1999-12-31T22:00:00Z" with TZ="Asia/Istanbul"
+localtime2gmt("2000-01-01 00:00:00", "Asia/Istanbul") = "1999-12-31T22:00:00Z"
+</pre>
+
+<h3 id="localtime2sec">localtime2sec<a class="headerlink" href="index.html#localtime2sec" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+localtime2sec  (class=time #args=1,2) Parses local timestamp as integer seconds since the epoch. Consults $TZ environment variable, unless second argument is supplied.
+Examples:
+localtime2sec("2001-02-03 04:05:06") = 981165906 with TZ="Asia/Istanbul"
+localtime2sec("2001-02-03 04:05:06", "Asia/Istanbul") = 981165906"
+</pre>
+
+<h3 id="sec2dhms">sec2dhms<a class="headerlink" href="index.html#sec2dhms" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sec2dhms  (class=time #args=1) Formats integer seconds as in sec2dhms(500000) = "5d18h53m20s"
+</pre>
+
+<h3 id="sec2gmt">sec2gmt<a class="headerlink" href="index.html#sec2gmt" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sec2gmt  (class=time #args=1,2) Formats seconds since epoch as GMT timestamp. Leaves non-numbers as-is. With second integer argument n, includes n decimal places for the seconds part.
+Examples:
+sec2gmt(1234567890)           = "2009-02-13T23:31:30Z"
+sec2gmt(1234567890.123456)    = "2009-02-13T23:31:30Z"
+sec2gmt(1234567890.123456, 6) = "2009-02-13T23:31:30.123456Z"
+</pre>
+
+<h3 id="sec2gmtdate">sec2gmtdate<a class="headerlink" href="index.html#sec2gmtdate" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sec2gmtdate  (class=time #args=1) Formats seconds since epoch (integer part) as GMT timestamp with year-month-date. Leaves non-numbers as-is.
+Example:
+sec2gmtdate(1440768801.7) = "2015-08-28".
+</pre>
+
+<h3 id="sec2hms">sec2hms<a class="headerlink" href="index.html#sec2hms" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sec2hms  (class=time #args=1) Formats integer seconds as in sec2hms(5000) = "01:23:20"
+</pre>
+
+<h3 id="sec2localdate">sec2localdate<a class="headerlink" href="index.html#sec2localdate" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sec2localdate  (class=time #args=1,2) Formats seconds since epoch (integer part) as local timestamp with year-month-date. Leaves non-numbers as-is. Consults $TZ environment variable unless second argument is supplied.
+Examples:
+sec2localdate(1440768801.7) = "2015-08-28" with TZ="Asia/Istanbul"
+sec2localdate(1440768801.7, "Asia/Istanbul") = "2015-08-28"
+</pre>
+
+<h3 id="sec2localtime">sec2localtime<a class="headerlink" href="index.html#sec2localtime" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+sec2localtime  (class=time #args=1,2,3) Formats seconds since epoch (integer part) as local timestamp. Consults $TZ environment variable unless third argument is supplied. Leaves non-numbers as-is. With second integer argument n, includes n decimal places for the seconds part
+Examples:
+sec2localtime(1234567890)           = "2009-02-14 01:31:30"        with TZ="Asia/Istanbul"
+sec2localtime(1234567890.123456)    = "2009-02-14 01:31:30"        with TZ="Asia/Istanbul"
+sec2localtime(1234567890.123456, 6) = "2009-02-14 01:31:30.123456" with TZ="Asia/Istanbul"
+sec2localtime(1234567890.123456, 6, "Asia/Istanbul") = "2009-02-14 01:31:30.123456"
+</pre>
+
+<h3 id="strftime">strftime<a class="headerlink" href="index.html#strftime" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+strftime  (class=time #args=2) Formats seconds since the epoch as timestamp. Format strings are as at https://pkg.go.dev/github.com/lestrrat-go/strftime, with the Miller-specific addition of "%1S" through "%9S" which format the seconds with 1 through 9 decimal places, respectively. ("%S" uses no decimal places.) See also https://miller.readthedocs.io/en/latest/reference-dsl-time/ for more information on the differences from the C library ("man strftime" on your system). See also strftime_local.
+Examples:
+strftime(1440768801.7,"%Y-%m-%dT%H:%M:%SZ")  = "2015-08-28T13:33:21Z"
+strftime(1440768801.7,"%Y-%m-%dT%H:%M:%3SZ") = "2015-08-28T13:33:21.700Z"
+</pre>
+
+<h3 id="strftime_local">strftime_local<a class="headerlink" href="index.html#strftime_local" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+strftime_local  (class=time #args=2,3) Like strftime but consults the $TZ environment variable to get local time zone.
+Examples:
+strftime_local(1440768801.7, "%Y-%m-%d %H:%M:%S %z")  = "2015-08-28 16:33:21 +0300" with TZ="Asia/Istanbul"
+strftime_local(1440768801.7, "%Y-%m-%d %H:%M:%3S %z") = "2015-08-28 16:33:21.700 +0300" with TZ="Asia/Istanbul"
+strftime_local(1440768801.7, "%Y-%m-%d %H:%M:%3S %z", "Asia/Istanbul") = "2015-08-28 16:33:21.700 +0300"
+</pre>
+
+<h3 id="strptime">strptime<a class="headerlink" href="index.html#strptime" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+strptime  (class=time #args=2) strptime: Parses timestamp as floating-point seconds since the epoch. See also strptime_local.
+Examples:
+strptime("2015-08-28T13:33:21Z",      "%Y-%m-%dT%H:%M:%SZ")   = 1440768801.000000
+strptime("2015-08-28T13:33:21.345Z",  "%Y-%m-%dT%H:%M:%SZ")   = 1440768801.345000
+strptime("1970-01-01 00:00:00 -0400", "%Y-%m-%d %H:%M:%S %z") = 14400
+strptime("1970-01-01 00:00:00 EET",   "%Y-%m-%d %H:%M:%S %Z") = -7200
+</pre>
+
+<h3 id="strptime_local">strptime_local<a class="headerlink" href="index.html#strptime_local" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+strptime_local  (class=time #args=2,3) Like strftime but consults the $TZ environment variable to get local time zone.
+Examples:
+strptime_local("2015-08-28T13:33:21Z",    "%Y-%m-%dT%H:%M:%SZ") = 1440758001     with TZ="Asia/Istanbul"
+strptime_local("2015-08-28T13:33:21.345Z","%Y-%m-%dT%H:%M:%SZ") = 1440758001.345 with TZ="Asia/Istanbul"
+strptime_local("2015-08-28 13:33:21",     "%Y-%m-%d %H:%M:%S")  = 1440758001     with TZ="Asia/Istanbul"
+strptime_local("2015-08-28 13:33:21",     "%Y-%m-%d %H:%M:%S", "Asia/Istanbul") = 1440758001
+</pre>
+
+<h3 id="systime">systime<a class="headerlink" href="index.html#systime" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+systime  (class=time #args=0) Returns the system time in floating-point seconds since the epoch.
+</pre>
+
+<h3 id="systimeint">systimeint<a class="headerlink" href="index.html#systimeint" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+systimeint  (class=time #args=0) Returns the system time in integer seconds since the epoch.
+</pre>
+
+<h3 id="uptime">uptime<a class="headerlink" href="index.html#uptime" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+uptime  (class=time #args=0) Returns the time in floating-point seconds since the current Miller program was started.
+</pre>
+
+<h2 id="typing-functions">Typing functions<a class="headerlink" href="index.html#typing-functions" title="Permanent link">&para;</a></h2>
+<h3 id="asserting_absent">asserting_absent<a class="headerlink" href="index.html#asserting_absent" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_absent  (class=typing #args=1) Aborts with an error if is_absent on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_array">asserting_array<a class="headerlink" href="index.html#asserting_array" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_array  (class=typing #args=1) Aborts with an error if is_array on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_bool">asserting_bool<a class="headerlink" href="index.html#asserting_bool" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_bool  (class=typing #args=1) Aborts with an error if is_bool on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_boolean">asserting_boolean<a class="headerlink" href="index.html#asserting_boolean" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_boolean  (class=typing #args=1) Aborts with an error if is_boolean on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_empty">asserting_empty<a class="headerlink" href="index.html#asserting_empty" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_empty  (class=typing #args=1) Aborts with an error if is_empty on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_empty_map">asserting_empty_map<a class="headerlink" href="index.html#asserting_empty_map" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_empty_map  (class=typing #args=1) Aborts with an error if is_empty_map on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_error">asserting_error<a class="headerlink" href="index.html#asserting_error" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_error  (class=typing #args=1) Aborts with an error if is_error on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_float">asserting_float<a class="headerlink" href="index.html#asserting_float" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_float  (class=typing #args=1) Aborts with an error if is_float on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_int">asserting_int<a class="headerlink" href="index.html#asserting_int" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_int  (class=typing #args=1) Aborts with an error if is_int on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_map">asserting_map<a class="headerlink" href="index.html#asserting_map" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_map  (class=typing #args=1) Aborts with an error if is_map on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_nonempty_map">asserting_nonempty_map<a class="headerlink" href="index.html#asserting_nonempty_map" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_nonempty_map  (class=typing #args=1) Aborts with an error if is_nonempty_map on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_not_array">asserting_not_array<a class="headerlink" href="index.html#asserting_not_array" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_not_array  (class=typing #args=1) Aborts with an error if is_not_array on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_not_empty">asserting_not_empty<a class="headerlink" href="index.html#asserting_not_empty" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_not_empty  (class=typing #args=1) Aborts with an error if is_not_empty on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_not_map">asserting_not_map<a class="headerlink" href="index.html#asserting_not_map" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_not_map  (class=typing #args=1) Aborts with an error if is_not_map on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_not_null">asserting_not_null<a class="headerlink" href="index.html#asserting_not_null" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_not_null  (class=typing #args=1) Aborts with an error if is_not_null on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_null">asserting_null<a class="headerlink" href="index.html#asserting_null" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_null  (class=typing #args=1) Aborts with an error if is_null on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_numeric">asserting_numeric<a class="headerlink" href="index.html#asserting_numeric" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_numeric  (class=typing #args=1) Aborts with an error if is_numeric on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_present">asserting_present<a class="headerlink" href="index.html#asserting_present" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_present  (class=typing #args=1) Aborts with an error if is_present on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="asserting_string">asserting_string<a class="headerlink" href="index.html#asserting_string" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+asserting_string  (class=typing #args=1) Aborts with an error if is_string on the argument returns false, else returns its argument.
+</pre>
+
+<h3 id="is_absent">is_absent<a class="headerlink" href="index.html#is_absent" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_absent  (class=typing #args=1) False if field is present in input, true otherwise
+</pre>
+
+<h3 id="is_array">is_array<a class="headerlink" href="index.html#is_array" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_array  (class=typing #args=1) True if argument is an array.
+</pre>
+
+<h3 id="is_bool">is_bool<a class="headerlink" href="index.html#is_bool" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_bool  (class=typing #args=1) True if field is present with boolean value. Synonymous with is_boolean.
+</pre>
+
+<h3 id="is_boolean">is_boolean<a class="headerlink" href="index.html#is_boolean" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_boolean  (class=typing #args=1) True if field is present with boolean value. Synonymous with is_bool.
+</pre>
+
+<h3 id="is_empty">is_empty<a class="headerlink" href="index.html#is_empty" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_empty  (class=typing #args=1) True if field is present in input with empty string value, false otherwise.
+</pre>
+
+<h3 id="is_empty_map">is_empty_map<a class="headerlink" href="index.html#is_empty_map" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_empty_map  (class=typing #args=1) True if argument is a map which is empty.
+</pre>
+
+<h3 id="is_error">is_error<a class="headerlink" href="index.html#is_error" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_error  (class=typing #args=1) True if if argument is an error, such as taking string length of an integer.
+</pre>
+
+<h3 id="is_float">is_float<a class="headerlink" href="index.html#is_float" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_float  (class=typing #args=1) True if field is present with value inferred to be float
+</pre>
+
+<h3 id="is_int">is_int<a class="headerlink" href="index.html#is_int" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_int  (class=typing #args=1) True if field is present with value inferred to be int
+</pre>
+
+<h3 id="is_map">is_map<a class="headerlink" href="index.html#is_map" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_map  (class=typing #args=1) True if argument is a map.
+</pre>
+
+<h3 id="is_nan">is_nan<a class="headerlink" href="index.html#is_nan" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_nan  (class=typing #args=1) True if the argument is the NaN (not-a-number) floating-point value. Note that NaN has the property that NaN != NaN, so you need 'is_nan(x)' rather than 'x == NaN'.
+</pre>
+
+<h3 id="is_nonempty_map">is_nonempty_map<a class="headerlink" href="index.html#is_nonempty_map" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_nonempty_map  (class=typing #args=1) True if argument is a map which is non-empty.
+</pre>
+
+<h3 id="is_not_array">is_not_array<a class="headerlink" href="index.html#is_not_array" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_not_array  (class=typing #args=1) True if argument is not an array.
+</pre>
+
+<h3 id="is_not_empty">is_not_empty<a class="headerlink" href="index.html#is_not_empty" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_not_empty  (class=typing #args=1) True if field is present in input with non-empty value, false otherwise
+</pre>
+
+<h3 id="is_not_map">is_not_map<a class="headerlink" href="index.html#is_not_map" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_not_map  (class=typing #args=1) True if argument is not a map.
+</pre>
+
+<h3 id="is_not_null">is_not_null<a class="headerlink" href="index.html#is_not_null" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_not_null  (class=typing #args=1) False if argument is null (empty, absent, or JSON null), true otherwise.
+</pre>
+
+<h3 id="is_null">is_null<a class="headerlink" href="index.html#is_null" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_null  (class=typing #args=1) True if argument is null (empty, absent, or JSON null), false otherwise.
+</pre>
+
+<h3 id="is_numeric">is_numeric<a class="headerlink" href="index.html#is_numeric" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_numeric  (class=typing #args=1) True if field is present with value inferred to be int or float
+</pre>
+
+<h3 id="is_present">is_present<a class="headerlink" href="index.html#is_present" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_present  (class=typing #args=1) True if field is present in input, false otherwise.
+</pre>
+
+<h3 id="is_string">is_string<a class="headerlink" href="index.html#is_string" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+is_string  (class=typing #args=1) True if field is present with string (including empty-string) value
+</pre>
+
+<h3 id="typeof">typeof<a class="headerlink" href="index.html#typeof" title="Permanent link">&para;</a></h3>
+<pre class="pre-non-highlight-non-pair">
+typeof  (class=typing #args=1) Convert argument to type of argument (e.g. "str"). For debug.
+</pre>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="index.html#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../reference-dsl-operators/index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: DSL operators" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              DSL operators
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../reference-dsl-user-defined-functions/index.html" class="md-footer__link md-footer__link--next" aria-label="Next: DSL user-defined functions" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              DSL user-defined functions
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="../../../../squidfunk.github.io/mkdocs-material/index.html" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="../../../../cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js"></script>
+      
+        <script src="../javascripts/tables.js"></script>
+      
+        <script src="../readthedocs-data.js"></script>
+      
+        <script src="../../../_/static/core/js/readthedocs-doc-embed.js"></script>
+      
+        <script src="../../../_/static/javascript/readthedocs-analytics.js"></script>
+      
+    
+  </body>
+</html>

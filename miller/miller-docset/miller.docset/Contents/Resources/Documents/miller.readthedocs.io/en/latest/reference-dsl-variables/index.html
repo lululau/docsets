@@ -1,0 +1,3252 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>DSL variables - Miller Latest Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="../../../../fonts.googleapis.com/css%3Ffamily=Lato:300,300i,400,400i,700,700i|Lato+Mono:400,400i,700,700i&amp;display=fallback.css">
+        <style>:root{--md-text-font:"Lato";--md-code-font:"Lato Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+      <link rel="stylesheet" href="../../../_/static/css/badge_only.css">
+    
+      <link rel="stylesheet" href="../../../_/static/css/readthedocs-doc-embed.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="index.html#dsl-variables" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../latest.html" title="Miller Latest Documentation" class="md-header__button md-logo" aria-label="Miller Latest Documentation" data-md-component="logo">
+      
+  <img src="../images/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Miller Latest Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DSL variables
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="../../../../github.com/johnkerl/miller.html" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    miller
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../latest.html" title="Miller Latest Documentation" class="md-nav__button md-logo" aria-label="Miller Latest Documentation" data-md-component="logo">
+      
+  <img src="../images/favicon.png" alt="logo">
+
+    </a>
+    Miller Latest Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="../../../../github.com/johnkerl/miller.html" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    miller
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../latest.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-miller/index.html" class="md-nav__link">
+        Installing Miller
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10min/index.html" class="md-nav__link">
+        Miller in 10 minutes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keystroke-savers/index.html" class="md-nav__link">
+        Keystroke-savers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller-programming-language/index.html" class="md-nav__link">
+        Intro to Miller's programming language
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller-on-windows/index.html" class="md-nav__link">
+        Miller on Windows
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/index.html" class="md-nav__link">
+        Community
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure-of-these-documents/index.html" class="md-nav__link">
+        Structure of these documents
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Miller in more detail
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Miller in more detail" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Miller in more detail
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/index.html" class="md-nav__link">
+        Features
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-formats/index.html" class="md-nav__link">
+        File formats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unix-toolkit-context/index.html" class="md-nav__link">
+        Unix-toolkit context
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../record-heterogeneity/index.html" class="md-nav__link">
+        Record-heterogeneity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internationalization/index.html" class="md-nav__link">
+        Internationalization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../output-colorization/index.html" class="md-nav__link">
+        Output colorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/index.html" class="md-nav__link">
+        Customization: .mlrrc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vimrc/index.html" class="md-nav__link">
+        Syntax highlighting: vimrc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../repl/index.html" class="md-nav__link">
+        The REPL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../online-help/index.html" class="md-nav__link">
+        Online help
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/index.html" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          FAQs and examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="FAQs and examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          FAQs and examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv-with-and-without-headers/index.html" class="md-nav__link">
+        CSV, with and without headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shapes-of-data/index.html" class="md-nav__link">
+        Shapes of data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operating-on-all-fields/index.html" class="md-nav__link">
+        Operating on all fields
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operating-on-all-records/index.html" class="md-nav__link">
+        Operating on all records
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questions-about-then-chaining/index.html" class="md-nav__link">
+        Questions about then-chaining
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questions-about-joins/index.html" class="md-nav__link">
+        Questions about joins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../date-time-examples/index.html" class="md-nav__link">
+        Date/time examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-symbols-and-formatting/index.html" class="md-nav__link">
+        Special symbols and formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shell-commands/index.html" class="md-nav__link">
+        Running shell commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-cleaning-examples/index.html" class="md-nav__link">
+        Data-cleaning examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-diving-examples/index.html" class="md-nav__link">
+        Data-diving examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../log-processing-examples/index.html" class="md-nav__link">
+        Log-processing examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql-examples/index.html" class="md-nav__link">
+        SQL examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl-and-helm/index.html" class="md-nav__link">
+        Processing Kubectl and Helm output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dkvp-examples/index.html" class="md-nav__link">
+        DKVP I/O examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics-examples/index.html" class="md-nav__link">
+        Statistics examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../randomizing-examples/index.html" class="md-nav__link">
+        Randomizing examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../two-pass-algorithms/index.html" class="md-nav__link">
+        Two-pass algorithms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../programming-examples/index.html" class="md-nav__link">
+        Programming-language examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc-examples/index.html" class="md-nav__link">
+        Miscellaneous examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Main reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Main reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Main reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-overview/index.html" class="md-nav__link">
+        Miller command structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-then-chaining/index.html" class="md-nav__link">
+        Then-chaining
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-flag-list/index.html" class="md-nav__link">
+        List of command-line flags
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-verbs/index.html" class="md-nav__link">
+        List of verbs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-in-place-processing/index.html" class="md-nav__link">
+        In-place mode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-number-formatting/index.html" class="md-nav__link">
+        Number formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-separators/index.html" class="md-nav__link">
+        Separators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsing-and-formatting-fields/index.html" class="md-nav__link">
+        Parsing and formatting fields
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flatten-unflatten/index.html" class="md-nav__link">
+        Flatten/unflatten: converting between JSON and tabular formats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sorting/index.html" class="md-nav__link">
+        Sorting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streaming-and-memory/index.html" class="md-nav__link">
+        Streaming processing, and memory usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-compressed-data/index.html" class="md-nav__link">
+        Compressed data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu/index.html" class="md-nav__link">
+        CPU/multicore usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scripting/index.html" class="md-nav__link">
+        Scripting with Miller
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-env-vars/index.html" class="md-nav__link">
+        Miller environment variables
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Types reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Types reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-data-types/index.html" class="md-nav__link">
+        Data types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-strings/index.html" class="md-nav__link">
+        Strings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-regular-expressions/index.html" class="md-nav__link">
+        Regular expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-arithmetic/index.html" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-maps/index.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-arrays/index.html" class="md-nav__link">
+        Arrays
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-null-data/index.html" class="md-nav__link">
+        Null/empty/absent data
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          DSL reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DSL reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          DSL reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl/index.html" class="md-nav__link">
+        DSL overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-syntax/index.html" class="md-nav__link">
+        DSL syntax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          DSL variables
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="index.html" class="md-nav__link md-nav__link--active">
+        DSL variables
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="index.html#field-names" class="md-nav__link">
+    Field names
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#positional-field-names" class="md-nav__link">
+    Positional field names
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#out-of-stream-variables" class="md-nav__link">
+    Out-of-stream variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#indexed-out-of-stream-variables" class="md-nav__link">
+    Indexed out-of-stream variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#local-variables" class="md-nav__link">
+    Local variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#map-literals" class="md-nav__link">
+    Map literals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#built-in-variables" class="md-nav__link">
+    Built-in variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#type-checking" class="md-nav__link">
+    Type-checking
+  </a>
+  
+    <nav class="md-nav" aria-label="Type-checking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#type-test-and-type-assertion-expressions" class="md-nav__link">
+    Type-test and type-assertion expressions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#type-declarations-for-local-variables-function-parameter-and-function-return-values" class="md-nav__link">
+    Type-declarations for local variables, function parameter, and function return values
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#aggregate-variable-assignments" class="md-nav__link">
+    Aggregate variable assignments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#keywords-for-filter-and-put" class="md-nav__link">
+    Keywords for filter and put
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-control-structures/index.html" class="md-nav__link">
+        DSL control structures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-operators/index.html" class="md-nav__link">
+        DSL operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-builtin-functions/index.html" class="md-nav__link">
+        DSL built-in functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-user-defined-functions/index.html" class="md-nav__link">
+        DSL user-defined functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-higher-order-functions/index.html" class="md-nav__link">
+        DSL higher-order functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-filter-statements/index.html" class="md-nav__link">
+        DSL filter statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-output-statements/index.html" class="md-nav__link">
+        DSL output statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-unset-statements/index.html" class="md-nav__link">
+        DSL unset statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-time/index.html" class="md-nav__link">
+        DSL datetime/timezone functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-errors/index.html" class="md-nav__link">
+        DSL errors and transparency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-differences/index.html" class="md-nav__link">
+        Differences from other programming languages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-complexity/index.html" class="md-nav__link">
+        A note on the complexity of Miller's expression language
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Background
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Background" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Background
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why/index.html" class="md-nav__link">
+        Why?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../etymology/index.html" class="md-nav__link">
+        Why call it Miller?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../originality/index.html" class="md-nav__link">
+        How original is Miller?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../performance/index.html" class="md-nav__link">
+        Performance
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Misc. reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Misc. reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Misc. reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-auxiliary-commands/index.html" class="md-nav__link">
+        Auxiliary commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manpage/index.html" class="md-nav__link">
+        Manual page
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/index.html" class="md-nav__link">
+        Building from source
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-release/index.html" class="md-nav__link">
+        How to create a new release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-docs/index.html" class="md-nav__link">
+        Documents for previous releases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/index.html" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../new-in-miller-6/index.html" class="md-nav__link">
+        What's new in Miller 6
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="index.html#field-names" class="md-nav__link">
+    Field names
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#positional-field-names" class="md-nav__link">
+    Positional field names
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#out-of-stream-variables" class="md-nav__link">
+    Out-of-stream variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#indexed-out-of-stream-variables" class="md-nav__link">
+    Indexed out-of-stream variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#local-variables" class="md-nav__link">
+    Local variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#map-literals" class="md-nav__link">
+    Map literals
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#built-in-variables" class="md-nav__link">
+    Built-in variables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#type-checking" class="md-nav__link">
+    Type-checking
+  </a>
+  
+    <nav class="md-nav" aria-label="Type-checking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="index.html#type-test-and-type-assertion-expressions" class="md-nav__link">
+    Type-test and type-assertion expressions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="index.html#type-declarations-for-local-variables-function-parameter-and-function-return-values" class="md-nav__link">
+    Type-declarations for local variables, function parameter, and function return values
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#aggregate-variable-assignments" class="md-nav__link">
+    Aggregate variable assignments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#keywords-for-filter-and-put" class="md-nav__link">
+    Keywords for filter and put
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/johnkerl/miller/edit/main/docs/src/reference-dsl-variables.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<!---  PLEASE DO NOT EDIT DIRECTLY. EDIT THE .md.in FILE PLEASE. --->
+<div>
+<span class="quicklinks">
+Quick links:
+&nbsp;
+<a class="quicklink" href="../reference-main-flag-list/index.html">Flags</a>
+&nbsp;
+<a class="quicklink" href="../reference-verbs/index.html">Verbs</a>
+&nbsp;
+<a class="quicklink" href="../reference-dsl-builtin-functions/index.html">Functions</a>
+&nbsp;
+<a class="quicklink" href="../glossary/index.html">Glossary</a>
+&nbsp;
+<a class="quicklink" href="../release-docs/index.html">Release docs</a>
+</span>
+</div>
+<h1 id="dsl-variables">DSL variables<a class="headerlink" href="index.html#dsl-variables" title="Permanent link">&para;</a></h1>
+<p>Miller has the following kinds of variables:</p>
+<p><strong>Fields of stream records</strong>, accessed using the <code>$</code> prefix. These refer to fields of the current data-stream record. For example, in <code>echo x=1,y=2 | mlr put '$z = $x + $y'</code>, <code>$x</code> and <code>$y</code> refer to input fields, and <code>$z</code> refers to a new, computed output field. In a few contexts, presented below, you can refer to the entire record as <code>$*</code>.</p>
+<p><strong>Out-of-stream variables</strong> accessed using the <code>@</code> prefix. These refer to data which persist from one record to the next, including in <code>begin</code> and <code>end</code> blocks (which execute before/after the record stream is consumed, respectively). You use them to remember values across records, such as sums, differences, counters, and so on.  In a few contexts, presented below, you can refer to the entire out-of-stream-variables collection as <code>@*</code>.</p>
+<p><strong>Local variables</strong> are limited in scope and extent to the current statements being executed: these include function arguments, bound variables in for loops, and local variables.</p>
+<p><strong>Built-in variables</strong> such as <code>NF</code>, <code>NR</code>, <code>FILENAME</code>, <code>M_PI</code>, and <code>M_E</code>.  These are all capital letters and are read-only (although some of them change value from one record to another).</p>
+<p><strong>Keywords</strong> are not variables, but since their names are reserved, you cannot use these names for local variables.</p>
+<h2 id="field-names">Field names<a class="headerlink" href="index.html#field-names" title="Permanent link">&para;</a></h2>
+<p>Names of fields within stream records must be specified using a <code>$</code> in <a href="../reference-dsl/index.html">filter and put expressions</a>, even though the dollar signs don't appear in the data stream itself. For integer-indexed data, this looks like <code>awk</code>'s <code>$1,$2,$3</code>, except that Miller allows non-numeric names such as <code>$quantity</code> or <code>$hostname</code>.  Likewise, enclose string literals in double quotes in <code>filter</code> expressions even though they don't appear in file data.  In particular, <code>mlr filter '$x=="abc"'</code> passes through the record <code>x=abc</code>.</p>
+<p>If field names have <strong>special characters</strong> such as <code>.</code> then you can use braces, e.g. <code>'${field.name}'</code>.</p>
+<p>You may also use a <strong>computed field name</strong> in square brackets, e.g.</p>
+<pre class="pre-highlight-non-pair">
+<b>echo a=3,b=4 | mlr filter '$["x"] < 0.5'</b>
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>echo s=green,t=blue,a=3,b=4 | mlr put '$[$s."_".$t] = $a * $b'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+s=green,t=blue,a=3,b=4,green_blue=12
+</pre>
+
+<p>Notes:</p>
+<p>The names of record fields depend on the contents of your input data stream, and their values change from one record to the next as Miller scans through your input data stream.</p>
+<p>Their <strong>extent</strong> is limited to the current record; their <strong>scope</strong> is the <code>filter</code> or <code>put</code> command in which they appear.</p>
+<p>These are <strong>read-write</strong>: you can do <code>$y=2*$x</code>, <code>$x=$x+1</code>, etc.</p>
+<p>Records are Miller's output: field names present in the input stream are passed through to output (written to standard output) unless fields are removed with <code>cut</code>, or records are excluded with <code>filter</code> or <code>put -q</code>, etc. Simply assign a value to a field and it will be output.</p>
+<h2 id="positional-field-names">Positional field names<a class="headerlink" href="index.html#positional-field-names" title="Permanent link">&para;</a></h2>
+<p>Even though Miller's main selling point is name-indexing, sometimes you really want to refer to a field name by its positional index (starting from 1).</p>
+<p>Use <code>$[[3]]</code> to access the name of field 3.  More generally, any expression evaluating to an integer can go between <code>$[[</code> and <code>]]</code>.</p>
+<p>Then using a computed field name, <code>$[ $[[3]] ]</code> is the value in the third field. This has the shorter equivalent notation <code>$[[[3]]]</code>.</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=3,x=0.204603,y=0.338318
+a=eks,b=wye,i=4,x=0.381399,y=0.134188
+a=wye,b=pan,i=5,x=0.573288,y=0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put '$[[3]] = "NEW"' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,NEW=1,x=0.346791,y=0.726802
+a=eks,b=pan,NEW=2,x=0.758679,y=0.522151
+a=wye,b=wye,NEW=3,x=0.204603,y=0.338318
+a=eks,b=wye,NEW=4,x=0.381399,y=0.134188
+a=wye,b=pan,NEW=5,x=0.573288,y=0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put '$[[[3]]] = "NEW"' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=NEW,x=0.346791,y=0.726802
+a=eks,b=pan,i=NEW,x=0.758679,y=0.522151
+a=wye,b=wye,i=NEW,x=0.204603,y=0.338318
+a=eks,b=wye,i=NEW,x=0.381399,y=0.134188
+a=wye,b=pan,i=NEW,x=0.573288,y=0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put '$NEW = $[[NR]]' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802,NEW=a
+a=eks,b=pan,i=2,x=0.758679,y=0.522151,NEW=b
+a=wye,b=wye,i=3,x=0.204603,y=0.338318,NEW=i
+a=eks,b=wye,i=4,x=0.381399,y=0.134188,NEW=x
+a=wye,b=pan,i=5,x=0.573288,y=0.863624,NEW=y
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put '$NEW = $[[[NR]]]' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802,NEW=pan
+a=eks,b=pan,i=2,x=0.758679,y=0.522151,NEW=pan
+a=wye,b=wye,i=3,x=0.204603,y=0.338318,NEW=3
+a=eks,b=wye,i=4,x=0.381399,y=0.134188,NEW=0.381399
+a=wye,b=pan,i=5,x=0.573288,y=0.863624,NEW=0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put '$[[[NR]]] = "NEW"' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=NEW,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=NEW,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=NEW,x=0.204603,y=0.338318
+a=eks,b=wye,i=4,x=NEW,y=0.134188
+a=wye,b=pan,i=5,x=0.573288,y=NEW
+</pre>
+
+<p>Right-hand side accesses to non-existent fields -- i.e. with index less than 1 or greater than <code>NF</code> -- return an absent value. Likewise, left-hand side accesses only refer to fields which already exist. For example, if a field has 5 records then assigning the name or value of the 6th (or 600th) field results in a no-op.</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr put '$[[6]] = "NEW"' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=3,x=0.204603,y=0.338318
+a=eks,b=wye,i=4,x=0.381399,y=0.134188
+a=wye,b=pan,i=5,x=0.573288,y=0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put '$[[[6]]] = "NEW"' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=3,x=0.204603,y=0.338318
+a=eks,b=wye,i=4,x=0.381399,y=0.134188
+a=wye,b=pan,i=5,x=0.573288,y=0.863624
+</pre>
+
+<h2 id="out-of-stream-variables">Out-of-stream variables<a class="headerlink" href="index.html#out-of-stream-variables" title="Permanent link">&para;</a></h2>
+<p>These are prefixed with an at-sign, e.g. <code>@sum</code>.  Furthermore, unlike built-in variables and stream-record fields, they are maintained in an arbitrarily nested map: you can do <code>@sum += $quantity</code>, or <code>@sum[$color] += $quantity</code>, or <code>@sum[$color][$shape] += $quantity</code>. The keys for the multi-level map can be any expression which evaluates to string or integer: e.g.  <code>@sum[NR] = $a + $b</code>, <code>@sum[$a."-".$b] = $x</code>, etc.</p>
+<p>Their names and their values are entirely under your control; they change only when you assign to them.</p>
+<p>Just as for field names in stream records, if you want to define out-of-stream variables with <strong>special characters</strong> such as <code>.</code> then you can use braces, e.g. <code>'@{variable.name}["index"]'</code>.</p>
+<p>You may use a <strong>computed key</strong> in square brackets, e.g.</p>
+<pre class="pre-highlight-in-pair">
+<b>echo s=green,t=blue,a=3,b=4 | mlr put -q '@[$s."_".$t] = $a * $b; emit all'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+green_blue=12
+</pre>
+
+<p>Out-of-stream variables are <strong>scoped</strong> to the <code>put</code> command in which they appear.  In particular, if you have two or more <code>put</code> commands separated by <code>then</code>, each put will have its own set of out-of-stream variables:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/a.dkvp</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=1,b=2,c=3
+a=4,b=5,c=6
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put '@sum += $a; end {emit @sum}' \</b>
+<b>  then put 'is_present($a) {$a=10*$a; @sum += $a}; end {emit @sum}' \</b>
+<b>  data/a.dkvp</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=10,b=2,c=3
+a=40,b=5,c=6
+sum=5
+sum=50
+</pre>
+
+<p>Out-of-stream variables' <strong>extent</strong> is from the start to the end of the record stream, i.e. every time the <code>put</code> or <code>filter</code> statement referring to them is executed.</p>
+<p>Out-of-stream variables are <strong>read-write</strong>: you can do <code>$sum=@sum</code>, <code>@sum=$sum</code>, etc.</p>
+<h2 id="indexed-out-of-stream-variables">Indexed out-of-stream variables<a class="headerlink" href="index.html#indexed-out-of-stream-variables" title="Permanent link">&para;</a></h2>
+<p>Using an index on the <code>@count</code> and <code>@sum</code> variables, we get the benefit of the <code>-g</code> (group-by) option which <code>mlr stats1</code> and various other Miller commands have:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '</b>
+<b>  @x_count[$a] += 1;</b>
+<b>  @x_sum[$a] += $x;</b>
+<b>  end {</b>
+<b>    emit @x_count, "a";</b>
+<b>    emit @x_sum, "a";</b>
+<b>  }</b>
+<b>' ./data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,x_count=1
+a=eks,x_count=2
+a=wye,x_count=2
+a=pan,x_sum=0.346791
+a=eks,x_sum=1.140078
+a=wye,x_sum=0.777891
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr stats1 -a count,sum -f x -g a ./data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,x_count=1,x_sum=0.346791
+a=eks,x_count=2,x_sum=1.140078
+a=wye,x_count=2,x_sum=0.777891
+</pre>
+
+<p>Indices can be arbitrarily deep -- here there are two or more of them:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --from data/medium put -q '</b>
+<b>  @x_count[$a][$b] += 1;</b>
+<b>  @x_sum[$a][$b] += $x;</b>
+<b>  end {</b>
+<b>    emit (@x_count, @x_sum), "a", "b";</b>
+<b>  }</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,x_count=427,x_sum=219.1851288316854
+a=pan,b=wye,x_count=395,x_sum=198.43293070748447
+a=pan,b=eks,x_count=429,x_sum=216.07522773165525
+a=pan,b=hat,x_count=417,x_sum=205.22277621488686
+a=pan,b=zee,x_count=413,x_sum=205.09751802331917
+a=eks,b=pan,x_count=371,x_sum=179.96303047250723
+a=eks,b=wye,x_count=407,x_sum=196.9452860713734
+a=eks,b=zee,x_count=357,x_sum=176.8803651584733
+a=eks,b=eks,x_count=413,x_sum=215.91609712937984
+a=eks,b=hat,x_count=417,x_sum=208.783170520597
+a=wye,b=wye,x_count=377,x_sum=185.29584980261419
+a=wye,b=pan,x_count=392,x_sum=195.84790012056564
+a=wye,b=hat,x_count=426,x_sum=212.0331829346132
+a=wye,b=zee,x_count=385,x_sum=194.77404756708714
+a=wye,b=eks,x_count=386,x_sum=204.8129608356315
+a=zee,b=pan,x_count=389,x_sum=202.21380378504267
+a=zee,b=wye,x_count=455,x_sum=233.9913939194868
+a=zee,b=eks,x_count=391,x_sum=190.9617780631925
+a=zee,b=zee,x_count=403,x_sum=206.64063510417319
+a=zee,b=hat,x_count=409,x_sum=191.30000620900935
+a=hat,b=wye,x_count=423,x_sum=208.8830097609959
+a=hat,b=zee,x_count=385,x_sum=196.3494502965293
+a=hat,b=eks,x_count=389,x_sum=189.0067933716193
+a=hat,b=hat,x_count=381,x_sum=182.8535323148762
+a=hat,b=pan,x_count=363,x_sum=168.5538067327806
+</pre>
+
+<p>The idea is that <code>stats1</code>, and other Miller verbs, encapsulate frequently-used patterns with a minimum of keystroking (and run a little faster), whereas using out-of-stream variables you have more flexibility and control in what you do.</p>
+<p>Begin/end blocks can be mixed with pattern/action blocks. For example:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr put '</b>
+<b>  begin {</b>
+<b>    @num_total = 0;</b>
+<b>    @num_positive = 0;</b>
+<b>  };</b>
+<b>  @num_total += 1;</b>
+<b>  $x > 0.0 {</b>
+<b>    @num_positive += 1;</b>
+<b>    $y = log10($x); $z = sqrt($y)</b>
+<b>  };</b>
+<b>  end {</b>
+<b>    emitf @num_total, @num_positive</b>
+<b>  }</b>
+<b>' data/put-gating-example-1.dkvp</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+x=-1
+x=0
+x=1,y=0,z=0
+x=2,y=0.3010299956639812,z=0.5486620049392715
+x=3,y=0.4771212547196624,z=0.6907396432228734
+num_total=5,num_positive=3
+</pre>
+
+<h2 id="local-variables">Local variables<a class="headerlink" href="index.html#local-variables" title="Permanent link">&para;</a></h2>
+<p>Local variables are similar to out-of-stream variables, except that their extent is limited to the expressions in which they appear (and their basenames can't be computed using square brackets). There are three kinds of local variables: <strong>arguments</strong> to functions/subroutines, <strong>variables bound within for-loops</strong>, and <strong>locals</strong> defined within control blocks. They may be untyped using <code>var</code>, or typed using <code>num</code>, <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>, <code>arr</code>, <code>map</code>, and <code>funct</code>.</p>
+<p>For example:</p>
+<pre class="pre-highlight-in-pair">
+<b># Here I'm using a specified random-number seed so this example always</b>
+<b># produces the same output for this web document: in everyday practice we</b>
+<b># would leave off the --seed 12345 part.</b>
+<b>mlr --seed 12345 seqgen --start 1 --stop 10 then put '</b>
+<b>  func f(a, b) {                          # function arguments a and b</b>
+<b>      r = 0.0;                            # local r scoped to the function</b>
+<b>      for (int i = 0; i < 6; i += 1) {    # local i scoped to the for-loop</b>
+<b>          num u = urand();                # local u scoped to the for-loop</b>
+<b>          r += u;                         # updates r from the enclosing scope</b>
+<b>      }</b>
+<b>      r /= 6;</b>
+<b>      return a + (b - a) * r;</b>
+<b>  }</b>
+<b>  num o = f(10, 20);                      # local to the top-level scope</b>
+<b>  $o = o;</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+i=1,o=15.952526011537227
+i=2,o=12.782237754999116
+i=3,o=15.126606630220966
+i=4,o=14.794357488895775
+i=5,o=15.168665974047421
+i=6,o=16.20662783079942
+i=7,o=13.966128063060479
+i=8,o=13.99248245928659
+i=9,o=15.784270485515197
+i=10,o=15.37686787628025
+</pre>
+
+<p>Things which are completely unsurprising, resembling many other languages:</p>
+<ul>
+<li>
+<p>Parameter names are bound to their arguments but can be reassigned, e.g. if there is a parameter named <code>a</code> then you can reassign the value of <code>a</code> to be something else within the function if you like.</p>
+</li>
+<li>
+<p>However, you cannot redeclare the <em>type</em> of an argument or a local: <code>var a=1; var a=2</code> is an error but <code>var a=1;  a=2</code> is OK.</p>
+</li>
+<li>
+<p>All argument-passing is positional rather than by name; arguments are passed by value, not by reference. (This is also true for map-valued variables: they are not, and cannot be, passed by reference.)</p>
+</li>
+<li>
+<p>You can define locals (using <code>var</code>, <code>num</code>, etc.) at any scope (if-statements, else-statements, while-loops, for-loops, or the top-level scope), and nested scopes will have access (more details on scope in the next section).  If you define a local variable with the same name inside an inner scope, then a new variable is created with the narrower scope.</p>
+</li>
+<li>
+<p>If you assign to a local variable for the first time in a scope without declaring it as <code>var</code>, <code>num</code>, etc. then: if it exists in an outer scope, that outer-scope variable will be updated; if not, it will be defined in the current scope as if <code>var</code> had been used. (See also <a href="index.html#type-checking">Type-checking</a> for an example.) I recommend always declaring variables explicitly to make the intended scoping clear.</p>
+</li>
+<li>
+<p>Functions and subroutines never have access to locals from their callee (unless passed by value as arguments).</p>
+</li>
+</ul>
+<p>Things which are perhaps surprising compared to other languages:</p>
+<ul>
+<li>
+<p>Type declarations using <code>var</code>, or typed using <code>num</code>, <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>, <code>arr</code>, <code>map</code>, <code>funct</code> are not necessary to declare local variables.  Function arguments and variables bound in for-loops over stream records and out-of-stream variables are <em>implicitly</em> declared using <code>var</code>. (Some examples are shown below.)</p>
+</li>
+<li>
+<p>Type-checking is done at assignment time. For example, <code>float f = 0</code> is an error (since <code>0</code> is an integer), as is <code>float f = 0.0; f = 1</code>. For this reason I prefer to use <code>num</code> over <code>float</code> in most contexts since <code>num</code> encompasses integer and floating-point values. More information is at <a href="index.html#type-checking">Type-checking</a>.</p>
+</li>
+<li>
+<p>Bound variables in for-loops over stream records and out-of-stream variables are implicitly local to that block. E.g. in <code>for (k, v in $*) { ... }</code> <code>for ((k1, k2), v in @*) { ... }</code> if there are <code>k</code>, <code>v</code>, etc. in the enclosing scope then those will be masked by the loop-local bound variables in the loop, and moreover the values of the loop-local bound variables are not available after the end of the loop.</p>
+</li>
+<li>
+<p>For C-style triple-for loops, if a for-loop variable is defined using <code>var</code>, <code>int</code>, etc. then it is scoped to that for-loop. E.g. <code>for (i = 0; i &lt; 10; i += 1) { ... }</code> and <code>for (int i = 0; i &lt; 10; i += 1) { ... }</code>. (This is unsurprising.). If there is no typedecl and an outer-scope variable of that name exists, then it is used. (This is also unsurprising.) But if there is no outer-scope variable of that name, then the variable is scoped to the for-loop only.</p>
+</li>
+</ul>
+<p>The following example demonstrates the scope rules:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/scope-example.mlr</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+func f(a) {      # argument is local to the function
+  var b = 100;   # local to the function
+  c = 100;       # local to the function; does not overwrite outer c
+  return a + 1;
+}
+var a = 10;      # local at top level
+var b = 20;      # local at top level
+c = 30;          # local at top level; there is no more-outer-scope c
+if (NR == 3) {
+  var a = 40;    # scoped to the if-statement; doesn't overwrite outer a
+  b = 50;        # not scoped to the if-statement; overwrites outer b
+  c = 60;        # not scoped to the if-statement; overwrites outer c
+  d = 70;        # there is no outer d so a local d is created here
+
+  $inner_a = a;
+  $inner_b = b;
+  $inner_c = c;
+  $inner_d = d;
+}
+$outer_a = a;
+$outer_b = b;
+$outer_c = c;
+$outer_d = d;    # there is no outer d defined so no assignment happens
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>cat data/scope-example.dat</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+n=1,x=123
+n=2,x=456
+n=3,x=789
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --oxtab --from data/scope-example.dat put -f data/scope-example.mlr</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+n       1
+x       123
+outer_a 10
+outer_b 20
+outer_c 30
+
+n       2
+x       456
+outer_a 10
+outer_b 20
+outer_c 30
+
+n       3
+x       789
+inner_a 40
+inner_b 50
+inner_c 60
+inner_d 70
+outer_a 10
+outer_b 50
+outer_c 60
+</pre>
+
+<p>And this example demonstrates the type-declaration rules:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/type-decl-example.mlr</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+subr s(a, str b, int c) {   # a is implicitly var (untyped).
+                            # b is explicitly str.
+                            # c is explicitly int.
+                            # The type-checking is done at the callsite
+                            # when arguments are bound to parameters.
+                            #
+    var b = 100;   # error  # Re-declaration in the same scope is disallowed.
+    int n = 10;             # Declaration of variable local to the subroutine.
+    n = 20;                 # Assignment is OK.
+    int n = 30;    # error  # Re-declaration in the same scope is disallowed.
+    str n = "abc"; # error  # Re-declaration in the same scope is disallowed.
+                            #
+    float f1 = 1;  # error  # 1 is an int, not a float.
+    float f2 = 2.0;         # 2.0 is a float.
+    num f3 = 3;             # 3 is a num.
+    num f4 = 4.0;           # 4.0 is a num.
+}                           #
+                            #
+call s(1, 2, 3);            # Type-assertion '3 is int' is done here at the callsite.
+                            #
+k = "def";                  # Top-level variable k.
+                            #
+for (str k, v in $*) {      # k and v are bound here, masking outer k.
+  print k . ":" . v;        # k is explicitly str; v is implicitly var.
+}                           #
+                            #
+print "k is".k;             # k at this scope level is still "def".
+print "v is".v;             # v is undefined in this scope.
+                            #
+i = -1;                     #
+for (i = 1, int j = 2; i <= 10; i += 1, j *= 2) {
+                            # C-style triple-for variables use enclosing scope,
+                            # unless declared local: i is outer, j is local to the loop.
+  print "inner i =", i;     #
+  print "inner j =", j;     #
+}                           #
+print "outer i =", i;       # i has been modified by the loop.
+print "outer j =", j;       # j is undefined in this scope.
+</pre>
+
+<h2 id="map-literals">Map literals<a class="headerlink" href="index.html#map-literals" title="Permanent link">&para;</a></h2>
+<p>Miller's <code>put</code>/<code>filter</code> DSL has four kinds of maps. <strong>Stream records</strong> are (single-level) maps from name to value. <strong>Out-of-stream variables</strong> and <strong>local variables</strong> can also be maps, although they can be multi-level maps (e.g. <code>@sum[$x][$y]</code>).  The fourth kind is <strong>map literals</strong>. These cannot be on the left-hand side of assignment expressions. Syntactically they look like JSON, although Miller allows string and integer keys in its map literals while JSON allows only string keys (e.g. <code>"3"</code> rather than <code>3</code>). Note though that integer keys become stringified in Miller: <code>@mymap[3]=4</code> results in <code>@mymap</code> being <code>{"3":4}</code>.</p>
+<p>For example, the following swaps the input stream's <code>a</code> and <code>i</code> fields, modifies <code>y</code>, and drops the rest:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --opprint put '</b>
+<b>  $* = {</b>
+<b>    "a": $i,</b>
+<b>    "i": $a,</b>
+<b>    "y": $y * 10,</b>
+<b>  }</b>
+<b>' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a i   y
+1 pan 7.26802
+2 eks 5.22151
+3 wye 3.3831800000000003
+4 eks 1.34188
+5 wye 8.636239999999999
+</pre>
+
+<p>Likewise, you can assign map literals to out-of-stream variables or local variables; pass them as arguments to user-defined functions, return them from functions, and so on:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --from data/small put '</b>
+<b>  func f(map m): map {</b>
+<b>    m["x"] *= 200;</b>
+<b>    return m;</b>
+<b>  }</b>
+<b>  $* = f({"a": $a, "x": $x});</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,x=69.3582
+a=eks,x=151.7358
+a=wye,x=40.9206
+a=eks,x=76.2798
+a=wye,x=114.6576
+</pre>
+
+<p>Like out-of-stream and local variables, map literals can be multi-level:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --from data/small put -q '</b>
+<b>  begin {</b>
+<b>    @o = {</b>
+<b>      "nrec": 0,</b>
+<b>      "nkey": {"numeric":0, "non-numeric":0},</b>
+<b>    };</b>
+<b>  }</b>
+<b>  @o["nrec"] += 1;</b>
+<b>  for (k, v in $*) {</b>
+<b>    if (is_numeric(v)) {</b>
+<b>      @o["nkey"]["numeric"] += 1;</b>
+<b>    } else {</b>
+<b>      @o["nkey"]["non-numeric"] += 1;</b>
+<b>    }</b>
+<b>  }</b>
+<b>  end {</b>
+<b>    dump @o;</b>
+<b>  }</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+{
+  "nrec": 5,
+  "nkey": {
+    "numeric": 15,
+    "non-numeric": 10
+  }
+}
+</pre>
+
+<p>See also the <a href="../reference-main-maps/index.html">Maps page</a>.</p>
+<h2 id="built-in-variables">Built-in variables<a class="headerlink" href="index.html#built-in-variables" title="Permanent link">&para;</a></h2>
+<p>These are written all in capital letters, and only a small, specific set of them is defined by Miller.</p>
+<p>Namely, Miller supports the following five built-in variables for <a href="../reference-dsl/index.html">filter and
+put</a>, all <code>awk</code>-inspired: <code>NF</code>, <code>NR</code>, <code>FNR</code>, <code>FILENUM</code>, and
+<code>FILENAME</code>, as well as the mathematical constants <code>M_PI</code> and <code>M_E</code>.  As well,
+there are the read-only separator variables <code>IRS</code>, <code>ORS</code>, <code>IFS</code>, <code>OFS</code>, <code>IPS</code>,
+and <code>OPS</code> as discussed on the <a href="../reference-main-separators/index.html">separators page</a>,
+and the flatten/unflatten separator <code>FLATSEP</code> discussed on the
+<a href="../flatten-unflatten/index.html">flatten/unflatten page</a>.  Lastly, the <code>ENV</code> map allows
+read/write access to environment variables, e.g.  <code>ENV["HOME"]</code> or
+<code>ENV["foo_".$hostname]</code> or <code>ENV["VERSION"]="1.2.3"</code>.</p>
+<!--- TODO: FLATSEP IFLATSEP OFLATSEP --->
+
+<pre class="pre-highlight-in-pair">
+<b>mlr filter 'FNR == 2' data/small*</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+1=pan,2=pan,3=1,4=0.3467901443380824,5=0.7268028627434533
+a=wye,b=eks,i=10000,x=0.734806020620654365,y=0.884788571337605134
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put '$fnr = FNR' data/small*</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802,fnr=1
+a=eks,b=pan,i=2,x=0.758679,y=0.522151,fnr=2
+a=wye,b=wye,i=3,x=0.204603,y=0.338318,fnr=3
+a=eks,b=wye,i=4,x=0.381399,y=0.134188,fnr=4
+a=wye,b=pan,i=5,x=0.573288,y=0.863624,fnr=5
+1=a,2=b,3=i,4=x,5=y,fnr=1
+1=pan,2=pan,3=1,4=0.3467901443380824,5=0.7268028627434533,fnr=2
+1=eks,2=pan,3=2,4=0.7586799647899636,5=0.5221511083334797,fnr=3
+1=wye,2=wye,3=3,4=0.20460330576630303,5=0.33831852551664776,fnr=4
+1=eks,2=wye,3=4,4=0.38139939387114097,5=0.13418874328430463,fnr=5
+1=wye,2=pan,3=5,4=0.5732889198020006,5=0.8636244699032729,fnr=6
+a=pan,b=eks,i=9999,x=0.267481232652199086,y=0.557077185510228001,fnr=1
+a=wye,b=eks,i=10000,x=0.734806020620654365,y=0.884788571337605134,fnr=2
+a=pan,b=wye,i=10001,x=0.870530722602517626,y=0.009854780514656930,fnr=3
+a=hat,b=wye,i=10002,x=0.321507044286237609,y=0.568893318795083758,fnr=4
+a=pan,b=zee,i=10003,x=0.272054845593895200,y=0.425789896597056627,fnr=5
+</pre>
+
+<p>Their values of <code>NF</code>, <code>NR</code>, <code>FNR</code>, <code>FILENUM</code>, and <code>FILENAME</code> change from one
+record to the next as Miller scans through your input data stream. The
+mathematical constants, of course, do not change; <code>ENV</code> is populated from the
+system environment variables at the time Miller starts. Any changes made to
+<code>ENV</code> by assigning to it will affect any subprocesses, such as using
+<a href="../reference-dsl-output-statements/index.html#redirected-output-statements">piped tee</a>.</p>
+<p>Their <strong>scope is global</strong>: you can refer to them in any <code>filter</code> or <code>put</code> statement. Their values are assigned by the input-record reader:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --csv put '$nr = NR' data/a.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a,b,c,nr
+1,2,3,1
+4,5,6,2
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --csv repeat -n 3 then put '$nr = NR' data/a.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a,b,c,nr
+1,2,3,1
+1,2,3,1
+1,2,3,1
+4,5,6,2
+4,5,6,2
+4,5,6,2
+</pre>
+
+<p>The <strong>extent</strong> is for the duration of the put/filter: in a <code>begin</code> statement (which executes before the first input record is consumed) you will find <code>NR=1</code> and in an <code>end</code> statement (which is executed after the last input record is consumed) you will find <code>NR</code> to be the total number of records ingested.</p>
+<p>These are all <strong>read-only</strong> for the <code>mlr put</code> and <code>mlr filter</code> DSL: they may be assigned from, e.g. <code>$nr=NR</code>, but they may not be assigned to: <code>NR=100</code> is a syntax error.</p>
+<h2 id="type-checking">Type-checking<a class="headerlink" href="index.html#type-checking" title="Permanent link">&para;</a></h2>
+<p>Miller's <code>put</code>/<code>filter</code> DSL supports two optional kinds of type-checking.  One is inline <strong>type-tests</strong> and <strong>type-assertions</strong> within expressions.  The other is <strong>type declarations</strong> for assignments to local variables, binding of arguments to user-defined functions, and return values from user-defined functions, These are discussed in the following subsections.</p>
+<p>Use of type-checking is entirely up to you: omit it if you want flexibility with heterogeneous data; use it if you want to help catch misspellings in your DSL code or unexpected irregularities in your input data.</p>
+<h3 id="type-test-and-type-assertion-expressions">Type-test and type-assertion expressions<a class="headerlink" href="index.html#type-test-and-type-assertion-expressions" title="Permanent link">&para;</a></h3>
+<p>The following <code>is_...</code> functions take a value and return a boolean indicating whether the argument is of the indicated type. The <code>assert_...</code> functions return their argument if it is of the specified type, and cause a fatal error otherwise:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr -f | grep ^is</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+is_absent
+is_array
+is_bool
+is_boolean
+is_empty
+is_empty_map
+is_error
+is_float
+is_int
+is_map
+is_nan
+is_nonempty_map
+is_not_array
+is_not_empty
+is_not_map
+is_not_null
+is_null
+is_numeric
+is_present
+is_string
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr -f | grep ^assert</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+asserting_absent
+asserting_array
+asserting_bool
+asserting_boolean
+asserting_empty
+asserting_empty_map
+asserting_error
+asserting_float
+asserting_int
+asserting_map
+asserting_nonempty_map
+asserting_not_array
+asserting_not_empty
+asserting_not_map
+asserting_not_null
+asserting_null
+asserting_numeric
+asserting_present
+asserting_string
+</pre>
+
+<p>See <a href="../data-cleaning-examples/index.html">Data-cleaning Examples</a> for examples of how to use these.</p>
+<h3 id="type-declarations-for-local-variables-function-parameter-and-function-return-values">Type-declarations for local variables, function parameter, and function return values<a class="headerlink" href="index.html#type-declarations-for-local-variables-function-parameter-and-function-return-values" title="Permanent link">&para;</a></h3>
+<p>Local variables can be defined either untyped as in <code>x = 1</code>, or typed as in <code>int x = 1</code>. Types include <strong>var</strong> (explicitly untyped), <strong>int</strong>, <strong>float</strong>, <strong>num</strong> (int or float), <strong>str</strong>, <strong>bool</strong>, <strong>arr</strong>, <strong>map</strong>, and <strong>funct</strong>. These optional type declarations are enforced at the time values are assigned to variables: whether at the initial value assignment as in <code>int x = 1</code> or in any subsequent assignments to the same variable farther down in the scope.</p>
+<p>The reason for <code>num</code> is that <code>int</code> and <code>float</code> typedecls are very precise:</p>
+<pre class="pre-non-highlight-non-pair">
+float a = 0;   # Runtime error since 0 is int not float
+int   b = 1.0; # Runtime error since 1.0 is float not int
+num   c = 0;   # OK
+num   d = 1.0; # OK
+</pre>
+
+<p>A suggestion is to use <code>num</code> for general use when you want numeric content, and use <code>int</code> when you genuinely want integer-only values, e.g. in loop indices or map keys (since Miller map keys can only be strings or ints).</p>
+<p>The <code>var</code> type declaration indicates no type restrictions, e.g. <code>var x = 1</code> has the same type restrictions on <code>x</code> as <code>x = 1</code>. The difference is in intentional shadowing: if you have <code>x = 1</code> in outer scope and <code>x = 2</code> in inner scope (e.g. within a for-loop or an if-statement) then outer-scope <code>x</code> has value 2 after the second assignment.  But if you have <code>var x = 2</code> in the inner scope, then you are declaring a variable scoped to the inner block.) For example:</p>
+<pre class="pre-non-highlight-non-pair">
+x = 1;
+if (NR == 4) {
+  x = 2; # Refers to outer-scope x: value changes from 1 to 2.
+}
+print x; # Value of x is now two
+</pre>
+
+<pre class="pre-non-highlight-non-pair">
+x = 1;
+if (NR == 4) {
+  var x = 2; # Defines a new inner-scope x with value 2
+}
+print x;     # Value of this x is still 1
+</pre>
+
+<p>Likewise function arguments can optionally be typed, with type enforced when the function is called:</p>
+<pre class="pre-non-highlight-non-pair">
+func f(map m, int i) {
+  ...
+}
+$a = f({1:2, 3:4}, 5);     # OK
+$b = f({1:2, 3:4}, "abc"); # Runtime error
+$c = f({1:2, 3:4}, $x);    # Runtime error for records with non-integer field named x
+if (NR == 4) {
+  var x = 2; # Defines a new inner-scope x with value 2
+}
+print x;     # Value of this x is still 1
+</pre>
+
+<p>Thirdly, function return values can be type-checked at the point of <code>return</code> using <code>:</code> and a typedecl after the parameter list:</p>
+<pre class="pre-non-highlight-non-pair">
+func f(map m, int i): bool {
+  ...
+  ...
+  if (...) {
+    return "false"; # Runtime error if this branch is taken
+  }
+  ...
+  ...
+  if (...) {
+    return retval; # Runtime error if this function doesn't have an in-scope
+    # boolean-valued variable named retval
+  }
+  ...
+  ...
+  # In Miller if your functions don't explicitly return a value, they return absent-null.
+  # So it would also be a runtime error on reaching the end of this function without
+  # an explicit return statement.
+}
+</pre>
+
+<p>The <code>funct</code> keyword, for <em>function type</em>, indicates that a variable, argument, or return value is a function -- either a <a href="../reference-dsl-user-defined-functions/index.html#function-literals">function literal</a> or a (named) <a href="../reference-dsl-user-defined-functions/index.html">user-defined function</a>.</p>
+<pre class="pre-non-highlight-non-pair">
+$ cat funct-example.mlr
+func makefunc(): funct {
+  return func(x,y) {
+    return 10*x + y
+  }
+}
+
+func callfunc(funct f, num x, num y): num {
+  return f(x, y)
+}
+</pre>
+
+<pre class="pre-non-highlight-non-pair">
+$ rlwrap mlr repl
+Miller 6.0.0-dev REPL for darwin/amd64/go1.17
+Docs: https://miller.readthedocs.io
+Type ':h' or ':help' for online help; ':q' or ':quit' to quit.
+
+[mlr] :load funct-example.mlr
+
+[mlr] f = makefunc()
+
+[mlr] f
+function-literal-000001
+
+[mlr] f(2,3)
+23
+
+[mlr] callfunc(f, 3, 5)
+35
+</pre>
+
+<h2 id="aggregate-variable-assignments">Aggregate variable assignments<a class="headerlink" href="index.html#aggregate-variable-assignments" title="Permanent link">&para;</a></h2>
+<p>There are three remaining kinds of variable assignment using out-of-stream variables, the last two of which use the <code>$*</code> syntax:</p>
+<ul>
+<li>Recursive copy of out-of-stream variables</li>
+<li>Out-of-stream variable assigned to full stream record</li>
+<li>Full stream record assigned to an out-of-stream variable</li>
+</ul>
+<p>Example recursive copy of out-of-stream variables:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --opprint --from data/small put -q '</b>
+<b>  @v["sum"] += $x;</b>
+<b>  @v["count"] += 1;</b>
+<b>  end{</b>
+<b>    dump;</b>
+<b>    @w = @v;</b>
+<b>    dump</b>
+<b>  }</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+{
+  "v": {
+    "sum": 2.26476,
+    "count": 5
+  }
+}
+{
+  "v": {
+    "sum": 2.26476,
+    "count": 5
+  },
+  "w": {
+    "sum": 2.26476,
+    "count": 5
+  }
+}
+</pre>
+
+<p>Example of out-of-stream variable assigned to full stream record, where the 2nd record is stashed, and the 4th record is overwritten with that:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr put 'NR == 2 {@keep = $*}; NR == 4 {$* = @keep}' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=3,x=0.204603,y=0.338318
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=pan,i=5,x=0.573288,y=0.863624
+</pre>
+
+<p>Example of full stream record assigned to an out-of-stream variable, finding the record for which the <code>x</code> field has the largest value in the input stream:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=3,x=0.204603,y=0.338318
+a=eks,b=wye,i=4,x=0.381399,y=0.134188
+a=wye,b=pan,i=5,x=0.573288,y=0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --opprint put -q '</b>
+<b>  is_null(@xmax) || $x > @xmax {@xmax = $x; @recmax = $*};</b>
+<b>  end {emit @recmax}</b>
+<b>' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a   b   i x        y
+eks pan 2 0.758679 0.522151
+</pre>
+
+<h2 id="keywords-for-filter-and-put">Keywords for filter and put<a class="headerlink" href="index.html#keywords-for-filter-and-put" title="Permanent link">&para;</a></h2>
+<pre class="pre-highlight-in-pair">
+<b>mlr help list-keywords # you can also use mlr -k</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+all
+begin
+bool
+break
+call
+continue
+do
+dump
+edump
+elif
+else
+emit1
+emit
+emitf
+emitp
+end
+eprint
+eprintn
+false
+filter
+float
+for
+func
+funct
+if
+in
+int
+map
+num
+print
+printn
+return
+stderr
+stdout
+str
+subr
+tee
+true
+unset
+var
+while
+ENV
+FILENAME
+FILENUM
+FNR
+IFS
+IPS
+IRS
+M_E
+M_PI
+NF
+NR
+OFS
+OPS
+ORS
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr help usage-keywords # you can also use mlr -K</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+all: used in "emit1", "emit", "emitp", and "unset" as a synonym for @*
+
+begin: defines a block of statements to be executed before input records
+are ingested. The body statements must be wrapped in curly braces.
+
+  Example: 'begin { @count = 0 }'
+
+bool: declares a boolean local variable in the current curly-braced scope.
+Type-checking happens at assignment: 'bool b = 1' is an error.
+
+break: causes execution to continue after the body of the current for/while/do-while loop.
+
+call: used for invoking a user-defined subroutine.
+
+  Example: 'subr s(k,v) { print k . " is " . v} call s("a", $a)'
+
+continue: causes execution to skip the remaining statements in the body of
+the current for/while/do-while loop. For-loop increments are still applied.
+
+do: with "while", introduces a do-while loop. The body statements must be wrapped
+in curly braces.
+
+dump: prints all currently defined out-of-stream variables immediately
+to stdout as JSON.
+
+With >, >>, or |, the data do not go directly to stdout but are instead
+redirected.
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { dump }'
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { dump >  "mytap.dat"}'
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { dump >> "mytap.dat"}'
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { dump | "jq .[]"}'
+
+edump: prints all currently defined out-of-stream variables immediately
+to stderr as JSON.
+
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { edump }'
+
+elif: the way Miller spells "else if". The body statements must be wrapped
+in curly braces.
+
+else: terminates an if/elif/elif chain. The body statements must be wrapped
+in curly braces.
+
+emit1: inserts an out-of-stream variable into the output record stream. Unlike
+the other map variants, side-by-sides, indexing, and redirection are not supported,
+but you can emit any map-valued expression.
+
+  Example: mlr --from f.dat put 'emit1 $*'
+  Example: mlr --from f.dat put 'emit1 mapsum({"id": NR}, $*)'
+
+Please see https://miller.readthedocs.io://johnkerl.org/miller/doc for more information.
+
+emit: inserts an out-of-stream variable into the output record stream. Hashmap
+indices present in the data but not slotted by emit arguments are not output.
+
+With >, >>, or |, the data do not become part of the output record stream but
+are instead redirected.
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+You can use any of the output-format command-line flags, e.g. --ocsv, --ofs,
+etc., to control the format of the output if the output is redirected. See also mlr -h.
+
+  Example: mlr --from f.dat put 'emit >  "/tmp/data-".$a, $*'
+  Example: mlr --from f.dat put 'emit >  "/tmp/data-".$a, mapexcept($*, "a")'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit @sums'
+  Example: mlr --from f.dat put --ojson '@sums[$a][$b]+=$x; emit > "tap-".$a.$b.".dat", @sums'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit @sums, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit >  "mytap.dat", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit >> "mytap.dat", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit | "gzip > mytap.dat.gz", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit > stderr, @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit | "grep somepattern", @*, "index1", "index2"'
+
+Please see https://miller.readthedocs.io://johnkerl.org/miller/doc for more information.
+
+emitf: inserts non-indexed out-of-stream variable(s) side-by-side into the
+output record stream.
+
+With >, >>, or |, the data do not become part of the output record stream but
+are instead redirected.
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+You can use any of the output-format command-line flags, e.g. --ocsv, --ofs,
+etc., to control the format of the output if the output is redirected. See also mlr -h.
+
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf @a'
+  Example: mlr --from f.dat put --oxtab '@a=$i;@b+=$x;@c+=$y; emitf > "tap-".$i.".dat", @a'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf > "mytap.dat", @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf >> "mytap.dat", @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf > stderr, @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf | "grep somepattern", @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf | "grep somepattern > mytap.dat", @a, @b, @c'
+
+Please see https://miller.readthedocs.io://johnkerl.org/miller/doc for more information.
+
+emitp: inserts an out-of-stream variable into the output record stream.
+Hashmap indices present in the data but not slotted by emitp arguments are
+output concatenated with ":".
+
+With >, >>, or |, the data do not become part of the output record stream but
+are instead redirected.
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+You can use any of the output-format command-line flags, e.g. --ocsv, --ofs,
+etc., to control the format of the output if the output is redirected. See also mlr -h.
+
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp @sums'
+  Example: mlr --from f.dat put --opprint '@sums[$a][$b]+=$x; emitp > "tap-".$a.$b.".dat", @sums'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp @sums, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp >  "mytap.dat", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp >> "mytap.dat", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp | "gzip > mytap.dat.gz", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp > stderr, @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp | "grep somepattern", @*, "index1", "index2"'
+
+Please see https://miller.readthedocs.io://johnkerl.org/miller/doc for more information.
+
+end: defines a block of statements to be executed after input records
+are ingested. The body statements must be wrapped in curly braces.
+
+  Example: 'end { emit @count }'
+  Example: 'end { eprint "Final count is " . @count }'
+
+eprint: prints expression immediately to stderr.
+
+  Example: mlr --from f.dat put -q 'eprint "The sum of x and y is ".($x+$y)'
+  Example: mlr --from f.dat put -q 'for (k, v in $*) { eprint k . " => " . v }'
+  Example: mlr --from f.dat put  '(NR % 1000 == 0) { eprint "Checkpoint ".NR}'
+
+eprintn: prints expression immediately to stderr, without trailing newline.
+
+  Example: mlr --from f.dat put -q 'eprintn "The sum of x and y is ".($x+$y); eprint ""'
+
+false: the boolean literal value.
+
+filter: includes/excludes the record in the output record stream.
+
+  Example: mlr --from f.dat put 'filter (NR == 2 || $x > 5.4)'
+
+Instead of put with 'filter false' you can simply use put -q.  The following
+uses the input record to accumulate data but only prints the running sum
+without printing the input record:
+
+  Example: mlr --from f.dat put -q '@running_sum += $x * $y; emit @running_sum'
+
+float: declares a floating-point local variable in the current curly-braced scope.
+Type-checking happens at assignment: 'float x = 0' is an error.
+
+for: defines a for-loop using one of three styles. The body statements must
+be wrapped in curly braces.
+For-loop over stream record:
+
+  Example:  'for (k, v in $*) { ... }'
+
+For-loop over out-of-stream variables:
+
+  Example: 'for (k, v in @counts) { ... }'
+  Example: 'for ((k1, k2), v in @counts) { ... }'
+  Example: 'for ((k1, k2, k3), v in @*) { ... }'
+
+C-style for-loop:
+
+  Example:  'for (var i = 0, var b = 1; i < 10; i += 1, b *= 2) { ... }'
+
+func: used for defining a user-defined function.
+
+  Example: 'func f(a,b) { return sqrt(a**2+b**2)} $d = f($x, $y)'
+
+funct: used for saying that a function argument is a user-defined function.
+
+  Example: 'func g(num a, num b, funct f) :num { return f(a**2+b**2) }'
+
+if: starts an if/elif/elif chain. The body statements must be wrapped
+in curly braces.
+
+in: used in for-loops over stream records or out-of-stream variables.
+
+int: declares an integer local variable in the current curly-braced scope.
+Type-checking happens at assignment: 'int x = 0.0' is an error.
+
+map: declares an map-valued local variable in the current curly-braced scope.
+Type-checking happens at assignment: 'map b = 0' is an error. map b = {} is
+always OK. map b = a is OK or not depending on whether a is a map.
+
+num: declares an int/float local variable in the current curly-braced scope.
+Type-checking happens at assignment: 'num b = true' is an error.
+
+print: prints expression immediately to stdout.
+
+  Example: mlr --from f.dat put -q 'print "The sum of x and y is ".($x+$y)'
+  Example: mlr --from f.dat put -q 'for (k, v in $*) { print k . " => " . v }'
+  Example: mlr --from f.dat put  '(NR % 1000 == 0) { print > stderr, "Checkpoint ".NR}'
+
+printn: prints expression immediately to stdout, without trailing newline.
+
+  Example: mlr --from f.dat put -q 'printn "."; end { print "" }'
+
+return: specifies the return value from a user-defined function.
+Omitted return statements (including via if-branches) result in an absent-null
+return value, which in turns results in a skipped assignment to an LHS.
+
+stderr: Used for tee, emit, emitf, emitp, print, and dump in place of filename
+to print to standard error.
+
+stdout: Used for tee, emit, emitf, emitp, print, and dump in place of filename
+to print to standard output.
+
+str: declares a string local variable in the current curly-braced scope.
+Type-checking happens at assignment.
+
+subr: used for defining a subroutine.
+
+  Example: 'subr s(k,v) { print k . " is " . v} call s("a", $a)'
+
+tee: prints the current record to specified file.
+This is an immediate print to the specified file (except for pprint format
+which of course waits until the end of the input stream to format all output).
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+You can use any of the output-format command-line flags, e.g. --ocsv, --ofs,
+etc., to control the format of the output. See also mlr -h.
+
+emit with redirect and tee with redirect are identical, except tee can only
+output $*.
+
+  Example: mlr --from f.dat put 'tee >  "/tmp/data-".$a, $*'
+  Example: mlr --from f.dat put 'tee >> "/tmp/data-".$a.$b, $*'
+  Example: mlr --from f.dat put 'tee >  stderr, $*'
+  Example: mlr --from f.dat put -q 'tee | "tr \[a-z\\] \[A-Z\\]", $*'
+  Example: mlr --from f.dat put -q 'tee | "tr \[a-z\\] \[A-Z\\] > /tmp/data-".$a, $*'
+  Example: mlr --from f.dat put -q 'tee | "gzip > /tmp/data-".$a.".gz", $*'
+  Example: mlr --from f.dat put -q --ojson 'tee | "gzip > /tmp/data-".$a.".gz", $*'
+
+true: the boolean literal value.
+
+unset: clears field(s) from the current record, or an out-of-stream or local variable.
+
+  Example: mlr --from f.dat put 'unset $x'
+  Example: mlr --from f.dat put 'unset $*'
+  Example: mlr --from f.dat put 'for (k, v in $*) { if (k =~ "a.*") { unset $[k] } }'
+  Example: mlr --from f.dat put '...; unset @sums'
+  Example: mlr --from f.dat put '...; unset @sums["green"]'
+  Example: mlr --from f.dat put '...; unset @*'
+
+var: declares an untyped local variable in the current curly-braced scope.
+
+  Examples: 'var a=1', 'var xyz=""'
+
+while: introduces a while loop, or with "do", introduces a do-while loop.
+The body statements must be wrapped in curly braces.
+
+ENV: access to environment variables by name, e.g. '$home = ENV["HOME"]'
+
+FILENAME: evaluates to the name of the current file being processed.
+
+FILENUM: evaluates to the number of the current file being processed,
+starting with 1.
+
+FNR: evaluates to the number of the current record within the current file
+being processed, starting with 1. Resets at the start of each file.
+
+IFS: evaluates to the input field separator from the command line.
+
+IPS: evaluates to the input pair separator from the command line.
+
+IRS: evaluates to the input record separator from the command line,
+or to LF or CRLF from the input data if in autodetect mode (which is
+the default).
+
+M_E: the mathematical constant e.
+
+M_PI: the mathematical constant pi.
+
+NF: evaluates to the number of fields in the current record.
+
+NR: evaluates to the number of the current record over all files
+being processed, starting with 1. Does not reset at the start of each file.
+
+OFS: evaluates to the output field separator from the command line.
+
+OPS: evaluates to the output pair separator from the command line.
+
+ORS: evaluates to the output record separator from the command line,
+or to LF or CRLF from the input data if in autodetect mode (which is
+the default).
+</pre>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="index.html#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../reference-dsl-syntax/index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: DSL syntax" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              DSL syntax
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../reference-dsl-control-structures/index.html" class="md-footer__link md-footer__link--next" aria-label="Next: DSL control structures" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              DSL control structures
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="../../../../squidfunk.github.io/mkdocs-material/index.html" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="../../../../cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js"></script>
+      
+        <script src="../javascripts/tables.js"></script>
+      
+        <script src="../readthedocs-data.js"></script>
+      
+        <script src="../../../_/static/core/js/readthedocs-doc-embed.js"></script>
+      
+        <script src="../../../_/static/javascript/readthedocs-analytics.js"></script>
+      
+    
+  </body>
+</html>

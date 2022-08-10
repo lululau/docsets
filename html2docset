@@ -223,3 +223,7 @@ html2docset -n mitmproxy -k mitm -i ./mitmproxy.png -d mitmproxy-docset -p /docs
 
 # Command generate arthas docs
 html2docset -n arthas -k arthas -i ./arthas.png -d arthas-docset -p /alibaba.github.io/arthas/commands.html -s arthas --page-pattern='/alibaba.github.io/arthas/.*.html' --link-pattern='/alibaba.github.io/arthas/.*.html' --link-script=''
+
+
+# Command generate miller docs
+html2docset -n miller -k mlr -i ./miller.png -d miller-docset -p /miller.readthedocs.io/en/latest.html -s web --page-pattern='/en/latest/.*html' --link-pattern='^(\.\./|index.html#)' --link-script='href.sub!(/^\.\./, "/miller.readthedocs.io/en/latest");href.sub!(/^index.html#/, "/miller.readthedocs.io/en/latest/#{File.basename(File.dirname(path))}/index.html#");'

@@ -1,0 +1,2741 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+    
+    
+      
+        <title>DSL output statements - Miller Latest Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="../../../../fonts.googleapis.com/css%3Ffamily=Lato:300,300i,400,400i,700,700i|Lato+Mono:400,400i,700,700i&amp;display=fallback.css">
+        <style>:root{--md-text-font:"Lato";--md-code-font:"Lato Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+      <link rel="stylesheet" href="../../../_/static/css/badge_only.css">
+    
+      <link rel="stylesheet" href="../../../_/static/css/readthedocs-doc-embed.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="index.html#dsl-output-statements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../latest.html" title="Miller Latest Documentation" class="md-header__button md-logo" aria-label="Miller Latest Documentation" data-md-component="logo">
+      
+  <img src="../images/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Miller Latest Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DSL output statements
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="../../../../github.com/johnkerl/miller.html" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    miller
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../latest.html" title="Miller Latest Documentation" class="md-nav__button md-logo" aria-label="Miller Latest Documentation" data-md-component="logo">
+      
+  <img src="../images/favicon.png" alt="logo">
+
+    </a>
+    Miller Latest Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="../../../../github.com/johnkerl/miller.html" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    miller
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../latest.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-miller/index.html" class="md-nav__link">
+        Installing Miller
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10min/index.html" class="md-nav__link">
+        Miller in 10 minutes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keystroke-savers/index.html" class="md-nav__link">
+        Keystroke-savers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller-programming-language/index.html" class="md-nav__link">
+        Intro to Miller's programming language
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miller-on-windows/index.html" class="md-nav__link">
+        Miller on Windows
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/index.html" class="md-nav__link">
+        Community
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../structure-of-these-documents/index.html" class="md-nav__link">
+        Structure of these documents
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Miller in more detail
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Miller in more detail" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Miller in more detail
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/index.html" class="md-nav__link">
+        Features
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-formats/index.html" class="md-nav__link">
+        File formats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unix-toolkit-context/index.html" class="md-nav__link">
+        Unix-toolkit context
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../record-heterogeneity/index.html" class="md-nav__link">
+        Record-heterogeneity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internationalization/index.html" class="md-nav__link">
+        Internationalization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../output-colorization/index.html" class="md-nav__link">
+        Output colorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/index.html" class="md-nav__link">
+        Customization: .mlrrc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vimrc/index.html" class="md-nav__link">
+        Syntax highlighting: vimrc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../repl/index.html" class="md-nav__link">
+        The REPL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../online-help/index.html" class="md-nav__link">
+        Online help
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/index.html" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          FAQs and examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="FAQs and examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          FAQs and examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv-with-and-without-headers/index.html" class="md-nav__link">
+        CSV, with and without headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shapes-of-data/index.html" class="md-nav__link">
+        Shapes of data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operating-on-all-fields/index.html" class="md-nav__link">
+        Operating on all fields
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operating-on-all-records/index.html" class="md-nav__link">
+        Operating on all records
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questions-about-then-chaining/index.html" class="md-nav__link">
+        Questions about then-chaining
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../questions-about-joins/index.html" class="md-nav__link">
+        Questions about joins
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../date-time-examples/index.html" class="md-nav__link">
+        Date/time examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../special-symbols-and-formatting/index.html" class="md-nav__link">
+        Special symbols and formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shell-commands/index.html" class="md-nav__link">
+        Running shell commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-cleaning-examples/index.html" class="md-nav__link">
+        Data-cleaning examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-diving-examples/index.html" class="md-nav__link">
+        Data-diving examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../log-processing-examples/index.html" class="md-nav__link">
+        Log-processing examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql-examples/index.html" class="md-nav__link">
+        SQL examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kubectl-and-helm/index.html" class="md-nav__link">
+        Processing Kubectl and Helm output
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dkvp-examples/index.html" class="md-nav__link">
+        DKVP I/O examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics-examples/index.html" class="md-nav__link">
+        Statistics examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../randomizing-examples/index.html" class="md-nav__link">
+        Randomizing examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../two-pass-algorithms/index.html" class="md-nav__link">
+        Two-pass algorithms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../programming-examples/index.html" class="md-nav__link">
+        Programming-language examples
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc-examples/index.html" class="md-nav__link">
+        Miscellaneous examples
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Main reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Main reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Main reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-overview/index.html" class="md-nav__link">
+        Miller command structure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-then-chaining/index.html" class="md-nav__link">
+        Then-chaining
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-flag-list/index.html" class="md-nav__link">
+        List of command-line flags
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-verbs/index.html" class="md-nav__link">
+        List of verbs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-in-place-processing/index.html" class="md-nav__link">
+        In-place mode
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-number-formatting/index.html" class="md-nav__link">
+        Number formatting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-separators/index.html" class="md-nav__link">
+        Separators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsing-and-formatting-fields/index.html" class="md-nav__link">
+        Parsing and formatting fields
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flatten-unflatten/index.html" class="md-nav__link">
+        Flatten/unflatten: converting between JSON and tabular formats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sorting/index.html" class="md-nav__link">
+        Sorting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streaming-and-memory/index.html" class="md-nav__link">
+        Streaming processing, and memory usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-compressed-data/index.html" class="md-nav__link">
+        Compressed data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cpu/index.html" class="md-nav__link">
+        CPU/multicore usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scripting/index.html" class="md-nav__link">
+        Scripting with Miller
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-env-vars/index.html" class="md-nav__link">
+        Miller environment variables
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Types reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Types reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Types reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-data-types/index.html" class="md-nav__link">
+        Data types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-strings/index.html" class="md-nav__link">
+        Strings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-regular-expressions/index.html" class="md-nav__link">
+        Regular expressions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-arithmetic/index.html" class="md-nav__link">
+        Arithmetic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-maps/index.html" class="md-nav__link">
+        Maps
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-arrays/index.html" class="md-nav__link">
+        Arrays
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-null-data/index.html" class="md-nav__link">
+        Null/empty/absent data
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          DSL reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="DSL reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          DSL reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl/index.html" class="md-nav__link">
+        DSL overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-syntax/index.html" class="md-nav__link">
+        DSL syntax
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-variables/index.html" class="md-nav__link">
+        DSL variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-control-structures/index.html" class="md-nav__link">
+        DSL control structures
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-operators/index.html" class="md-nav__link">
+        DSL operators
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-builtin-functions/index.html" class="md-nav__link">
+        DSL built-in functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-user-defined-functions/index.html" class="md-nav__link">
+        DSL user-defined functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-higher-order-functions/index.html" class="md-nav__link">
+        DSL higher-order functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-filter-statements/index.html" class="md-nav__link">
+        DSL filter statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          DSL output statements
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="index.html" class="md-nav__link md-nav__link--active">
+        DSL output statements
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="index.html#print-statements" class="md-nav__link">
+    Print statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#dump-statements" class="md-nav__link">
+    Dump statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#tee-statements" class="md-nav__link">
+    Tee statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#redirected-output-statements" class="md-nav__link">
+    Redirected-output statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#emit1-and-emitemitpemitf" class="md-nav__link">
+    Emit1 and emit/emitp/emitf
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#emitf-statements" class="md-nav__link">
+    Emitf statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#emit-statements" class="md-nav__link">
+    Emit statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#multi-emit-statements" class="md-nav__link">
+    Multi-emit statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#emit-all-statements" class="md-nav__link">
+    Emit-all statements
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-unset-statements/index.html" class="md-nav__link">
+        DSL unset statements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-time/index.html" class="md-nav__link">
+        DSL datetime/timezone functions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-errors/index.html" class="md-nav__link">
+        DSL errors and transparency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-differences/index.html" class="md-nav__link">
+        Differences from other programming languages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-dsl-complexity/index.html" class="md-nav__link">
+        A note on the complexity of Miller's expression language
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Background
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Background" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Background
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why/index.html" class="md-nav__link">
+        Why?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../etymology/index.html" class="md-nav__link">
+        Why call it Miller?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../originality/index.html" class="md-nav__link">
+        How original is Miller?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../performance/index.html" class="md-nav__link">
+        Performance
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          Misc. reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Misc. reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Misc. reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-main-auxiliary-commands/index.html" class="md-nav__link">
+        Auxiliary commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manpage/index.html" class="md-nav__link">
+        Manual page
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build/index.html" class="md-nav__link">
+        Building from source
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-release/index.html" class="md-nav__link">
+        How to create a new release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release-docs/index.html" class="md-nav__link">
+        Documents for previous releases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/index.html" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../new-in-miller-6/index.html" class="md-nav__link">
+        What's new in Miller 6
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="index.html#print-statements" class="md-nav__link">
+    Print statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#dump-statements" class="md-nav__link">
+    Dump statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#tee-statements" class="md-nav__link">
+    Tee statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#redirected-output-statements" class="md-nav__link">
+    Redirected-output statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#emit1-and-emitemitpemitf" class="md-nav__link">
+    Emit1 and emit/emitp/emitf
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#emitf-statements" class="md-nav__link">
+    Emitf statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#emit-statements" class="md-nav__link">
+    Emit statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#multi-emit-statements" class="md-nav__link">
+    Multi-emit statements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="index.html#emit-all-statements" class="md-nav__link">
+    Emit-all statements
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/johnkerl/miller/edit/main/docs/src/reference-dsl-output-statements.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<!---  PLEASE DO NOT EDIT DIRECTLY. EDIT THE .md.in FILE PLEASE. --->
+<div>
+<span class="quicklinks">
+Quick links:
+&nbsp;
+<a class="quicklink" href="../reference-main-flag-list/index.html">Flags</a>
+&nbsp;
+<a class="quicklink" href="../reference-verbs/index.html">Verbs</a>
+&nbsp;
+<a class="quicklink" href="../reference-dsl-builtin-functions/index.html">Functions</a>
+&nbsp;
+<a class="quicklink" href="../glossary/index.html">Glossary</a>
+&nbsp;
+<a class="quicklink" href="../release-docs/index.html">Release docs</a>
+</span>
+</div>
+<h1 id="dsl-output-statements">DSL output statements<a class="headerlink" href="index.html#dsl-output-statements" title="Permanent link">&para;</a></h1>
+<p>You can <strong>output</strong> variable-values or expressions in <strong>five ways</strong>:</p>
+<ul>
+<li>
+<p><strong>Assign</strong> them to stream-record fields. For example, <code>$cumulative_sum = @sum</code>. For another example, <code>$nr = NR</code> adds a field named <code>nr</code> to each output record, containing the value of the built-in variable <code>NR</code> as of when that record was ingested.</p>
+</li>
+<li>
+<p>Use <strong>emit1</strong>/<strong>emit</strong>/<strong>emitp</strong>/<strong>emitf</strong> to send out-of-stream variables' current values to the output record stream, e.g.  <code>@sum += $x; emit1 @sum</code> which produces an extra record such as <code>sum=3.1648382</code>. These records, just like records from input file(s), participate in downstream <a href="../reference-main-then-chaining/index.html">then-chaining</a> to other verbs.</p>
+</li>
+<li>
+<p>Use the <strong>print</strong> or <strong>eprint</strong> keywords which immediately print an expression <em>directly to standard output or standard error</em>, respectively. Note that <code>dump</code>, <code>edump</code>, <code>print</code>, and <code>eprint</code> don't output records which participate in <code>then</code>-chaining; rather, they're just immediate prints to stdout/stderr. The <code>printn</code> and <code>eprintn</code> keywords are the same except that they don't print final newlines. Additionally, you can print to a specified file instead of stdout/stderr.</p>
+</li>
+<li>
+<p>Use the <strong>dump</strong> or <strong>edump</strong> keywords, which <em>immediately print all out-of-stream variables as a JSON data structure to the standard output or standard error</em> (respectively).</p>
+</li>
+<li>
+<p>Use <strong>tee</strong> which formats the current stream record (not just an arbitrary string as with <strong>print</strong>) to a specific file.</p>
+</li>
+</ul>
+<p>For the first two options you are populating the output-records stream which feeds into the next verb in a <code>then</code>-chain (if any), or which otherwise is formatted for output using <code>--o...</code> flags.</p>
+<p>For the last three options you are sending output directly to standard output, standard error, or a file.</p>
+<h2 id="print-statements">Print statements<a class="headerlink" href="index.html#print-statements" title="Permanent link">&para;</a></h2>
+<p>The <code>print</code> statement is perhaps self-explanatory, but with a few light caveats:</p>
+<ul>
+<li>
+<p>There are four variants: <code>print</code> goes to stdout with final newline, <code>printn</code> goes to stdout without final newline (you can include one using "\n" in your output string), <code>eprint</code> goes to stderr with final newline, and <code>eprintn</code> goes to stderr without final newline.</p>
+</li>
+<li>
+<p>Output goes directly to stdout/stderr, respectively: data produced this way do not go downstream to the next verb in a <code>then</code>-chain. (Use <code>emit</code> for that.)</p>
+</li>
+<li>
+<p>Print statements are for strings (<code>print "hello"</code>), or things which can be made into strings: numbers (<code>print 3</code>, <code>print $a + $b</code>), or concatenations thereof (<code>print "a + b = " . ($a + $b)</code>). Maps (in <code>$*</code>, map-valued out-of-stream or local variables, and map literals) as well as arrays are printed as JSON.</p>
+</li>
+<li>
+<p>You can redirect print output to a file:</p>
+</li>
+</ul>
+<pre class="pre-highlight-non-pair">
+<b>mlr --from myfile.dat put 'print > "tap.txt", $x'</b>
+</pre>
+
+<ul>
+<li>You can redirect print output to multiple files, split by values present in various records:</li>
+</ul>
+<pre class="pre-highlight-non-pair">
+<b>mlr --from myfile.dat put 'print > $a.".txt", $x'</b>
+</pre>
+
+<p>See also <a href="index.html#redirected-output-statements">Redirected-output statements</a> for examples.</p>
+<h2 id="dump-statements">Dump statements<a class="headerlink" href="index.html#dump-statements" title="Permanent link">&para;</a></h2>
+<p>The <code>dump</code> statement is for printing expressions, including maps, directly to stdout/stderr, respectively:</p>
+<ul>
+<li>
+<p>There are two variants: <code>dump</code> prints to stdout; <code>edump</code> prints to stderr.</p>
+</li>
+<li>
+<p>Output goes directly to stdout/stderr, respectively: data produced this way do not go downstream to the next verb in a <code>then</code>-chain. (Use <code>emit</code> for that.)</p>
+</li>
+<li>
+<p>You can use <code>dump</code> to output single strings, numbers, or expressions including map-valued data. Map-valued data are printed as JSON.</p>
+</li>
+<li>
+<p>If you use <code>dump</code> (or <code>edump</code>) with no arguments, you get a JSON structure representing the current values of all out-of-stream variables.</p>
+</li>
+<li>
+<p>As with <code>print</code>, you can redirect output to files.</p>
+</li>
+<li>
+<p>See also <a href="index.html#redirected-output-statements">Redirected-output statements</a> for examples.</p>
+</li>
+</ul>
+<h2 id="tee-statements">Tee statements<a class="headerlink" href="index.html#tee-statements" title="Permanent link">&para;</a></h2>
+<p>Records produced by a <code>mlr put</code> go downstream to the next verb in your <code>then</code>-chain, if any, or otherwise to standard output.  If you want to additionally copy out records to files, you can do that using <code>tee</code>.</p>
+<p>The syntax is, by example:</p>
+<pre class="pre-highlight-non-pair">
+<b>mlr --from myfile.dat put 'tee > "tap.dat", $*' then sort -n index</b>
+</pre>
+
+<p>First is <code>tee &gt;</code>, then the filename expression (which can be an expression such as <code>"tap.".$a.".dat"</code>), then a comma, then <code>$*</code>. (Nothing else but <code>$*</code> is teeable.)</p>
+<p>You can also write to a variable file name -- for example, you can split a
+single file into multiple ones on field names:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --csv cat example.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+color,shape,flag,k,index,quantity,rate
+yellow,triangle,true,1,11,43.6498,9.8870
+red,square,true,2,15,79.2778,0.0130
+red,circle,true,3,16,13.8103,2.9010
+red,square,false,4,48,77.5542,7.4670
+purple,triangle,false,5,51,81.2290,8.5910
+red,square,false,6,64,77.1991,9.5310
+purple,triangle,false,7,65,80.1405,5.8240
+yellow,circle,true,8,73,63.9785,4.2370
+yellow,circle,true,9,87,63.5058,8.3350
+purple,square,false,10,91,72.3735,8.2430
+</pre>
+
+<pre class="pre-highlight-non-pair">
+<b>mlr --csv --from example.csv put -q 'tee > $shape.".csv", $*'</b>
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --csv cat circle.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+color,shape,flag,k,index,quantity,rate
+red,circle,true,3,16,13.8103,2.9010
+yellow,circle,true,8,73,63.9785,4.2370
+yellow,circle,true,9,87,63.5058,8.3350
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --csv cat square.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+color,shape,flag,k,index,quantity,rate
+red,square,true,2,15,79.2778,0.0130
+red,square,false,4,48,77.5542,7.4670
+red,square,false,6,64,77.1991,9.5310
+purple,square,false,10,91,72.3735,8.2430
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --csv cat triangle.csv</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+color,shape,flag,k,index,quantity,rate
+yellow,triangle,true,1,11,43.6498,9.8870
+purple,triangle,false,5,51,81.2290,8.5910
+purple,triangle,false,7,65,80.1405,5.8240
+</pre>
+
+<p>See also <a href="index.html#redirected-output-statements">Redirected-output statements</a> for examples.</p>
+<h2 id="redirected-output-statements">Redirected-output statements<a class="headerlink" href="index.html#redirected-output-statements" title="Permanent link">&para;</a></h2>
+<p>The <strong>print</strong>, <strong>dump</strong> <strong>tee</strong>, <strong>emit</strong>, <strong>emitp</strong>, and <strong>emitf</strong> keywords all allow you to redirect output to one or more files or pipe-to commands. The filenames/commands are strings which can be constructed using record-dependent values, so you can do things like splitting a table into multiple files, one for each account ID, and so on.</p>
+<p>Details:</p>
+<ul>
+<li>The <code>print</code> and <code>dump</code> keywords produce output immediately to standard output, or to specified file(s) or pipe-to command if present.</li>
+</ul>
+<pre class="pre-highlight-in-pair">
+<b>mlr help keyword print</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+print: prints expression immediately to stdout.
+
+  Example: mlr --from f.dat put -q 'print "The sum of x and y is ".($x+$y)'
+  Example: mlr --from f.dat put -q 'for (k, v in $*) { print k . " => " . v }'
+  Example: mlr --from f.dat put  '(NR % 1000 == 0) { print > stderr, "Checkpoint ".NR}'
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr help keyword dump</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+dump: prints all currently defined out-of-stream variables immediately
+to stdout as JSON.
+
+With >, >>, or |, the data do not go directly to stdout but are instead
+redirected.
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { dump }'
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { dump >  "mytap.dat"}'
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { dump >> "mytap.dat"}'
+  Example: mlr --from f.dat put -q '@v[NR]=$*; end { dump | "jq .[]"}'
+</pre>
+
+<ul>
+<li><code>mlr put</code> sends the current record (possibly modified by the <code>put</code> expression) to the output record stream. Records are then input to the following verb in a <code>then</code>-chain (if any), else printed to standard output (unless <code>put -q</code>). The <strong>tee</strong> keyword <em>additionally</em> writes the output record to specified file(s) or pipe-to command, or immediately to <code>stdout</code>/<code>stderr</code>.</li>
+</ul>
+<pre class="pre-highlight-in-pair">
+<b>mlr help keyword tee</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+tee: prints the current record to specified file.
+This is an immediate print to the specified file (except for pprint format
+which of course waits until the end of the input stream to format all output).
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+You can use any of the output-format command-line flags, e.g. --ocsv, --ofs,
+etc., to control the format of the output. See also mlr -h.
+
+emit with redirect and tee with redirect are identical, except tee can only
+output $*.
+
+  Example: mlr --from f.dat put 'tee >  "/tmp/data-".$a, $*'
+  Example: mlr --from f.dat put 'tee >> "/tmp/data-".$a.$b, $*'
+  Example: mlr --from f.dat put 'tee >  stderr, $*'
+  Example: mlr --from f.dat put -q 'tee | "tr \[a-z\\] \[A-Z\\]", $*'
+  Example: mlr --from f.dat put -q 'tee | "tr \[a-z\\] \[A-Z\\] > /tmp/data-".$a, $*'
+  Example: mlr --from f.dat put -q 'tee | "gzip > /tmp/data-".$a.".gz", $*'
+  Example: mlr --from f.dat put -q --ojson 'tee | "gzip > /tmp/data-".$a.".gz", $*'
+</pre>
+
+<ul>
+<li><code>mlr put</code>'s <code>emitf</code>, <code>emitp</code>, and <code>emit</code> send out-of-stream variables to the output record stream. These are then input to the following verb in a <code>then</code>-chain (if any), else printed to standard output. When redirected with <code>&gt;</code>, <code>&gt;&gt;</code>, or <code>|</code>, they <em>instead</em> write the out-of-stream variable(s) to specified file(s) or pipe-to command, or immediately to <code>stdout</code>/<code>stderr</code>.</li>
+</ul>
+<pre class="pre-highlight-in-pair">
+<b>mlr help keyword emitf</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+emitf: inserts non-indexed out-of-stream variable(s) side-by-side into the
+output record stream.
+
+With >, >>, or |, the data do not become part of the output record stream but
+are instead redirected.
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+You can use any of the output-format command-line flags, e.g. --ocsv, --ofs,
+etc., to control the format of the output if the output is redirected. See also mlr -h.
+
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf @a'
+  Example: mlr --from f.dat put --oxtab '@a=$i;@b+=$x;@c+=$y; emitf > "tap-".$i.".dat", @a'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf > "mytap.dat", @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf >> "mytap.dat", @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf > stderr, @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf | "grep somepattern", @a, @b, @c'
+  Example: mlr --from f.dat put '@a=$i;@b+=$x;@c+=$y; emitf | "grep somepattern > mytap.dat", @a, @b, @c'
+
+Please see https://miller.readthedocs.io://johnkerl.org/miller/doc for more information.
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr help keyword emitp</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+emitp: inserts an out-of-stream variable into the output record stream.
+Hashmap indices present in the data but not slotted by emitp arguments are
+output concatenated with ":".
+
+With >, >>, or |, the data do not become part of the output record stream but
+are instead redirected.
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+You can use any of the output-format command-line flags, e.g. --ocsv, --ofs,
+etc., to control the format of the output if the output is redirected. See also mlr -h.
+
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp @sums'
+  Example: mlr --from f.dat put --opprint '@sums[$a][$b]+=$x; emitp > "tap-".$a.$b.".dat", @sums'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp @sums, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp >  "mytap.dat", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp >> "mytap.dat", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp | "gzip > mytap.dat.gz", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp > stderr, @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emitp | "grep somepattern", @*, "index1", "index2"'
+
+Please see https://miller.readthedocs.io://johnkerl.org/miller/doc for more information.
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr help keyword emit</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+emit: inserts an out-of-stream variable into the output record stream. Hashmap
+indices present in the data but not slotted by emit arguments are not output.
+
+With >, >>, or |, the data do not become part of the output record stream but
+are instead redirected.
+
+The > and >> are for write and append, as in the shell, but (as with awk) the
+file-overwrite for > is on first write, not per record. The | is for piping to
+a process which will process the data. There will be one open file for each
+distinct file name (for > and >>) or one subordinate process for each distinct
+value of the piped-to command (for |). Output-formatting flags are taken from
+the main command line.
+
+You can use any of the output-format command-line flags, e.g. --ocsv, --ofs,
+etc., to control the format of the output if the output is redirected. See also mlr -h.
+
+  Example: mlr --from f.dat put 'emit >  "/tmp/data-".$a, $*'
+  Example: mlr --from f.dat put 'emit >  "/tmp/data-".$a, mapexcept($*, "a")'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit @sums'
+  Example: mlr --from f.dat put --ojson '@sums[$a][$b]+=$x; emit > "tap-".$a.$b.".dat", @sums'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit @sums, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit >  "mytap.dat", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit >> "mytap.dat", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit | "gzip > mytap.dat.gz", @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit > stderr, @*, "index1", "index2"'
+  Example: mlr --from f.dat put '@sums[$a][$b]+=$x; emit | "grep somepattern", @*, "index1", "index2"'
+
+Please see https://miller.readthedocs.io://johnkerl.org/miller/doc for more information.
+</pre>
+
+<h2 id="emit1-and-emitemitpemitf">Emit1 and emit/emitp/emitf<a class="headerlink" href="index.html#emit1-and-emitemitpemitf" title="Permanent link">&para;</a></h2>
+<p>There are four variants: <code>emit1</code>, <code>emitf</code>, <code>emit</code>, and <code>emitp</code>. These are used
+to insert new records into the record stream -- or, optionally, redirect them
+to files.</p>
+<p>Keep in mind that out-of-stream variables are a nested, multi-level
+<a href="../reference-main-maps/index.html">map</a> (directly viewable as JSON using <code>dump</code>), while
+Miller record values are as well during processing -- but records may be
+flattened down for output to tabular formats. See the page <a href="../flatten-unflatten/index.html">Flatten/unflatten:
+JSON vs. tabular formats</a> for more information.</p>
+<ul>
+<li>You can use <code>emit1</code> to emit any map-valued expression, including <code>$*</code>,
+  map-valued out-of-stream variables, the entire out-of-stream-variable
+  collection <code>@*</code>, map-valued local variables, map literals, or map-valued
+  function return values.</li>
+<li>For <code>emit</code>, <code>emitp</code>, and <code>emitf</code>, you can emit map-valued local variables,
+  map-valued field attributes (with <code>$</code>), map-va out-of-stream variables (with
+  <code>@</code>), <code>$*</code>, <code>@*</code>, or map literals (with outermost <code>{...}</code>) -- but not arbitrary
+  expressions which evaluate to map (such as function return values).</li>
+</ul>
+<p>The reason for this is part historical and part technical. As we'll see below,
+you can do lots of syntactical things with <code>emit</code>, <code>emitp</code>, and <code>emitf</code>,
+including printing them side-by-side, index them, redirect the output to files,
+etc. What this means syntatically is that Miller's parser needs to handle all
+sorts of commas, parentheses, and so on:</p>
+<pre class="pre-non-highlight-non-pair">
+  emitf @count, @sum
+  emit @sum, "a", "b"
+  emitp (@count, @sum),"a","b"}
+  # etc
+</pre>
+
+<p>When we try to allow <code>emitf</code>/<code>emit</code>/<code>emitp</code> to handle arbitrary map-valued
+expressions, like <code>mapexcept($*, mymap)</code> and so on, this inserts more syntactic
+complexity in terms of commas, parentheses, and so on. The technical term is
+<em>LR-1 shift-reduce conflicts</em>, but we can simply think of this in terms of the
+parser not being able to efficiently disambiguate all the punctuational
+opportunities.</p>
+<p>So, <code>emit1</code> can handle syntactic richness in the one thing being emitted;
+<code>emitf</code>, <code>emit</code>, and <code>emitp</code> can handle syntactic richness in the side-by-side
+placement, indexing, and redirection.</p>
+<p>(Mnemonic: If all you want is to insert a new record into the record stream, <code>emit1</code> is probably the <em>one</em> you want.)</p>
+<p>What this means is that if you want to emit an expression which evaluates to a map, you can do quite simply</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --c2p --from example.csv put -q '</b>
+<b>  emit1 mapsum({"id": NR}, $*)</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+id color  shape    flag  k  index quantity rate
+1  yellow triangle true  1  11    43.6498  9.8870
+2  red    square   true  2  15    79.2778  0.0130
+3  red    circle   true  3  16    13.8103  2.9010
+4  red    square   false 4  48    77.5542  7.4670
+5  purple triangle false 5  51    81.2290  8.5910
+6  red    square   false 6  64    77.1991  9.5310
+7  purple triangle false 7  65    80.1405  5.8240
+8  yellow circle   true  8  73    63.9785  4.2370
+9  yellow circle   true  9  87    63.5058  8.3350
+10 purple square   false 10 91    72.3735  8.2430
+</pre>
+
+<p>And if you want indexing, redirects, etc., just assign to a temporary variable and use one of the other emit variants:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --c2p --from example.csv put -q '</b>
+<b>  o = mapsum({"id": NR}, $*);</b>
+<b>  emit o;</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+id color  shape    flag  k  index quantity rate
+1  yellow triangle true  1  11    43.6498  9.8870
+2  red    square   true  2  15    79.2778  0.0130
+3  red    circle   true  3  16    13.8103  2.9010
+4  red    square   false 4  48    77.5542  7.4670
+5  purple triangle false 5  51    81.2290  8.5910
+6  red    square   false 6  64    77.1991  9.5310
+7  purple triangle false 7  65    80.1405  5.8240
+8  yellow circle   true  8  73    63.9785  4.2370
+9  yellow circle   true  9  87    63.5058  8.3350
+10 purple square   false 10 91    72.3735  8.2430
+</pre>
+
+<h2 id="emitf-statements">Emitf statements<a class="headerlink" href="index.html#emitf-statements" title="Permanent link">&para;</a></h2>
+<p>Use <strong>emitf</strong> to output several out-of-stream variables side-by-side in the same output record. For <code>emitf</code> these mustn't have indexing using <code>@name[...]</code>. Example:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '</b>
+<b>  @count += 1;</b>
+<b>  @x_sum += $x;</b>
+<b>  @y_sum += $y;</b>
+<b>  end { emitf @count, @x_sum, @y_sum}</b>
+<b>' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+count=5,x_sum=2.26476,y_sum=2.585083
+</pre>
+
+<h2 id="emit-statements">Emit statements<a class="headerlink" href="index.html#emit-statements" title="Permanent link">&para;</a></h2>
+<p>Use <strong>emit</strong> to output an out-of-stream variable. If it's non-indexed you'll get a simple key-value pair:</p>
+<pre class="pre-highlight-in-pair">
+<b>cat data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,x=0.346791,y=0.726802
+a=eks,b=pan,i=2,x=0.758679,y=0.522151
+a=wye,b=wye,i=3,x=0.204603,y=0.338318
+a=eks,b=wye,i=4,x=0.381399,y=0.134188
+a=wye,b=pan,i=5,x=0.573288,y=0.863624
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum += $x; end { dump }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+{
+  "sum": 2.26476
+}
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum += $x; end { emit @sum }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+sum=2.26476
+</pre>
+
+<p>If it's indexed then use as many names after <code>emit</code> as there are indices:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a] += $x; end { dump }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+{
+  "sum": {
+    "pan": 0.346791,
+    "eks": 1.140078,
+    "wye": 0.777891
+  }
+}
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a] += $x; end { emit @sum, "a" }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,sum=0.346791
+a=eks,sum=1.140078
+a=wye,sum=0.777891
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a][$b] += $x; end { dump }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+{
+  "sum": {
+    "pan": {
+      "pan": 0.346791
+    },
+    "eks": {
+      "pan": 0.758679,
+      "wye": 0.381399
+    },
+    "wye": {
+      "wye": 0.204603,
+      "pan": 0.573288
+    }
+  }
+}
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a][$b] += $x; end { emit @sum, "a", "b" }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,sum=0.346791
+a=eks,b=pan,sum=0.758679
+a=eks,b=wye,sum=0.381399
+a=wye,b=wye,sum=0.204603
+a=wye,b=pan,sum=0.573288
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a][$b][$i] += $x; end { dump }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+{
+  "sum": {
+    "pan": {
+      "pan": {
+        "1": 0.346791
+      }
+    },
+    "eks": {
+      "pan": {
+        "2": 0.758679
+      },
+      "wye": {
+        "4": 0.381399
+      }
+    },
+    "wye": {
+      "wye": {
+        "3": 0.204603
+      },
+      "pan": {
+        "5": 0.573288
+      }
+    }
+  }
+}
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '</b>
+<b>  @sum[$a][$b][$i] += $x;</b>
+<b>  end { emit @sum, "a", "b", "i" }</b>
+<b>' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,b=pan,i=1,sum=0.346791
+a=eks,b=pan,i=2,sum=0.758679
+a=eks,b=wye,i=4,sum=0.381399
+a=wye,b=wye,i=3,sum=0.204603
+a=wye,b=pan,i=5,sum=0.573288
+</pre>
+
+<p>Now for <strong>emitp</strong>: if you have as many names following <code>emit</code> as there are levels in the out-of-stream variable's map, then <code>emit</code> and <code>emitp</code> do the same thing. Where they differ is when you don't specify as many names as there are map levels. In this case, Miller needs to flatten multiple map indices down to output-record keys: <code>emitp</code> includes full prefixing (hence the <code>p</code> in <code>emitp</code>) while <code>emit</code> takes the deepest map key as the output-record key:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a][$b] += $x; end { dump }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+{
+  "sum": {
+    "pan": {
+      "pan": 0.346791
+    },
+    "eks": {
+      "pan": 0.758679,
+      "wye": 0.381399
+    },
+    "wye": {
+      "wye": 0.204603,
+      "pan": 0.573288
+    }
+  }
+}
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a][$b] += $x; end { emit @sum, "a" }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,pan=0.346791
+a=eks,pan=0.758679,wye=0.381399
+a=wye,wye=0.204603,pan=0.573288
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a][$b] += $x; end { emit @sum }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+pan=0.346791
+pan=0.758679,wye=0.381399
+wye=0.204603,pan=0.573288
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a][$b] += $x; end { emitp @sum, "a" }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,sum.pan=0.346791
+a=eks,sum.pan=0.758679,sum.wye=0.381399
+a=wye,sum.wye=0.204603,sum.pan=0.573288
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr put -q '@sum[$a][$b] += $x; end { emitp @sum }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+sum.pan.pan=0.346791,sum.eks.pan=0.758679,sum.eks.wye=0.381399,sum.wye.wye=0.204603,sum.wye.pan=0.573288
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --oxtab put -q '@sum[$a][$b] += $x; end { emitp @sum }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+sum.pan.pan 0.346791
+sum.eks.pan 0.758679
+sum.eks.wye 0.381399
+sum.wye.wye 0.204603
+sum.wye.pan 0.573288
+</pre>
+
+<p>Use <strong>--flatsep</strong> to specify the character which joins multilevel
+keys for <code>emitp</code> (it defaults to a colon):</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --flatsep / put -q '@sum[$a][$b] += $x; end { emitp @sum, "a" }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a=pan,sum/pan=0.346791
+a=eks,sum/pan=0.758679,sum/wye=0.381399
+a=wye,sum/wye=0.204603,sum/pan=0.573288
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --flatsep / put -q '@sum[$a][$b] += $x; end { emitp @sum }' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+sum/pan/pan=0.346791,sum/eks/pan=0.758679,sum/eks/wye=0.381399,sum/wye/wye=0.204603,sum/wye/pan=0.573288
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --flatsep / --oxtab put -q '</b>
+<b>  @sum[$a][$b] += $x;</b>
+<b>  end { emitp @sum }</b>
+<b>' data/small</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+sum/pan/pan 0.346791
+sum/eks/pan 0.758679
+sum/eks/wye 0.381399
+sum/wye/wye 0.204603
+sum/wye/pan 0.573288
+</pre>
+
+<h2 id="multi-emit-statements">Multi-emit statements<a class="headerlink" href="index.html#multi-emit-statements" title="Permanent link">&para;</a></h2>
+<p>You can emit <strong>multiple map-valued expressions side-by-side</strong> by
+including their names in parentheses:</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --from data/medium --opprint put -q '</b>
+<b>  @x_count[$a][$b] += 1;</b>
+<b>  @x_sum[$a][$b] += $x;</b>
+<b>  end {</b>
+<b>      for ((a, b), _ in @x_count) {</b>
+<b>          @x_mean[a][b] = @x_sum[a][b] / @x_count[a][b]</b>
+<b>      }</b>
+<b>      emit (@x_sum, @x_count, @x_mean), "a", "b"</b>
+<b>  }</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a   b   x_sum              x_count x_mean
+pan pan 219.1851288316854  427     0.5133141190437597
+pan wye 198.43293070748447 395     0.5023618498923658
+pan eks 216.07522773165525 429     0.5036718595143479
+pan hat 205.22277621488686 417     0.492140950155604
+pan zee 205.09751802331917 413     0.4966041598627583
+eks pan 179.96303047250723 371     0.48507555383425127
+eks wye 196.9452860713734  407     0.4838950517724162
+eks zee 176.8803651584733  357     0.49546320772681596
+eks eks 215.91609712937984 413     0.5227992666570941
+eks hat 208.783170520597   417     0.5006790659966355
+wye wye 185.29584980261419 377     0.49150092785839306
+wye pan 195.84790012056564 392     0.4996119901034838
+wye hat 212.0331829346132  426     0.4977304763723314
+wye zee 194.77404756708714 385     0.5059066170573692
+wye eks 204.8129608356315  386     0.5306035254809106
+zee pan 202.21380378504267 389     0.5198298297816007
+zee wye 233.9913939194868  455     0.5142667998230479
+zee eks 190.9617780631925  391     0.4883932942792647
+zee zee 206.64063510417319 403     0.5127559183726382
+zee hat 191.30000620900935 409     0.46772617655014515
+hat wye 208.8830097609959  423     0.49381326184632596
+hat zee 196.3494502965293  385     0.5099985721987774
+hat eks 189.0067933716193  389     0.48587864619953547
+hat hat 182.8535323148762  381     0.47993053101017374
+hat pan 168.5538067327806  363     0.4643355557376876
+</pre>
+
+<p>What this does is walk through the first out-of-stream variable (<code>@x_sum</code> in this example) as usual, then for each keylist found (e.g. <code>pan,wye</code>), include the values for the remaining out-of-stream variables (here, <code>@x_count</code> and <code>@x_mean</code>). You should use this when all out-of-stream variables in the emit statement have <strong>the same shape and the same keylists</strong>.</p>
+<h2 id="emit-all-statements">Emit-all statements<a class="headerlink" href="index.html#emit-all-statements" title="Permanent link">&para;</a></h2>
+<p>Use <strong>emit all</strong> (or <code>emit @*</code> which is synonymous) to output all out-of-stream variables. You can use the following idiom to get various accumulators output side-by-side (reminiscent of <code>mlr stats1</code>):</p>
+<pre class="pre-highlight-in-pair">
+<b>mlr --from data/small --opprint put -q '</b>
+<b>  @v[$a][$b]["sum"] += $x;</b>
+<b>  @v[$a][$b]["count"] += 1;</b>
+<b>  end{emit @*,"a","b"}</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a   b   v.sum    v.count
+pan pan 0.346791 1
+eks pan 0.758679 1
+eks wye 0.381399 1
+wye wye 0.204603 1
+wye pan 0.573288 1
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --from data/small --opprint put -q '</b>
+<b>  @sum[$a][$b] += $x;</b>
+<b>  @count[$a][$b] += 1;</b>
+<b>  end{emit @*,"a","b"}</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a   b   sum
+pan pan 0.346791
+eks pan 0.758679
+eks wye 0.381399
+wye wye 0.204603
+wye pan 0.573288
+
+a   b   count
+pan pan 1
+eks pan 1
+eks wye 1
+wye wye 1
+wye pan 1
+</pre>
+
+<pre class="pre-highlight-in-pair">
+<b>mlr --from data/small --opprint put -q '</b>
+<b>  @sum[$a][$b] += $x;</b>
+<b>  @count[$a][$b] += 1;</b>
+<b>  end{emit (@sum, @count),"a","b"}</b>
+<b>'</b>
+</pre>
+<pre class="pre-non-highlight-in-pair">
+a   b   sum      count
+pan pan 0.346791 1
+eks pan 0.758679 1
+eks wye 0.381399 1
+wye wye 0.204603 1
+wye pan 0.573288 1
+</pre>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+          <a href="index.html#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../reference-dsl-filter-statements/index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: DSL filter statements" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              DSL filter statements
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../reference-dsl-unset-statements/index.html" class="md-footer__link md-footer__link--next" aria-label="Next: DSL unset statements" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              DSL unset statements
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="../../../../squidfunk.github.io/mkdocs-material/index.html" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top"], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      
+        <script src="../../../../cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js"></script>
+      
+        <script src="../javascripts/tables.js"></script>
+      
+        <script src="../readthedocs-data.js"></script>
+      
+        <script src="../../../_/static/core/js/readthedocs-doc-embed.js"></script>
+      
+        <script src="../../../_/static/javascript/readthedocs-analytics.js"></script>
+      
+    
+  </body>
+</html>

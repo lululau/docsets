@@ -1,0 +1,20 @@
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+          <key>CFBundleIdentifier</key>
+          <string>miller</string>
+          <key>CFBundleName</key>
+          <string>miller</string>
+          <key>DashDocSetFamily</key>
+          <string>miller</string>
+          <key>DocSetPlatformFamily</key>
+          <string>mlr</string>
+          <key>isDashDocset</key>
+          <true/>
+          <key>isJavaScriptEnabled</key>
+          <true/>
+          <key>dashIndexFilePath</key>
+          <string>/miller.readthedocs.io/en/latest.html</string>
+  </dict>
+  </plist>
