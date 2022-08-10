@@ -226,4 +226,5 @@ html2docset -n arthas -k arthas -i ./arthas.png -d arthas-docset -p /alibaba.git
 
 
 # Command generate miller docs
+wget -E -H -k -K -p -r -l 1 https://miller.readthedocs.io/en/latest
 html2docset -n miller -k mlr -i ./miller.png -d miller-docset -p /miller.readthedocs.io/en/latest.html -s web --page-pattern='/en/latest/.*html' --link-pattern='^(\.\./|index.html#)' --link-script='href.sub!(/^\.\./, "/miller.readthedocs.io/en/latest");href.sub!(/^index.html#/, "/miller.readthedocs.io/en/latest/#{File.basename(File.dirname(path))}/index.html#");'
