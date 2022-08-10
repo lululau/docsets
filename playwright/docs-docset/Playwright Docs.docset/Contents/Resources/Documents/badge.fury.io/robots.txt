@@ -1,0 +1,4 @@
+# robots.txt file for badge.fury.io website provider
+
+User-agent: *
+Disallow: /test.html
