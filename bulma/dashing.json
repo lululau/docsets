@@ -1,0 +1,17 @@
+{
+    "name": "Bulma",
+    "package": "bulma",
+    "index": "./html/bulma.io/documentation/overview/index.html",
+    "selectors": {
+      "#docsNav a": {
+        "type": "Command",
+        "matchpath": "/documentation/.*/index.html"
+      }
+    },
+    "ignore": [
+        "ABOUT"
+    ],
+    "icon32x32": "",
+    "allowJS": false,
+    "ExternalURL": ""
+}

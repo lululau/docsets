@@ -1,0 +1,3074 @@
+<!DOCTYPE html><html lang="en" class="route-documentation"><head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="Bulma is a free, open source CSS framework based on Flexbox and built with Sass. It&#39;s 100% responsive, fully modular, and available for free."/>
+
+  <title>Responsive Mixins
+ | Bulma: Free, open source, and modern CSS framework based on Flexbox
+</title>
+
+  <link rel="stylesheet" href="../../../vendor/fontawesome-free-5.15.2-web/css/all.min.css"/>
+
+  
+  
+  
+
+  <link rel="stylesheet" href="../../../../cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
+  <link rel="stylesheet" href="../../../css/bulma-docs.min.css%3Fv=202208161652.css"/>
+
+  <link rel="canonical" href="index.html"/>
+  <link rel="alternate" type="application/rss+xml" title="Bulma: Free, open source, and modern CSS framework based on Flexbox" href="https://bulma.io/atom.xml"/>
+
+  <meta property="og:url" content="https://bulma.io"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image:type" content="image/png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:site" content="@jgthms"/>
+  <meta name="twitter:creator" content="@jgthms"/>
+
+  <!-- Shared social media -->
+  
+    <meta property="og:title" content="Responsive Mixins"/>
+    <meta name="twitter:title" content="Responsive Mixins"/>
+  
+
+  
+    
+    
+      <meta property="og:description" content="Sass tools used by Bulma and available for you"/>
+      <meta name="twitter:description" content="Sass tools used by Bulma and available for you"/>
+    
+  
+
+  
+    <meta property="og:image" content="https://bulma.io/images/bulma-banner.png"/>
+    <meta name="twitter:image" content="https://bulma.io/images/bulma-banner.png"/>
+  
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https://bulma.io/favicons/apple-touch-icon.png?v=201701041855"/>
+  <link rel="icon" type="image/png" href="../../../favicons/favicon-32x32.png%3Fv=201701041855" sizes="32x32"/>
+  <link rel="icon" type="image/png" href="../../../favicons/favicon-16x16.png%3Fv=201701041855" sizes="16x16"/>
+  <link rel="manifest" href="../../../favicons/manifest.json%3Fv=201701041855"/>
+  <link rel="mask-icon" href="https://bulma.io/favicons/safari-pinned-tab.svg?v=201701041855" color="#00d1b2"/>
+  <link rel="shortcut icon" href="../../../favicons/favicon.ico%3Fv=201701041855"/>
+  <meta name="msapplication-config" content="https://bulma.io/favicons/browserconfig.xml?v=201701041855"/>
+  <meta name="theme-color" content="#00d1b2"/>
+</head>
+
+  <body class="layout-documentation page-utilities">
+    
+
+    <nav id="navbar" class="bd-navbar navbar">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://bulma.io">
+      <img src="../../../images/bulma-logo.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28"/>
+    </a>
+
+    <a class="navbar-item bd-navbar-mobile-icon" href="https://github.com/jgthms/bulma" target="_blank">
+      <span class="icon" style="color: var(--github);">
+        <i class="fab fa-lg fa-github-alt"></i>
+      </span>
+    </a>
+
+    <a class="navbar-item bd-navbar-mobile-icon" href="https://twitter.com/jgthms" target="_blank">
+      <span class="icon" style="color: var(--twitter);">
+        <i class="fab fa-lg fa-twitter"></i>
+      </span>
+    </a>
+
+    <div class="navbar-item bd-navbar-mobile-sponsor-icon">
+      <a href="https://bulma.io/become-a-bulma-sponsor/" class="button is-sponsor is-outlined is-small">
+        <span class="icon">
+          <i class="fas fa-thumbs-up"></i>
+        </span>
+        <span>Sponsor</span>
+      </a>
+    </div>
+
+    <button id="searchIcon" class="navbar-item bd-navbar-search-icon bd-navbar-search-mobile-icon">
+      <span class="icon">
+        <i class="fas fa-lg fa-search"></i>
+      </span>
+    </button>
+
+    <button id="navbarBurger" class="navbar-burger" data-target="navMenuDocumentation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div id="navMenuDocumentation" class="navbar-menu">
+    <div id="navbarStartOriginal" class="navbar-start bd-navbar-start bd-is-original">
+  <a class="
+      navbar-item bd-navbar-item bd-navbar-item-base bd-navbar-item-documentation
+      
+      is-active
+    " href="https://bulma.io/documentation">
+    <span class="icon has-text-primary">
+      <i class="fas fa-book"></i>
+    </span>
+    <span>
+      Docs
+    </span>
+  </a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-videos
+  bd-navbar-item-base
+  
+  
+" href="https://bulma.io/videos/">
+<span class="icon has-text-success">
+  <i class="fas fa-play-circle"></i>
+</span>
+
+<span>Videos</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-expo
+  bd-navbar-item-base
+  
+  
+" href="https://bulma.io/expo/">
+<span class="icon has-text-expo">
+  <i class="fas fa-star"></i>
+</span>
+
+<span>Expo</span>
+</a>
+
+  
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-love
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/love/">
+<span class="icon has-text-love">
+  <i class="fas fa-heart"></i>
+</span>
+
+<span>Love</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-backers
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/backers/">
+<span class="icon has-text-patreon">
+  <i class="fab fa-patreon"></i>
+</span>
+
+<span>Backers</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-extensions
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/extensions/">
+<span class="icon has-text-extensions">
+  <i class="fas fa-plug"></i>
+</span>
+
+<span>Extensions</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-bulma-book
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/the-official-bulma-book/">
+<span class="icon has-text-bleeding">
+  <i class="fas fa-bookmark"></i>
+</span>
+
+<span>Book</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-blog
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/blog/">
+<span class="icon has-text-rss">
+  <i class="fas fa-rss"></i>
+</span>
+
+<span>Blog</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-brand
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/brand/">
+<span class="icon has-text-primary">
+  <i class="fas fa-medal"></i>
+</span>
+
+<span>Brand</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-bulma-start
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/bulma-start/">
+<span class="icon has-text-success">
+  <i class="fas fa-rocket"></i>
+</span>
+
+<span>Start</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-made-with-bulma
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/made-with-bulma/">
+<span class="icon has-text-warning">
+  <i class="fas fa-certificate"></i>
+</span>
+
+<span>Badge</span>
+</a>
+
+  
+
+  <div class="navbar-item bd-navbar-item bd-navbar-item-base has-dropdown is-hoverable">
+    
+
+    <a class="navbar-link bd-navbar-ellipsis" href="https://bulma.io/more/">
+      <span class="icon">
+        <i class="fas fa-ellipsis-h"></i>
+      </span>
+    </a>
+
+    <div class="navbar-dropdown bd-navbar-dropdown is-boxed">
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/love/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-love">
+                  <i class="fas fa-heart"></i>
+                </span>
+                <span>
+                  <strong>Love</strong>
+                </span>
+              </div>
+              Fans of Bulma around the world
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/backers/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-patreon">
+                  <i class="fab fa-patreon"></i>
+                </span>
+                <span>
+                  <strong>Backers</strong>
+                </span>
+              </div>
+              Everyone who is supporting Bulma via Patreon and GitHub
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/extensions/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-extensions">
+                  <i class="fas fa-plug"></i>
+                </span>
+                <span>
+                  <strong>Bulma extensions</strong>
+                </span>
+              </div>
+              Side projects to enhance Bulma
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/the-official-bulma-book/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-bleeding">
+                  <i class="fas fa-bookmark"></i>
+                </span>
+                <span>
+                  <strong>The official Bulma book</strong>
+                </span>
+              </div>
+              A step-by-step guide that teaches you how to build a web interface from scratch using Bulma
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/blog/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-rss">
+                  <i class="fas fa-rss"></i>
+                </span>
+                <span>
+                  <strong>Blog</strong>
+                </span>
+              </div>
+              Stay updated with new features
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/brand/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-primary">
+                  <i class="fas fa-medal"></i>
+                </span>
+                <span>
+                  <strong>Brand</strong>
+                </span>
+              </div>
+              The official Bulma logos
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/bulma-start/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-success">
+                  <i class="fas fa-rocket"></i>
+                </span>
+                <span>
+                  <strong>Bulma start</strong>
+                </span>
+              </div>
+              A tiny npm package to get started
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/made-with-bulma/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-warning">
+                  <i class="fas fa-certificate"></i>
+                </span>
+                <span>
+                  <strong>Made with Bulma</strong>
+                </span>
+              </div>
+              The official community badge
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/alternative-to-bootstrap/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-bootstrap">
+                  <i class="fas fa-exchange-alt"></i>
+                </span>
+                <span>
+                  <strong>Coming from Bootstrap</strong>
+                </span>
+              </div>
+              See how Bulma is an alternative to Bootstrap
+            </div>
+        </a>
+        
+      
+    </div>
+  </div>
+</div>
+
+
+    <div class="navbar-end">
+      <a class="bd-navbar-icon navbar-item" href="https://github.com/jgthms/bulma" target="_blank">
+        <span class="icon" style="color: var(--github);">
+          <i class="fab fa-lg fa-github-alt"></i>
+        </span>
+      </a>
+
+      <a class="bd-navbar-icon navbar-item" href="https://twitter.com/jgthms" target="_blank">
+        <span class="icon" style="color: var(--twitter);">
+          <i class="fab fa-lg fa-twitter"></i>
+        </span>
+      </a>
+
+      <div class="navbar-item bd-navbar-sponsor-button is-hidden-desktop">
+        <a class="button is-sponsor is-light">
+          <span class="icon is-small">
+            <i class="fas fa-thumbs-up"></i>
+          </span>
+        </a>
+      </div>
+
+      <div class="navbar-item bd-navbar-download-button is-hidden-touch">
+        <a class="button is-primary mr-3" href="https://github.com/jgthms/bulma/releases/download/0.9.4/bulma-0.9.4.zip">
+          <span class="icon is-hidden-touch is-hidden-desktop-only">
+            <i class="fas fa-download"></i>
+          </span>
+          <span>Download</span>
+        </a>
+
+        <a href="https://bulma.io/become-a-bulma-sponsor/" class="button is-sponsor is-light">
+          <span class="icon is-small is-hidden-touch is-hidden-desktop-only">
+            <i class="fas fa-thumbs-up"></i>
+          </span>
+          <span>
+            Sponsor
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="search" class="bd-search">
+    <p class="control has-icons-left">
+      <input id="algoliaSearch" class="input is-rounded" type="text" placeholder="Search the docs"/>
+      <span class="icon is-small is-left">
+        <i class="fas fa-search"></i>
+      </span>
+    </p>
+  </div>
+</nav>
+
+<div class="bd-navbar bd-is-clone">
+  <div id="navbarStartClone" class="navbar-start bd-navbar-start bd-is-clone">
+  <a class="
+      navbar-item bd-navbar-item bd-navbar-item-base bd-navbar-item-documentation
+      
+      is-active
+    " href="https://bulma.io/documentation">
+    <span class="icon has-text-primary">
+      <i class="fas fa-book"></i>
+    </span>
+    <span>
+      Docs
+    </span>
+  </a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-videos
+  bd-navbar-item-base
+  
+  
+" href="https://bulma.io/videos/">
+<span class="icon has-text-success">
+  <i class="fas fa-play-circle"></i>
+</span>
+
+<span>Videos</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-expo
+  bd-navbar-item-base
+  
+  
+" href="https://bulma.io/expo/">
+<span class="icon has-text-expo">
+  <i class="fas fa-star"></i>
+</span>
+
+<span>Expo</span>
+</a>
+
+  
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-love
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/love/">
+<span class="icon has-text-love">
+  <i class="fas fa-heart"></i>
+</span>
+
+<span>Love</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-backers
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/backers/">
+<span class="icon has-text-patreon">
+  <i class="fab fa-patreon"></i>
+</span>
+
+<span>Backers</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-extensions
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/extensions/">
+<span class="icon has-text-extensions">
+  <i class="fas fa-plug"></i>
+</span>
+
+<span>Extensions</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-bulma-book
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/the-official-bulma-book/">
+<span class="icon has-text-bleeding">
+  <i class="fas fa-bookmark"></i>
+</span>
+
+<span>Book</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-blog
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/blog/">
+<span class="icon has-text-rss">
+  <i class="fas fa-rss"></i>
+</span>
+
+<span>Blog</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-brand
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/brand/">
+<span class="icon has-text-primary">
+  <i class="fas fa-medal"></i>
+</span>
+
+<span>Brand</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-bulma-start
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/bulma-start/">
+<span class="icon has-text-success">
+  <i class="fas fa-rocket"></i>
+</span>
+
+<span>Start</span>
+</a>
+
+  
+    
+
+
+<a class="
+  navbar-item
+  bd-navbar-item
+  bd-navbar-item-made-with-bulma
+  bd-navbar-item-more
+  
+  
+" href="https://bulma.io/made-with-bulma/">
+<span class="icon has-text-warning">
+  <i class="fas fa-certificate"></i>
+</span>
+
+<span>Badge</span>
+</a>
+
+  
+
+  <div class="navbar-item bd-navbar-item bd-navbar-item-base has-dropdown is-hoverable">
+    
+
+    <a class="navbar-link bd-navbar-ellipsis" href="https://bulma.io/more/">
+      <span class="icon">
+        <i class="fas fa-ellipsis-h"></i>
+      </span>
+    </a>
+
+    <div class="navbar-dropdown bd-navbar-dropdown is-boxed">
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/love/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-love">
+                  <i class="fas fa-heart"></i>
+                </span>
+                <span>
+                  <strong>Love</strong>
+                </span>
+              </div>
+              Fans of Bulma around the world
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/backers/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-patreon">
+                  <i class="fab fa-patreon"></i>
+                </span>
+                <span>
+                  <strong>Backers</strong>
+                </span>
+              </div>
+              Everyone who is supporting Bulma via Patreon and GitHub
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/extensions/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-extensions">
+                  <i class="fas fa-plug"></i>
+                </span>
+                <span>
+                  <strong>Bulma extensions</strong>
+                </span>
+              </div>
+              Side projects to enhance Bulma
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/the-official-bulma-book/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-bleeding">
+                  <i class="fas fa-bookmark"></i>
+                </span>
+                <span>
+                  <strong>The official Bulma book</strong>
+                </span>
+              </div>
+              A step-by-step guide that teaches you how to build a web interface from scratch using Bulma
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/blog/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-rss">
+                  <i class="fas fa-rss"></i>
+                </span>
+                <span>
+                  <strong>Blog</strong>
+                </span>
+              </div>
+              Stay updated with new features
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/brand/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-primary">
+                  <i class="fas fa-medal"></i>
+                </span>
+                <span>
+                  <strong>Brand</strong>
+                </span>
+              </div>
+              The official Bulma logos
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/bulma-start/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-success">
+                  <i class="fas fa-rocket"></i>
+                </span>
+                <span>
+                  <strong>Bulma start</strong>
+                </span>
+              </div>
+              A tiny npm package to get started
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/made-with-bulma/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-warning">
+                  <i class="fas fa-certificate"></i>
+                </span>
+                <span>
+                  <strong>Made with Bulma</strong>
+                </span>
+              </div>
+              The official community badge
+            </div>
+        </a>
+        
+          <hr class="navbar-divider "/>
+        
+      
+        
+        
+        <a class="
+            navbar-item
+            
+          " data-route="" href="https://bulma.io/alternative-to-bootstrap/">
+            <div>
+              <div class="icon-text">
+                <span class="icon has-text-bootstrap">
+                  <i class="fas fa-exchange-alt"></i>
+                </span>
+                <span>
+                  <strong>Coming from Bootstrap</strong>
+                </span>
+              </div>
+              See how Bulma is an alternative to Bootstrap
+            </div>
+        </a>
+        
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<header id="docsToggles" class="bd-docs-toggles">
+  <button class="button is-primary is-light bd-fat-button is-small" id="docsNavButton">Show menu</button>
+  <button class="button is-primary is-light bd-fat-button is-small" id="docsSideButton">Show sidebar</button>
+</header>
+
+<div id="docs" class="
+  bd-docs
+    
+      bd-is-contained
+    
+    bd-is-full-main
+  ">
+  <div id="docsNavOverlay" class="bd-docs-overlay"></div>
+
+  <nav id="docsNav" class="bd-docs-nav ">
+    <nav id="categories" class="bd-categories">
+  <div class="bd-categories-filter">
+    <input id="categoriesFilter" class="input is-small" type="text" name="" placeholder="Filter links" style="border-radius: 0.5em;"/>
+    <span class="bd-key">f</span>
+  </div>
+
+  
+    
+    
+
+    
+      <p class="bd-category-group">
+        Guides
+      </p>
+    
+
+    <div class="bd-category ">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5256"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Overview"></a><a class="
+            bd-category-name
+            
+          " href="../../overview/index.html" data-name="Overview">
+          <strong class="bd-name">Overview</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5257"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Start"></a><a href="../../overview/start/index.html" data-name="Start">
+              <span class="bd-name">Start</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5258"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/CSS%20classes"></a><a href="../../overview/classes/index.html" data-name="CSS classes">
+              <span class="bd-name">CSS classes</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5259"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Modifiers%20syntax"></a><a href="../../overview/modifiers/index.html" data-name="Modifiers syntax">
+              <span class="bd-name">Modifiers syntax</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5260"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Modularity"></a><a href="../../overview/modular/index.html" data-name="Modularity">
+              <span class="bd-name">Modularity</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5261"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Responsiveness"></a><a href="../../overview/responsiveness/index.html" data-name="Responsiveness">
+              <span class="bd-name">Responsiveness</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5262"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Colors"></a><a href="../../overview/colors/index.html" data-name="Colors">
+              <span class="bd-name">Colors</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+    
+    
+
+    
+
+    <div class="bd-category ">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5263"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Customize"></a><a class="
+            bd-category-name
+            
+          " href="../../customize/index.html" data-name="Customize">
+          <strong class="bd-name">Customize</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5264"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Concepts"></a><a href="../../customize/concepts/index.html" data-name="Concepts">
+              <span class="bd-name">Concepts</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5265"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Variables"></a><a href="../../customize/variables/index.html" data-name="Variables">
+              <span class="bd-name">Variables</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5266"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/With%20node-sass"></a><a href="../../customize/with-node-sass/index.html" data-name="With node-sass">
+              <span class="bd-name">With node-sass</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5267"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/With%20Sass%20CLI"></a><a href="../../customize/with-sass-cli/index.html" data-name="With Sass CLI">
+              <span class="bd-name">With Sass CLI</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5268"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/With%20webpack"></a><a href="../../customize/with-webpack/index.html" data-name="With webpack">
+              <span class="bd-name">With webpack</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+    
+    
+
+    
+
+    <div class="bd-category is-current">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5269"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Utilities"></a><a class="
+            bd-category-name
+            
+          " href="../index.html" data-name="Utilities">
+          <strong class="bd-name">Utilities</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5270"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Mixins"></a><a href="../mixins/index.html" data-name="Mixins">
+              <span class="bd-name">Mixins</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li class="is-current">
+            <a class="dashingAutolink" name="autolink-5271"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Responsive%20mixins"></a><a href="index.html" data-name="Responsive mixins">
+              <span class="bd-name">Responsive mixins</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5272"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Form%20Control%20mixins"></a><a href="../control-mixins/index.html" data-name="Form Control mixins">
+              <span class="bd-name">Form Control mixins</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5273"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Functions"></a><a href="../functions/index.html" data-name="Functions">
+              <span class="bd-name">Functions</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5274"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Extends"></a><a href="../extends/index.html" data-name="Extends">
+              <span class="bd-name">Extends</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+    
+    
+
+    
+      <p class="bd-category-group">
+        CSS Library
+      </p>
+    
+
+    <div class="bd-category ">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5275"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Columns"></a><a class="
+            bd-category-name
+            
+          " href="../../columns/index.html" data-name="Columns">
+          <strong class="bd-name">Columns</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5276"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Basics"></a><a href="../../columns/basics/index.html" data-name="Basics">
+              <span class="bd-name">Basics</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5277"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Sizes"></a><a href="../../columns/sizes/index.html" data-name="Sizes">
+              <span class="bd-name">Sizes</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5278"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Responsiveness"></a><a href="../../columns/responsiveness/index.html" data-name="Responsiveness">
+              <span class="bd-name">Responsiveness</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5279"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Nesting"></a><a href="../../columns/nesting/index.html" data-name="Nesting">
+              <span class="bd-name">Nesting</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5280"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Gap"></a><a href="../../columns/gap/index.html" data-name="Gap">
+              <span class="bd-name">Gap</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5281"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Options"></a><a href="../../columns/options/index.html" data-name="Options">
+              <span class="bd-name">Options</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+    
+    
+
+    
+
+    <div class="bd-category ">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5282"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Elements"></a><a class="
+            bd-category-name
+            
+          " href="../../elements/index.html" data-name="Elements">
+          <strong class="bd-name">Elements</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5283"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Block"></a><a href="../../elements/block/index.html" data-name="Block">
+              <span class="bd-name">Block</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5284"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Box"></a><a href="../../elements/box/index.html" data-name="Box">
+              <span class="bd-name">Box</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5285"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Button"></a><a href="../../elements/button/index.html" data-name="Button">
+              <span class="bd-name">Button</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5286"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Content"></a><a href="../../elements/content/index.html" data-name="Content">
+              <span class="bd-name">Content</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5287"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Delete"></a><a href="../../elements/delete/index.html" data-name="Delete">
+              <span class="bd-name">Delete</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5288"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Icon"></a><a href="../../elements/icon/index.html" data-name="Icon">
+              <span class="bd-name">Icon</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5289"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Image"></a><a href="../../elements/image/index.html" data-name="Image">
+              <span class="bd-name">Image</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5290"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Notification"></a><a href="../../elements/notification/index.html" data-name="Notification">
+              <span class="bd-name">Notification</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5291"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Progress%20bars"></a><a href="../../elements/progress/index.html" data-name="Progress bars">
+              <span class="bd-name">Progress bars</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5292"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Table"></a><a href="../../elements/table/index.html" data-name="Table">
+              <span class="bd-name">Table</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5293"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Tag"></a><a href="../../elements/tag/index.html" data-name="Tag">
+              <span class="bd-name">Tag</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5294"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Title"></a><a href="../../elements/title/index.html" data-name="Title">
+              <span class="bd-name">Title</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+    
+    
+
+    
+
+    <div class="bd-category ">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5295"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Components"></a><a class="
+            bd-category-name
+            
+          " href="../../components/index.html" data-name="Components">
+          <strong class="bd-name">Components</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5296"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Breadcrumb"></a><a href="../../components/breadcrumb/index.html" data-name="Breadcrumb">
+              <span class="bd-name">Breadcrumb</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5297"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Card"></a><a href="../../components/card/index.html" data-name="Card">
+              <span class="bd-name">Card</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5298"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Dropdown"></a><a href="../../components/dropdown/index.html" data-name="Dropdown">
+              <span class="bd-name">Dropdown</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5299"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Menu"></a><a href="../../components/menu/index.html" data-name="Menu">
+              <span class="bd-name">Menu</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5300"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Message"></a><a href="../../components/message/index.html" data-name="Message">
+              <span class="bd-name">Message</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5301"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Modal"></a><a href="../../components/modal/index.html" data-name="Modal">
+              <span class="bd-name">Modal</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5302"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Navbar"></a><a href="../../components/navbar/index.html" data-name="Navbar">
+              <span class="bd-name">Navbar</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5303"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Pagination"></a><a href="../../components/pagination/index.html" data-name="Pagination">
+              <span class="bd-name">Pagination</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5304"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Panel"></a><a href="../../components/panel/index.html" data-name="Panel">
+              <span class="bd-name">Panel</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5305"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Tabs"></a><a href="../../components/tabs/index.html" data-name="Tabs">
+              <span class="bd-name">Tabs</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+    
+    
+
+    
+
+    <div class="bd-category ">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5306"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Form"></a><a class="
+            bd-category-name
+            
+          " href="../../form/index.html" data-name="Form">
+          <strong class="bd-name">Form</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5307"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/General"></a><a href="../../form/general/index.html" data-name="General">
+              <span class="bd-name">General</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5308"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Input"></a><a href="../../form/input/index.html" data-name="Input">
+              <span class="bd-name">Input</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5309"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Textarea"></a><a href="../../form/textarea/index.html" data-name="Textarea">
+              <span class="bd-name">Textarea</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5310"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Select"></a><a href="../../form/select/index.html" data-name="Select">
+              <span class="bd-name">Select</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5311"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Checkbox"></a><a href="../../form/checkbox/index.html" data-name="Checkbox">
+              <span class="bd-name">Checkbox</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5312"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Radio"></a><a href="../../form/radio/index.html" data-name="Radio">
+              <span class="bd-name">Radio</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5313"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/File"></a><a href="../../form/file/index.html" data-name="File">
+              <span class="bd-name">File</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+    
+    
+
+    
+
+    <div class="bd-category ">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5314"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Layout"></a><a class="
+            bd-category-name
+            
+          " href="../../layout/index.html" data-name="Layout">
+          <strong class="bd-name">Layout</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5315"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Container"></a><a href="../../layout/container/index.html" data-name="Container">
+              <span class="bd-name">Container</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5316"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Level"></a><a href="../../layout/level/index.html" data-name="Level">
+              <span class="bd-name">Level</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5317"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Media%20Object"></a><a href="../../layout/media-object/index.html" data-name="Media Object">
+              <span class="bd-name">Media Object</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5318"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Hero"></a><a href="../../layout/hero/index.html" data-name="Hero">
+              <span class="bd-name">Hero</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5319"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Section"></a><a href="../../layout/section/index.html" data-name="Section">
+              <span class="bd-name">Section</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5320"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Footer"></a><a href="../../layout/footer/index.html" data-name="Footer">
+              <span class="bd-name">Footer</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5321"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Tiles"></a><a href="../../layout/tiles/index.html" data-name="Tiles">
+              <span class="bd-name">Tiles</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+    
+    
+
+    
+
+    <div class="bd-category ">
+      <header class="bd-category-header">
+        <a class="dashingAutolink" name="autolink-5322"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Helpers"></a><a class="
+            bd-category-name
+            
+          " href="../../helpers/index.html" data-name="Helpers">
+          <strong class="bd-name">Helpers</strong>
+        </a>
+
+        <button class="bd-category-toggle icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </header>
+
+      <ul class="bd-category-list">
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5323"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Color"></a><a href="../../helpers/color-helpers/index.html" data-name="Color">
+              <span class="bd-name">Color</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5324"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Spacing"></a><a href="../../helpers/spacing-helpers/index.html" data-name="Spacing">
+              <span class="bd-name">Spacing</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5325"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Typography"></a><a href="../../helpers/typography-helpers/index.html" data-name="Typography">
+              <span class="bd-name">Typography</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5326"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Visibility"></a><a href="../../helpers/visibility-helpers/index.html" data-name="Visibility">
+              <span class="bd-name">Visibility</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5327"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Flexbox"></a><a href="../../helpers/flexbox-helpers/index.html" data-name="Flexbox">
+              <span class="bd-name">Flexbox</span>
+
+              
+            </a>
+          </li>
+        
+          
+
+          <li>
+            <a class="dashingAutolink" name="autolink-5328"></a><a class="dashAnchor" name="//apple_ref/cpp/Command/Other"></a><a href="../../helpers/other-helpers/index.html" data-name="Other">
+              <span class="bd-name">Other</span>
+
+              
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  
+
+  <p id="categoriesNoResults" class="
+      bd-categories-no-results
+      has-background-primary-light
+      is-size-7
+      has-text-primary-dark
+      has-text-centered
+      p-3
+    ">
+    There are no results.
+    <br/>
+    <button class="button is-primary is-small">Reset search <span class="bd-key">esc</span></button>
+  </p>
+</nav>
+
+  </nav>
+
+  <main class="bd-docs-main">
+    
+      <div class="container">
+        
+
+<section class="hero bd-hero bd-is-basic">
+  <div class="hero-body">
+    
+      <div class="container">
+        
+<div class="bd-hero-body">
+  <div class="bd-hero-heading">
+    <h1 class="title algolia-lvl0">
+      
+      <p>Responsive Mixins</p>
+
+    </h1>
+    <div class="subtitle is-4 algolia-lvl1">
+      <p>Mixins that allows you to define different styles for each screen size</p>
+
+    </div>
+    
+  </div>
+</div>
+
+      </div>
+    
+  </div>
+</section>
+
+
+<div class="bd-docs-body">
+  <div class="bd-docs-content bd-content algolia-content">
+    <div class="content">
+  <p>
+    Bulma is <strong>responsive by default</strong>. <a href="../../overview/responsiveness/index.html">Learn more about Bulma&#39;s responsiveness</a>.
+  </p>
+</div>
+
+<h3 id="from-and-until-mixins" class="title is-4 is-spaced bd-anchor-title">
+  <span class="bd-anchor-name">
+    from() and until() mixins
+  </span>
+  <a class="bd-anchor-link" href="index.html#from-and-until-mixins">
+    #
+  </a>
+  
+</h3>
+
+
+<div class="content">
+  <p>
+    Responsiveness in CSS is based on <strong>media queries</strong> (see <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries" target="_blank">MDN documentation</a>).
+  </p>
+
+  <p>
+    Bulma provides <strong>2 useful responsive mixins:</strong>
+  </p>
+
+  <ul>
+    <li>
+      <div class="bd-snippet-inline"><figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@mixin</span> <span class="nf">from</span><span class="p">(</span><span class="nv">$breakpoint</span><span class="p">)</span></code></pre></figure></div>
+ to target devices with a screen <em>wider</em> than or equal to the breakpoint
+    </li>
+    <li>
+      <div class="bd-snippet-inline"><figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@mixin</span> <span class="nf">until</span><span class="p">(</span><span class="nv">$breakpoint</span><span class="p">)</span></code></pre></figure></div>
+ to target devices with a screen <em>narrower</em> than the breakpoint
+    </li>
+  </ul>
+
+  <p>Their usage is very simple:</p>
+</div>
+
+<h4 id="from" class="title is-5 is-spaced bd-anchor-title">
+  <span class="bd-anchor-name">
+    from()
+  </span>
+  <a class="bd-anchor-link" href="index.html#from">
+    #
+  </a>
+</h4>
+
+
+<div class="content">
+  <p>
+    The <code>from()</code> mixin has a single parameter which sets the <strong>screen width</strong> from which the styles it contains will be applied:
+  </p>
+</div>
+
+<p class="title is-6">Sass source</p>
+
+<figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="nc">.my-element</span> <span class="err">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="no">red</span><span class="err">;</span>
+
+  <span class="k">@include</span> <span class="nd">from</span><span class="p">(</span><span class="m">1280px</span><span class="p">)</span> <span class="err">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">blue</span><span class="err">;</span>
+  <span class="err">}</span>
+<span class="err">}</span></code></pre></figure>
+
+<p class="title is-6">CSS output</p>
+
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nc">.my-element</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">1280px</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nc">.my-element</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<div class="content">
+  <p>
+    For screens with a width of 1279px or less, the element&#39;s background will be <strong style="color: red;">red</strong>.
+    <br/>
+    For screens 1280px-wide or more, the element&#39;s background will be <strong style="color: blue;">blue</strong>.
+  </p>
+</div>
+
+<h4 id="until" class="title is-5 is-spaced bd-anchor-title">
+  <span class="bd-anchor-name">
+    until()
+  </span>
+  <a class="bd-anchor-link" href="index.html#until">
+    #
+  </a>
+</h4>
+
+
+<div class="content">
+  <p>
+    The <code>until()</code> mixin has a single parameter which sets the <strong>screen width (minus <code>1px</code>)</strong> until which the styles it contains will be applied.
+  </p>
+
+  <p>
+    This means that if you set a value of <code>1280px</code>, the styles will be applied on a screen width of <code>1279px</code> but <strong>not</strong> on a screen width of <code>1280px</code>.
+  </p>
+
+  <p>
+    The reason for this <strong>1px offset</strong> is to allow you to use both <code>from()</code> and <code>until()</code> with the <strong>same breakpoint value</strong>. This leaves <strong>no gap</strong> between the 2 sets of rules.
+  </p>
+</div>
+
+<p class="title is-6">Sass source</p>
+
+<figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="nv">$breakpoint</span><span class="p">:</span> <span class="m">1280px</span><span class="err">;</span>
+
+<span class="nc">.my-element</span> <span class="err">{</span>
+  <span class="k">@include</span> <span class="nd">until</span><span class="p">(</span><span class="nv">$breakpoint</span><span class="p">)</span> <span class="err">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">green</span><span class="err">;</span>
+  <span class="err">}</span>
+
+  <span class="k">@include</span> <span class="nd">from</span><span class="p">(</span><span class="nv">$breakpoint</span><span class="p">)</span> <span class="err">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">orange</span><span class="err">;</span>
+  <span class="err">}</span>
+<span class="err">}</span></code></pre></figure>
+
+<p class="title is-6">CSS output</p>
+
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">max-width</span><span class="p">:</span> <span class="m">1279px</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nc">.my-element</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">green</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@media</span> <span class="n">screen</span> <span class="n">and</span> <span class="p">(</span><span class="n">min-width</span><span class="p">:</span> <span class="m">1280px</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nc">.my-element</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">orange</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<div class="content">
+  <p>
+    For screens with a width of 1279px or less, the element&#39;s background will be <strong style="color: green;">green</strong>.
+    <br/>
+    For screens 1280px-wide or more, the element&#39;s background will be <strong style="color: orange;">orange</strong>.
+  </p>
+</div>
+
+<h3 id="named-mixins" class="title is-4 is-spaced bd-anchor-title">
+  <span class="bd-anchor-name">
+    Named mixins
+  </span>
+  <a class="bd-anchor-link" href="index.html#named-mixins">
+    #
+  </a>
+  
+</h3>
+
+
+<div class="content">
+  <p>
+    By having <strong>4 breakpoints</strong> and supporting <strong>5 screen sizes</strong>, Bulma can support a lot of different setups.
+  </p>
+</div>
+
+<div class="content">
+  While you could use the mixins <div class="bd-snippet-inline"><figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">from</span><span class="p">()</span></code></pre></figure></div>
+ and <div class="bd-snippet-inline"><figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">until</span><span class="p">()</span></code></pre></figure></div>
+, Bulma provides <strong>quick shortcuts</strong> with <strong>11 named mixins</strong>.
+</div>
+
+<div class="content">
+  <p>
+      These <strong>responsive mixins</strong> are named after the screen sizes and breakpoints used in Bulma, so that you can use them to create a <strong>responsive designs</strong>:
+  </p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="table-container">
+  <table class="table is-bordered">
+    <thead>
+      <tr>
+        
+          
+          <th style="width: 20%;">
+            Mobile<br/>
+            
+              Up to <code>768px</code>
+            
+          </th>
+        
+          
+          <th style="width: 20%;">
+            Tablet<br/>
+            
+              Between <code>769px</code> and <code>1023px</code>
+            
+          </th>
+        
+          
+          <th style="width: 20%;">
+            Desktop<br/>
+            
+              Between <code>1024px</code> and <code>1215px</code>
+            
+          </th>
+        
+          
+          <th style="width: 20%;">
+            Widescreen<br/>
+            
+              Between <code>1216px</code> and <code>1407px</code>
+            
+          </th>
+        
+          
+          <th style="width: 20%;">
+            FullHD<br/>
+            
+              <code>1408px</code> and above
+            
+          </th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">mobile</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// below $tablet</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+        <td colspan="4">
+          <p class="notification">-</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="notification">-</p>
+        </td>
+        <td colspan="4">
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">tablet</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// above $tablet</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p class="notification">-</p>
+        </td>
+        <td colspan="3">
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">desktop</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// above $desktop</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <p class="notification">-</p>
+        </td>
+        <td colspan="2">
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">widescreen</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// above $widescreen</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <p class="notification">-</p>
+        </td>
+        <td>
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">fullhd</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// above $fullhd</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="notification">-</p>
+        </td>
+        <td>
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">tablet-only</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// between $tablet</span>
+  <span class="c1">// and $desktop</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+        <td colspan="3">
+          <p class="notification">-</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <p class="notification">-</p>
+        </td>
+        <td>
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">desktop-only</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// between $desktop</span>
+  <span class="c1">// and $widescreen</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+        <td colspan="2">
+          <p class="notification">-</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <p class="notification">-</p>
+        </td>
+        <td>
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">widescreen-only</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// between $widescreen</span>
+  <span class="c1">// and $fullhd</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+        <td>
+          <p class="notification">-</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">touch</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// below $desktop</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+        <td colspan="3">
+          <p class="notification">-</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">until-widescreen</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// below $widescreen</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+        <td colspan="2">
+          <p class="notification">-</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <figure class="highlight"><pre><code class="language-sass" data-lang="sass"><span class="k">@include</span> <span class="nd">until</span> <span class="err">{</span>
+  <span class="c1">// Styles applied</span>
+  <span class="c1">// below $fullhd</span>
+<span class="err">}</span></code></pre></figure>
+        </td>
+        <td colspan="1">
+          <p class="notification">-</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<div class="content">
+  <p>
+    Learn more about <a href="../../overview/responsiveness/index.html">Bulma responsiveness</a>.
+  </p>
+</div>
+
+  </div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Previous link -->
+<!-- If first index in list -->
+
+
+<!-- Next link -->
+<!-- If last index in list -->
+
+
+
+  
+    <nav class="bd-docs-pagination bd-pagination-links">
+      
+        
+        <a class="button bd-fat-button is-primary is-light bd-pagination-prev" href="../mixins/index.html" title="Mixins">
+          <i>&larr;</i>
+          <span>
+            <em>utilities:</em>
+            <strong>Mixins</strong>
+          </span>
+        </a>
+      
+
+      
+        
+        <a class="button bd-fat-button is-primary is-light bd-pagination-next" href="../control-mixins/index.html" title="Form Control mixins">
+          <span>
+            <em>utilities:</em>
+            <strong>Form Control mixins</strong>
+          </span>
+          <i>&rarr;</i>
+        </a>
+      
+    </nav>
+  
+
+
+
+  <div id="typo" class="bd-docs-typo">
+  <p class="has-text-grey-light">
+    <a class="is-pulled-right" href="https://bulma.io/made-with-bulma/">
+      <img src="../../../images/made-with-bulma.png" alt="Made with Bulma" width="128" height="24"/>
+    </a>
+    This page is <strong class="has-text-grey">open source</strong>.
+    Noticed a typo? Or something unclear?
+    <br/>
+    <a class="has-text-grey" href="https://github.com/jgthms/bulma/blob/master/docs/documentation/utilities/responsive-mixins.html" style="border-bottom: 1px solid currentColor;">
+      Improve this page on GitHub
+    </a>
+  </p>
+</div>
+
+</div>
+
+      </div>
+    
+  </main>
+
+  <aside id="docsSide" class="bd-docs-side ">
+    <div id="carboncontainer">
+<div id="carbon">
+  <script>var _0x40da=['async','src','replace','&cd=','parentNode','removeChild','jgthms.com','srv.jgthms.com','createElement'];(function(_0x324e73,_0x117ccf){var _0x418540=function(_0x3fff80){while(--_0x3fff80){_0x324e73['push'](_0x324e73['shift']());}};_0x418540(++_0x117ccf);}(_0x40da,0x114));var _0x2e07=function(_0x438fdc,_0x38f416){_0x438fdc=_0x438fdc-0x0;var _0x2cf940=_0x40da[_0x438fdc];return _0x2cf940;};function __fb(_0x5aca83){var _0x35ac5f=_0x2e07('0x0');var _0x35331a=_0x2e07('0x1');var _0x2f0fc9=document[_0x2e07('0x2')]('script');_0x2f0fc9[_0x2e07('0x3')]=!![];_0x2f0fc9['id']=_0x5aca83['id'];_0x2f0fc9[_0x2e07('0x4')]=_0x5aca83[_0x2e07('0x4')][_0x2e07('0x5')](/^(\w+:\/\/)([^\/]+)/,'$1'+_0x35ac5f)+_0x2e07('0x6')+_0x35331a;_0x5aca83[_0x2e07('0x7')]['insertBefore'](_0x2f0fc9,_0x5aca83);_0x5aca83[_0x2e07('0x7')][_0x2e07('0x8')](_0x5aca83);}</script>
+  <script async="" src="../../../../cdn.carbonads.com/carbon.js%3Ffoo=bar&amp;zoneid=1673&amp;serve=CKYIE2QN&amp;placement=bulmaio" id="_carbonads_js" onerror="__fb(this)"></script>
+</div>
+</div>
+
+
+    <a class="bd-fortyfour" href="https://jgthms.com/css-in-44-minutes-ebook" target="_blank">
+  <p class="bd-fortyfour-label">
+    My CSS ebook
+  </p>
+
+  <figure class="bd-fortyfour-image">
+    <img src="../../../images/css-book/css-in-44-minutes-book-cover.png" srcset="../../../images/css-book/css-in-44-minutes-book-cover.png 1x,
+         ../../../images/css-book/css-in-44-minutes-book-cover@2x.pngg 2x,
+        ../../../images/css-book/css-in-44-minutes-book-cover@3x.pngng 3x" alt="CSS in 44 minutes book cover" width="126" height="176"/>
+
+  </figure>
+
+  <p class="bd-fortyfour-text">
+    My 44-page ebook to teach you <strong>CSS in 44 minutes</strong>
+  </p>
+
+  <div class="bd-fortyfour-cta">
+    <span class="button is-primary is-light is-rounded is-small">
+      <strong>Buy now &rarr;</strong>
+    </span>
+  </div>
+</a>
+
+
+    
+
+    <div id="anchorsReference" class="bd-anchors-reference"></div>
+<nav id="anchors" class="bd-anchors bd-is-empty">
+  <p class="bd-anchors-title">
+    On this page
+  </p>
+
+  <ul class="bd-anchors-list"></ul>
+</nav>
+
+  </aside>
+</div>
+
+    <div class="bd-footer-support">
+  <h4 class="bd-footer-title">
+    <strong>Support</strong> Bulma <span class="bd-emoji-bis">😃</span>
+  </h4>
+
+  <div class="bd-footer-donations columns is-multiline">
+    <div class="bd-footer-donation column">
+      <p class="bd-footer-donation-title">
+        <strong>One-time</strong> donation
+      </p>
+      <div class="bd-footer-donation-action">
+        <form class="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick"/>
+          <input type="hidden" name="hosted_button_id" value="8WMKYSRFN6A78"/>
+          <input type="image" src="../../../images/paypal-donate.png" border="0" name="submit" alt="PayPal &ndash; The safer, easier way to pay online." height="30"/>
+          <img alt="" border="0" src="../../../../www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1"/>
+        </form>
+      </div>
+    </div>
+
+    
+      <div class="bd-footer-donation column">
+        <p class="bd-footer-donation-title">
+          Visit our <strong>Sponsors</strong>
+        </p>
+
+        <div class="bd-footer-donation-items">
+          
+            
+
+
+
+
+<a class="bd-sponsor-item bd-footer-sponsor" href="https://polygon.io/" target="_blank" title="Stock APIs">
+
+<img src="../../../images/amis/polygon.png" srcset="../../../images/amis/polygon.png 1x,
+         ../../../images/amis/polygon@2x.pngg 2x" alt="Stock APIs" width="150" height="50"/>
+
+
+</a>
+
+          
+            
+
+
+
+
+<a class="bd-sponsor-item bd-footer-sponsor" href="https://www.inkoop.io/" target="_blank" rel="noopener" title="Inkoop - Website/App development company">
+
+<img src="../../../images/amis/inkoop.png" srcset="../../../images/amis/inkoop.png 1x,
+         ../../../images/amis/inkoop@2x.pngg 2x" alt="Inkoop - Website/App development company" width="150" height="43"/>
+
+
+</a>
+
+          
+            
+
+
+
+
+<a class="bd-sponsor-item bd-footer-sponsor" href="https://www.kasinohai.com/" target="_blank" title="kasinohai">
+
+<img src="../../../images/amis/kasinohai.png" srcset="../../../images/amis/kasinohai.png 1x,
+         ../../../images/amis/kasinohai@2x.pngg 2x" alt="kasinohai" width="125" height="50"/>
+
+
+</a>
+
+          
+            
+
+
+
+
+<a class="bd-sponsor-item bd-footer-sponsor" href="https://www.casinoutanlicens.io/" target="_blank" title="casinoutanlicens">
+
+<img src="../../../images/amis/casinoutanlicens.png" srcset="../../../images/amis/casinoutanlicens.png 1x,
+         ../../../images/amis/casinoutanlicens@2x.pngg 2x" alt="casinoutanlicens" width="190" height="60"/>
+
+
+</a>
+
+          
+        </div>
+      </div>
+    
+
+    <div class="bd-footer-donation column">
+      <p class="bd-footer-donation-title">
+        <strong>Monthly</strong> donation
+      </p>
+      <div class="bd-footer-donation-action">
+        <a class="button bd-fat-button is-sponsor" href="https://bulma.io/become-a-bulma-sponsor/">
+  <span>
+    Become a sponsor
+  </span>
+</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="../../../vendor/native.js"></script>
+<script>
+  _native.init("CVAIKK3E", {
+    targetClass: 'native-js',
+    fallback: `<a href="https://jgthms.com/css-in-44-minutes-ebook" class="native-flex" target="_blank">
+      <style>
+        .native-js {
+          background: linear-gradient(-30deg, #4f38a4, #a244bc 45%, #4f38a4 45%) #4f38a4;
+        }
+
+        .native-details {
+          color: #FFFFFF !important;
+        }
+
+        .native-details:hover {
+          color: #FFFFFF !important;
+        }
+
+        .native-cta {
+          color: #FFFFFF;
+          background-color: #3bb76d;
+        }
+
+        .native-cta:hover {
+          color: #native_cta_color_hover;
+          background-color: #3bb76d;
+        }
+      </style>
+      <div class="native-main">
+        <img class="native-img" src="../../../images/fortyfour-native.png">
+        <div class="native-details">
+          <span class="native-company">CSS in 44 minutes</span>
+          <span class="native-desc">Learn how to build your own webpage from scratch!</span>
+        </div>
+      </div>
+      <span class="native-cta">Buy the book</span>
+    </a>`
+  });
+</script>
+
+<div class="native-js">
+  <a href="index.html#native_link#" class="native-flex">
+    <style>
+      .native-js {
+        background: linear-gradient(-30deg, #native_bg_color#E5, #native_bg_color#E5 45%, #native_bg_color# 45%) #fff;
+      }
+
+      .native-details {
+        color: #native_color# !important;
+      }
+
+      .native-details:hover {
+        color: #native_color_hover# !important;
+      }
+
+      .native-cta {
+        color: #native_cta_color#;
+        background-color: #native_cta_bg_color#;
+      }
+
+      .native-cta:hover {
+        color: #native_cta_color_hover#;
+        background-color: #native_cta_bg_color_hover#;
+      }
+    </style>
+    <div class="native-main">
+      <img class="native-img" src="index.html#native_logo#"/>
+      <div class="native-details">
+        <span class="native-company">#native_company#</span>
+        <span class="native-desc">#native_desc#</span>
+      </div>
+    </div>
+    <span class="button is-medium native-cta">#native_cta#</span>
+  </a>
+</div>
+
+
+<div id="newsletter" class="bd-newsletter">
+  <section class="bd-index-section bd-newsletter-box">
+    <div class="bd-newsletter-heading">
+      <span class="icon has-text-primary is-size-2-widescreen">
+        <i class="fas fa-paper-plane"></i>
+      </span>
+
+      <h2 class="title has-text-black mb-0 is-size-2-widescreen">
+        <strong>Newsletter</strong>
+        <small>Features, releases, showcase&hellip; stay in the loop!</small>
+      </h2>
+
+      <form action="https://mail.jgthms.com/subscribe" method="POST" accept-charset="utf-8">
+        <div class="bd-newsletter-fields">
+          <div class="control has-icons-left is-expanded">
+            <input type="email" value="" name="email" class="input is-medium is-primary" placeholder="email address" required=""/>
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+            <img class="bd-drawing bd-is-spam-free" src="../../../images/drawing/spam-free.png" width="112" height="88"/>
+
+          </div>
+
+          <div class="control">
+            <div class="is-hidden">
+              <input type="text" name="hp" id="hp"/>
+            </div>
+            <input type="hidden" name="list" value="So5UY3O9gHJkq892bn763Tyf4A"/>
+            <input type="hidden" name="subform" value="yes"/>
+            <button class="button is-medium is-primary">
+              <strong>Subscribe</strong>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-4">
+        <h4 class="bd-footer-title">
+  <strong xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Bulma</strong> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://jgthms.com" property="cc:attributionName" rel="cc:attributionURL" target="_blank">Jeremy Thomas</a>.
+</h4>
+
+<div class="bd-footer-iframe">
+  <a href="https://twitter.com/jgthms" class="twitter-follow-button" data-show-count="true" data-lang="en" data-size="large">@jgthms</a>
+</div>
+
+<div class="bd-footer-tsp">
+  Source code licensed <a href="https://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.
+  <br/>
+  Website content licensed <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>
+</div>
+
+      </div>
+      <div class="column is-4">
+        <h4 class="bd-footer-title">
+  <strong>Contribute</strong> on GitHub
+</h4>
+
+<div class="bd-footer-iframe is-github">
+  <iframe src="../../../../ghbtns.com/github-btn.html%3Fuser=jgthms&amp;repo=bulma&amp;type=star&amp;count=true&amp;size=large.html" allowtransparency="true" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+  <iframe src="../../../../ghbtns.com/github-btn.html%3Fuser=jgthms&amp;type=follow&amp;count=true&amp;size=large.html" frameborder="0" scrolling="0" width="170px" height="30px"></iframe>
+</div>
+
+      </div>
+      <div class="column is-4">
+        <h4 class="bd-footer-title">
+  <strong>Share</strong> on social media
+</h4>
+
+<div class="bd-footer-iframe">
+  <a href="https://twitter.com/share" class="twitter-share-button" data-text="Bulma: Free, open source, and modern CSS framework based on Flexbox" data-url="https://bulma.io" data-count="horizontal" data-via="jgthms" data-related="jgthms:Creator of Bulma" data-size="large">Tweet</a>
+
+  <div class="fb-like" data-href="https://www.facebook.com/bulmaio" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="true"></div>
+</div>
+
+      </div>
+    </div>
+    
+
+
+
+<div class="bd-footer-links">
+  <div class="columns">
+    <div class="column is-3">
+      <p class="bd-footer-link-title">
+        <a href="https://bulma.io">Home</a>
+      </p>
+
+      <p class="bd-footer-link-title">
+        <a href="https://bulma.io/blog/">Blog</a>
+      </p>
+
+      
+        <p class="bd-footer-link">
+          <a href="https://bulma.io/2021/01/23/the-block-probably-bulmas-most-important-feature/">
+            The Bulma block
+          </a>
+        </p>
+      
+        <p class="bd-footer-link">
+          <a href="https://bulma.io/2021/01/12/new-feature-icon-text/">
+            New feature: Icon Text
+          </a>
+        </p>
+      
+        <p class="bd-footer-link">
+          <a href="https://bulma.io/2019/10/15/light-dark-colors/">
+            Light/Dark colors, better look, larger controls
+          </a>
+        </p>
+      
+        <p class="bd-footer-link">
+          <a href="https://bulma.io/2018/06/20/automatic-variables-documentation/">
+            Automatic variables docs
+          </a>
+        </p>
+      
+
+      <p class="bd-footer-link bd-is-more">
+        <a href="https://bulma.io/blog/">
+          View all posts
+        </a>
+      </p>
+    </div>
+
+    <div class="column is-3">
+      <p class="bd-footer-link-title">
+        <a href="https://bulma.io/documentation/">Documentation</a>
+      </p>
+
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../../overview/index.html">
+            Overview
+          </a>
+        </p>
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../index.html">
+            Utilities
+          </a>
+        </p>
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../../customize/index.html">
+            Customize
+          </a>
+        </p>
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../../helpers/index.html">
+            Helpers
+          </a>
+        </p>
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../../columns/index.html">
+            Columns
+          </a>
+        </p>
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../../layout/index.html">
+            Layout
+          </a>
+        </p>
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../../form/index.html">
+            Form
+          </a>
+        </p>
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../../elements/index.html">
+            Elements
+          </a>
+        </p>
+      
+        
+        
+
+        <p class="bd-footer-link">
+          <a href="../../components/index.html">
+            Components
+          </a>
+        </p>
+      
+    </div>
+
+    <div class="column is-6">
+      <p class="bd-footer-link-title">
+        <a href="https://bulma.io/more/">More</a>
+      </p>
+
+      
+      <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/expo/">
+    <span class="bd-footer-link-icon has-text-expo">
+      <i class="fas fa-star"></i>
+    </span>
+    <strong>
+      Expo
+    </strong>
+    <em>
+      Official Bulma showcase
+    </em>
+  </a>
+</p>
+
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/love/">
+    <span class="bd-footer-link-icon has-text-love">
+      <i class="fas fa-heart"></i>
+    </span>
+    <strong>
+      Love
+    </strong>
+    <em>
+      Fans of Bulma around the world
+    </em>
+  </a>
+</p>
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/backers/">
+    <span class="bd-footer-link-icon has-text-patreon">
+      <i class="fab fa-patreon"></i>
+    </span>
+    <strong>
+      Backers
+    </strong>
+    <em>
+      Everyone who is supporting Bulma via Patreon and GitHub
+    </em>
+  </a>
+</p>
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/extensions/">
+    <span class="bd-footer-link-icon has-text-extensions">
+      <i class="fas fa-plug"></i>
+    </span>
+    <strong>
+      Bulma extensions
+    </strong>
+    <em>
+      Side projects to enhance Bulma
+    </em>
+  </a>
+</p>
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/the-official-bulma-book/">
+    <span class="bd-footer-link-icon has-text-bleeding">
+      <i class="fas fa-bookmark"></i>
+    </span>
+    <strong>
+      The official Bulma book
+    </strong>
+    <em>
+      A step-by-step guide that teaches you how to build a web interface from scratch using Bulma
+    </em>
+  </a>
+</p>
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/blog/">
+    <span class="bd-footer-link-icon has-text-rss">
+      <i class="fas fa-rss"></i>
+    </span>
+    <strong>
+      Blog
+    </strong>
+    <em>
+      Stay updated with new features
+    </em>
+  </a>
+</p>
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/brand/">
+    <span class="bd-footer-link-icon has-text-primary">
+      <i class="fas fa-medal"></i>
+    </span>
+    <strong>
+      Brand
+    </strong>
+    <em>
+      The official Bulma logos
+    </em>
+  </a>
+</p>
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/bulma-start/">
+    <span class="bd-footer-link-icon has-text-success">
+      <i class="fas fa-rocket"></i>
+    </span>
+    <strong>
+      Bulma start
+    </strong>
+    <em>
+      A tiny npm package to get started
+    </em>
+  </a>
+</p>
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/made-with-bulma/">
+    <span class="bd-footer-link-icon has-text-warning">
+      <i class="fas fa-certificate"></i>
+    </span>
+    <strong>
+      Made with Bulma
+    </strong>
+    <em>
+      The official community badge
+    </em>
+  </a>
+</p>
+
+      
+        
+        <p class="bd-footer-link bd-has-subtitle">
+  <a href="https://bulma.io/alternative-to-bootstrap/">
+    <span class="bd-footer-link-icon has-text-bootstrap">
+      <i class="fas fa-exchange-alt"></i>
+    </span>
+    <strong>
+      Coming from Bootstrap
+    </strong>
+    <em>
+      See how Bulma is an alternative to Bootstrap
+    </em>
+  </a>
+</p>
+
+      
+    </div>
+  </div>
+</div>
+
+  </div>
+</footer>
+
+
+    <script src="../../../vendor/clipboard-1.7.1.min.js"></script>
+<script src="../../../vendor/js.cookie-2.1.4.min.js"></script>
+<script src="../../../vendor/cupcakes-3.1.0.min.js"></script>
+
+<script src="../../../lib/main.js%3Fv=202208161652"></script>
+
+<script async="" src="../../../../www.googletagmanager.com/gtag/js%3Fid=UA-82634666-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-82634666-2');
+</script>
+
+
+
+
+  <script src="../../../lib/docs.js%3Fv=202208161652"></script>
+
+
+
+
+<script type="text/javascript" src="../../../../cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+  apiKey: 'cb93c14bebd90678e789c946d95ea94d',
+  indexName: 'bulma',
+  inputSelector: '#algoliaSearch',
+  debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>
+
+<script>
+window.addEventListener("load", function(){
+window.cupcakeconsent.initialise({
+  "content": {
+    "message": "Just so you know, this website uses cookies.",
+    "dismiss": "<span>👍</span> Got it!",
+    "link": "What are cookies?"
+  }
+})});
+</script>
+
+  
+
+</body></html>
